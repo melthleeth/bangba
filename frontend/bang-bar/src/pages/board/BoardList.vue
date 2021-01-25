@@ -1,18 +1,39 @@
 <template>
-  <p>게시판</p>
+  <div>
+    <h1>게시판</h1>
+    <paginated-list :list-array="pageArray" />
+  </div>
 </template>
 
-<style scoped>
-p {
-  margin: 0;
-  font-family: Noto Sans KR;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 64px;
-  line-height: 93px;
-  display: flex;
-  align-items: center;
+<script>
+import axios from 'axios'
+import PaginatedList from './PaginatedList'
+export default {
+  name: 'simple-pagination',
+  components: {
+    PaginatedList
+  },
+  data () {
+    return {
+      pageArray: []
+    }
+  },
+  created () {
+    axios.get('http://sample.bmaster.kro.kr/contacts')
+    .then(response => {
+      console.log(response);
+      this.pageArray = response.data.contacts;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
+}
+</script>
 
-  color: #23232f;
+<style>
+h1 {
+  color: #454545;
+  text-align: center;
 }
 </style>
