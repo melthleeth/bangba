@@ -27,6 +27,7 @@ export default {
 
 html {
   font-family: 'Noto Sans KR', sans-serif;
+  color: #23232F;
   /* font-family: "Roboto", sans-serif; */
 }
 

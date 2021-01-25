@@ -27,19 +27,6 @@ export default {
 </script>
 
 <style scoped>
-body {
-  position: relative;
-  width: 1440px;
-  height: 120px;
-
-  background: #ffffff;
-  border: 1px solid #000000;
-  box-sizing: border-box;
-}
-
-img {
-  float: auto;
-}
 
 header {
   width: 100%;
@@ -61,7 +48,7 @@ header a {
 a:active,
 a:hover,
 a.router-link-active {
-  border: 1px solid #ff5e46;
+  /* border: 1px solid #ff5e46; */
 }
 
 h1 {
@@ -98,5 +85,6 @@ header ul {
 
 li {
   margin: 0 0.5rem;
+  font-size: 15pt;
 }
 </style>
