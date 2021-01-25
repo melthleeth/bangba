@@ -14,14 +14,18 @@
           <li><router-link to="/board">게시판</router-link></li>
       </ul>
       <base-button link mode="outline" to="/signup">회원가입</base-button>
-      <base-button>로그인</base-button>
+      <base-button @click="showDialog">로그인</base-button>
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {
+      dialogIsVisible: false,
+    };
+  }
 
 };
 </script>
