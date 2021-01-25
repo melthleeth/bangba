@@ -11,6 +11,7 @@ import BoardList from "./pages/board/BoardList.vue";
 import BangbaGuide from "./pages/footers/BangbaGuide.vue";
 import BangbaPeople from "./pages/footers/BangbaPeople.vue";
 import BangbaAsk from "./pages/footers/BangbaAsk.vue";
+import Signup from "./pages/account/signup.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -27,6 +28,7 @@ const router = createRouter({
     { path: "/footer/guide", component: BangbaGuide },
     { path: "/footer/people", component: BangbaPeople },
     { path: "/footer/ask", component: BangbaAsk },
+    { path: "/signup", component: Signup },
   ],
 });
 

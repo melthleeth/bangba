@@ -13,7 +13,7 @@
           <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
           <li><router-link to="/board">게시판</router-link></li>
       </ul>
-      <base-button mode="outline">회원가입</base-button>
+      <base-button mode="outline"><router-link to="/signup">회원가입</router-link></base-button>
       <base-button>로그인</base-button>
     </nav>
   </header>
