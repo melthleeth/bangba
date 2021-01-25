@@ -13,7 +13,7 @@
           <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
           <li><router-link to="/board">게시판</router-link></li>
       </ul>
-      <base-button mode="outline"><router-link to="/signup">회원가입</router-link></base-button>
+      <base-button link mode="outline" to="/signup">회원가입</base-button>
       <base-button>로그인</base-button>
     </nav>
   </header>
@@ -51,19 +51,21 @@ a.router-link-active {
   /* border: 1px solid #ff5e46; */
 }
 
-h1 {
+li {
   margin: 0;
+
 }
 
-h1 a {
-  color: white;
+li a {
   margin: 0;
+  transition: .3s ease-out;
 }
 
-h1 a:hover,
-h1 a:active,
-h1 a.router-link-active {
-  border-color: transparent;
+li a:hover,
+li a:active,
+li a.router-link-active {
+  /* border-color: transparent; */
+  border-bottom: 5px solid #FF5E46;
 }
 
 header nav {
