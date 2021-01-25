@@ -9,8 +9,8 @@
 
 <script>
 export default {
-  props: ['open'],
-  emits: ['close'],
+  props: ["open"],
+  emits: ["close"],
 };
 </script>
 
@@ -26,18 +26,22 @@ export default {
 }
 
 dialog {
+  background-color: #fff5eb;
   position: fixed;
-  top: 30vh;
-  width: 30rem;
-  left: calc(50% - 15rem);
+  top: 20vh;
+  width: 20rem;
+  left: calc(50% - 10rem);
   margin: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 12px;
   padding: 1rem;
-  background-color: white;
   z-index: 100;
   border: none;
   /* animation: modal 0.3s ease-out forwards; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;;
 }
 
 .modal-enter-active {

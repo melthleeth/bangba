@@ -1,37 +1,62 @@
 <template>
   <header>
     <nav>
-      <div>
-        <router-link to="/"
-          ><img src="../../assets/img/logo.png" /> 방구석 바텐더
+        <router-link to="/">
+      <section class="logo">
+          <img src="../../assets/img/logo.png" />
+          <span>방구석 바텐더</span>
+      </section>
         </router-link>
-      </div>
       <ul>
-          <li><router-link to="/search">통합검색</router-link></li>
-          <li><router-link to="/recommendation">칵테일 추천</router-link></li>
-          <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
-          <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
-          <li><router-link to="/board">게시판</router-link></li>
+        <li><router-link to="/search">통합검색</router-link></li>
+        <li><router-link to="/recommendation">칵테일 추천</router-link></li>
+        <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
+        <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
+        <li><router-link to="/board">게시판</router-link></li>
       </ul>
       <base-button link mode="outline" to="/signup">회원가입</base-button>
+      <base-modal @close="hideDialog" :open="dialogIsVisible">
+        <section class="modal-header">
+          <img src="../../assets/img/logo.png" />
+          <span>로그인</span>
+        </section>
+        <input class="input-modal" type="text" placeholder="이메일" />
+        <input class="input-modal" type="password" placeholder="비밀번호" />
+        <section class="button-modal">
+          <base-button>로그인</base-button>
+          <base-button @click="hideDialog" mode="outline">취소</base-button>
+        </section>
+        <section class="sub-menu">
+          <router-link to=""><u>비밀번호 찾기</u></router-link>
+          <router-link @click="hideDialog" to="/signup"><u>회원가입</u></router-link>
+        </section>
+      </base-modal>
       <base-button @click="showDialog">로그인</base-button>
     </nav>
   </header>
 </template>
 
 <script>
+import BaseButton from "../ui/BaseButton.vue";
 export default {
+  components: { BaseButton },
   data() {
     return {
       dialogIsVisible: false,
     };
-  }
-
+  },
+  methods: {
+    showDialog() {
+      this.dialogIsVisible = true;
+    },
+    hideDialog() {
+      this.dialogIsVisible = false;
+    },
+  },
 };
 </script>
 
 <style scoped>
-
 header {
   width: 100%;
   height: 5rem;
@@ -43,7 +68,7 @@ header {
 
 header a {
   text-decoration: none;
-  color: #23232F;
+  color: #23232f;
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border: 1px solid transparent;
@@ -57,19 +82,18 @@ a.router-link-active {
 
 li {
   margin: 0;
-
 }
 
 li a {
   margin: 0;
-  transition: .3s ease-out;
+  transition: 0.3s ease-out;
 }
 
 li a:hover,
 li a:active,
 li a.router-link-active {
   /* border-color: transparent; */
-  border-bottom: 5px solid #FF5E46;
+  border-bottom: 5px solid #ff5e46;
 }
 
 header nav {
@@ -93,4 +117,50 @@ li {
   margin: 0 0.5rem;
   font-size: 15pt;
 }
+
+.modal-header {
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 18pt;
+}
+
+.input-modal {
+  font-size: 12pt;
+  text-align: left;
+  padding: 1rem 2rem;
+  width: 257px;
+  border-radius: 25px;
+  border: 3px solid white;
+  background-color: white;
+  margin: 0.5rem 0;
+  transition: .3s ease-out;
+}
+
+.input-modal:hover,
+.input-modal:active,
+.input-modal:focus {
+  border: 3px solid #dddddd;
+}
+
+.button-modal {
+  margin-top: 1rem;
+}
+
+u {
+  color: #9A9A9A;
+  transition: .3s ease-out;
+}
+
+u:hover,
+u:active {
+  color: #23232F;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
 </style>

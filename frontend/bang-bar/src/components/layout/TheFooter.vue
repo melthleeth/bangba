@@ -1,12 +1,12 @@
 <template>
   <footer>
     <div class="container">
-      <section>
-        <router-link to="/" class="logo"
-          ><img src="../../assets/img/logo.png" />
-          <p>방구석 바텐더</p>
-        </router-link>
+        <router-link to="/">
+      <section class="logo">
+          <img src="../../assets/img/logo.png" />
+          <span>방구석 바텐더</span>
       </section>
+        </router-link>
       <section>
         <nav>
           <ul>
@@ -41,6 +41,8 @@ section {
     border-radius: 50%;
     margin: 1rem;
     padding: 0.5rem;
+    display: flex;
+    transition: .3s ease-out;
 }
 
 .logo p {
