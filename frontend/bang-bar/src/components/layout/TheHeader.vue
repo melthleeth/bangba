@@ -7,11 +7,11 @@
         </router-link>
       </div>
       <ul>
-          <li><router-link to="">통합검색</router-link></li>
-          <li><router-link to="">칵테일 추천</router-link></li>
-          <li><router-link to="">오피셜 레시피</router-link></li>
-          <li><router-link to="">커스텀 레시피</router-link></li>
-          <li><router-link to="">게시판</router-link></li>
+          <li><router-link to="/search">통합검색</router-link></li>
+          <li><router-link to="/recommendation">칵테일 추천</router-link></li>
+          <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
+          <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
+          <li><router-link to="/board">게시판</router-link></li>
       </ul>
       <base-button mode="outline">회원가입</base-button>
       <base-button>로그인</base-button>
