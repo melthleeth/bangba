@@ -27,7 +27,7 @@
           <base-button @click="hideDialog" mode="outline">취소</base-button>
         </section>
         <section class="sub-menu">
-          <router-link to=""><u>비밀번호 찾기</u></router-link>
+          <router-link @click="hideDialog" to="/findpassword"><u>비밀번호 찾기</u></router-link>
           <router-link @click="hideDialog" to="/signup"><u>회원가입</u></router-link>
         </section>
       </base-modal>
