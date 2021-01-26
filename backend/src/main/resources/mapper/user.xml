@@ -3,19 +3,19 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.bangba.project730.model.dao.UserDao">
-	<insert id="createUser" parameterType="User">
+	<insert id="createUser" parameterType="UserDto">
 		insert into user (email, password, user_name, birth, phone_number, user_type, banned, img_path)
 		values (#{email}, #{password}, #{user_name}, #{birth}, #{phone_number}, #{user_type}, #{banned}, #{img_path})	
 	</insert>
 	
-	<select id="login" parameterType="map" resultType="User">
+	<select id="login" parameterType="map" resultType="UserDto">
 		select email, password, user_name, birth, phone_number, user_type, banned, img_path
 		from user
 		where email = #{email} and password = #{password}
 	</select>
 	
-	<select id="isDuplicated" parameterType="String" resultType="Boolean">
-		select email 
+	<select id="isDuplicated" parameterType="String" resultType="Integer">
+		select count(*)
 		from user
 		where email = #{email}	
 	</select>

@@ -4,13 +4,13 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.bangba.project730.model.dto.User;
+import com.bangba.project730.model.dto.UserDto;
 
 @Mapper
 public interface UserDao {
-	public void createUser(User user) throws Exception;
+	public void createUser(UserDto user) throws Exception;
 	public void sendEmail(String toAddress, String subject, String body);
-	public boolean isDuplicated(String toAddress);
+	public int isDuplicated(String toAddress);
 
-	public User login(Map<String, String> map) throws Exception;
+	public UserDto login(Map<String, String> map) throws Exception;
 }

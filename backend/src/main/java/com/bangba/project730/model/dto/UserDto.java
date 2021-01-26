@@ -1,27 +1,27 @@
 package com.bangba.project730.model.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="회원정보", description = "이메일, 비밀번호, 닉네임 등을 가진 Domain Class")
 public class UserDto {
 	
-	private int pk_user;
-	
+	@ApiModelProperty(value="회원 이메일")
 	private String email;
+	@ApiModelProperty(value="회원 비밀번호")
 	private String password;
+	@ApiModelProperty(value="회원 닉네임")
 	private String user_name;
+	@ApiModelProperty(value="회원 생년월일")
 	private String birth;
+	@ApiModelProperty(value="회원 전화번호")
 	private String phone_number;
-	
+	@ApiModelProperty(value="관리자 여부")
 	private boolean user_type;
+	@ApiModelProperty(value="영구정지 여부")
 	private boolean banned;
-	
+	@ApiModelProperty(value="회원 프로필 사진 경로")
 	private String img_path;
-
-	public int getPk_user() {
-		return pk_user;
-	}
-
-	public void setPk_user(int pk_user) {
-		this.pk_user = pk_user;
-	}
 
 	public String getEmail() {
 		return email;
@@ -86,6 +86,4 @@ public class UserDto {
 	public void setImg_path(String img_path) {
 		this.img_path = img_path;
 	}
-
-	
 }

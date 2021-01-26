@@ -10,7 +10,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.bangba.project730.model.dao.UserDao;
-import com.bangba.project730.model.dto.User;
+import com.bangba.project730.model.dto.UserDto;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -21,12 +21,12 @@ public class UserServiceImpl implements UserService{
 	private JavaMailSender sender;
 	
 	@Override
-	public void createUser(User user) throws Exception {
+	public void createUser(UserDto user) throws Exception {
 		dao.createUser(user);
 	}
 
 	@Override
-	public User login(Map<String, String> map) throws Exception {
+	public UserDto login(Map<String, String> map) throws Exception {
 		if(map.get("email") == null || map.get("password") == null) {
 			return null;
 		}
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public boolean isDuplicated(String toAddress) {
+	public int isDuplicated(String toAddress) {
 		return dao.isDuplicated(toAddress);
 	}
 }
