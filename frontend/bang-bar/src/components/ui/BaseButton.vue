@@ -1,7 +1,10 @@
 <template>
-    <button :class="mode">
+    <button v-if="!link" :class="mode">
         <slot></slot>
     </button>
+    <router-link v-else :to="to" :class="mode">
+        <slot></slot>
+    </router-link>
 </template>
 
 <script>
@@ -42,7 +45,6 @@ a {
   transition: .3s ease-out;
 }
 
-
 a:hover,
 a:active,
 button:hover,
@@ -62,6 +64,7 @@ button:active {
   color: #00002F;
 }
 
+.redbutton:hover,
 .flat:hover,
 .flat:active,
 .outline:hover,
@@ -69,4 +72,12 @@ button:active {
     color: white;
   background-color: #00002F;
 }
+
+ /* SJ의 추가 css */
+.redbutton{
+    background-color: #FF5E46;
+    border: 1px solid #FFFFFF;
+}
+
+
 </style>

@@ -24,7 +24,7 @@
           <input class="input-modal" type="text" placeholder="이메일" />
           <input class="input-modal" type="password" placeholder="비밀번호" />
           <section class="button-modal">
-            <base-button>로그인</base-button>
+            <base-button @click="login">로그인</base-button>
             <base-button @click="hideDialog" mode="outline">취소</base-button>
           </section>
           <section class="sub-menu">
@@ -36,10 +36,11 @@
             >
           </section>
         </base-modal>
-        <base-button @click="login">로그인</base-button>
+        <base-button @click="showDialog">로그인</base-button>
       </section>
       <section v-else>
-        <base-button @click="logout">로그아웃</base-button>
+        <span>{{ username }}</span>
+        <img src="../../assets/img/mr.fox.jpg" class="img-profile" @click="logout" />
       </section>
     </nav>
   </header>
@@ -51,6 +52,7 @@ export default {
   components: { BaseButton },
   data() {
     return {
+      username: "미스터 여우씨",
       dialogIsVisible: false,
       isAuth: false,
     };
@@ -67,12 +69,18 @@ export default {
     },
     logout() {
       this.isAuth = false;
-    }
+    },
   },
 };
 </script>
 
 <style scoped>
+.img-profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+}
+
 header {
   width: 100%;
   height: 5rem;
@@ -152,6 +160,31 @@ li {
   background-color: white;
   margin: 0.5rem 0;
   transition: 0.3s ease-out;
+}
+
+.input-modal:hover,
+.input-modal:active,
+.input-modal:focus {
+  border: 3px solid #dddddd;
+}
+
+.button-modal {
+  margin-top: 1rem;
+}
+
+u {
+  color: #9a9a9a;
+  transition: 0.3s ease-out;
+}
+
+u:hover,
+u:active {
+  color: #23232f;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
 }
 
 .input-modal:hover,
