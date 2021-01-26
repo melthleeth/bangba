@@ -17,3 +17,6 @@ The --save option instructed NPM to include the package inside of the dependenci
 - `npm install vuex@next`
 - `npm install --save core-js`
 - `npm install --save axios@next`
+- `npm install --save mitt`
+- `yarn add --dev @fullhuman/postcss-purgecss`
+- `yarn add --dev cssnano`: CSS 파일 크기 압축
