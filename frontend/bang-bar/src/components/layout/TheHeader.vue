@@ -70,33 +70,33 @@
                     </a>
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/profile"
+                    <a class="font-normal block px-4 py-3" to="/header/editprofile"
                       >프로필 수정</a
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/profile"
+                    <a class="font-normal block px-4 py-3" to="/header/bookmarkedrecipe"
                       >북마크한 레시피</a
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/profile"
+                    <a class="font-normal block px-4 py-3" to="/header/myposts"
                       >내가 쓴 글</a
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/profile"
+                    <a class="font-normal block px-4 py-3" to="/header/activitylog"
                       >활동기록</a
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/profile"
+                    <a class="font-normal block px-4 py-3" to="/header/followingfollowers"
                       >팔로잉/팔로워</a
                     >
                   </li>
                     <hr>
                   <li class="hover:bg-gray-100">
-                    <a class="font-font-normal block px-4 py-3" to="/profile"
+                    <a class="font-font-normal block px-4 py-3" to="logout"
                       >로그아웃</a
                     >
                   </li>
