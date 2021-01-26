@@ -12,6 +12,4 @@ public interface UserService {
 	
 	// 로그인 관련 함수 
 	public User login(Map<String, String> map) throws Exception;
-	// 테스트
-	public boolean i22sDuplicated(String toAddress);
 }
