@@ -32,6 +32,7 @@
         <td>{{ p.no }}</td>
       </tr>
     </table>
+    <!-- 이미지를 넣어야댐 -->
     <div class="btn-cover">
       <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
         이전
