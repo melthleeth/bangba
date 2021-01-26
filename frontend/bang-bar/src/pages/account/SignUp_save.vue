@@ -1,11 +1,10 @@
 <template>
     
-
-    <img src="@/assets/img/BangBaJoin.png"/>
-    <h1 style="text-align:left">회원가입<br>Sign up to Bang-Ba</h1>
-
 	<div class="container">
+        <img src="@/assets/img/BangBaJoin.png"/>
         
+             <h1>회원가입</h1>
+             <h1>Sign up to Bang-Ba</h1>
 		<form @submit.prevent="submitForm">
 			<div class="joindiv">
 				<label for="email">이메일 </label> 
@@ -64,11 +63,15 @@
                     이용약관
                 </span>
                 과 
+                
+
                  <base-modal @close="hideDialog" :open="dialogIsVisible_personal">
                     <section class="modal-header">
                         <img src="../../assets/img/logo.png" />
                     </section>
+
                     개인정보이용정책
+
                     <section class="button-modal">
                         <base-button @click="hideDialog_personal" mode="outline">취소</base-button>
                     </section>
@@ -76,9 +79,12 @@
                 <span @click="showDialog_personal"  style="text-decoration:underline; font-weight:bold">
                     개인정보이용정책
                 </span>
+                
                 에 동의합니다.
+                
+                
 			</div>
-            <div style="text-align:left">
+            <div style="text-align:center">
 			<base-button>회원 가입</base-button>
             <base-button mode="outline">취소</base-button>
             </div>
@@ -118,26 +124,29 @@ export default {
 
 <style scope>
 
-    h1{
-        text-align: left;
+    
+
+
+    input{
+        /* text-align: center ; */
+        vertical-align: auto;
+        margin: auto;
+        /* margin-left: px; */
+        
     }
 
     img {
-        /* text-align: left; */
-        /* display: ; */
         float:left;
-        /* align-content:inherit; */
         margin-right: 40px;
     }
     label {
         padding: 0.75rem 1.5rem;
         font-weight: 500;
-
+        
     }
 
-
-
     .date,
+    select,
     .textarea{
         text-decoration: none;
         padding: 0.75rem 1.5rem;
@@ -161,4 +170,9 @@ export default {
     ::placeholder{
         color: #C6C6C6;
     }
+
+    .container{
+        text-align: center;
+    }
+
 </style>

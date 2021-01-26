@@ -6,12 +6,14 @@
     <base-button class=redbutton >글쓰기</base-button>
       </span>
       <span style="text-align:right; padding:10px;">
+        
         <select id="year" name="year" >
                   <option value="전체">전체</option>
                   <option value="공지사항">공지사항</option>
                   <option value="후기">후기</option>
                   <option value="질문">질문</option>
         </select>
+        
         <input type="nickname" id="nickname" v-model="nickname" class="textarea" />
       <base-button >검색</base-button>
       </span>
@@ -46,7 +48,9 @@
 </template>
 
 <script>
+import BaseButton from '../../components/ui/BaseButton.vue';
 export default {
+  components: { BaseButton },
   name: 'paginated-list',
   data () {
     return {
