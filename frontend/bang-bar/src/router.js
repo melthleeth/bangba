@@ -27,6 +27,7 @@ import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 
 // board menus
 import BoardCreate from "@/pages/board/BoardCreate";
+import BoardDetail from "@/pages/board/BoardDetail";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -56,7 +57,8 @@ const router = createRouter({
     { path: "/footer/ask", component: BangbaAsk },
 
      //board
-     { path: "/board/create/:contentId?",name: "BoardCreate",component: BoardCreate }
+    { path: "/board/create/:contentId?", name: "BoardCreate", component: BoardCreate },
+    { path: "/board/detail/:contentId", name: "BoardDetail", component: BoardDetail },
   ],
 });
 

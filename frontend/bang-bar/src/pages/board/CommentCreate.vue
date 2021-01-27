@@ -1,17 +1,11 @@
 <template>
-  <div class="comment-create">
-    <b-input-group :prepend="name" class="mt-3">
-      <b-form-textarea
-        id="textarea"
-        v-model="context"
-        :placeholder="isSubComment ? '덧글에 덧글을 달아주세요~!' : '코멘트를 달아주세요~!'"
-        rows="3"
-        max-rows="6"
-      ></b-form-textarea>
-      <b-input-group-append>
-        <b-button variant="info" @click="isSubComment ? createSubComment() : createComment()">작성하기</b-button>
-      </b-input-group-append>
-    </b-input-group>
+  <div class="flex">
+    
+    <div class="flex flex-row flex-initial h-full w-full">
+      <div class="flex-initial ">{{name}}</div>
+      <textarea  placeholder="코멘트를 달아주세요." class="min-h-full min-w-full" ></textarea>
+      <button variant="info" @click="isSubComment ? createSubComment() : createComment()">작성하기</button>
+    </div>
   </div>
 </template>
 

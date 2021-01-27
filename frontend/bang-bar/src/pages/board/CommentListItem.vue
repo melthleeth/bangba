@@ -7,9 +7,9 @@
       </div>
       <div class="comment-list-item-context">{{commentObj.context}}</div>
       <div class="comment-list-item-button">
-        <b-button variant="info">수정</b-button>
-        <b-button variant="info">삭제</b-button>
-        <b-button variant="info" @click="subCommentToggle">덧글 달기</b-button>
+        <button variant="info">수정</button>
+        <button variant="info">삭제</button>
+        <button variant="info" @click="subCommentToggle">덧글 달기</button>
       </div>
     </div>
     <template v-if="subCommentCreateToggle">
@@ -32,8 +32,8 @@
         </div>
         <div class="comment-list-item-context">{{item.context}}</div>
         <div class="comment-list-item-button">
-          <b-button variant="info">수정</b-button>
-          <b-button variant="info">삭제</b-button>
+          <button variant="info">수정</button>
+          <button variant="info">삭제</button>
         </div>
       </div>
     </template>
