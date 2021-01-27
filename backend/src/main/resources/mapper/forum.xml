@@ -2,14 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
 
-<mapper namespace="com.bangba.project730.model.dao.ArticleDao">
-
-	<insert id="createArticle" parameterType="ArticleDto">
+<mapper namespace="com.bangba.project730.model.dao.ForumDao">
+	<insert id="createForum" parameterType="ForumDto">
 		insert into article (user_no, title_kor, title_eng, like_cnt, bookmark_cnt, hits, created_at, updated_at, like_weekly, content, img_path, category, abv)
 		values (#{user_no}, #{title_kor}, #{title_eng}, #{like_cnt}, #{bookmark_cnt}, #{hits}, #{created_at}, #{updated_at}
 		, #{like_weekly}, #{content}, #{img_path}, #{category}, #{abv})	
 	</insert>
-	<select id="searchArticlePK" resultType="int" parameterType="ArticleDto">
+	<select id="searchForumPK" resultType="int" parameterType="ForumDto">
 		select max(pk_article) from article
 		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
 	</select>

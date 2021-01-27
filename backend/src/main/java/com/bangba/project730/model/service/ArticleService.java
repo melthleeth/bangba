@@ -10,4 +10,7 @@ public interface ArticleService {
 	public ArticleDto searchArticle(List<String> tags) throws Exception;
 	public void updateArticle(Map<String, String> map) throws Exception;
 	public void deleteArticle(int pk_article) throws Exception;
+	
+	public void createIngredient(String name) throws Exception;
+	public void createTag(String content,int type) throws Exception;
 }
