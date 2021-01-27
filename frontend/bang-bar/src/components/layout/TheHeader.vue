@@ -14,24 +14,33 @@
         <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
         <li><router-link to="/board">게시판</router-link></li>
       </ul>
-      <base-button link mode="outline" to="/signup">회원가입</base-button>
-      <base-modal @close="hideDialog" :open="dialogIsVisible">
-        <section class="modal-header">
-          <img src="../../assets/img/logo.png" />
-          <span>로그인</span>
-        </section>
-        <input class="input-modal" type="text" placeholder="이메일" />
-        <input class="input-modal" type="password" placeholder="비밀번호" />
-        <section class="button-modal">
-          <base-button>로그인</base-button>
-          <base-button @click="hideDialog" mode="outline">취소</base-button>
-        </section>
-        <section class="sub-menu">
-          <router-link @click="hideDialog" to="/findpassword"><u>비밀번호 찾기</u></router-link>
-          <router-link @click="hideDialog" to="/signup"><u>회원가입</u></router-link>
-        </section>
-      </base-modal>
-      <base-button @click="showDialog">로그인</base-button>
+      <section v-if="!isAuth">
+        <base-button link mode="outline" to="/signup">회원가입</base-button>
+        <base-modal @close="hideDialog" :open="dialogIsVisible">
+          <section class="modal-header">
+            <img src="../../assets/img/logo.png" />
+            <span>로그인</span>
+          </section>
+          <input class="input-modal" type="text" placeholder="이메일" />
+          <input class="input-modal" type="password" placeholder="비밀번호" />
+          <section class="button-modal">
+            <base-button>로그인</base-button>
+            <base-button @click="hideDialog" mode="outline">취소</base-button>
+          </section>
+          <section class="sub-menu">
+            <router-link @click="hideDialog" to="/findpassword"
+              ><u>비밀번호 찾기</u></router-link
+            >
+            <router-link @click="hideDialog" to="/signup"
+              ><u>회원가입</u></router-link
+            >
+          </section>
+        </base-modal>
+        <base-button @click="login">로그인</base-button>
+      </section>
+      <section v-else>
+        <base-button @click="logout">로그아웃</base-button>
+      </section>
     </nav>
   </header>
 </template>
@@ -43,6 +52,7 @@ export default {
   data() {
     return {
       dialogIsVisible: false,
+      isAuth: false,
     };
   },
   methods: {
@@ -52,6 +62,12 @@ export default {
     hideDialog() {
       this.dialogIsVisible = false;
     },
+    login() {
+      this.isAuth = true;
+    },
+    logout() {
+      this.isAuth = false;
+    }
   },
 };
 </script>
@@ -135,7 +151,32 @@ li {
   border: 3px solid white;
   background-color: white;
   margin: 0.5rem 0;
-  transition: .3s ease-out;
+  transition: 0.3s ease-out;
+}
+
+.input-modal:hover,
+.input-modal:active,
+.input-modal:focus {
+  border: 3px solid #dddddd;
+}
+
+.button-modal {
+  margin-top: 1rem;
+}
+
+u {
+  color: #9a9a9a;
+  transition: 0.3s ease-out;
+}
+
+u:hover,
+u:active {
+  color: #23232f;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
 }
 
 .input-modal:hover,

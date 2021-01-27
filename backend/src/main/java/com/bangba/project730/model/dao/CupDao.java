@@ -7,6 +7,7 @@ import com.bangba.project730.model.dto.CupDto;
 public interface CupDao {
 	
 	public void addCup(CupDto cupDto) throws Exception;
-	public void searchCup(String type, int size) throws Exception;
+	public CupDto searchCup(String type, String size) throws Exception;
+	public int searchCupPK(String type, String size) throws Exception;
 	
 }
