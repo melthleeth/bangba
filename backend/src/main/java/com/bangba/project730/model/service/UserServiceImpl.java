@@ -1,5 +1,6 @@
 package com.bangba.project730.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.mail.internet.MimeMessage;
@@ -21,8 +22,8 @@ public class UserServiceImpl implements UserService{
 	private JavaMailSender sender;
 	
 	@Override
-	public void createUser(UserDto user) throws Exception {
-		dao.createUser(user);
+	public void createUser(UserDto userDto) throws Exception {
+		dao.createUser(userDto);
 	}
 
 	@Override
@@ -51,7 +52,27 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int isDuplicated(String toAddress) {
-		return dao.isDuplicated(toAddress);
+	public int isDuplicatedEmail(String toAddress) {
+		return dao.isDuplicatedEmail(toAddress);
+	}
+
+	@Override
+	public int isDuplicatedName(String name) {
+		return dao.isDuplicatedName(name);
+	}
+
+	@Override
+	public UserDto getMyPage(int pk_user) {
+		return dao.getMyPage(pk_user);
+	}
+
+	@Override
+	public void updateMyPage(UserDto userDto) {
+		dao.updateMyPage(userDto);
+	}
+
+	@Override
+	public void deleteMyPage(int pk_user) {
+		dao.deleteMyPage(pk_user);
 	}
 }

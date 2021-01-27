@@ -14,9 +14,34 @@
 		where email = #{email} and password = #{password}
 	</select>
 	
-	<select id="isDuplicated" parameterType="String" resultType="Integer">
+	<select id="isDuplicatedEmail" parameterType="String" resultType="Integer">
 		select count(*)
 		from user
 		where email = #{email}	
 	</select>
+	
+	<select id="isDuplicatedName" parameterType="String" resultType="Integer">
+		select count(*)
+		from user
+		where user_name = #{user_name}	
+	</select>
+	
+	<select id="getMyPage" parameterType="Integer" resultType="UserDto">
+		select select pk_user, email, user_name, birth, phone_number, img_path
+		from user
+		where pk_user = #{pk_user}
+	</select>
+	
+	<update id="updateMyPage" parameterType="UserDto">
+		update user
+		set password = #{password}
+		where pk_user = #{pk_user}
+	</update>
+	
+	
+	<delete id="deleteMyPage" parameterType="Integer">
+		delete 
+		from user
+		where pk_user = #{pk_user}
+	</delete>
 </mapper>
