@@ -1,31 +1,33 @@
 <template>
-  <div>
-    <b-card>
-      <div class="content-detail-content-info">
-        <div class="content-detail-content-info-left">
+  <div style="text-align: center;">
+      <div >
+        <div class="whiteboard">
           <div class="content-detail-content-info-left-number">{{contentId}}</div>
           <div class="content-detail-content-info-left-subject">{{title}}</div>
         </div>
-        <div class="content-detail-content-info-right">
+        <div class="whiteboard">
           <div class="content-detail-content-info-right-user">글쓴이: {{user}}</div>
           <div class="content-detail-content-info-right-created">등록일: {{created}}</div>
         </div>
       </div>
-      <div class="content-detail-content">{{context}}</div>
+      <div class="whiteboard" style="min-height:500px">{{context}}</div>
       <div class="content-detail-button">
-        <b-button variant="primary" @click="updateData">수정</b-button>&nbsp;
-        <b-button variant="success" @click="deleteData">삭제</b-button>
+        <base-button @click="updateData">수정</base-button>
+        <base-button @click="deleteData">삭제</base-button>
+        
+        
       </div>
       <div class="content-detail-comment">
         <CommentList :contentId="contentId"></CommentList>
       </div>
-    </b-card>
+    
   </div>
 </template>
 
 <script>
 import data from "@/data";
 import CommentList from "./CommentList";
+import BaseButton from '../../components/ui/BaseButton.vue';
 
 export default {
   name: "BoardDetail",
@@ -50,7 +52,7 @@ export default {
       );
       data.Content.splice(content_index, 1); // 데이터 삭제
       this.$router.push({
-        path: "/"
+        path: "/board/list"
       });
     },
     updateData() {
@@ -60,7 +62,8 @@ export default {
     }
   },
   components: {
-    CommentList
+    CommentList,
+    BaseButton
   }
 };
 </script>
@@ -107,4 +110,18 @@ export default {
   margin-top: 1rem;
   padding: 2rem;
 }
+
+    .whiteboard{
+        width:50%;
+        background-color: #FFFFFF;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        font: inherit;
+        border: 0.1px solid #FFFFFF;
+        border-radius: 30px;
+        margin-right: 0.5rem;
+        display: inline-block;
+        transition: .3s ease-out;
+        margin-bottom: 15px;
+    }
 </style>

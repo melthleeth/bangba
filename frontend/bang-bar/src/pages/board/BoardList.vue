@@ -14,7 +14,7 @@
       <tbody>
         <tr v-for="item in items" :key="item.no">
           <td>{{ item.content_id }}</td>
-          <td>{{ item.title}}</td>
+          <td @click="rowClick(item)">{{ item.title}}</td>
           <td>{{ item.user_name}}</td>
           <td>{{ item.created_at }}</td>
           <td>{{ item.user_id }}</td>
@@ -87,11 +87,13 @@ export default {
     };
   },
   methods: {
-    // rowClick(item, index, e) {
-    //   this.$router.push({
-    //     path: `/board/detail/${item.content_id}`
-    //   });
-    // },
+    rowClick(item) {
+      // alert(item.content_id)
+      
+      this.$router.push({
+        path: `/board/detail/${item.content_id}`
+      });
+    },
     writeContent() {
       this.$router.push({
         path: `/board/create`
