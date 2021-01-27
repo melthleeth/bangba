@@ -1,13 +1,13 @@
 <template>
   <header>
     <nav>
-        <router-link to="/">
-      <section class="logo">
+      <router-link to="/">
+        <section class="logo">
           <img src="../../assets/img/logo.png" />
           <span>방구석 바텐더</span>
-      </section>
-        </router-link>
-      <ul>
+        </section>
+      </router-link>
+      <ul class="ul-menu">
         <li><router-link to="/search">통합검색</router-link></li>
         <li><router-link to="/recommendation">칵테일 추천</router-link></li>
         <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
@@ -24,7 +24,7 @@
           <input class="input-modal" type="text" placeholder="이메일" />
           <input class="input-modal" type="password" placeholder="비밀번호" />
           <section class="button-modal">
-            <base-button>로그인</base-button>
+            <base-button @click="login">로그인</base-button>
             <base-button @click="hideDialog" mode="outline">취소</base-button>
           </section>
           <section class="sub-menu">
@@ -36,10 +36,75 @@
             >
           </section>
         </base-modal>
-        <base-button @click="login">로그인</base-button>
+        <base-button @click="showDialog">로그인</base-button>
       </section>
       <section v-else>
-        <base-button @click="logout">로그아웃</base-button>
+        <base-dropdown>
+          <!-- <img src="../../assets/img/mr.fox.jpg" class="img-profile" @click="showDropdown" /> -->
+          <template v-slot="context">
+            <img
+              @click="context.toggleOpen"
+              class="h-12 w-12 cursor-pointer rounded-full border-2 border-gray-400 object-cover"
+              src="../../assets/img/mr.fox.jpg"
+              alt="profile image"
+            />
+            <transition
+              enter-active-class="transition-all duration-100 ease-out"
+              leave-active-class="transition-all duration-100 ease-in"
+              enter-class="opacity-0 scale-75"
+              enter-to-class="opacity-100 scale-100"
+              leave-class="opacity-100 scale-100"
+              leave-to-class="opacity-0 scale-75"
+            >
+              <div
+                v-if="context.open"
+                class="origin-top-right absolute -right-8 mt-14 w-min bg-white text-center border overflow-hidden rounded-3xl shadow-xl"
+              >
+                <ul>
+                  <li>
+                    <a
+                      class="rounded-t-lg block px-4 py-3 hover:bg-gray-100"
+                    >
+                      <div class="font-semibold">{{ username }}</div>
+                      <div class="text-gray-700">{{ email }}</div>
+                    </a>
+                  </li>
+                  <li class="hover:bg-gray-100">
+                    <a class="font-normal block px-4 py-3" to="/header/editprofile"
+                      >프로필 수정</a
+                    >
+                  </li>
+                  <li class="hover:bg-gray-100">
+                    <a class="font-normal block px-4 py-3" to="/header/bookmarkedrecipe"
+                      >북마크한 레시피</a
+                    >
+                  </li>
+                  <li class="hover:bg-gray-100">
+                    <a class="font-normal block px-4 py-3" to="/header/myposts"
+                      >내가 쓴 글</a
+                    >
+                  </li>
+                  <li class="hover:bg-gray-100">
+                    <a class="font-normal block px-4 py-3" to="/header/activitylog"
+                      >활동기록</a
+                    >
+                  </li>
+                  <li class="hover:bg-gray-100">
+                    <a class="font-normal block px-4 py-3" to="/header/followingfollowers"
+                      >팔로잉/팔로워</a
+                    >
+                  </li>
+                    <hr>
+                  <li class="hover:bg-gray-100">
+                    <a class="font-font-normal block px-4 py-3" to="logout"
+                      >로그아웃</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </transition>
+          </template>
+        </base-dropdown>
       </section>
     </nav>
   </header>
@@ -47,10 +112,13 @@
 
 <script>
 import BaseButton from "../ui/BaseButton.vue";
+import BaseDropdown from "../ui/BaseDropdown.vue";
 export default {
-  components: { BaseButton },
+  components: { BaseButton, BaseDropdown },
   data() {
     return {
+      username: "미스터 여우씨",
+      email: "mrfox@bangbar.com",
       dialogIsVisible: false,
       isAuth: false,
     };
@@ -67,15 +135,22 @@ export default {
     },
     logout() {
       this.isAuth = false;
-    }
+    },
+    showDropdown() {},
   },
 };
 </script>
 
 <style scoped>
+.img-profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 15px;
+}
+
 header {
   width: 100%;
-  height: 5rem;
+  height: 100%;
   /* background-color: #3d008d; */
   display: flex;
   justify-content: center;
@@ -96,18 +171,18 @@ a.router-link-active {
   /* border: 1px solid #ff5e46; */
 }
 
-li {
+.ul-menu li {
   margin: 0;
 }
 
-li a {
+.ul-menu li a {
   margin: 0;
   transition: 0.3s ease-out;
 }
 
-li a:hover,
-li a:active,
-li a.router-link-active {
+.ul-menu li a:hover,
+.ul-menu li a:active,
+.ul-menu li a.router-link-active {
   /* border-color: transparent; */
   border-bottom: 5px solid #ff5e46;
 }
@@ -120,7 +195,7 @@ header nav {
   align-items: center;
 }
 
-header ul {
+header .ul-menu {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -129,7 +204,7 @@ header ul {
   align-items: center;
 }
 
-li {
+.ul-menu li {
   margin: 0 0.5rem;
   font-size: 15pt;
 }
@@ -190,18 +265,17 @@ u:active {
 }
 
 u {
-  color: #9A9A9A;
-  transition: .3s ease-out;
+  color: #9a9a9a;
+  transition: 0.3s ease-out;
 }
 
 u:hover,
 u:active {
-  color: #23232F;
+  color: #23232f;
 }
 
 .logo {
   display: flex;
   align-items: center;
 }
-
 </style>
