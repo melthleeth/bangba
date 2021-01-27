@@ -86,18 +86,14 @@
 	</div>
 </template>
 
-
-
 <script>
-
 export default {
-    data() {
-      return {
+  data() {
+    return {
       date: new Date(),
-
       dialogIsVisible_terms: false,
       dialogIsVisible_personal: false,
-      }
+      };
     },
     methods: {
     showDialog_terms() {
@@ -117,7 +113,11 @@ export default {
 </script>
 
 <style scope>
-
+input {
+  text-align: center;
+  vertical-align: auto;
+  margin: auto;
+}
     h1{
         text-align: left;
     }
