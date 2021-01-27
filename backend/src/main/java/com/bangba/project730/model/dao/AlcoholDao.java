@@ -7,6 +7,7 @@ import com.bangba.project730.model.dto.AlcoholDto;
 public interface AlcoholDao {
 	
 	public void addAlcohol(AlcoholDto alcoholDto) throws Exception;
-	public void searchAlcohol(String type, String name) throws Exception;
+	public AlcoholDto searchAlcohol(String type, String name) throws Exception;
+	public int searchAlcoholPK(String name) throws Exception;
 	
 }

@@ -19,6 +19,5 @@ public interface ArticleDao {
 	public void addArticleIngredient(int pk_article, int pk_ingredient) throws Exception;
 	public void addArticleAlcohol(int pk_article, int pk_alcohol) throws Exception;
 	public void addArticleCup(int pk_article, int pk_cup) throws Exception;
-	
-	public void addRecipe(int pk_article, int pk_cup) throws Exception;
+	public void addRecipe(String pk_article, String content, String order) throws Exception;
 }
