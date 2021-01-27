@@ -18,28 +18,20 @@ import com.bangba.project730.model.dto.TagDto;
 @Service
 public class ArticleServiceImpl implements ArticleService{
 
-	@Autowired
 	ArticleDao dao;
 
-	@Autowired
-	ArticleDto adto;
+	ArticleDto dto;
 
-	@Autowired
 	AlcoholDao adao;
 
-	@Autowired
 	CupDao cdao;
 
-	@Autowired
 	IngredientDao idao;
 
-	@Autowired
 	TagDao tdao;
 
-	@Autowired
 	IngredientDto idto;
 	
-	@Autowired
 	TagDto tdto;
 	
 	@Override
@@ -48,32 +40,27 @@ public class ArticleServiceImpl implements ArticleService{
 		
 		//이미지 경로
 		//아티클 생성
-		adto.setUser_no(Integer.parseInt(map.get("user_no")));
-		adto.setTitle_kor(map.get("title_kor"));
-		adto.setTitle_eng(map.get("title_eng"));
-		adto.setLike_cnt(0);
-		adto.setBookmark_cnt(0);
-		adto.setHits(0);
-		adto.setCreated_at(map.get("created_at"));
-		adto.setUpdated_at("created_at");
-		adto.setLike_weekly(0);
-		adto.setContent(map.get("content"));
-		adto.setImg_path(map.get("img_path"));
+		dto.setUser_no(Integer.parseInt(map.get("user_no")));
+		dto.setTitle_kor(map.get("title_kor"));
+		dto.setTitle_eng(map.get("title_eng"));
+		dto.setLike_cnt(0);
+		dto.setBookmark_cnt(0);
+		dto.setHits(0);
+		dto.setCreated_at(map.get("created_at"));
+		dto.setUpdated_at("created_at");
+		dto.setLike_weekly(0);
+		dto.setContent(map.get("content"));
+		dto.setImg_path(map.get("img_path"));
 		if(map.get("category").equals("admin"))
-			adto.setCategory(true);
+			dto.setCategory(true);
 		else
-			adto.setCategory(false);
-		adto.setAbv(Integer.parseInt(map.get("abv")));
-		dao.createArticle(adto);
+			dto.setCategory(false);
+		dto.setAbv(Integer.parseInt(map.get("abv")));
+		dao.createArticle(dto);
 		
 		//생성된 아티클의 pk를 유저번호, 제목, 시간으로 찾고 그중에 가장 나중에 만들어진 pk를 가져옴
-		int pk=dao.searchArticlePK(adto);
+		int pk=dao.searchArticlePK(dto);
 
-		//재료 생성
-		//idao.addIngredient(ingredientDto);
-		//태그 생성
-		//tdao.addTag(tagDto);
-		
 		//술추가
 		int apk=adao.searchAlcoholPK(map.get("title_eng"));
 		dao.addArticleAlcohol(pk, apk);
