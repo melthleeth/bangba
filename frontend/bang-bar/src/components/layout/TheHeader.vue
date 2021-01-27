@@ -12,7 +12,7 @@
         <li><router-link to="/recommendation">칵테일 추천</router-link></li>
         <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
         <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
-        <li><router-link to="/board">게시판</router-link></li>
+        <li><router-link to="/board/list">게시판</router-link></li>
       </ul>
       <section v-if="!isAuth">
         <base-button link mode="outline" to="/signup">회원가입</base-button>
