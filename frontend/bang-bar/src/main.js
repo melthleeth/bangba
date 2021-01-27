@@ -11,6 +11,7 @@ import BaseButton from  './components/ui/BaseButton.vue';
 import BaseTag from './components/ui/BaseTag.vue';
 import BaseModal from './components/ui/BaseModal.vue';
 
+
 const app = createApp(App);
 
 app.use(router);
