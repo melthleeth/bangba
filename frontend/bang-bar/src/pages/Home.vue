@@ -1,13 +1,11 @@
 <template>
   <div class="flex flex-row place-content-center">
     <section class="flex-1">
-      <article class="p-20 mt-24">
-        <span class="block align-middle text-xl text-7xl font-bold mb-4"
-          >Search Your</span
-        >
-        <span class="block align-middle text-xl text-7xl font-bold mb-16"
-          >Cocktail Taste.</span
-        >
+      <article class="pl-20 mt-32">
+        <div class="flex flex-col tracking-wide font-Abril-Fatface font-color-black-400 block align-middle text-7xl font-normal mb-16">
+        <span class="mb-4">Search Your</span>
+        <span>Cocktail Taste.</span>
+        </div>
         <section class="flex items-center">
           <div class="inline-block relative w-max">
             <select
@@ -39,21 +37,21 @@
               placeholder="검색"
             />
           </div>
-            <div class="w-10 h-10 ml-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
+          <div class="w-10 h-10 ml-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
         </section>
       </article>
     </section>
@@ -235,10 +233,14 @@ export default {
 </script>
 
 <style scoped>
+
 html,
 body,
 section {
   height: 100%;
+  /* font-family: 'NIXGONM-Vb'; */
+  /* font-family: "S-CoreDream-4Regular"; */
+  font-family: 'S-CoreDream-3Light';
 }
 
 .box-290 {
