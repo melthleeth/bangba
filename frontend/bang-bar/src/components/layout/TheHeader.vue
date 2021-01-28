@@ -1,10 +1,13 @@
 <template>
   <header>
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
+    </div>
     <nav>
       <router-link to="/">
         <section class="logo">
-          <img src="../../assets/img/logo.png" />
-          <span>방구석 바텐더</span>
+          <img src="../../assets/img/logo.png" alt="logo-image" />
+          <span class="text-xl text-center">방구석 바텐더</span>
         </section>
       </router-link>
       <ul class="ul-menu">
@@ -16,31 +19,48 @@
       </ul>
       <section v-if="!isAuth">
         <base-button link mode="outline" to="/signup">회원가입</base-button>
-        <base-modal @close="hideDialog" :open="dialogIsVisible">
+        <base-modal @close="hideDialog" :open="dialogIsVisible" class="flex flex-col justify-items-center">
           <section class="modal-header">
-            <img src="../../assets/img/logo.png" />
+            <img src="../../assets/img/logo.png" alt="logo" />
             <span>로그인</span>
           </section>
-          <input class="input-modal" type="text" placeholder="이메일" />
-          <input class="input-modal" type="password" placeholder="비밀번호" />
-          <section class="button-modal">
-            <base-button @click="login">로그인</base-button>
-            <base-button @click="hideDialog" mode="outline">취소</base-button>
-          </section>
-          <section class="sub-menu">
-            <router-link @click="hideDialog" to="/findpassword"
-              ><u>비밀번호 찾기</u></router-link
-            >
-            <router-link @click="hideDialog" to="/signup"
-              ><u>회원가입</u></router-link
-            >
-          </section>
+            <form @submit.prevent="submitForm" class="flex flex-col justify-items-center">
+              <input
+                class="input-modal"
+                type="text"
+                placeholder="이메일"
+                v-model.trim="email"
+              />
+              <input
+                class="input-modal"
+                type="password"
+                placeholder="비밀번호"
+                v-model.trim="password"
+              />
+              <span v-if="!formIsValid" class="font-sm text-red-500">
+                이메일과 비밀번호가 올바른지 확인해주세요. (비밀번호는 최소 8자
+                입니다.)
+              </span>
+              <section class="button-modal flex justify-center">
+                <base-button>로그인</base-button>
+                <base-button @click="hideDialog" mode="outline"
+                  >취소</base-button
+                >
+              </section>
+            </form>
+            <section class="sub-menu flex justify-center">
+              <router-link @click="hideDialog" to="/findpassword"
+                ><u>비밀번호 찾기</u></router-link
+              >
+              <router-link @click="hideDialog" to="/signup"
+                ><u>회원가입</u></router-link
+              >
+            </section>
         </base-modal>
-        <base-button @click="showDialog">로그인</base-button>
+        <base-button class="ml-4" @click="showDialog">로그인</base-button>
       </section>
       <section v-else>
-        <base-dropdown>
-          <!-- <img src="../../assets/img/mr.fox.jpg" class="img-profile" @click="showDropdown" /> -->
+        <base-dropdown class="z-40">
           <template v-slot="context">
             <img
               @click="context.toggleOpen"
@@ -49,8 +69,8 @@
               alt="profile image"
             />
             <transition
-              enter-active-class="transition-all duration-100 ease-out"
-              leave-active-class="transition-all duration-100 ease-in"
+              enter-active-class="transition-all duration-300 ease-out"
+              leave-active-class="transition-all duration-200 ease-in"
               enter-class="opacity-0 scale-75"
               enter-to-class="opacity-100 scale-100"
               leave-class="opacity-100 scale-100"
@@ -58,46 +78,59 @@
             >
               <div
                 v-if="context.open"
-                class="origin-top-right absolute -right-8 mt-14 w-min bg-white text-center border overflow-hidden rounded-3xl shadow-xl"
+                class="origin-top-right absolute -right-6 mt-14 w-max bg-white text-center border border-transparent overflow-hidden rounded-3xl shadow-2xl"
               >
                 <ul>
                   <li>
-                    <a
+                    <router-link
+                      to="/"
                       class="rounded-t-lg block px-4 py-3 hover:bg-gray-100"
                     >
                       <div class="font-semibold">{{ username }}</div>
                       <div class="text-gray-700">{{ email }}</div>
-                    </a>
+                    </router-link>
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/header/editprofile"
-                      >프로필 수정</a
+                    <router-link
+                      class="font-normal block px-4 py-3"
+                      to="/header/editprofile"
+                      >프로필 수정</router-link
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/header/bookmarkedrecipe"
-                      >북마크한 레시피</a
+                    <router-link
+                      class="font-normal block px-4 py-3"
+                      to="/header/bookmarkedrecipe"
+                      >북마크한 레시피</router-link
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/header/myposts"
-                      >내가 쓴 글</a
+                    <router-link
+                      class="font-normal block px-4 py-3"
+                      to="/header/myposts"
+                      >내가 쓴 글</router-link
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/header/activitylog"
-                      >활동기록</a
+                    <router-link
+                      class="font-normal block px-4 py-3"
+                      to="/header/activitylog"
+                      >활동기록</router-link
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <a class="font-normal block px-4 py-3" to="/header/followingfollowers"
-                      >팔로잉/팔로워</a
+                    <router-link
+                      class="font-normal block px-4 py-3"
+                      to="/header/followingfollowers"
+                      >팔로잉/팔로워</router-link
                     >
                   </li>
-                    <hr>
+                  <hr />
                   <li class="hover:bg-gray-100">
-                    <a class="font-font-normal block px-4 py-3" to="logout"
-                      >로그아웃</a
+                    <span
+                      class="font-font-normal block px-4 py-3"
+                      @click="logout"
+                      >로그아웃</span
                     >
                   </li>
                 </ul>
@@ -111,21 +144,24 @@
 </template>
 
 <script>
-import BaseButton from "../ui/BaseButton.vue";
-import BaseDropdown from "../ui/BaseDropdown.vue";
 export default {
-  components: { BaseButton, BaseDropdown },
   data() {
     return {
       username: "미스터 여우씨",
-      email: "mrfox@bangbar.com",
+      // email: "mrfox@bangbar.com",
+      email: "",
+      password: "",
       dialogIsVisible: false,
       isAuth: false,
+      formIsValid: true,
+      isLoading: false,
+      error: null,
     };
   },
   methods: {
     showDialog() {
       this.dialogIsVisible = true;
+      this.formIsValid = true;
     },
     hideDialog() {
       this.dialogIsVisible = false;
@@ -135,8 +171,38 @@ export default {
     },
     logout() {
       this.isAuth = false;
+      this.dialogIsVisible = false;
+      this.$router.replace("/");
     },
-    showDropdown() {},
+    async submitForm() {
+      this.formIsValid = true;
+      if (
+        this.email === "" ||
+        !this.email.includes("@") ||
+        this.password.length < 8
+      ) {
+        this.formIsValid = false;
+        return;
+      }
+
+      const actionPayload = {
+        email: this.email,
+        password: this.password,
+      };
+
+      try {
+        if (this.isAuth === false) {
+          await this.$store.dispatch("login", actionPayload);
+        }
+      } catch (error) {
+        this.error =
+          error.message || "로그인에 실패하였습니다. 다시 시도바랍니다.";
+      }
+      this.isAuth = true;
+    },
+    handleError() {
+      this.error = null;
+    },
   },
 };
 </script>
@@ -177,6 +243,7 @@ a.router-link-active {
 
 .ul-menu li a {
   margin: 0;
+  border-bottom: 5px solid transparent;
   transition: 0.3s ease-out;
 }
 
@@ -185,6 +252,10 @@ a.router-link-active {
 .ul-menu li a.router-link-active {
   /* border-color: transparent; */
   border-bottom: 5px solid #ff5e46;
+}
+
+.router-link-active {
+  font-weight: 600;
 }
 
 header nav {
@@ -277,5 +348,13 @@ u:active {
 .logo {
   display: flex;
   align-items: center;
+  border-radius: 50%;
+  transition: 0.3s ease-out;
+  padding: 0 1rem;
+}
+
+.logo:hover {
+  font-weight: 600;
+  background: #ff5e46;
 }
 </style>
