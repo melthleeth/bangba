@@ -1,6 +1,123 @@
 <template>
-  <div class="flex flex-col justify-items-center">
+  <div class="flex flex-col justify-items-center px-32">
     <span class="title text-center my-10">커스텀 레시피</span>
+    <section class="flex justify-center px-32 mb-6">
+      <base-card size="box-340" class="flex flex-col justify-items-center">
+        <span class="text-3xl font-bold text-center py-4">금주의 랭킹</span>
+        <section
+          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+        >
+          <div class="flex items-center mt-4">
+            <span class="text-2xl font-extrabold mx-4">1</span>
+            <img
+              src="../../assets/img/mr.fox.jpg"
+              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
+            />
+            <span class="font-medium ml-2 text-lg">미스터 여우씨</span>
+          </div>
+        </section>
+        <section
+          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+        >
+          <div class="flex items-center mt-4">
+            <span class="text-2xl font-extrabold mx-4">2</span>
+            <img
+              src="../../assets/img/profile2.png"
+              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
+            />
+            <span class="font-medium ml-2 text-lg">의문의 루피</span>
+          </div>
+        </section>
+        <section
+          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+        >
+          <div class="flex items-center mt-4">
+            <span class="text-2xl font-extrabold mx-4">3</span>
+            <img
+              src="../../assets/img/profile3.jpg"
+              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
+            />
+            <span class="font-medium ml-2 text-lg">베르나르 무민무민</span>
+          </div>
+        </section>
+        <section
+          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+        >
+          <div class="flex items-center mt-4">
+            <span class="text-2xl font-extrabold mx-4">4</span>
+            <img
+              src="../../assets/img/profile4.jpeg"
+              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
+            />
+            <span class="font-medium ml-2 text-lg">이시국 칵테일</span>
+          </div>
+        </section>
+        <section
+          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+        >
+          <div class="flex items-center mt-4">
+            <span class="text-2xl font-extrabold mx-4">5</span>
+            <img
+              src="../../assets/img/profile5.jpg"
+              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
+            />
+            <span class="font-medium ml-2 text-lg">개발 안맞아</span>
+          </div>
+        </section>
+      </base-card>
+      <base-card
+        class="flex-auto inline-block flex flex-col justify-items-center"
+      >
+        <span class="text-3xl font-bold text-center py-4">주간 베스트</span>
+      </base-card>
+    </section>
+    <section class="flex items-center px-64 mb-12">
+      <div class="inline-block relative w-max">
+            <select
+              class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-4 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
+            >
+              <option>통합</option>
+              <option>오피셜</option>
+              <option>커스텀</option>
+            </select>
+            <div
+              class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+            >
+              <svg
+                class="fill-current h-4 w-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+                />
+              </svg>
+            </div>
+          </div>
+      <div class="ml-4 flex-auto inline-block">
+        <input
+          class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-4 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
+          id="search"
+          type="text"
+          placeholder="검색"
+        />
+      </div>
+      <div class="w-10 h-10 ml-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+    </section>
     <div class=" grid grid-cols-4 grid-flow-row gap-4">
       <recipe-card
         v-for="cocktail in cocktails"
@@ -18,7 +135,7 @@
 
 <script>
 import recipe from "../../data/recipe.js";
-import RecipeCard from '../../components/recipes/RecipeCard.vue';
+import RecipeCard from "../../components/recipes/RecipeCard.vue";
 export default {
   components: {
     RecipeCard,
