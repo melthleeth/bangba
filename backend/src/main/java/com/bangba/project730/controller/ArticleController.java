@@ -85,6 +85,40 @@ public class ArticleController {
 			return "error";
 		}
 	}
+	@ApiOperation(value = "재료 추가", response = String.class)
+	@ApiImplicitParams({})
+	@PostMapping("/addingredient")
+	public String addIngredient(@RequestParam String ingredient, Model model) throws Exception {
+		try {
+			articleService.createIngredient(ingredient);
+			articleService.createTag(ingredient,2);
+			model.addAttribute("msg", "재료 추가 완료");
+			model.addAttribute("msg", "태그 추가 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "재료 추가중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
+	@ApiOperation(value = "태그 추가", response = String.class)
+	@ApiImplicitParams({})
+	@PostMapping("/addtag")
+	public String addTag(@RequestParam String tag, Model model) throws Exception {
+		try {
+			articleService.createTag(tag,3);
+			model.addAttribute("msg", "태그 추가 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "태그 추가중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
+
+
+	
+	
 	 @PostMapping("/upload")
 	    public String upload(@RequestParam("file") MultipartFile file) {
 	 
