@@ -39,5 +39,5 @@ public class AcommentDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
+
 }

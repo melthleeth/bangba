@@ -9,8 +9,8 @@
 	</insert>
 	<select id="searchAlcohol" resultType="AlcoholDto" parameterType="String">
 		select * from alcohol
-		where type_kor like %#{type}% or type_eng like %#{type}% 
-		or name_kor like %#{name}% or name_eng like %#{name}%
+		where type_kor like '%' + #{type} + '%' or type_eng like '%' + #{type} + '%' 
+		or name_kor like '%' + #{name} + '%' or name_eng like '%' + #{name} + '%'
 	</select>
 	<select id="searchAlcoholPK" resultType="int" parameterType="String">
 		select pk_alcohol from alcohol

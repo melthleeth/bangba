@@ -9,12 +9,12 @@
 	</insert>
 	<select id="searchIngredient" resultType="IngredientDto" parameterType="String">
 		select * from ingredient
-		where name_kor like %#{name}% or name_eng like %#{name}%
+		where name_kor like '%' + #{name} + '%' or name_eng like '%' + #{name} + '%'
 	</select>
 	
 	<select id="searchIngredientPK" resultType="int" parameterType="String">
 		select pk_ingredient from ingredient
-		where name_kor like #{name}
+		where name_kor like #{name} or name_eng like #{name}
 	</select>
 	
 </mapper>
