@@ -1,4 +1,5 @@
 <template>
+<<<<<<< Updated upstream
   <div class="flex flex-row place-content-center">
     <section class="flex-1">
       <article class="p-20 mt-24">
@@ -8,6 +9,21 @@
         <span class="block align-middle text-xl text-7xl font-bold mb-16"
           >Cocktail Taste.</span
         >
+=======
+<<<<<<< Updated upstream
+<div>
+  <p>Search Your</p>
+  <p>Cocktail Taste.</p>
+</div>
+=======
+  <div class="flex flex-row place-content-center">
+    <section class="flex-1">
+      <article class="pl-20 mt-32">
+        <div class="flex flex-col tracking-wide font-Abril-Fatface font-color-black-400 block align-middle text-7xl font-normal mb-16">
+        <span class="mb-4">Search Your</span>
+        <span>Cocktail Taste.</span>
+        </div>
+>>>>>>> Stashed changes
         <section class="flex items-center">
           <div class="inline-block relative w-max">
             <select
@@ -39,6 +55,7 @@
               placeholder="검색"
             />
           </div>
+<<<<<<< Updated upstream
             <div class="w-10 h-10 ml-4">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,6 +71,23 @@
                 />
               </svg>
             </div>
+=======
+          <div class="w-10 h-10 ml-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+          </div>
+>>>>>>> Stashed changes
         </section>
       </article>
     </section>
@@ -222,6 +256,10 @@
       </article>
     </section>
   </div>
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 </template>
 
 <script>
@@ -235,10 +273,30 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+p {
+    margin: 0;
+  font-family: Noto Sans KR;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 64px;
+  line-height: 93px;
+  display: flex;
+  align-items: center;
+=======
+>>>>>>> Stashed changes
 html,
 body,
 section {
   height: 100%;
+<<<<<<< Updated upstream
+=======
+  /* font-family: 'NIXGONM-Vb'; */
+  /* font-family: "S-CoreDream-4Regular"; */
+  font-family: 'S-CoreDream-3Light';
+>>>>>>> Stashed changes
 }
 
 .box-290 {
@@ -252,6 +310,10 @@ section {
 .box-620 {
   width: 720px;
 }
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 .board-post {
   width: 25px;
