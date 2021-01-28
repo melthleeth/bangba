@@ -4,7 +4,7 @@
       <span class="font-bold mb-10">당신의 칵테일을 찾아보세요</span>
     </section>
     <section>
-      <base-button :mode="outline"
+      <base-button mode="outline"
         >내 취향대로 칵테일 추천받으러 가기</base-button
       >
     </section>
@@ -13,8 +13,9 @@
 
 <style scoped>
 div {
-  margin: 70px auto;
   display: flex;
+  flex-direction: column;
+  margin: 70px auto;
   width: 1060px;
   height: 465px;
   justify-content: center;
@@ -36,7 +37,7 @@ section {
 
 <<<<<<< Updated upstream
 p {
-  margin: 0;
+  margin: 1rem auto 4rem auto;
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: bold;
