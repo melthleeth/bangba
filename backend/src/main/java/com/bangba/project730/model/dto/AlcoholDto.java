@@ -12,8 +12,7 @@ public class AlcoholDto {
 	private int abv;
 	
 	private String img_path;
-	private String desc;
-	
+	private String content;
 	public int getPk_alcohol() {
 		return pk_alcohol;
 	}
@@ -56,11 +55,11 @@ public class AlcoholDto {
 	public void setImg_path(String img_path) {
 		this.img_path = img_path;
 	}
-	public String getDesc() {
-		return desc;
+	public String getContent() {
+		return content;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

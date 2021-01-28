@@ -3,7 +3,7 @@ package com.bangba.project730.model.dto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value="회원정보", description = "이메일, 비밀번호, 닉네임 등을 가진 Domain Class")
+@ApiModel(value="회원정보", description = "이메일, 비밀번호, 닉네임 등을 가진  Domain Class")
 public class UserDto {
 	
 	@ApiModelProperty(value="회원 pk값")

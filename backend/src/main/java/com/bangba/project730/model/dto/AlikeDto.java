@@ -1,19 +1,19 @@
 package com.bangba.project730.model.dto;
 
-public class AbookmarkDto {
+public class AlikeDto {
 	
-	private int pk_abookmark;
+	private int pk_alike;
 	private int article_no;
 	private int user_no;
 	
-	private boolean favorites;
+	private boolean bookmark;
 
-	public int getPk_abookmark() {
-		return pk_abookmark;
+	public int getPk_alike() {
+		return pk_alike;
 	}
 
-	public void setPk_abookmark(int pk_abookmark) {
-		this.pk_abookmark = pk_abookmark;
+	public void setPk_alike(int pk_alike) {
+		this.pk_alike = pk_alike;
 	}
 
 	public int getArticle_no() {
@@ -32,12 +32,12 @@ public class AbookmarkDto {
 		this.user_no = user_no;
 	}
 
-	public boolean isFavorites() {
-		return favorites;
+	public boolean isBookmark() {
+		return bookmark;
 	}
 
-	public void setFavorites(boolean favorites) {
-		this.favorites = favorites;
+	public void setBookmark(boolean bookmark) {
+		this.bookmark = bookmark;
 	}
-	
+
 }
