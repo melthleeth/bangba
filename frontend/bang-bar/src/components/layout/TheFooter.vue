@@ -1,20 +1,6 @@
 <template>
-<<<<<<< Updated upstream
-  <footer>
-    <div class="container">
-        <router-link to="/">
-      <section class="logo">
-          <img src="../../assets/img/logo.png" />
-          <span>방구석 바텐더</span>
-      </section>
-<<<<<<< Updated upstream
-        </router-link>
-=======
-=======
   <footer class="my-10">
     <div class="flex flex-col justify-items-center">
->>>>>>> Stashed changes
->>>>>>> Stashed changes
       <section>
       <router-link to="/">
         <article class="logo flex flex-col justify-items-center w-max">
@@ -66,23 +52,11 @@ img {
 }
 
 .logo {
-<<<<<<< Updated upstream
-    font-size: 15pt;
-    border-radius: 50%;
-    margin: 1rem;
-    padding: 0.5rem;
-<<<<<<< Updated upstream
-    display: flex;
-    transition: .3s ease-out;
-=======
-=======
   font-size: 15pt;
   border-radius: 50%;
   margin: 1rem;
   padding: 0.5rem;
   transition: 0.3s ease-out;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 }
 
 .logo p {

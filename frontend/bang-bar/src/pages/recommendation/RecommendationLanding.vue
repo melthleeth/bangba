@@ -35,17 +35,8 @@ section {
   align-items: center;
 }
 
-<<<<<<< Updated upstream
-p {
-  margin: 1rem auto 4rem auto;
-  font-family: Noto Sans KR;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 30px;
-=======
 span {
   font-size: 36px;
->>>>>>> Stashed changes
   line-height: 93px;
   display: flex;
   align-items: center;

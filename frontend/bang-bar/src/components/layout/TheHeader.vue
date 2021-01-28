@@ -1,31 +1,4 @@
 <template>
-<<<<<<< Updated upstream
-  <header>
-    <div v-if="isLoading">
-      <base-spinner></base-spinner>
-    </div>
-    <nav>
-      <router-link to="/">
-        <section class="logo">
-          <img src="../../assets/img/logo.png" alt="logo-image" />
-          <span class="text-xl text-center">방구석 바텐더</span>
-        </section>
-      </router-link>
-      <ul class="ul-menu">
-        <li><router-link to="/search">통합검색</router-link></li>
-        <li><router-link to="/recommendation">칵테일 추천</router-link></li>
-        <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
-        <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
-        <li><router-link to="/board/list">게시판</router-link></li>
-      </ul>
-<<<<<<< Updated upstream
-      <section v-if="!isAuth">
-        <base-button link mode="outline" to="/signup">회원가입</base-button>
-        <base-modal @close="hideDialog" :open="dialogIsVisible" class="flex flex-col justify-items-center">
-=======
-      <base-button link mode="outline" to="/signup">회원가입</base-button>
-      <base-button>로그인</base-button>
-=======
   <header class="mt-2">
     <div v-if="isLoading">
       <base-spinner></base-spinner>
@@ -51,45 +24,10 @@
           :open="dialogIsVisible"
           class="flex flex-col justify-items-center"
         >
->>>>>>> Stashed changes
           <section class="modal-header">
             <img src="../../assets/img/logo.png" alt="logo" />
             <span>로그인</span>
           </section>
-<<<<<<< Updated upstream
-            <form @submit.prevent="submitForm" class="flex flex-col justify-items-center">
-              <input
-                class="input-modal"
-                type="text"
-                placeholder="이메일"
-                v-model.trim="email"
-              />
-              <input
-                class="input-modal"
-                type="password"
-                placeholder="비밀번호"
-                v-model.trim="password"
-              />
-              <span v-if="!formIsValid" class="font-sm text-red-500">
-                이메일과 비밀번호가 올바른지 확인해주세요. (비밀번호는 최소 8자
-                입니다.)
-              </span>
-              <section class="button-modal flex justify-center">
-                <base-button>로그인</base-button>
-                <base-button @click="hideDialog" mode="outline"
-                  >취소</base-button
-                >
-              </section>
-            </form>
-            <section class="sub-menu flex justify-center">
-              <router-link @click="hideDialog" to="/findpassword"
-                ><u>비밀번호 찾기</u></router-link
-              >
-              <router-link @click="hideDialog" to="/signup"
-                ><u>회원가입</u></router-link
-              >
-            </section>
-=======
           <form
             @submit.prevent="submitForm"
             class="flex flex-col justify-items-center"
@@ -123,7 +61,6 @@
               ><u>회원가입</u></router-link
             >
           </section>
->>>>>>> Stashed changes
         </base-modal>
         <base-button class="ml-4" @click="showDialog">로그인</base-button>
       </section>
@@ -207,10 +144,6 @@
           </template>
         </base-dropdown>
       </section>
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     </nav>
   </header>
 </template>
@@ -280,25 +213,15 @@ export default {
 </script>
 
 <style scoped>
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
 section, li {
   /* font-family: 'NIXGONM-Vb'; */
   font-family: 'S-CoreDream-3Light';
 }
-
->>>>>>> Stashed changes
 .img-profile {
   width: 50px;
   height: 50px;
   border-radius: 15px;
 }
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 header {
   width: 100%;
@@ -365,11 +288,6 @@ header .ul-menu {
   margin: 0 0.5rem;
   font-size: 15pt;
 }
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 
 .modal-header {
   margin: 2rem auto;
@@ -439,17 +357,6 @@ u:active {
 .logo {
   display: flex;
   align-items: center;
-<<<<<<< Updated upstream
-  border-radius: 50%;
-  transition: 0.3s ease-out;
-  padding: 0 1rem;
-}
-
-.logo:hover {
-  font-weight: 600;
-  background: #ff5e46;
-}
-=======
   border-radius: 100%;
   transition: 0.3s ease-out;
   /* padding: 0 1rem; */
@@ -458,6 +365,4 @@ u:active {
 .logo:hover {
   background: #ff5e46;
 }
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 </style>

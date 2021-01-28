@@ -1,8 +1,53 @@
 <template>
-  <div class="container mx-auto">
+  <div class="flex flex-col justify-items-center px-16">
+    <span
+      class="text-center my-10 text-6xl font-S-CoreDream-medium font-bold font-color-black-400"
+      >게시판</span
+    >
+    <section id="search-bar" class="flex flex-row mb-6 px-16 font-S-CoreDream-light">
+      <article class="flex justify-center justify-self-start">
+        <base-button mode="important" @click="writeContent">글쓰기</base-button>
+      </article>
+      <article class="flex flex-1"></article>
+      <article class="flex justify-center justify-self-end">
+        <div class="inline-block relative w-max">
+          <select
+            class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
+          >
+            <option>전체</option>
+            <option>공지사항</option>
+            <option>후기</option>
+            <option>질문</option>
+          </select>
+          <div
+            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+          >
+           <svg
+              class="fill-current h-4 w-4"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div class="mx-4 flex-auto inline-block">
+          <input
+            class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
+            id="search"
+            type="text"
+            placeholder="검색"
+          />
+        </div>
+        <base-button>검색</base-button>
+      </article>
+    </section>
     <paginated-list :list-array="items" />
   </div>
 </template>
+
 
 <script>
 import data from "@/data";
