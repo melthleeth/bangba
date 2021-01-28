@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container font-S-CoreDream-medium">
     <section>
-      <p>당신의 칵테일을 찾아보세요</p>
+      <span class="font-bold mb-10">당신의 칵테일을 찾아보세요</span>
     </section>
     <section>
       <base-button mode="outline"
@@ -35,12 +35,8 @@ section {
   align-items: center;
 }
 
-p {
-  margin: 1rem auto 4rem auto;
-  font-family: Noto Sans KR;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 30px;
+span {
+  font-size: 36px;
   line-height: 93px;
   display: flex;
   align-items: center;
