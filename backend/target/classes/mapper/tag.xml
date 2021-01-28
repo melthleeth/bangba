@@ -9,10 +9,10 @@
 	</insert>
 	<select id="searchTag" resultType="TagDto" parameterType="String">
 		select * from tag
-		where content_kor like %#{content}% or content_eng like %#{content}% and type = 3
+		where content_kor like '%' + #{content} + '%' or content_eng like '%' + #{content} + '%'
 	</select>
 	<select id="searchTagPK" resultType="int" parameterType="String">
 		select pk_tag from tag
-		where content = #{content_kor} or content = #{content_eng}
+		where content_kor like #{content} or content_eng like #{content}
 	</select>
 </mapper>
