@@ -25,6 +25,10 @@ import BangbaGuide from "./pages/footers/BangbaGuide.vue";
 import BangbaPeople from "./pages/footers/BangbaPeople.vue";
 import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 
+// board menus
+import BoardCreate from "@/pages/board/BoardCreate";
+import BoardDetail from "@/pages/board/BoardDetail";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -46,10 +50,15 @@ const router = createRouter({
     { path: '/header/myposts', component: MyPosts },
     { path: '/header/activitylog', component: ActivityLog },
     { path: '/header/followingfollowers', component: FollowingFollowers },
+    { path: "/board/list", component: BoardList },
     // footer
     { path: "/footer/guide", component: BangbaGuide },
     { path: "/footer/people", component: BangbaPeople },
     { path: "/footer/ask", component: BangbaAsk },
+
+     //board
+    { path: "/board/create/:contentId?", name: "BoardCreate", component: BoardCreate },
+    { path: "/board/detail/:contentId", name: "BoardDetail", component: BoardDetail },
   ],
 });
 
