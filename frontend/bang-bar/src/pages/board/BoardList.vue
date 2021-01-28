@@ -1,42 +1,16 @@
 <template>
-  <div >
-    <table border="1">
-      <thead role="rowgroup" class>
-        <tr role="row" class="">
-          <th>말머리</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>작성일</th>
-          <th>조회수</th>
-        </tr>
-
-      </thead>
-      <tbody>
-        <tr v-for="item in items" :key="item.no">
-          <td>{{ item.content_id }}</td>
-          <td @click="rowClick(item)">{{ item.title}}</td>
-          <td>{{ item.user_name}}</td>
-          <td>{{ item.created_at }}</td>
-          <td>{{ item.user_id }}</td>
-        </tr>
-      </tbody>
-
-    </table>
-
+  <div class="container mx-auto">
     <paginated-list :list-array="items" />
-    <base-button @click="writeContent">글쓰기</base-button>
   </div>
 </template>
 
 <script>
 import data from "@/data";
-import BaseButton from '@/components/ui/BaseButton.vue';
 import PaginatedList from './PaginatedList.vue';
 
 
 export default {
   components: { 
-    BaseButton,
     PaginatedList,
   },
   name: "BoardList",
@@ -59,7 +33,7 @@ export default {
     });
     
     return {
-      pageArray: items,
+      // pageArray: [],
       currentPage: 1, // 현재 페이지
       perPage: 10, // 페이지당 보여줄 갯수
       pageSize:10,
@@ -83,7 +57,8 @@ export default {
           label: "작성일"
         }
       ],
-      items: items
+      items: items,
+      pageArray:items
     };
   },
   methods: {
@@ -104,7 +79,11 @@ export default {
     rows() {
       return this.items.length;
     }
-  }
+  },
+  created() {
+    this.pageArray=this.items;
+
+  },
 };
 
 /*
@@ -132,3 +111,20 @@ const onlyA = altered.filter(item => {
   0: {a: "a", c: "c"}
 */
 </script>
+<style scoped>
+    .board{
+        /* width:50%; */
+
+        background-color: #FFFFFF;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        font: inherit;
+        /* border: 0.1px solid #FFFFFF; */
+        
+        border-radius: 30px;
+        margin-right: 0.5rem;
+        /* display: inline-block; */
+        transition: .3s ease-out;
+        margin-bottom: 15px;
+    }
+</style>
