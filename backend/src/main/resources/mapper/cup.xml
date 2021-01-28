@@ -10,7 +10,7 @@
 	
 	<select id="searchCup" resultType="CupDto" parameterType="String">
 		select * from cup
-		where user_no like %#{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+		where type_kor like '%' + #{type} + '%' or type_eng like '%' + #{type} + '%' 
 	</select>
 	
 	<select id="searchCupPK" resultType="int" parameterType="String">

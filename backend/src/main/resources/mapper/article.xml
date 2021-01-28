@@ -8,8 +8,51 @@
 		insert into article (user_no, title_kor, title_eng, like_cnt, bookmark_cnt, hits, created_at, updated_at, like_weekly, content, img_path, category, abv)
 		values (#{user_no}, #{title_kor}, #{title_eng}, #{like_cnt}, #{bookmark_cnt}, #{hits}, #{created_at}, #{updated_at}
 		, #{like_weekly}, #{content}, #{img_path}, #{category}, #{abv})	
+		<selectKey resultType="int" keyProperty="pk_article" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>		
 	</insert>
 	<select id="searchArticle" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle1" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle2" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle3" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle4" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle5" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle6" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle7" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle8" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle9" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle10" resultType="int" parameterType="ArticleDto">
 		select * from article
 		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
 	</select>

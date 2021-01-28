@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,7 +32,7 @@ public class ArticleController {
 		@ApiImplicitParam(name = "password", value = "패스워드", required = true, dataType = "string", paramType = "query", defaultValue = "") 
 	})
 	@PostMapping("/create")
-	public String createArticle(@RequestParam Map<String, String> map, Model model) throws Exception {
+	public String createArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			articleService.createArticle(map);
 			model.addAttribute("msg", "레시피 작성 완료");
@@ -46,7 +47,7 @@ public class ArticleController {
 	@ApiOperation(value = "레시피 검색", response = String.class)
 	@ApiImplicitParams({})
 	@PostMapping("/search")
-	public String searchArticle(@RequestParam List<String> tags, Model model) throws Exception {
+	public String searchArticle(@RequestBody List<String> tags, Model model) throws Exception {
 		try {
 			articleService.searchArticle(tags);
 			model.addAttribute("msg", "레시피 검색 완료");
@@ -60,7 +61,7 @@ public class ArticleController {
 	@ApiOperation(value = "레시피 수정", response = String.class)
 	@ApiImplicitParams({})
 	@PostMapping("/update")
-	public String updateArticle(@RequestParam Map<String, String> map, Model model) throws Exception {
+	public String updateArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			articleService.updateArticle(map);
 			model.addAttribute("msg", "레시피 수정 완료");
@@ -88,7 +89,7 @@ public class ArticleController {
 	@ApiOperation(value = "재료 추가", response = String.class)
 	@ApiImplicitParams({})
 	@PostMapping("/addingredient")
-	public String addIngredient(@RequestParam String ingredient, Model model) throws Exception {
+	public String createIngredient(@RequestParam String ingredient, Model model) throws Exception {
 		try {
 			articleService.createIngredient(ingredient);
 			articleService.createTag(ingredient,2);
@@ -104,7 +105,7 @@ public class ArticleController {
 	@ApiOperation(value = "태그 추가", response = String.class)
 	@ApiImplicitParams({})
 	@PostMapping("/addtag")
-	public String addTag(@RequestParam String tag, Model model) throws Exception {
+	public String createTag(@RequestParam String tag, Model model) throws Exception {
 		try {
 			articleService.createTag(tag,3);
 			model.addAttribute("msg", "태그 추가 완료");
