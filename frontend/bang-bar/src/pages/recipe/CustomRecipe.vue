@@ -1,9 +1,20 @@
 <template>
+<<<<<<< Updated upstream
   <div class="flex flex-col justify-items-center px-32">
     <span class="title text-center my-10">커스텀 레시피</span>
     <section class="flex justify-center px-32 mb-6">
       <base-card size="box-340" class="flex flex-col justify-items-center">
         <span class="text-3xl font-bold text-center py-4">금주의 랭킹</span>
+=======
+<<<<<<< Updated upstream
+  <p>커스텀 레시피</p>
+=======
+  <div class="flex flex-col justify-items-center mx-16">
+    <span class="title text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400">커스텀 레시피</span>
+    <section class="flex justify-center px-32 mb-6 font-S-CoreDream-light">
+      <base-card size="box-340" class="flex flex-col justify-items-center">
+        <span class="text-3xl text-center py-4 font-S-CoreDream-medium font-semibold font-color-black-400">금주의 랭킹</span>
+>>>>>>> Stashed changes
         <section
           class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
         >
@@ -68,10 +79,18 @@
       <base-card
         class="flex-auto inline-block flex flex-col justify-items-center"
       >
+<<<<<<< Updated upstream
         <span class="text-3xl font-bold text-center py-4">주간 베스트</span>
       </base-card>
     </section>
     <section class="flex items-center px-64 mb-12">
+=======
+        <span class="text-3xl text-center py-4 font-S-CoreDream-medium font-semibold font-color-black-400">주간 베스트</span>
+        <section class="font-S-CoreDream-light"></section>
+      </base-card>
+    </section>
+    <section class="flex items-center mx-64 mb-12 font-S-CoreDream-light">
+>>>>>>> Stashed changes
       <div class="inline-block relative w-max">
             <select
               class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-4 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
@@ -118,7 +137,11 @@
         </svg>
       </div>
     </section>
+<<<<<<< Updated upstream
     <div class=" grid grid-cols-4 grid-flow-row gap-4">
+=======
+    <div class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto">
+>>>>>>> Stashed changes
       <recipe-card
         v-for="cocktail in cocktails"
         :key="cocktail.no"
@@ -126,11 +149,19 @@
         :tag="cocktail.tag"
         :username="cocktail.username"
         :like="cocktail.like"
+<<<<<<< Updated upstream
         :bookmared="cocktail.bookmared"
+=======
+        :bookmarked="cocktail.bookmarked"
+>>>>>>> Stashed changes
       >
       </recipe-card>
     </div>
   </div>
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 </template>
 
 <script>
@@ -149,10 +180,19 @@ export default {
 </script>
 
 <style scoped>
+<<<<<<< Updated upstream
 .title {
+=======
+<<<<<<< Updated upstream
+p {
+  margin: 0;
+>>>>>>> Stashed changes
   font-family: Noto Sans KR;
   font-style: normal;
   font-weight: bold;
+=======
+.title {
+>>>>>>> Stashed changes
   font-size: 64px;
   line-height: 93px;
 
