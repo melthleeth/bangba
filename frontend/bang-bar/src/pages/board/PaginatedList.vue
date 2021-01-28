@@ -1,6 +1,43 @@
 <template>
   <div>
+          <span style="text-align:left; padding:10px;">
+        <base-button class="redbutton" @click="writeContent">글쓰기</base-button>
+      </span>
+      <span>
+        
+        <select id="year" name="year" >
+                  <option value="전체">전체</option>
+                  <option value="공지사항">공지사항</option>
+                  <option value="후기">후기</option>
+                  <option value="질문">질문</option>
+        </select>
+        
+        <input  v-model="search" class="textarea" />
+      <base-button >검색</base-button>
+      </span>
 
+    <table border="0" class="border-none board table-auto bg-white border-none" style="">
+      <thead role="rowgroup" class="border-none">
+        <tr role="row" >
+          <th>말머리</th>
+          <th>제목</th>
+          <th>작성자</th>
+          <th>작성일</th>
+          <th>조회수</th>
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr v-for="item in paginatedData" :key="item.no">
+          <td>{{ item.content_id }}</td>
+          <td @click="rowClick(item)">{{ item.title}}</td>
+          <td>{{ item.user_name}}</td>
+          <td>{{ item.created_at }}</td>
+          <td>{{ item.user_id }}</td>
+        </tr>
+      </tbody>
+
+    </table>
       <!-- 아니 왜 span 태그 style 안먹히는겨  -->
     <!-- 이미지를 넣어야댐 -->
     <div class="btn-cover">
@@ -16,6 +53,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'paginated-list',
   data () {
@@ -44,6 +83,18 @@ export default {
     fnView(){
       // alert("이동!");
       <router-link to="/board/view"></router-link>
+    },
+    rowClick(item) {
+      // alert(item.content_id)
+      
+      this.$router.push({
+        path: `/board/detail/${item.content_id}`
+      });
+    },
+    writeContent() {
+      this.$router.push({
+        path: `/board/create`
+      });
     }
 
 

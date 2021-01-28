@@ -1,13 +1,11 @@
 <template>
-    <div>
-        <sidebar></sidebar>
+    <div class="md:container bg-green-500" >
+        
     </div>
 </template>
 
 <script>
-import sidebar from './sidebar.vue'
 export default {
-  components: { sidebar },
     
 }
 </script>

@@ -4,6 +4,7 @@
     <div class="flex flex-row flex-initial h-full w-full">
       <div class="flex-initial ">{{name}}</div>
       <textarea  placeholder="코멘트를 달아주세요." class="min-h-full min-w-full" ></textarea>
+      <base-button></base-button>
       <button variant="info" @click="isSubComment ? createSubComment() : createComment()">작성하기</button>
     </div>
   </div>
@@ -11,8 +12,10 @@
 
 <script>
 import data from "@/data";
+import BaseButton from '../../components/ui/BaseButton.vue';
 
 export default {
+  components: { BaseButton },
   name: "CommentCreate",
   props: {
     contentId: Number,

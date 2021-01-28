@@ -14,7 +14,7 @@
       <div class="content-detail-button">
         <base-button @click="updateData">수정</base-button>
         <base-button @click="deleteData">삭제</base-button>
-        
+        <base-button @click="golist">목록</base-button>
         
       </div>
       <div class="content-detail-comment">
@@ -27,7 +27,6 @@
 <script>
 import data from "@/data";
 import CommentList from "./CommentList";
-import BaseButton from '../../components/ui/BaseButton.vue';
 
 export default {
   name: "BoardDetail",
@@ -59,11 +58,13 @@ export default {
       this.$router.push({
         path: `/board/create/${this.contentId}`
       });
+    },
+    golist(){
+      this.$router.go(-1)
     }
   },
   components: {
     CommentList,
-    BaseButton
   }
 };
 </script>
