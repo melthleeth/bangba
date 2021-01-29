@@ -6,8 +6,6 @@ public class Article_alcoholDto {
 	private int article_no;
 	private int alcohol_no;
 	
-	private boolean type;
-	
 	private String quantity;
 	private String unit;
 	
@@ -29,12 +27,6 @@ public class Article_alcoholDto {
 	public void setAlcohol_no(int alcohol_no) {
 		this.alcohol_no = alcohol_no;
 	}
-	public boolean isType() {
-		return type;
-	}
-	public void setType(boolean type) {
-		this.type = type;
-	}
 	public String getQuantity() {
 		return quantity;
 	}
@@ -47,6 +39,5 @@ public class Article_alcoholDto {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
 	
 }

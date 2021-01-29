@@ -1,5 +1,4 @@
 <template>
-
   <div class="flex justify-center">
     <div class="relative">
       <div v-if="open" @click="open = false" class="fixed inset-0"></div>

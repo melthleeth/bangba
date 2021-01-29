@@ -34,7 +34,7 @@ button,
 a {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
-  /* font: inherit; */
+  font: inherit;
   background-color: #00002F;
   border: 1px solid #00002F;
   color: white;
@@ -79,14 +79,5 @@ button:active {
     border: 1px solid #FFFFFF;
 }
 
-.important {
-    background-color: #FF5E46;
-    border: 1px solid #FFFFFF;
-}
-
-.important:hover {
-    color: #00002F;
-    background-color: #FF5E46;
-}
 
 </style>

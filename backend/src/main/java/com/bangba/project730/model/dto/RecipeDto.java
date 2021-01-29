@@ -5,11 +5,10 @@ public class RecipeDto {
 	private int pk_recipe;
 	private int article_no;
 	
-	private String desc;
+	private String content;
 	
 	private int order;
 
-	
 	public int getPk_recipe() {
 		return pk_recipe;
 	}
@@ -26,12 +25,12 @@ public class RecipeDto {
 		this.article_no = article_no;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public int getOrder() {
@@ -41,4 +40,5 @@ public class RecipeDto {
 	public void setOrder(int order) {
 		this.order = order;
 	}
+
 }

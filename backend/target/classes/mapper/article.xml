@@ -8,9 +8,114 @@
 		insert into article (user_no, title_kor, title_eng, like_cnt, bookmark_cnt, hits, created_at, updated_at, like_weekly, content, img_path, category, abv)
 		values (#{user_no}, #{title_kor}, #{title_eng}, #{like_cnt}, #{bookmark_cnt}, #{hits}, #{created_at}, #{updated_at}
 		, #{like_weekly}, #{content}, #{img_path}, #{category}, #{abv})	
+		<selectKey resultType="int" keyProperty="pk_article" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>		
 	</insert>
+	<select id="searchArticle" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle1" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle2" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle3" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle4" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle5" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle6" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle7" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle8" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle9" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
+	<select id="searchArticle10" resultType="int" parameterType="ArticleDto">
+		select * from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+	</select>
 	<select id="searchArticlePK" resultType="int" parameterType="ArticleDto">
 		select max(pk_article) from article
 		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
 	</select>
+	<update id="updateArticle" parameterType="ArticleDto">
+		update article set user_no = #{user_no}, title_kor = #{title_kor}, title_eng = #{title_eng}, like_cnt = #{like_cnt},
+		bookmark_cnt = #{bookmark_cnt}, hits = #{hits}, created_at = #{created_at}, updated_at = #{updated_at}
+		where pk_article = #{pk_article}
+	</update>
+	<delete id="deleteArticle" parameterType="String">
+		delete from article
+		where pk_article = #{pk_article}
+	</delete>
+	
+	
+	<insert id="addArticleAlcohol" parameterType="Article_alcoholDto">
+		insert into article_alcohol (article_no, alcohol_no, quantity, unit)
+		values (#{article_no}, #{alcohol_no}, #{quantity}, #{unit})	
+	</insert>
+	
+	<delete id="deleteArticleAlcohol" parameterType="int">
+		delete from article_alcohol
+		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
+	</delete>
+	
+	
+	<insert id="addArticleCup" parameterType="Article_cupDto">
+	</insert>
+	
+	<delete id="deleteArticleCup" parameterType="int">
+	</delete>
+	
+	
+	<insert id="addArticleIngredient" parameterType="Article_ingredientDto">
+		insert into article_ingredient (article_no, ingredient_no, type, quantity, unit)
+		values (#{article_no}, #{ingredient_no}, #{type}, #{quantity}, #{unit})	
+	</insert>
+	<delete id="deleteArticleIngredient" parameterType="int">
+		delete from article_ingredient
+		where article_no = #{article_no} and ingredient_no = #{ingredient_no}
+	</delete>
+	
+	
+	<insert id="addArticleTag" parameterType="int">
+		insert into article_tag (article_no, article_no)
+		values (#{pk_article}, #{pk_tag})	
+	</insert>
+	<delete id="deleteArticleTag" parameterType="int">
+		delete from article_tag
+		where article_no = #{article_no} and pk_tag = #{pk_tag}
+	</delete>
+	
+	
+	<insert id="addRecipe" parameterType="RecipeDto">
+		insert into recipe (article_no, content, order)
+		values (#{article_no}, #{content}, #{order})	
+	</insert>
+	<delete id="deleteRecipe" parameterType="int">
+		delete from recipe
+		where article_no = #{article_no} and order = #{order}
+	</delete>
+	
 </mapper>

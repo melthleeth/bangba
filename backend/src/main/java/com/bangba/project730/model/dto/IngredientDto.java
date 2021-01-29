@@ -7,7 +7,7 @@ public class IngredientDto {
 	private String name_kor;
 	private String name_eng;
 	private String img_path;
-	private String desc;
+	private String content;
 	
 	public int getPk_ingredient() {
 		return pk_ingredient;
@@ -33,11 +33,10 @@ public class IngredientDto {
 	public void setImg_path(String img_path) {
 		this.img_path = img_path;
 	}
-	public String getDesc() {
-		return desc;
+	public String getContent() {
+		return content;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setContent(String content) {
+		this.content = content;
 	}
-
 }

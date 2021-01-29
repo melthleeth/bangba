@@ -1,7 +1,9 @@
 package com.bangba.project730.model.service;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,17 +14,17 @@ import com.bangba.project730.model.dao.CupDao;
 import com.bangba.project730.model.dao.IngredientDao;
 import com.bangba.project730.model.dao.TagDao;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.Article_alcoholDto;
+import com.bangba.project730.model.dto.Article_ingredientDto;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.TagDto;
+import com.bangba.project730.model.dto.TaglistDto;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
 
 	@Autowired
 	ArticleDao dao;
-
-	@Autowired
-	ArticleDto adto;
 
 	@Autowired
 	AlcoholDao adao;
@@ -35,69 +37,130 @@ public class ArticleServiceImpl implements ArticleService{
 
 	@Autowired
 	TagDao tdao;
-
-	@Autowired
-	IngredientDto idto;
-	
-	@Autowired
-	TagDto tdto;
 	
 	@Override
 	public void createArticle(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
+
+		ArticleDto dto =  new ArticleDto();
 		
-		//이미지 경로
 		//아티클 생성
-		adto.setUser_no(Integer.parseInt(map.get("user_no")));
-		adto.setTitle_kor(map.get("title_kor"));
-		adto.setTitle_eng(map.get("title_eng"));
-		adto.setLike_cnt(0);
-		adto.setBookmark_cnt(0);
-		adto.setHits(0);
-		adto.setCreated_at(map.get("created_at"));
-		adto.setUpdated_at("created_at");
-		adto.setLike_weekly(0);
-		adto.setContent(map.get("content"));
-		adto.setImg_path(map.get("img_path"));
+		dto.setUser_no(Integer.parseInt(map.get("user_no")));
+		dto.setTitle_kor(map.get("title_kor"));
+		dto.setTitle_eng(map.get("title_eng"));
+		dto.setLike_cnt(0);
+		dto.setBookmark_cnt(0);
+		dto.setHits(0);
+		dto.setCreated_at(map.get("created_at"));
+		dto.setUpdated_at("created_at");
+		dto.setLike_weekly(0);
+		dto.setContent(map.get("content"));
+		dto.setImg_path(map.get("img_path"));
 		if(map.get("category").equals("admin"))
-			adto.setCategory(true);
+			dto.setCategory(true);
 		else
-			adto.setCategory(false);
-		adto.setAbv(Integer.parseInt(map.get("abv")));
-		dao.createArticle(adto);
+			dto.setCategory(false);
+		dto.setAbv(Integer.parseInt(map.get("abv")));
+		dto.setCup_no(Integer.parseInt(map.get("cup_no")));
+		
+		int pk=dao.createArticle(dto);
 		
 		//생성된 아티클의 pk를 유저번호, 제목, 시간으로 찾고 그중에 가장 나중에 만들어진 pk를 가져옴
-		int pk=dao.searchArticlePK(adto);
+		//int pk=dao.searchArticlePK(dto);
 
-		//재료 생성
-		//idao.addIngredient(ingredientDto);
-		//태그 생성
-		//tdao.addTag(tagDto);
-		
-		//술추가
-		int apk=adao.searchAlcoholPK(map.get("title_eng"));
-		dao.addArticleAlcohol(pk, apk);
-		
-		//컵추가
-		int cpk=cdao.searchCupPK(map.get("title_eng"), map.get("title_eng"));
-		dao.addArticleCup(pk, cpk);
-		
-		//재료추가
-		int ipk=idao.searchIngredientPK(map.get("title_eng"));
-		dao.addArticleIngredient(pk, ipk);
-		
-		//태그추가
-		int tpk=tdao.searchTagPK(map.get("title_eng"));
-		dao.addArticleTag(pk, tpk);
-		
-		//레시피추가
-		dao.addRecipe(Integer.toString(pk), map.get("title_eng"), map.get("title_eng"));
+         int r=1;
+		 Set<Map.Entry<String, String>> entrySet = map.entrySet(); //Map.EntrySet 얻기
+	     Iterator<Map.Entry<String, String>> entryIterator = entrySet.iterator();
+	     while (entryIterator.hasNext()) {
+	            Map.Entry<String, String> entry = entryIterator.next();
+	            String key = entry.getKey();
+	            String value = entry.getValue();
+	            if(key.equals("alcohol"))
+	            {
+	            	//술추가
+	            	Article_alcoholDto aadto= new Article_alcoholDto();
+	            	
+	        		int apk=adao.searchAlcoholPK(value);
+	        		
+	        		entry = entryIterator.next();
+	 	            String quantity = entry.getValue();
+	 	            entry = entryIterator.next();
+	 	            String unit = entry.getValue();
+	 	            
+	        		aadto.setArticle_no(pk);
+	        		aadto.setAlcohol_no(apk);
+	        		aadto.setQuantity(quantity);
+	        		aadto.setUnit(unit);
+	        		
+	        		dao.addArticleAlcohol(aadto);
+	            }
+		        else if(key.equals("ingredient"))
+		        {
+		        	//재료추가
+		        	Article_ingredientDto aidto= new Article_ingredientDto();
+
+		    		int ipk=idao.searchIngredientPK(value);
+		    		
+	 	            entry = entryIterator.next();
+	 	            String type = entry.getValue();
+		        	entry = entryIterator.next();
+	 	            String quantity = entry.getValue();
+	 	            entry = entryIterator.next();
+	 	            String unit = entry.getValue();
+	 	            
+	 	            aidto.setArticle_no(pk);
+	 	            aidto.setIngredient_no(ipk);
+	 	            aidto.setType(Boolean.parseBoolean(type));
+	 	            aidto.setQuantity(quantity);
+	 	            aidto.setUnit(unit);
+	 	            
+		    		dao.addArticleIngredient(aidto);
+		        }
+	            else if(key.equals("tag"))
+	            {
+	            	//태그추가
+	        		int tpk=tdao.searchTagPK(value);
+	        		dao.addArticleTag(pk, tpk);
+	            }
+	            else if(key.equals("recipe"))
+	            {
+	        		//레시피추가
+	        		dao.addRecipe(Integer.toString(pk), value, Integer.toString(r));
+	        		r++;
+	            }
+	        }
 	}
 
 	@Override
 	public ArticleDto searchArticle(List<String> tags) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.searchArticle(tags);
+		TaglistDto tldto = new TaglistDto();
+		
+		int s=tags.size();
+		if(s==11)
+			return dao.searchArticle(tldto);
+		else if(s==1)
+			return dao.searchArticle(tldto);
+		else if(s==2)
+			return dao.searchArticle(tldto);
+		else if(s==3)
+			return dao.searchArticle(tldto);
+		else if(s==4)
+			return dao.searchArticle(tldto);
+		else if(s==5)
+			return dao.searchArticle(tldto);
+		else if(s==6)
+			return dao.searchArticle(tldto);
+		else if(s==7)
+			return dao.searchArticle(tldto);
+		else if(s==8)
+			return dao.searchArticle(tldto);
+		else if(s==9)
+			return dao.searchArticle(tldto);
+		else if(s==10)
+			return dao.searchArticle(tldto);
+		else
+			return null;
 	}
 
 	@Override
@@ -115,18 +178,20 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public void createIngredient(String name) throws Exception {
 		// TODO Auto-generated method stub
+		IngredientDto idto= new IngredientDto();
 		idto.setName_kor(name);
 		idto.setName_eng("");
-		idto.setImg_path("");
-		idto.setDesc("");
+		idto.setImg_path("1");
+		idto.setContent("새로추가된 재료");
 		idao.addIngredient(idto);
 	}
 
 	@Override
 	public void createTag(String content, int type) throws Exception {
 		// TODO Auto-generated method stub
+		TagDto tdto = new TagDto();
 		tdto.setContent_kor(content);
-		tdto.setContent_eng(null);
+		tdto.setContent_eng("");
 		tdto.setType(type);
 		tdao.addTag(tdto);
 	}
