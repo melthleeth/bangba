@@ -69,4 +69,53 @@
 		delete from article
 		where pk_article = #{pk_article}
 	</delete>
+	
+	
+	<insert id="addArticleAlcohol" parameterType="Article_alcoholDto">
+		insert into article_alcohol (article_no, alcohol_no, quantity, unit)
+		values (#{article_no}, #{alcohol_no}, #{quantity}, #{unit})	
+	</insert>
+	
+	<delete id="deleteArticleAlcohol" parameterType="int">
+		delete from article_alcohol
+		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
+	</delete>
+	
+	
+	<insert id="addArticleCup" parameterType="Article_cupDto">
+	</insert>
+	
+	<delete id="deleteArticleCup" parameterType="int">
+	</delete>
+	
+	
+	<insert id="addArticleIngredient" parameterType="Article_ingredientDto">
+		insert into article_ingredient (article_no, ingredient_no, type, quantity, unit)
+		values (#{article_no}, #{alcohol_no}, #{type}, #{quantity}, #{unit})	
+	</insert>
+	<delete id="deleteArticleIngredient" parameterType="int">
+		delete from article_ingredient
+		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
+	</delete>
+	
+	
+	<insert id="deleteArticleTag" parameterType="int">
+		insert into article_tag (article_no, article_no)
+		values (#{pk_article}, #{pk_tag})	
+	</insert>
+	<delete id="deleteArticleAlcohol" parameterType="int">
+		delete from article_tag
+		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
+	</delete>
+	
+	
+	<insert id="addRecipe" parameterType="RecipeDto">
+		insert into recipe (article_no, content, order)
+		values (#{article_no}, #{content}, #{order})	
+	</insert>
+	<delete id="deleteRecipe" parameterType="int">
+		delete from recipe
+		where article_no = #{article_no} and order = #{order}
+	</delete>
+	
 </mapper>

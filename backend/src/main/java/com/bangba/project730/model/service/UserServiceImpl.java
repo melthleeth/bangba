@@ -44,6 +44,8 @@ public class UserServiceImpl implements UserService{
 			helper.setTo(toAddress);
 			helper.setSubject(subject);
 			helper.setText(body);
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
