@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,12 +28,13 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/article")
 public class ArticleController {
 	
+	@Autowired
 	private ArticleService articleService;
 	
 	@ApiOperation(value = "레시피 작성", response = String.class)
 	@ApiImplicitParams({ 
-		@ApiImplicitParam(name = "id", value = "아이디", required = true, dataType = "string", paramType = "query", defaultValue = ""), 
-		@ApiImplicitParam(name = "password", value = "패스워드", required = true, dataType = "string", paramType = "query", defaultValue = "") 
+		//@ApiImplicitParam(name = "id", value = "아이디", required = true, dataType = "string", paramType = "query", defaultValue = ""), 
+		//@ApiImplicitParam(name = "password", value = "패스워드", required = true, dataType = "string", paramType = "query", defaultValue = "") 
 	})
 	@PostMapping("/create")
 	public String createArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
@@ -63,7 +65,7 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "레시피 수정", response = String.class)
 	@ApiImplicitParams({})
-	@PutMapping("/{pk_article}")
+	@PutMapping("/recipe/{pk_article}")
 	public String updateArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			articleService.updateArticle(map);
@@ -77,7 +79,7 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "레시피 삭제", response = String.class)
 	@ApiImplicitParams({})
-	@DeleteMapping("/{pk_article}")
+	@DeleteMapping("/recipe/{pk_article}")
 	public String deleteArticle(@RequestParam Integer pk_article, Model model) throws Exception {
 		try {
 			articleService.deleteArticle(pk_article);

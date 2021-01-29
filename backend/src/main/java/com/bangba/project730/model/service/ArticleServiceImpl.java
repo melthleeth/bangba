@@ -181,8 +181,8 @@ public class ArticleServiceImpl implements ArticleService{
 		IngredientDto idto= new IngredientDto();
 		idto.setName_kor(name);
 		idto.setName_eng("");
-		idto.setImg_path("");
-		idto.setContent("");
+		idto.setImg_path("1");
+		idto.setContent("새로추가된 재료");
 		idao.addIngredient(idto);
 	}
 

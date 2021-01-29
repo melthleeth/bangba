@@ -91,11 +91,11 @@
 	
 	<insert id="addArticleIngredient" parameterType="Article_ingredientDto">
 		insert into article_ingredient (article_no, ingredient_no, type, quantity, unit)
-		values (#{article_no}, #{alcohol_no}, #{type}, #{quantity}, #{unit})	
+		values (#{article_no}, #{ingredient_no}, #{type}, #{quantity}, #{unit})	
 	</insert>
 	<delete id="deleteArticleIngredient" parameterType="int">
 		delete from article_ingredient
-		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
+		where article_no = #{article_no} and ingredient_no = #{ingredient_no}
 	</delete>
 	
 	
@@ -105,7 +105,7 @@
 	</insert>
 	<delete id="deleteArticleTag" parameterType="int">
 		delete from article_tag
-		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
+		where article_no = #{article_no} and pk_tag = #{pk_tag}
 	</delete>
 	
 	
