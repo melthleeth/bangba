@@ -99,11 +99,11 @@
 	</delete>
 	
 	
-	<insert id="deleteArticleTag" parameterType="int">
+	<insert id="addArticleTag" parameterType="int">
 		insert into article_tag (article_no, article_no)
 		values (#{pk_article}, #{pk_tag})	
 	</insert>
-	<delete id="deleteArticleAlcohol" parameterType="int">
+	<delete id="deleteArticleTag" parameterType="int">
 		delete from article_tag
 		where article_no = #{article_no} and alcohol_no = #{alcohol_no}
 	</delete>

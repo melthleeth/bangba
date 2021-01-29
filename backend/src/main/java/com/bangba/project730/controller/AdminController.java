@@ -54,7 +54,7 @@ public class AdminController {
 	}
 	
 	@ApiOperation(value = "관리자 기능 - 회원 영구정지", response = String.class)
-	@PutMapping(value="/member/{user_no}")
+	@PutMapping(value="/member/ban")
 	@ResponseBody public List<UserDto> banUser(@RequestBody @ApiParam(value="회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
 		adminService.banUser(userDto);
 		return adminService.searchAll();
