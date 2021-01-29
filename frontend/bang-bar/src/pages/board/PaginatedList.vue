@@ -1,60 +1,56 @@
 <template>
-  <div class="font-S-CoreDream-light flex flex-col justify-items-center">
-    <section class="mt-4 mx-32">
-      <table
-        class="corner w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 font-color-black-400"
-      >
-        <thead role="rowgroup" class="border-none py-4">
-          <tr role="row" class="font-S-CoreDream-light font-bold text-lg">
-            <th class="py-4 px-3">말머리</th>
-            <th class="w-3/7">제목</th>
-            <th class="w-1/7">작성자</th>
-            <th class="w-1/7">작성일</th>
-            <th class="w-1/7">조회수</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          <tr
-            class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 hover:bg-gray-100 hover:font-medium cursor-pointer text-base"
-            @click="rowClick(item)"
-            v-for="item in paginatedData"
-            :key="item.no"
-          >
-            <td class="py-4 text-sm">{{ item.content_id }}</td>
-            <td class="text-left font-semibold">{{ item.title }}</td>
-            <td class="">{{ item.user_name }}</td>
-            <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
-            <td class="text-sm">{{ item.user_id }}</td>
-          </tr>
-          </tbody>
-      </table>
-    </section>
-    <!-- 아니 왜 span 태그 style 안먹히는겨  -->
+  <div>
+
+      <!-- 아니 왜 span 태그 style 안먹히는겨  -->
+      <span style="text-align:left; padding:10px;">
+    <base-button class=redbutton >글쓰기</base-button>
+      </span>
+      <span style="text-align:right; padding:10px;">
+        
+        <select id="year" name="year" >
+                  <option value="전체">전체</option>
+                  <option value="공지사항">공지사항</option>
+                  <option value="후기">후기</option>
+                  <option value="질문">질문</option>
+        </select>
+        
+        <input type="nickname" id="nickname" v-model="nickname" class="textarea" />
+      <base-button >검색</base-button>
+      </span>
+    
+    <table>
+      <tr>
+        <th>말머리</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+        <th>조회수</th>
+      </tr>
+      <tr v-for="p in paginatedData" :key="p.no">
+        <td>{{ p.no }}</td>
+        <td>{{ p.tel }}</td>
+        <td>{{ p.address }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.no }}</td>
+      </tr>
+    </table>
     <!-- 이미지를 넣어야댐 -->
-    <section class="font-sm flex justify-center items-center mt-2 mb-6">
-      <base-button
-        mode="outline"
-        :disabled="pageNum === 0"
-        @click="prevPage"
-      >
+    <div class="btn-cover">
+      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
         이전
-      </base-button>
-      <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ pageCount }}</span>
-      <base-button
-        mode="outline"
-        :disabled="pageNum >= pageCount - 1"
-        @click="nextPage"
-      >
+      </button>
+      <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
         다음
-      </base-button>
-    </section>
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-
-
+import BaseButton from '../../components/ui/BaseButton.vue';
 export default {
+  components: { BaseButton },
   name: 'paginated-list',
   data () {
     return {
@@ -78,25 +74,7 @@ export default {
     },
     prevPage () {
       this.pageNum -= 1;
-    },
-    fnView(){
-      // alert("이동!");
-      <router-link to="/board/view"></router-link>
-    },
-    rowClick(item) {
-      // alert(item.content_id)
-      
-      this.$router.push({
-        path: `/board/detail/${item.content_id}`
-      });
-    },
-    writeContent() {
-      this.$router.push({
-        path: `/board/create`
-      });
     }
-
-
   },
   computed: {
     pageCount () {
@@ -116,31 +94,40 @@ export default {
             end = start + this.pageSize;
       return this.listArray.slice(start, end);
     }
-
-
   }
 }
 </script>
 
 <style>
-@media (min-width: 640px) {
-  table {
-    display: inline-table !important;
-  }
-  thead tr:not(:first-child) {
-    display: none;
-  }
+table {
+  width: 100%;
+  border-collapse: collapse;
 }
-/* td:not(:last-child) {
-  border-bottom: 0;
+table th {
+  font-size: 1.2rem;
 }
-th:not(:last-child) {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
-} */
-th {
-  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+table tr {
+  height: 2rem;
+  text-align: center;
+  border-bottom: 1px solid #505050;
 }
-.corner {
-  border-radius: 45px;
+table tr:first-of-type {
+  border-top: 2px solid #404040;
+}
+table tr td {
+  padding: 1rem 0;
+  font-size: 1.1rem;
+}
+.btn-cover {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+.btn-cover .page-btn {
+  width: 5rem;
+  height: 2rem;
+  letter-spacing: 0.5px;
+}
+.btn-cover .page-count {
+  padding: 0 1rem;
 }
 </style>

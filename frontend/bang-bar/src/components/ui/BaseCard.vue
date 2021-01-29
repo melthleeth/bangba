@@ -29,10 +29,6 @@ export default {
     width: 290px;
 }
 
-.box-340 {
-    width: 340px;
-}
-
 .box-400 {
     width: 400px;
 }
