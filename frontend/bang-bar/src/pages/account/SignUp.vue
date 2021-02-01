@@ -139,12 +139,10 @@
 
 export default {
   data() {
-    checked:false
     return {
       date: new Date(),
-      authCode_Spring:"",
-
-
+      checked:false,
+      authCode_Spring: "",
       dialogIsVisible_terms: false,
       dialogIsVisible_personal: false,
     };
@@ -169,7 +167,8 @@ export default {
          { headers }
       )
       .then((result)=>{
-          this.authCode_Spring={};
+          this.authCode_Spring=result.data;
+          alert("인증코드가 발송되었습니다.")
           console.log(result)
       })
       .catch(e=>{
@@ -205,7 +204,11 @@ export default {
     },
 
     authCode_Check(){
-      
+      if(this.authCode_Spring == this.code) {
+        alert("인증에 성공했습니다.")
+      } else {
+        alert("인증에 실패했습니다.")
+      }
     },
 
 

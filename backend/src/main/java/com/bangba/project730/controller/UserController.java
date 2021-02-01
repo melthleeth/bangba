@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8083")
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
@@ -100,9 +100,8 @@ public class UserController {
 				String code = makeCode();
 				String codeMsg = "인증코드는 " + code + " 입니다.";
 				userService.sendEmail(toAddress, "방바! 이메일 인증 발송 코드입니다.", codeMsg);
-				model.addAttribute("authCode", code);
 				model.addAttribute("msg", "인증번호가 발송되었습니다.");
-				return "SUCCESS";
+				return code;
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "이메일 인증에 실패했습니다.");
