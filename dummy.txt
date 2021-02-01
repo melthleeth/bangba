@@ -1,1 +1,1 @@
-dummy file
+새 브랜치 등록을 위한 dummy file
