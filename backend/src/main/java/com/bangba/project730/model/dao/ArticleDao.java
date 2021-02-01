@@ -28,5 +28,5 @@ public interface ArticleDao {
 	public void deleteArticleCup(int pk_article, int pk_cup) throws Exception;
 	public void deleteArticleIngredient(int pk_article, int pk_ingredient) throws Exception;
 	public void deleteArticleTag(int pk_article, int pk_tag) throws Exception;
-	public void deleteRecipe(String pk_article, String content, String order) throws Exception;
+	public void deleteRecipe(int pk_article, int order) throws Exception;
 }
