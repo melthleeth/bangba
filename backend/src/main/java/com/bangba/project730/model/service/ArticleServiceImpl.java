@@ -132,41 +132,102 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public ArticleDto searchArticle(List<String> tags) throws Exception {
+	public ArticleDto searchArticle(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		TaglistDto tldto = new TaglistDto();
+		 Set<Map.Entry<String, String>> entrySet = map.entrySet(); //Map.EntrySet 얻기
+	     Iterator<Map.Entry<String, String>> entryIterator = entrySet.iterator();
+	     while (entryIterator.hasNext()) {
+	            Map.Entry<String, String> entry = entryIterator.next();
+	            String key = entry.getKey();
+	            String value = entry.getValue();
+	            if(key.equals("searchtxt"))
+	            {
+	            	tldto.setSearchtxt(value);
+	            	
+	            }
+		        else
+		        {
+		        	String s=tldto.getTag1();
+		        	
+		        	if(s==null)
+		        		tldto.setTag1(value);
+		        	else
+		        		s=tldto.getTag2();
+		        	
+		        	if(s==null)
+		        		tldto.setTag2(value);
+		        	else
+		        		s=tldto.getTag3();
+		        	
+		        	if(s==null)
+		        		tldto.setTag3(value);
+		        	else
+		        		s=tldto.getTag4();
+		        	
+		        	if(s==null)
+		        		tldto.setTag4(value);
+		        	else
+		        		s=tldto.getTag5();
+		        	
+		        	if(s==null)
+		        		tldto.setTag5(value);
+		        	else
+		        		s=tldto.getTag6();
+		        	
+		        	if(s==null)
+		        		tldto.setTag6(value);
+		        	else
+		        		s=tldto.getTag7();
+		        	
+		        	if(s==null)
+		        		tldto.setTag7(value);
+		        	else
+		        		s=tldto.getTag8();
+		        	
+		        	if(s==null)
+		        		tldto.setTag8(value);
+		        	else
+		        		s=tldto.getTag9();
+		        	
+		        	if(s==null)
+		        		tldto.setTag9(value);
+		        	else
+		        		tldto.setTag10(value);
+		        }
+	           
+	        }
+		return dao.searchArticle(tldto);
 		
-		int s=tags.size();
-		if(s==11)
-			return dao.searchArticle(tldto);
-		else if(s==1)
-			return dao.searchArticle(tldto);
-		else if(s==2)
-			return dao.searchArticle(tldto);
-		else if(s==3)
-			return dao.searchArticle(tldto);
-		else if(s==4)
-			return dao.searchArticle(tldto);
-		else if(s==5)
-			return dao.searchArticle(tldto);
-		else if(s==6)
-			return dao.searchArticle(tldto);
-		else if(s==7)
-			return dao.searchArticle(tldto);
-		else if(s==8)
-			return dao.searchArticle(tldto);
-		else if(s==9)
-			return dao.searchArticle(tldto);
-		else if(s==10)
-			return dao.searchArticle(tldto);
-		else
-			return null;
 	}
 
 	@Override
 	public void updateArticle(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
-		dao.updateArticle(map);
+
+		ArticleDto dto =  new ArticleDto();
+		
+		//아티클 생성
+		dto.setUser_no(Integer.parseInt(map.get("user_no")));
+		dto.setTitle_kor(map.get("title_kor"));
+		dto.setTitle_eng(map.get("title_eng"));
+		dto.setLike_cnt(0);
+		dto.setBookmark_cnt(0);
+		dto.setHits(0);
+		dto.setCreated_at(map.get("created_at"));
+		dto.setUpdated_at("created_at");
+		dto.setLike_weekly(0);
+		dto.setContent(map.get("content"));
+		dto.setImg_path(map.get("img_path"));
+		if(map.get("category").equals("admin"))
+			dto.setCategory(true);
+		else
+			dto.setCategory(false);
+		dto.setAbv(Integer.parseInt(map.get("abv")));
+		dto.setCup_no(Integer.parseInt(map.get("cup_no")));
+		
+		int pk=dao.createArticle(dto);
+		dao.updateArticle(dto);
 	}
 
 	@Override

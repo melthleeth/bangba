@@ -10,6 +10,10 @@ import BaseCard from  './components/ui/BaseCard.vue';
 import BaseButton from  './components/ui/BaseButton.vue';
 import BaseTag from './components/ui/BaseTag.vue';
 import BaseModal from './components/ui/BaseModal.vue';
+import BaseDropdown from './components/ui/BaseDropdown.vue';
+import BaseSpinner from './components/ui/BaseSpinner.vue';
+import BaseDialog from './components/ui/BaseDialog.vue';
+import SideMenu from './components/ui/SideMenu.vue';
 
 const app = createApp(App);
 
@@ -20,5 +24,10 @@ app.component('base-card', BaseCard);
 app.component('base-button', BaseButton);
 app.component('base-tag', BaseTag);
 app.component('base-modal', BaseModal);
+app.component('base-dropdown', BaseDropdown);
+app.component('base-spinner', BaseSpinner);
+app.component('base-dialog', BaseDialog.vue);
+app.component('side-menu', SideMenu);
+
 
 app.mount('#app')

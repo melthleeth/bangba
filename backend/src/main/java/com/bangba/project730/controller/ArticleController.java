@@ -52,9 +52,9 @@ public class ArticleController {
 	@ApiOperation(value = "레시피 검색", response = String.class)
 	@ApiImplicitParams({})
 	@GetMapping("/keyword")
-	public String searchArticle(@RequestBody List<String> tags, Model model) throws Exception {
+	public String searchArticle(@RequestBody Map<String, String> map , Model model) throws Exception {
 		try {
-			articleService.searchArticle(tags);
+			articleService.searchArticle(map);
 			model.addAttribute("msg", "레시피 검색 완료");
 			return "main";
 		} catch (Exception e) {
@@ -122,7 +122,7 @@ public class ArticleController {
 		}
 	}	
 	
-	 @PostMapping("/photo")
+	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
  
         System.out.println("파일 이름 : " + file.getOriginalFilename());
