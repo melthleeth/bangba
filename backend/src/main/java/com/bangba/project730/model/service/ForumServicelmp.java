@@ -49,7 +49,7 @@ public class ForumServicelmp implements ForumService{
 
 	@Override
 	public void deleteForum(int pk_forum) throws Exception {
-		dao.deleteForum(pk_forum);;
+		dao.deleteForum(pk_forum);
 		
 	}
 	
