@@ -3,12 +3,32 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
 
 <mapper namespace="com.bangba.project730.model.dao.ForumDao">
-
+	<!-- 포럼 생성 -->
 	<insert id="createForum" parameterType="ForumDto">
 		insert into article (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
 		values (#{user_no}, #{title}, #{category}, #{like_cnt}, #{hits}, #{created_at}, #{updated_at}, #{content})	
 	</insert>
+	
+	<!-- 포럼 리스트 보기 -->
 	<select id="searchForumList" resultType="int" parameterType="ForumDto">
-		select * from forum order by pk_forum 
+	<![CDATA[
+		select * from forum order by pk_forum DESC
+	]]>
 	</select>
+	
+	<!-- 포럼 상세보기 -->
+	<select id="detailForum" resultType="int" parameterType="ForumDto">
+		select * from forum where pk_forum = #{pk_forum}
+	</select>
+	
+	<!-- 포럼 삭제 -->
+	<delete id="deleteForum">
+		delete from forum where pk_forum = #{pk_forum}
+	</delete>
+	
+	<!-- 포럼 수정 -->
+	<update id="updateForum" parameterType="ForumDto">
+		update forum set title = #{title}, category = #{category}, updated_at = #{updated_at}, content = #{content} 
+		where pk_forum = #{pk_forum}
+	</update>
 </mapper>
