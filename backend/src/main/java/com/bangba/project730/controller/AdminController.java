@@ -1,8 +1,9 @@
 package com.bangba.project730.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,18 +11,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.bangba.project730.model.dto.UserDto;
 import com.bangba.project730.model.service.AdminService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:8083")
+@RestController
 @RequestMapping("/admin")
 public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+
 	@ApiOperation(value = "관리자 기능 - 회원 전체 검색", response = String.class)
 	@GetMapping(value="/members")
 	@ResponseBody public List<UserDto> searchAll() {

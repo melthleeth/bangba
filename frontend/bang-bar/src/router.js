@@ -29,6 +29,9 @@ import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 import BoardCreate from "@/pages/board/BoardCreate";
 import BoardDetail from "@/pages/board/BoardDetail";
 
+import Test from "@/pages/test.vue"
+
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -59,6 +62,8 @@ const router = createRouter({
      //board
     { path: "/board/create/:contentId?", name: "BoardCreate", component: BoardCreate },
     { path: "/board/detail/:contentId", name: "BoardDetail", component: BoardDetail },
+
+    {path:"/home/test" ,component:Test}
   ],
 });
 

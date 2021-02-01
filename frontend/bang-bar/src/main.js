@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 
+import axios from 'axios';
 import router from './router.js';
 import store from './store/index.js';
 import App from './App.vue';
@@ -15,10 +16,14 @@ import BaseSpinner from './components/ui/BaseSpinner.vue';
 import BaseDialog from './components/ui/BaseDialog.vue';
 import SideMenu from './components/ui/SideMenu.vue';
 
+// Vue.prototype.$http = axios;
+App.prototype.$http = axios;
 const app = createApp(App);
 
 app.use(router);
 app.use(store);
+// app.use(axios);
+
 
 app.component('base-card', BaseCard);
 app.component('base-button', BaseButton);
