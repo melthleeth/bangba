@@ -1,10 +1,7 @@
 <template>
-    <button v-if="!link" :class="mode">
+    <textarea v-if="!link" :class="mode">
         <slot></slot>
-    </button>
-    <router-link v-else :to="to" :class="mode">
-        <slot></slot>
-    </router-link>
+    </textarea>
 </template>
 
 <script>
@@ -30,11 +27,11 @@ export default {
 </script>
 
 <style scoped>
-button,
+textarea,
 a {
   text-decoration: none;
   padding: 0.75rem 1.5rem;
-  /* font: inherit; */
+  font: inherit;
   background-color: #00002F;
   border: 1px solid #00002F;
   color: white;
@@ -45,12 +42,12 @@ a {
   transition: .3s ease-out;
 }
 
-a:hover,
+/* a:hover,
 a:active,
-button:hover,
-button:active {
+textarea:hover,
+textarea:active {
     color: #FF5E46;
-}
+} */
 
 .flat {
   background-color: transparent;
@@ -74,19 +71,10 @@ button:active {
 }
 
  /* SJ의 추가 css */
-.redbutton{
+/* .redbutton{
     background-color: #FF5E46;
     border: 1px solid #FFFFFF;
-}
+} */
 
-.important {
-    background-color: #FF5E46;
-    border: 1px solid #FFFFFF;
-}
-
-.important:hover {
-    color: #00002F;
-    background-color: #FF5E46;
-}
 
 </style>
