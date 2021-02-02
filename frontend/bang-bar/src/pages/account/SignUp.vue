@@ -16,7 +16,7 @@
               v-model="email"
               placeholder="cocktail@bangba.com"
               required
-              pattern="/^[a-z0-9_+.-]+@)([a-z0-9-]+\.+[a-z]$/"
+              
             />
             <base-button class="redbutton" @click="authMail_Send()">인증메일 전송</base-button>
           </div>
@@ -35,7 +35,7 @@
           <div class="joindiv">
             <label for="phone_numver">전화번호</label>
             <input
-              type="text"
+              type="number"
               id="phone_numver"
               v-model="phone_number"
               class="textarea"
@@ -77,7 +77,7 @@
               minlength="8"
               maxlength="20"
               required
-              pattern="^(?=.*[A-Za-z])(?=.[0-9]+)[A-Za-z\d]{8,20}$"
+              pattern="^(?=.*[A-Za-z])(?=.[0-9])[A-Za-z0-9]+{8,20}$"
               @keyup="pass_Check()"
               
             />
@@ -195,7 +195,7 @@ export default {
       )
       .then((result)=>{
         if(result.data=="FAIL"){
-          alert("중복된 닉네임 입니다.")
+          alert("이미 가입한 이메일 입니다.")
         }else{
           this.authCode_Spring=result.data;
           alert("인증코드가 발송되었습니다.")
@@ -222,8 +222,8 @@ export default {
 
 
     nickName_Check(){
-      if(this.nickname==null){
-        alert("닉네임을 입력해주세요.");
+      if(this.nickname==null || this.nickname.length<2){
+        alert("닉네임을 확인해주세요.");
       }else{
         let params={
           user_name:this.nickname
@@ -257,12 +257,25 @@ export default {
     },
 
     join_Check(){
+      
+      //약관
       if(this.checked==false){
         alert("약관에 동의해주세요.");
-      }else if(this.finalCheck==false){
+      }
+      //전반적인 회원정보 체크
+      else if(this.finalCheck==false){
         alert("회원정보를 확인해주세요.")
-      }else if(this.date.replace("-","").replace("-","")>20030000){
+      }
+      //가입 생년월일
+      else if(this.date.replace("-","").replace("-","")>20030000){
         alert("어려")
+      }
+      //전화번호 길이
+      else if(this.phone_number.length<10 || this.phone_number.length>11){
+        alert("전화번호를 확인해 주세요.")
+      }
+       else if(this.password.length<8 || this.ispassCheck(this.password)){
+        alert("비밀번호를 확인해 주세요.")
       }
       else{
         // var repl=this.date.replace("-","");
@@ -297,11 +310,8 @@ export default {
       })
       }
     },
-
-
-
     passDupl_Check(){
-      if(this.password===this.passwordConfirm && this.password){
+      if(this.password===this.passwordConfirm ){
         this.passmessage="비밀번호가 동일합니다."
         this.finalCheck=true;
       }else{
@@ -310,6 +320,15 @@ export default {
       }
     },
 
+
+    ispassCheck(password){  
+
+      var check= new RegExp("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,20}$");
+        if(check.test(password)){
+          return false;
+        }
+      return true;
+    },
 
 
     goback(){
@@ -329,21 +348,6 @@ export default {
       this.dialogIsVisible_personal = false;
     },
   },
-
-
-
-  checkForm(e){
-    this.errors = [];
-
-
-
-    e.preventDefault();
-  },
-
-  validEmail(email){
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-  }
 
 
 };
@@ -393,5 +397,12 @@ label {
 
 ::placeholder {
   color: #c6c6c6;
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 </style>

@@ -61,10 +61,10 @@ export default {
       // ...
     }
 
-    context.commit("registerRecipe", {
-      ...recipeData,
-      id: userId,
-    });
+    let recipeItem = [];
+    recipeItem.push(recipeData);
+    
+    context.commit("registerRecipe", recipeItem);
   },
   async loadRecipe(context, payload) {
     console.log("context: " + context);

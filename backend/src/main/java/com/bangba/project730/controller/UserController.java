@@ -43,23 +43,22 @@ public class UserController {
 
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
-	public UserDto createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
+	public String createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
 			Model model) throws Exception {
 		if (userService.isDuplicatedEmail(userDto.getEmail()) != 0
 				|| userService.isDuplicatedName(userDto.getUser_name()) != 0) {
-			return userService.getMyPage(-1);
 		} else {
 			try {
 				userService.createUser(userDto);
 				model.addAttribute("msg", "회원가입 완료");
-				return userDto;
+				return "SUCCESS";
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "회원가입중 문제가 발생했습니다.");
 				
 			}
 		}
-		return userService.getMyPage(-1);
+		return "FAIL";
 	}
 	
 	
