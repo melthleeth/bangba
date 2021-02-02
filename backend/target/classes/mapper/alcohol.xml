@@ -14,6 +14,6 @@
 	</select>
 	<select id="searchAlcoholPK" resultType="int" parameterType="String">
 		select pk_alcohol from alcohol
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+		where name_kor like #{name} or name_eng like #{name}
 	</select>
 </mapper>
