@@ -16,6 +16,7 @@
               v-model="email"
               placeholder="cocktail@bangba.com"
               required
+              pattern="/^[a-z0-9_+.-]+@)([a-z0-9-]+\.+[a-z]$/"
             />
             <base-button class="redbutton" @click="authMail_Send()">인증메일 전송</base-button>
           </div>
@@ -29,7 +30,7 @@
               placeholder="이메일로 전송된 코드 입력"
               required
             />
-            <base-button mode="outline" v-model="authCode" @click="authCode_Check()">확인</base-button>
+            <base-button mode="outline" v-show="auth" @click="authCode_Check()">확인</base-button>
           </div>
           <div class="joindiv">
             <label for="phone_numver">전화번호</label>
@@ -40,6 +41,7 @@
               class="textarea"
               placeholder="01012345678"
               required
+              pattern="[0-9]{10,11}+"
             />
             
           </div>
@@ -55,6 +57,7 @@
               v-model="nickname"
               class="textarea"
               required
+              pattern="{2,10}+"
               minlength="2"
               maxlength="10"
             />
@@ -71,11 +74,14 @@
               id="password"
               v-model="password"
               class="textarea"
-              required
               minlength="8"
               maxlength="20"
+              required
+              pattern="^(?=.*[A-Za-z])(?=.[0-9]+)[A-Za-z\d]{8,20}$"
+              @keyup="pass_Check()"
+              
             />
-            <!-- <a>{{ message }}</a> -->
+            <span>{{ message }}</span>
             <div class="alertText">
               * 비밀번호는 영문과 숫자를 반드시 포함해 최소 8자, 최대 20자까지
               입력이 가능해요.
@@ -89,10 +95,13 @@
               v-model="passwordConfirm"
               class="textarea"
               required
+              pattern="[A-Za-z0-9]{8,20}+"
+              @keyup="passDupl_Check()"
             />
             <!-- <a>{{ message }}</a> -->
+            <span>{{ passmessage }}</span>
           </div>
-          <div>{{ passmessage }}</div>
+          <!-- <div>{{ passmessage }}</div> -->
 
           <div class="joindiv">
             <label><input type="checkbox" name="check" value="check"  v-model="checked"/> </label>
@@ -148,27 +157,29 @@
 </template>
 
 <script>
-
 export default {
-
-  data() {
+  data() {  
     return {
-      
+      password:'',
       date: new Date(),
       checked:false,
+      auth:true,
       authCode_Spring: "",
       passmessage:"",
+      message:"",
       dialogIsVisible_terms: false,
       dialogIsVisible_personal: false,
+      errors:[],
+      finalCheck:false,
     };
   },
+
   methods: {
-    
+
     authMail_Send(){
       if(this.email==null){
-        alert("아이디를 입력해주세요.");
+        alert("이메일을 입력해주세요.");
       }else{
-        
         let params={
           email:this.email
         }
@@ -183,8 +194,12 @@ export default {
          { headers }
       )
       .then((result)=>{
+        if(result.data=="FAIL"){
+          alert("중복된 닉네임 입니다.")
+        }else{
           this.authCode_Spring=result.data;
           alert("인증코드가 발송되었습니다.")
+        }
           console.log(result)
       })
       .catch(e=>{
@@ -192,6 +207,20 @@ export default {
       })
       }
     },
+
+    authCode_Check(){
+      if(this.authCode_Spring == this.code) {
+        this.auth=!this.auth
+        this.finalCheck=true;
+        alert("인증에 성공했습니다.")
+        
+      } else {
+        this.finalCheck=false;
+        alert("인증에 실패했습니다.")
+      }
+    },
+
+
     nickName_Check(){
       if(this.nickname==null){
         alert("닉네임을 입력해주세요.");
@@ -211,26 +240,29 @@ export default {
         { headers }
       )
       .then((result)=>{
-          console.log(result)
+
+        if(result.data=="FAIL"){
+          this.finalCheck=false
+          alert("중복된 닉네임 입니다.")
+        }else{
+          this.finalCheck=true
+          alert("사용하실 수 있는 닉네임 입니다.")
+        }
       })
       .catch(e=>{
           console.log('error:',e)
+          
       })
-      }
-    },
-
-    authCode_Check(){
-      if(this.authCode_Spring == this.code) {
-        alert("인증에 성공했습니다.")
-      } else {
-        alert("인증에 실패했습니다.")
       }
     },
 
     join_Check(){
       if(this.checked==false){
         alert("약관에 동의해주세요.");
-
+      }else if(this.finalCheck==false){
+        alert("회원정보를 확인해주세요.")
+      }else if(this.date.replace("-","").replace("-","")>20030000){
+        alert("어려")
       }
       else{
         // var repl=this.date.replace("-","");
@@ -244,8 +276,6 @@ export default {
           banned:false,
           img_path:"",
         }
-
-
         const headers = {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
@@ -258,22 +288,29 @@ export default {
       )
       .then((result)=>{
           console.log(result)
+          this.$router.push({
+            path:'/home'
+          });
       })
       .catch(e=>{
           console.log('error:',e)
       })
       }
-        
-      
     },
 
+
+
     passDupl_Check(){
-      if(this.password===this.passwordConfirm){
-        this.passmessage="비밀번호가 같습니다."
+      if(this.password===this.passwordConfirm && this.password){
+        this.passmessage="비밀번호가 동일합니다."
+        this.finalCheck=true;
       }else{
         this.passmessage="비밀번호가 다릅니다."
+        this.finalCheck=false;
       }
     },
+
+
 
     goback(){
       this.$router.go(-1)
@@ -292,6 +329,23 @@ export default {
       this.dialogIsVisible_personal = false;
     },
   },
+
+
+
+  checkForm(e){
+    this.errors = [];
+
+
+
+    e.preventDefault();
+  },
+
+  validEmail(email){
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  }
+
+
 };
 </script>
 
