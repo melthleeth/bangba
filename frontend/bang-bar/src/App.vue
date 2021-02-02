@@ -1,4 +1,5 @@
 <template>
+<div>
   <the-header></the-header>
     <router-view v-slot="slotProps">
     <transition name="route" mode="out-in">
@@ -6,6 +7,7 @@
     </transition>
   </router-view>
   <the-footer></the-footer>
+</div>
 </template>
 
 <script>
@@ -16,6 +18,7 @@ export default {
   components: {
     TheHeader,
     TheFooter,
+
   },
 };
 </script>
