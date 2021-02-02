@@ -10,7 +10,21 @@
 	</insert>
 	
 	<!-- 포럼 리스트 보기 -->
-	<select id="searchForumList" resultType="searchForumDto" parameterType="String">
+	<select id="searchForumList" resultType="searchForumDto">
+	<!-- 우선은 제목만 검색 기능 넣어요 -->
+		select 
+			a.pk_forum
+			, a.title
+			, a.category
+			, a.hits
+			, a.created_at
+		from forum as a
+		order by pk_forum DESC
+	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
+	</select>
+	
+	<!-- 포럼 리스트 보기 -->
+	<select id="searchForumKeyword" resultType="searchForumDto" parameterType="String">
 	<!-- 우선은 제목만 검색 기능 넣어요 -->
 		select 
 			a.pk_forum
