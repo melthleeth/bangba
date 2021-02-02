@@ -1,6 +1,18 @@
 <template>
   <div class="flex flex-col justify-items-center mx-16">
-    <span class="title text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400">오피셜 레시피</span>
+    <span
+      class="title text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400"
+      >오피셜 레시피</span
+    >
+    <section class="flex justify-end mx-12">
+      <base-button
+        class="w-max"
+        mode="important"
+        link
+        to="{name: 'RecipeRegistration', params: { mode: 'official' }}"
+        >레시피 등록</base-button
+      >
+    </section>
     <section id="search-bar" class="flex items-center mx-64 mb-12">
       <div class="inline-block relative w-max">
         <select

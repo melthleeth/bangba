@@ -7,6 +7,7 @@ export default {
     return {
       userId: null,
       token: null,
+      pk_user: null,
       didAutoLogout: false
     };
   },
