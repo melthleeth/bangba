@@ -41,7 +41,6 @@ public class UserController {
 	@Autowired
 	private FollowService followService;
 
-	@CrossOrigin(origins = "http://localhost:8080")
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
 	public UserDto createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
@@ -53,7 +52,7 @@ public class UserController {
 			try {
 				userService.createUser(userDto);
 				model.addAttribute("msg", "회원가입 완료");
-				return userService.getMyPage(userDto.getPk_user());
+				return userDto;
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "회원가입중 문제가 발생했습니다.");
