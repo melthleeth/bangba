@@ -8,13 +8,14 @@
       <div class="container">
         <form @submit.prevent="submitForm">
           <div class="joindiv">
-            <label for="email">이메일 </label>
+            <label for="email">이메일</label>
             <input
               type="text"
               id="email"
               class="textarea"
               v-model="email"
               placeholder="cocktail@bangba.com"
+              required
             />
             <base-button class="redbutton" @click="authMail_Send()">인증메일 전송</base-button>
           </div>
@@ -26,6 +27,7 @@
               v-model="code"
               class="textarea"
               placeholder="이메일로 전송된 코드 입력"
+              required
             />
             <base-button mode="outline" v-model="authCode" @click="authCode_Check()">확인</base-button>
           </div>
@@ -34,15 +36,16 @@
             <input
               type="text"
               id="phone_numver"
-              v-model="phone_numver"
+              v-model="phone_number"
               class="textarea"
               placeholder="01012345678"
+              required
             />
-            <base-button class="redbutton">본인 인증</base-button>
+            
           </div>
           <div class="joindiv">
             <label for="birthday">생년월일</label>
-            <input type="date" class="date" />
+            <input type="date" class="date" v-model="date"/>
           </div>
           <div class="joindiv">
             <label for="nickname">닉네임</label>
@@ -51,6 +54,9 @@
               id="nickname"
               v-model="nickname"
               class="textarea"
+              required
+              minlength="2"
+              maxlength="10"
             />
             <base-button class="redbutton" @click="nickName_Check()">중복 확인</base-button>
             <div class="alertText">
@@ -65,8 +71,11 @@
               id="password"
               v-model="password"
               class="textarea"
+              required
+              minlength="8"
+              maxlength="20"
             />
-            <a>{{ message }}</a>
+            <!-- <a>{{ message }}</a> -->
             <div class="alertText">
               * 비밀번호는 영문과 숫자를 반드시 포함해 최소 8자, 최대 20자까지
               입력이 가능해요.
@@ -79,11 +88,14 @@
               id="passwordConfirm"
               v-model="passwordConfirm"
               class="textarea"
+              required
             />
-            <a>{{ message }}</a>
+            <!-- <a>{{ message }}</a> -->
           </div>
+          <div>{{ passmessage }}</div>
+
           <div class="joindiv">
-            <label><input type="checkbox" name="check" value="check" /> </label>
+            <label><input type="checkbox" name="check" value="check"  v-model="checked"/> </label>
             모든
 
             <base-modal @close="hideDialog" :open="dialogIsVisible_terms">
@@ -126,8 +138,8 @@
             에 동의합니다.
           </div>
           <div style="text-align:left">
-            <base-button>회원 가입</base-button>
-            <base-button mode="outline">취소</base-button>
+            <base-button @click="join_Check()">회원 가입</base-button>
+            <base-button mode="outline"  @click="goback()" >취소</base-button>
           </div>
         </form>
       </div>
@@ -138,16 +150,20 @@
 <script>
 
 export default {
+
   data() {
     return {
+      
       date: new Date(),
       checked:false,
       authCode_Spring: "",
+      passmessage:"",
       dialogIsVisible_terms: false,
       dialogIsVisible_personal: false,
     };
   },
   methods: {
+    
     authMail_Send(){
       if(this.email==null){
         alert("아이디를 입력해주세요.");
@@ -211,7 +227,57 @@ export default {
       }
     },
 
+    join_Check(){
+      if(this.checked==false){
+        alert("약관에 동의해주세요.");
 
+      }
+      else{
+        // var repl=this.date.replace("-","");
+        let params={
+          email: this.email,
+          password: this.password,
+          user_name: this.nickname,
+          birth: this.date.replace("-","").replace("-",""),
+          phone_number: this.phone_number,
+          user_type:0,
+          banned:false,
+          img_path:"",
+        }
+
+
+        const headers = {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+      }
+
+        this.axios.post('http://localhost:8081/user/join',
+        JSON.stringify(params),
+        { headers }
+      )
+      .then((result)=>{
+          console.log(result)
+      })
+      .catch(e=>{
+          console.log('error:',e)
+      })
+      }
+        
+      
+    },
+
+    passDupl_Check(){
+      if(this.password===this.passwordConfirm){
+        this.passmessage="비밀번호가 같습니다."
+      }else{
+        this.passmessage="비밀번호가 다릅니다."
+      }
+    },
+
+    goback(){
+      this.$router.go(-1)
+    },
 
     showDialog_terms() {
       this.dialogIsVisible_terms = true;
