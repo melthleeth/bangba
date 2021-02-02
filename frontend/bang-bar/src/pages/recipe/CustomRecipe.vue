@@ -77,7 +77,7 @@
         class="w-max"
         mode="important"
         link
-        to="recipeRegisterLink"
+        to="register/custom"
         >레시피 등록</base-button
       >
     </section>
@@ -155,11 +155,6 @@ export default {
       cocktails: recipe.data,
     };
   },
-  computed: {
-    recipeRegisterLink() {
-       return '/recipe/register/custom';
-    }
-  }
 };
 </script>
 
