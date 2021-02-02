@@ -7,11 +7,11 @@ import SignUp from "./pages/account/SignUp.vue";
 import FindPassword from "./pages/account/FindPassword.vue";
 
 // users
-import EditProfile from './pages/users/EditProfile.vue';
-import BookmarkedRecipe from './pages/users/BookmarkedRecipe.vue';
-import MyPosts from './pages/users/MyPosts.vue';
-import ActivityLog from './pages/users/ActivityLog.vue';
-import FollowingFollowers from './pages/users/FollowingFollowers.vue';
+import EditProfile from "./pages/users/EditProfile.vue";
+import BookmarkedRecipe from "./pages/users/BookmarkedRecipe.vue";
+import MyPosts from "./pages/users/MyPosts.vue";
+import ActivityLog from "./pages/users/ActivityLog.vue";
+import FollowingFollowers from "./pages/users/FollowingFollowers.vue";
 
 // header menus
 import SearchRecipe from "./pages/search/SearchRecipe.vue";
@@ -29,6 +29,9 @@ import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 import BoardCreate from "@/pages/board/BoardCreate";
 import BoardDetail from "@/pages/board/BoardDetail";
 
+// recipe
+import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -45,20 +48,34 @@ const router = createRouter({
     { path: "/recipe/custom", component: CustomRecipe },
     { path: "/board", component: BoardList },
     // header-dropdown
-    { path: '/header/editprofile', component: EditProfile },
-    { path: '/header/bookmarkedrecipe', component: BookmarkedRecipe },
-    { path: '/header/myposts', component: MyPosts },
-    { path: '/header/activitylog', component: ActivityLog },
-    { path: '/header/followingfollowers', component: FollowingFollowers },
+    { path: "/header/editprofile", component: EditProfile },
+    { path: "/header/bookmarkedrecipe", component: BookmarkedRecipe },
+    { path: "/header/myposts", component: MyPosts },
+    { path: "/header/activitylog", component: ActivityLog },
+    { path: "/header/followingfollowers", component: FollowingFollowers },
     { path: "/board/list", component: BoardList },
     // footer
     { path: "/footer/guide", component: BangbaGuide },
     { path: "/footer/people", component: BangbaPeople },
     { path: "/footer/ask", component: BangbaAsk },
-
-     //board
-    { path: "/board/create/:contentId?", name: "BoardCreate", component: BoardCreate },
-    { path: "/board/detail/:contentId", name: "BoardDetail", component: BoardDetail },
+    //board
+    {
+      path: "/board/create/:contentId?",
+      name: "BoardCreate",
+      component: BoardCreate,
+    },
+    {
+      path: "/board/detail/:contentId",
+      name: "BoardDetail",
+      component: BoardDetail,
+    },
+    // recipe
+    {
+      path: "/recipe/register",
+      name: "RecipeRegistration",
+      props: true,
+      component: RecipeRegistration,
+    },
   ],
 });
 
