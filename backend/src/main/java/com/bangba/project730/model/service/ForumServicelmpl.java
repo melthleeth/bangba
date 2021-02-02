@@ -23,7 +23,7 @@ public class ForumServicelmpl implements ForumService{
 	}
 
 	@Override
-	public List<SearchForumDto> searchForumList(Map<String, String> map) throws Exception {
+	public List<SearchForumDto> searchForumList(String keyword) throws Exception {
 		
 		/*
 		 * 여기는 포럼 게시판 리스트를 불러오는 곳입니다.
@@ -37,7 +37,7 @@ public class ForumServicelmpl implements ForumService{
 		 * created_at
 		 * */
 		// return (페이지 당 개시물 수),(페이지번호),(검색결과)에 해당하는 글
-		return dao.searchForumList();
+		return dao.searchForumList(keyword);
 	}
 
 	@Override
