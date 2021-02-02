@@ -8,11 +8,12 @@ import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.Article_cupDto;
 import com.bangba.project730.model.dto.Article_ingredientDto;
+import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TaglistDto;
 
 @Mapper
 public interface ArticleDao {
-	public int createArticle(ArticleDto articledto) throws Exception;
+	public void createArticle(ArticleDto articledto) throws Exception;
 	public ArticleDto searchArticle(TaglistDto taglistdto) throws Exception;
 	public int  searchArticlePK(ArticleDto articledto) throws Exception;
 	public void updateArticle(ArticleDto articledto) throws Exception;
@@ -22,7 +23,7 @@ public interface ArticleDao {
 	public void addArticleCup(Article_cupDto article_cupdto) throws Exception;
 	public void addArticleIngredient(Article_ingredientDto article_ingredientdto) throws Exception;
 	public void addArticleTag(int pk_article, int pk_tag) throws Exception;
-	public void addRecipe(String pk_article, String content, String order) throws Exception;
+	public void addRecipe(RecipeDto recipedto) throws Exception;
 
 	public void deleteArticleAlcohol(int pk_article, int pk_alcohol) throws Exception;
 	public void deleteArticleCup(int pk_article, int pk_cup) throws Exception;
