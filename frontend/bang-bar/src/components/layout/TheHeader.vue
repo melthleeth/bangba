@@ -22,7 +22,7 @@
         <base-modal
           @close="hideDialog"
           :open="dialogIsVisible"
-          class="flex flex-col justify-items-center"
+          class="flex flex-col justify-items-center z-40"
         >
           <section class="modal-header">
             <img src="../../assets/img/logo.png" alt="logo" />

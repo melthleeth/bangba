@@ -1,4 +1,7 @@
 module.exports = {
+  devServer: {
+    overlay:false
+  },
     configureWebpack: {
       module: {
         rules: [
@@ -8,5 +11,6 @@ module.exports = {
           }
         ]
       }
-    }
+  }
+  
   }
