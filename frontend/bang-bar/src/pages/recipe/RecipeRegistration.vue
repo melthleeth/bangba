@@ -81,7 +81,7 @@
             id="cupinfo"
             v-model="cupinfo.val"
           >
-            <option v-for="cup in cups" :key="cup.index" value="cup.index">{{
+            <option v-for="cup in cups" :key="cup.index" :value="cup.index">{{
               cup.val
             }}</option>
           </select>
@@ -408,7 +408,7 @@ export default {
       if (!this.formIsValid) return;
 
       const formData = {
-        category: this.mode,
+        category: this.category,
         img_path: this.img_path.val,
         title_kor: this.title_kor.val,
         title_eng: this.title_eng.val,
@@ -423,8 +423,8 @@ export default {
 
       console.log(formData);
 
-      await this.$store.dispatch("registerRecipe", formData);
-      this.$router.replace("/recipe/" + this.mode);
+      await this.$store.dispatch("recipes/registerRecipe", formData);
+      this.$router.replace("/recipe/" + this.category);
     },
   },
 };

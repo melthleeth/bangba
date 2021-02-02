@@ -6,7 +6,7 @@ import recipeModule from './modules/recipes/index.js';
 const store = createStore ({
     modules: {
         auth: authModule,
-        recipe: recipeModule,
+        recipes: recipeModule,
     }
 });
 

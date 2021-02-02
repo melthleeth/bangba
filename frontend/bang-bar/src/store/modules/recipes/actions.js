@@ -1,7 +1,7 @@
 export default {
   async registerRecipe(context, payload) {
-    console.log("context: " + context);
-    console.log("payload: " + payload);
+    console.log(context);
+    console.log(payload);
 
     /*
     {
@@ -20,11 +20,12 @@ export default {
     "recipe": "recipe1,recipe2,recipe3"
   }
     */
-    const userId = context.rootGetters.userId;
+    // const userId = context.rootGetters.userId;
+    const userId = "test@test.com";
     const recipeData = {
       userId: userId,
       created_at: new Date().toLocaleTimeString(), // 변경 가능
-      category: payload.mode,
+      category: payload.category,
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,
@@ -37,14 +38,24 @@ export default {
       recipe: payload.recipes,
     };
 
-    const token = context.rootGetters.token;
+    // const token = context.rootGetters.token;
+    const url = 'http://localhost:8081/article/create';
     const response = await fetch(
-      `https://vue-http-demo-b9415-default-rtdb.firebaseio.com/recipes/${userId}.json?auth=${token}`,
+      url,
       {
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+        },
         method: "PUT",
         body: JSON.stringify(recipeData),
       }
     );
+    const responseData = await response.json();
+    console.log("responseData")
+    console.log(responseData);
 
     if (!response.ok) {
       // ...

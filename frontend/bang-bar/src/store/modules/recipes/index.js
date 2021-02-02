@@ -8,7 +8,8 @@ export default {
     return {
         lastFetch: null,
       // dummy data
-      recipes: [
+      recipes: [],
+      recipe: [
         {
           username: "관리자",
           category: "official",
