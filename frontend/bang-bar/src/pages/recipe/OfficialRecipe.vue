@@ -9,7 +9,7 @@
         class="w-max"
         mode="important"
         link
-        to="{name: 'RecipeRegistration', params: { mode: 'official' }}"
+        to="recipeRegisterLink"
         >레시피 등록</base-button
       >
     </section>
@@ -85,6 +85,7 @@ export default {
   data() {
     return {
       cocktails: recipe.data,
+      recipeRegisterLink: '/recipe/register/official',
     };
   },
 };

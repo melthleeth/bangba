@@ -123,6 +123,10 @@ export default {
   color: #DDDDDD;
 }
 
+.font-red {
+  color: #FF0000;
+}
+
 * {
   box-sizing: border-box;
 }

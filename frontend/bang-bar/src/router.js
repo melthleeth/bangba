@@ -71,7 +71,7 @@ const router = createRouter({
     },
     // recipe
     {
-      path: "/recipe/register",
+      path: "/recipe/register/:category",
       name: "RecipeRegistration",
       props: true,
       component: RecipeRegistration,

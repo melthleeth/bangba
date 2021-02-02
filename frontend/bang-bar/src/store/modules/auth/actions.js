@@ -2,6 +2,8 @@ let timer;
 
 export default {
   async login(context, payload) {
+    console.log(payload);
+    
     return context.dispatch('auth', {
       ...payload,
       mode: 'login',

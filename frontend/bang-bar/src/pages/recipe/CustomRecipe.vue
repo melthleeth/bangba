@@ -72,6 +72,15 @@
         <section class="font-S-CoreDream-light"></section>
       </base-card>
     </section>
+    <section class="flex justify-end mx-12">
+      <base-button
+        class="w-max"
+        mode="important"
+        link
+        to="recipeRegisterLink"
+        >레시피 등록</base-button
+      >
+    </section>
     <section class="flex items-center mx-64 mb-12 font-S-CoreDream-light">
       <div class="inline-block relative w-max">
             <select
@@ -146,6 +155,11 @@ export default {
       cocktails: recipe.data,
     };
   },
+  computed: {
+    recipeRegisterLink() {
+       return '/recipe/register/custom';
+    }
+  }
 };
 </script>
 
