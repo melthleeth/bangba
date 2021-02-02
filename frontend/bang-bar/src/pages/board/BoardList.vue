@@ -39,9 +39,11 @@
             id="search"
             type="text"
             placeholder="검색"
+            v-model="keyword"
+            @keydown.enter="search_board()"
           />
         </div>
-        <base-button>검색</base-button>
+        <base-button @click="search_board()">검색</base-button>
       </article>
     </section>
     <paginated-list :list-array="items" />
@@ -61,6 +63,7 @@ export default {
   
   name: "BoardList",
   data() {
+    
     // 정렬 : https://blog.naver.com/haskim0716n/221681695401
     let contentItems = data.Content.sort((a, b) => {
       return b.content_id - a.content_id;
@@ -80,6 +83,7 @@ export default {
     
     return {
       // pageArray: [],
+      keyword:"",
       currentPage: 1, // 현재 페이지
       perPage: 10, // 페이지당 보여줄 갯수
       pageSize:10,
@@ -126,6 +130,7 @@ export default {
       });
     },
     getList() {
+
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
         this.axios.get('http://localhost:8081/forum/search-forum-list', {
         headers: {
@@ -142,6 +147,24 @@ export default {
         console.log('error:',e)
       })
     },
+
+
+    search_board(){
+      this.axios.get('http://localhost:8081/forum/search-forum-list/'+this.keyword, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json; charset = utf-8'
+        }
+      })
+      .then((result)=>{
+        // this.items=result;
+        console.log(result)
+        this.items = result.data
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
+    }
   },
   computed: {
     rows() {

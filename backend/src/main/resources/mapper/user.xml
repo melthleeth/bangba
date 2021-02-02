@@ -27,7 +27,7 @@
 	</select>
 	
 	<select id="getMyPage" parameterType="Integer" resultType="UserDto">
-		select select pk_user, email, user_name, birth, phone_number, img_path
+		select pk_user, email, user_name, birth, phone_number, img_path
 		from user
 		where pk_user = #{pk_user}
 	</select>

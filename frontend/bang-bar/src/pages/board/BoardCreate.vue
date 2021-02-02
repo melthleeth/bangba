@@ -5,13 +5,13 @@
         
 
         <div>
-            <textarea class="whiteboard" placeholder="제목을 입력해주세요." v-model="subject">
+            <textarea class="whiteboard" placeholder="제목을 입력해주세요." v-model="title">
 
             </textarea>
         </div>
         
         <div>
-            <textarea  class="whiteboard" style="min-height:500px" v-model="context" placeholder="내용을 입력해주세요.">
+            <textarea  class="whiteboard" style="min-height:500px" v-model="content" placeholder="내용을 입력해주세요.">
             
             </textarea>
         </div>
@@ -35,11 +35,12 @@ export default {
   name: 'BoardCreate',
   data() {
     return {
-      subject: '',
+      category:'후기',
+      title: '',
       context: '',
       user_id: 1,
-      created_at: "2018-09-11",
-      updated_at: null,
+      created_at: new Date(),
+      updated_at: new Date(),
       updateObject: null,
       updateMode: this.$route.params.contentId > 0 ? true : false,
     }
@@ -55,21 +56,45 @@ export default {
   methods: {
     uploadContent() { // 저장
 
-        let contentItems = data.Content.sort((a, b) => { return b.content_id - a.content_id });
-        const content_id = contentItems[0].content_id + 1;  // 마지막 데이터의 id + 1
+        // let contentItems = data.Content.sort((a, b) => { return b.content_id - a.content_id });
+        // const content_id = contentItems[0].content_id + 1;  // 마지막 데이터의 id + 1
+        // alert(this.created_at);
+        console.log(this.created_at);
 
-        data.Content.push({
-          content_id: content_id,
-          user_id: this.user_id,
-          title: this.subject,
-          context: this.context,
-          created_at: this.created_at,
-          updated_at: this.updated_at
-        })
+        let params={
+          title: this.title,
+          category: this.category,
+          content: this.content,
+          // created_at: this.created_at.replace("-","").replace("-",""), 
+          // updated_at: this.updated_at.replace("-","").replace("-",""),
 
-        this.$router.push({
-          path: '/board/list'
-        })
+          created_at:20210202000000,
+          updated_at:20210202000000,
+          user_no:9,
+        }
+        const headers = {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+      }
+
+        this.axios.post('http://localhost:8081/forum/create-forum',
+        JSON.stringify(params),
+        { headers }
+      )
+      .then((result)=>{
+          console.log(result)
+          this.$router.push({
+            path:'/home'
+          });
+      })
+      .catch(e=>{
+          console.log('error:',e)
+      })
+
+        // this.$router.push({
+        //   path: '/board/list'
+        // })
     },
     updateContent() { // 수정
         this.updateObject.title = this.subject;
