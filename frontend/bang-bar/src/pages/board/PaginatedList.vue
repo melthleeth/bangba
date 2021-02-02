@@ -20,11 +20,11 @@
             v-for="item in paginatedData"
             :key="item.no"
           >
-            <td class="py-4 text-sm">{{ item.content_id }}</td>
+            <td class="py-4 text-sm">{{ item.category }}</td>
             <td class="text-left font-semibold">{{ item.title }}</td>
             <td class="">{{ item.user_name }}</td>
             <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
-            <td class="text-sm">{{ item.user_id }}</td>
+            <td class="text-sm">{{ item.hits }}</td>
           </tr>
           </tbody>
       </table>
@@ -98,30 +98,9 @@ export default {
         path: `/board/create`
       });
     },
-   
-    getMembers () {
-        // this.axios.get(`${SERVER_URL}/forum/search-forum-list/${this.keyword}`, {
-        this.axios.get('http://localhost:8081/forum/search-forum-list/'+ this.keyword, {
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8'
-        }
-      })
-      .then((result)=>{
-        console.log(result)
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
-    },
 
   },
-  mounted: {
-      getMembers(){ 
-        console.log('hi')
 
-       }
-  },
   computed: {
     pageCount () {
       let listLeng = this.listArray.length,
