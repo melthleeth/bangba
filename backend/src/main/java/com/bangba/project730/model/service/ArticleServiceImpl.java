@@ -1,9 +1,7 @@
 package com.bangba.project730.model.service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +11,9 @@ import com.bangba.project730.model.dao.ArticleDao;
 import com.bangba.project730.model.dao.CupDao;
 import com.bangba.project730.model.dao.IngredientDao;
 import com.bangba.project730.model.dao.TagDao;
-import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.Article_ingredientDto;
-import com.bangba.project730.model.dto.Article_tagDto;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
@@ -126,12 +122,11 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 	@Override
-	public ArticleDto searchArticle(Map<String, String> map) throws Exception {
+	public List<ArticleDto> searchArticle(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		TaglistDto tldto = new TaglistDto();
-		String s = map.get("searchtxt");
-		tldto.setSearchtxt(s);
-		s=map.get("tag");
+		tldto.setSearchtxt(map.get("searchtxt"));
+		String s = map.get("tag");
 		String[] ss=s.split(",");
 		int i=0;
 		for(String a:ss)
@@ -183,27 +178,17 @@ public class ArticleServiceImpl implements ArticleService{
 		ArticleDto dto =  new ArticleDto();
 		
 		//아티클 생성
-		dto.setUser_no(Integer.parseInt(map.get("user_no")));
 		dto.setTitle_kor(map.get("title_kor"));
 		dto.setTitle_eng(map.get("title_eng"));
-		dto.setLike_cnt(0);
-		dto.setBookmark_cnt(0);
-		dto.setHits(0);
-		dto.setCreated_at(map.get("created_at"));
-		dto.setUpdated_at("created_at");
-		dto.setLike_weekly(0);
+		dto.setUpdated_at(map.get("updated_at"));
 		dto.setContent(map.get("content"));
 		dto.setImg_path(map.get("img_path"));
-		if(map.get("category").equals("admin"))
-			dto.setCategory(true);
-		else
-			dto.setCategory(false);
-		dto.setAbv(Integer.parseInt(map.get("abv")));
+		//dto.setAbv(Integer.parseInt(map.get("abv")));
 		dto.setCup_no(Integer.parseInt(map.get("cup_no")));
-		
+
+		dao.updateArticle(dto);
 		//생성된 아티클의 pk를 유저번호, 제목, 시간으로 찾고 그중에 가장 나중에 만들어진 pk를 가져옴
 		int pk=dao.searchArticlePK(dto);
-		dao.updateArticle(dto);
 	}
 
 	@Override
@@ -222,7 +207,11 @@ public class ArticleServiceImpl implements ArticleService{
 		idto.setContent("새로추가된 재료");
 		idao.addIngredient(idto);
 	}
-
+	@Override
+	public List<IngredientDto> searchIngredient(String searchtxt) throws Exception {
+		// TODO Auto-generated method stub
+		return idao.searchIngredient(searchtxt);
+	}
 	@Override
 	public void createTag(String content, int type) throws Exception {
 		// TODO Auto-generated method stub
@@ -232,5 +221,7 @@ public class ArticleServiceImpl implements ArticleService{
 		tdto.setType(type);
 		tdao.addTag(tdto);
 	}
+
+	
 	
 }

@@ -1,6 +1,6 @@
 package com.bangba.project730.model.dao;
 
-import java.util.Map;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,9 +14,10 @@ import com.bangba.project730.model.dto.TaglistDto;
 @Mapper
 public interface ArticleDao {
 	public void createArticle(ArticleDto articledto) throws Exception;
-	public ArticleDto searchArticle(TaglistDto taglistdto) throws Exception;
+	public List<ArticleDto> searchArticle(TaglistDto taglistdto) throws Exception;
 	public int  searchArticlePK(ArticleDto articledto) throws Exception;
 	public void updateArticle(ArticleDto articledto) throws Exception;
+	public int  searchUpdateArticlePK(ArticleDto articledto) throws Exception;
 	public void deleteArticle(int pk_article) throws Exception;
 
 	public void addArticleAlcohol(Article_alcoholDto article_alcoholdto) throws Exception;
