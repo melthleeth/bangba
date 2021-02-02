@@ -29,9 +29,12 @@
 		where target_no = #{user_no})
 	</select>
 	
-	<select id="selectFollowingList" parameterType="Integer" resultType="UserDto"></select>
-	
-	
-	
-	
+	<select id="selectFollowingList" parameterType="Integer" resultType="UserDto">
+		select user_name
+		from user 
+		where pk_user in 
+		(select target_no
+		from follow
+		where user_no = #{user_no})
+	</select>
 </mapper>
