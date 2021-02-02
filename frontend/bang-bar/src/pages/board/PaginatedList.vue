@@ -29,8 +29,6 @@
           </tbody>
       </table>
     </section>
-    <!-- 아니 왜 span 태그 style 안먹히는겨  -->
-    <!-- 이미지를 넣어야댐 -->
     <section class="font-sm flex justify-center items-center mt-2 mb-6">
       <base-button
         mode="outline"
@@ -52,12 +50,16 @@
 </template>
 
 <script>
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 
 export default {
   name: 'paginated-list',
+  
   data () {
+    
     return {
+      keyword:"포럼",
       pageNum: 0
     }
   },
@@ -72,6 +74,7 @@ export default {
       default: 10
     }
   },
+  
   methods: {
     nextPage () {
       this.pageNum += 1;
@@ -94,9 +97,30 @@ export default {
       this.$router.push({
         path: `/board/create`
       });
-    }
+    },
+   
+    getMembers () {
+        // this.axios.get(`${SERVER_URL}/forum/search-forum-list/${this.keyword}`, {
+        this.axios.get('http://localhost:8081/forum/search-forum-list/'+ this.keyword, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json; charset = utf-8'
+        }
+      })
+      .then((result)=>{
+        console.log(result)
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
+    },
 
+  },
+  mounted: {
+      getMembers(){ 
+        console.log('hi')
 
+       }
   },
   computed: {
     pageCount () {
