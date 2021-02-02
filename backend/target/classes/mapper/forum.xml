@@ -5,20 +5,40 @@
 <mapper namespace="com.bangba.project730.model.dao.ForumDao">
 	<!-- 포럼 생성 -->
 	<insert id="createForum" parameterType="ForumDto">
-		insert into article (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
+		insert into forum (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
 		values (#{user_no}, #{title}, #{category}, #{like_cnt}, #{hits}, #{created_at}, #{updated_at}, #{content})	
 	</insert>
 	
 	<!-- 포럼 리스트 보기 -->
-	<select id="searchForumList" resultType="int" parameterType="ForumDto">
-	<![CDATA[
-		select * from forum order by pk_forum DESC
-	]]>
+	<select id="searchForumList" resultType="searchForumDto" parameterType="String">
+	<!-- 우선은 제목만 검색 기능 넣어요 -->
+		select 
+			a.pk_forum
+			, a.title
+			, a.category
+			, a.hits
+			, a.created_at
+		from forum as a
+		where title like concat('%', #{keyword}, '%')
+		order by pk_forum DESC
+	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
 	</select>
 	
 	<!-- 포럼 상세보기 -->
 	<select id="detailForum" resultType="int" parameterType="ForumDto">
-		select * from forum where pk_forum = #{pk_forum}
+		select 
+			A.pk_forum
+			, A.title
+			, A.category
+			, A.hits
+            , A.like_cnt
+			, A.created_at
+            , A.updated_at
+            , A.content
+			, B.user_name
+		from forum as A
+		inner join user as B on A.user_no = B.pk_user
+        where pk_forum = #{pk_forum};
 	</select>
 	
 	<!-- 포럼 삭제 -->
