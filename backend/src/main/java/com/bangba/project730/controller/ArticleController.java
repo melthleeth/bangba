@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.IngredientDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.service.ArticleService;
 
 import io.swagger.annotations.ApiOperation;
@@ -90,6 +92,21 @@ public class ArticleController {
 			return "error";
 		}
 	}
+	@ApiOperation(value = "주류 검색", response = String.class)
+	@PostMapping("/alcohol/{searchtxt}")
+	public String searchAlcohol(@RequestParam String searchtxt, Model model) throws Exception {
+		try {
+			List<AlcoholDto> adto = articleService.searchAlcohol(searchtxt);
+			for(AlcoholDto a:adto)
+				System.out.println(a.getName_kor());
+			model.addAttribute("msg", "재료 검색 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
 	@ApiOperation(value = "재료 추가", response = String.class)
 	@PostMapping("/ingredient")
 	public String createIngredient(@RequestParam String ingredient, Model model) throws Exception {
@@ -106,7 +123,7 @@ public class ArticleController {
 		}
 	}
 	@ApiOperation(value = "재료 검색", response = String.class)
-	@PostMapping("/search/{searchtxt}")
+	@PostMapping("/ingredient/{searchtxt}")
 	public String searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
 			List<IngredientDto> idto = articleService.searchIngredient(searchtxt);
@@ -116,7 +133,7 @@ public class ArticleController {
 			return "main";
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "재료 추가중 문제가 발생했습니다.");
+			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
 			return "error";
 		}
 	}
@@ -133,7 +150,21 @@ public class ArticleController {
 			return "error";
 		}
 	}	
-	
+	@ApiOperation(value = "태그 검색", response = String.class)
+	@PostMapping("/tag/{searchtxt}")
+	public String searchTag(@RequestParam String searchtxt, Model model) throws Exception {
+		try {
+			List<TagDto> tdto = articleService.searchTag(searchtxt);
+			for(TagDto a:tdto)
+				System.out.println(a.getContent_kor());
+			model.addAttribute("msg", "태그 검색 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "태그 검색중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
 	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
  

@@ -9,7 +9,11 @@
 	</insert>
 	<select id="searchTag" resultType="TagDto" parameterType="String">
 		select * from tag
-		where content_kor like '%' + #{content} + '%' or content_eng like '%' + #{content} + '%'
+		where content_kor like concat('%', #{searchtxt}, '%') or content_eng like concat('%', #{searchtxt}, '%')
+	</select>
+	<select id="searchArticleTag" resultType="TagDto" parameterType="int">
+		select * from tag
+		where pk_tag in (select tag_no from article_tag where article_no =  #{pk_article}) 
 	</select>
 	<select id="searchTagPK" resultType="int" parameterType="String">
 		select pk_tag from tag

@@ -9,7 +9,7 @@ import com.bangba.project730.model.dto.IngredientDto;
 public interface IngredientDao {
 	
 	public void addIngredient(IngredientDto ingredientDto) throws Exception;
-	public List<IngredientDto> searchIngredient(String name) throws Exception;
+	public List<IngredientDto> searchIngredient(String searchtxt) throws Exception;
 	public int searchIngredientPK(String name) throws Exception;
 	
 }

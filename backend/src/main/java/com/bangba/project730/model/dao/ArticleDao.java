@@ -26,9 +26,9 @@ public interface ArticleDao {
 	public void addArticleTag(int pk_article, int pk_tag) throws Exception;
 	public void addRecipe(RecipeDto recipedto) throws Exception;
 
-	public void deleteArticleAlcohol(int pk_article, int pk_alcohol) throws Exception;
+	public void deleteArticleAlcohol(int pk_article) throws Exception;
 	public void deleteArticleCup(int pk_article, int pk_cup) throws Exception;
-	public void deleteArticleIngredient(int pk_article, int pk_ingredient) throws Exception;
-	public void deleteArticleTag(int pk_article, int pk_tag) throws Exception;
-	public void deleteRecipe(int pk_article, int order) throws Exception;
+	public void deleteArticleIngredient(int pk_article) throws Exception;
+	public void deleteArticleTag(int pk_article) throws Exception;
+	public void deleteRecipe(int pk_article) throws Exception;
 }
