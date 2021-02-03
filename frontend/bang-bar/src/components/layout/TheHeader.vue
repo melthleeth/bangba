@@ -169,6 +169,7 @@ export default {
   watch: {
     setUsername: function(newVal) {
       this.username = newVal;
+      console.log(this.$store.getters.pk_user);
     }
   },
   methods: {
