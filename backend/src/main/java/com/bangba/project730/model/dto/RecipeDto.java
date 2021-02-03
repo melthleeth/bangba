@@ -7,7 +7,7 @@ public class RecipeDto {
 	
 	private String content;
 	
-	private int order;
+	private int num;
 
 	public int getPk_recipe() {
 		return pk_recipe;
@@ -32,13 +32,13 @@ public class RecipeDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-	public int getOrder() {
-		return order;
+	
+	public int getNum() {
+		return num;
 	}
 
-	public void setOrder(int order) {
-		this.order = order;
+	public void setNum(int num) {
+		this.num = num;
 	}
-
+	
 }

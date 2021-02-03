@@ -9,8 +9,8 @@ import java.util.Random;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,60 +20,68 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bangba.project730.model.dto.FollowDto;
 import com.bangba.project730.model.dto.UserDto;
+import com.bangba.project730.model.service.FollowService;
 import com.bangba.project730.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@Controller
+@RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private FollowService followService;
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
-	@ResponseBody
-	public String createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
+	public UserDto createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
 			Model model) throws Exception {
 		if (userService.isDuplicatedEmail(userDto.getEmail()) != 0
 				|| userService.isDuplicatedName(userDto.getUser_name()) != 0) {
-			return "FAIL";
+			return userService.getMyPage(-1);
 		} else {
 			try {
 				userService.createUser(userDto);
 				model.addAttribute("msg", "회원가입 완료");
-				return "SUCCESS";
+				return userService.getMyPage(userDto.getPk_user());
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "회원가입중 문제가 발생했습니다.");
-				return "FAIL";
+				
 			}
 		}
+		return userService.getMyPage(-1);
 	}
-
+	
+	
 	@ApiOperation(value = "로그인", response = String.class)
-	@PostMapping(value = "/login")
-	@ResponseBody
-	public String login(@RequestBody @ApiParam(value = "로그인 정보를 담는 객체", required = true) Map<String, String> map,
-			Model model, HttpSession session) {
+	@PostMapping(value = "/login",  headers = { "Content-type=application/json" })
+	public UserDto login(@RequestBody @ApiParam(value = "로그인 정보를 담는 객체", required = true) Map<String, String> map,
+			Model model) {
+//		System.out.println(map);
 		try {
 			UserDto user = userService.login(map);
 			if (user != null) {
-				session.setAttribute("userinfo", user);
-				return "SUCCESS";
+				System.out.println(user.getPk_user());
+				return userService.getMyPage(user.getPk_user());
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 로그인해 주세요.");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "로그인 중 문제가 발생했습니다.");
-			return "error/error";
 		}
-		return "FAIL";
+		return userService.getMyPage(-1);
 	}
 
 	@ApiOperation(value = "로그아웃", response = String.class)
@@ -85,9 +93,9 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "이메일 중복 확인 및 인증", response = String.class)
-	@PostMapping(value = "/join/mail")
+	@PostMapping(value = "/join/mail/{toAddress}")
 	@ResponseBody
-	public String messageSend(@RequestBody @ApiParam(value = "회원가입에 필요한 이메일", required = true) String toAddress,
+	public String messageSend(@PathVariable @ApiParam(value = "회원가입에 필요한 이메일", required = true) String toAddress,
 			Model model) {
 		int result = userService.isDuplicatedEmail(toAddress);
 		if (result != 0) { // 이미 이메일이 존재할 때
@@ -95,11 +103,10 @@ public class UserController {
 		} else { // 이메일이 존재하지 않을 때
 			try {
 				String code = makeCode();
-				String codeMsg = "인증코드는 " + code + " 입니다.";
+				String codeMsg = "인증코드는 [" + code + "] 입니다.";
 				userService.sendEmail(toAddress, "방바! 이메일 인증 발송 코드입니다.", codeMsg);
-				model.addAttribute("authCode", code);
 				model.addAttribute("msg", "인증번호가 발송되었습니다.");
-				return "SUCCESS";
+				return code;
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "이메일 인증에 실패했습니다.");
@@ -109,20 +116,20 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "닉네임 중복 확인", response = String.class)
-	@PostMapping(value = "/join/name")
-	@ResponseBody
-	public String confirmName(@RequestBody @ApiParam(value = "회원가입에 필요한 닉네임", required = true) String user_name,
-			Model model) {
-		int result = userService.isDuplicatedName(user_name);
-
-		if (result != 0) { // 이미 사용중인 닉네임일 경우
-			model.addAttribute("msg", "이미 사용중인 닉네임입니다.");
-			return "FAIL";
-		} else {
-			model.addAttribute("msg", "사용가능한 닉네임입니다.");
-			return "SUCCESS";
-		}
-	}
+    @PostMapping(value = "/join/{user_name}")
+    @ResponseBody
+    public String confirmName(@PathVariable @ApiParam(value = "회원가입에 필요한 닉네임", required = true) String user_name,
+            Model model) {
+        int result = userService.isDuplicatedName(user_name);
+        
+        if (result != 0) { // 이미 사용중인 닉네임일 경우
+            model.addAttribute("msg", "이미 사용중인 닉네임입니다.");
+            return "FAIL";
+        } else {
+            model.addAttribute("msg", "사용가능한 닉네임입니다.");
+            return "SUCCESS";
+        }
+    }
 
 	@ApiOperation(value = "마이페이지 수정 - 먼저 패스워드만 가능", response = String.class)
 	@PutMapping(value = "/mypage/options/pw")
@@ -217,5 +224,55 @@ public class UserController {
 			}
 		}
 		return temp;
+	}
+	
+	
+	@ApiOperation(value = "팔로우 하기", response = String.class)
+	@PostMapping(value = "/follow")
+	public String follow(@ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+			Model model) {
+		try {
+			followService.follow(followDto);
+			model.addAttribute("msg", "팔로우에 성공했습니다.");
+			return "SUCCESS";
+		} catch (Exception e) {
+			model.addAttribute("msg", "팔로우에 실패했습니다.");
+		}
+		return "FAIL";
+	}
+	
+	@ApiOperation(value = "언팔로우 하기", response = String.class)
+	@PostMapping(value = "/unfollow")
+	public String unfollow(@ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+			Model model) {
+		try {
+			followService.unfollow(followDto);
+			model.addAttribute("msg", "팔로우에 성공했습니다.");
+			return "SUCCESS";
+		} catch (Exception e) {
+			model.addAttribute("msg", "팔로우에 실패했습니다.");
+		}
+		return "FAIL";
+	}
+	
+	@ApiOperation(value = "팔로우 여부 확인하기", response = String.class)
+	@GetMapping(value = "/isfollow")
+	public int isFollow(@ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+			Model model) {
+		return followService.isFollow(followDto);
+	}
+	
+	@ApiOperation(value = "팔로워 확인하기", response = String.class)
+	@GetMapping(value = "/follow/{user_no}/ec")
+	public List<UserDto> selectFollowerList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
+			Model model) {
+		return followService.selectFollowerList(user_no);
+	}
+	
+	@ApiOperation(value = "팔로잉 확인하기", response = String.class)
+	@GetMapping(value = "/follow/{user_no}/ic")
+	public List<UserDto> selectFollowingList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
+			Model model) {
+		return followService.selectFollowingList(user_no);
 	}
 }

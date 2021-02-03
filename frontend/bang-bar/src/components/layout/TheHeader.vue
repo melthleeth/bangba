@@ -22,7 +22,7 @@
         <base-modal
           @close="hideDialog"
           :open="dialogIsVisible"
-          class="flex flex-col justify-items-center"
+          class="flex flex-col justify-items-center z-40"
         >
           <section class="modal-header">
             <img src="../../assets/img/logo.png" alt="logo" />
@@ -83,7 +83,7 @@
             >
               <div
                 v-if="context.open"
-                class="origin-top-right absolute -right-6 mt-14 w-max bg-white text-center border border-transparent overflow-hidden rounded-3xl shadow-2xl"
+                class="origin-top-right absolute -right-6 mt-14 w-max bg-white text-center border border-transparent overflow-hidden rounded-3xl shadow-2xl z-40"
               >
                 <ul>
                   <li>
@@ -162,6 +162,14 @@ export default {
       isLoading: false,
       error: null,
     };
+  },
+  computed: {
+    setUsername() { return this.$store.getters.userName }
+  },
+  watch: {
+    setUsername: function(newVal) {
+      this.username = newVal;
+    }
   },
   methods: {
     showDialog() {

@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
 
+import { createApp } from 'vue'
+import axios from 'axios'
 import router from './router.js';
 import store from './store/index.js';
 import App from './App.vue';
+
+
 
 import './assets/styles/index.css';
 
@@ -15,7 +18,10 @@ import BaseSpinner from './components/ui/BaseSpinner.vue';
 import BaseDialog from './components/ui/BaseDialog.vue';
 import SideMenu from './components/ui/SideMenu.vue';
 
+
 const app = createApp(App);
+
+app.config.globalProperties.axios = axios;
 
 app.use(router);
 app.use(store);
