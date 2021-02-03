@@ -12,9 +12,10 @@ public interface ForumDao {
 	public int createForum(ForumDto forumdto) throws Exception;
 	public List<SearchForumDto> searchForumList() throws Exception;
 	public List<SearchForumDto> searchForumKeyword(String keyword) throws Exception;
-	public ForumDto read(int pk_forum) throws Exception;
+	public ForumDto detailForum(int pk_forum) throws Exception;
 	public void updateForum(ForumDto forumDto) throws Exception;
 	public void deleteForum(int pk_forum) throws Exception;
+	public void updateHits(int hits) throws Exception;
 
 
 }

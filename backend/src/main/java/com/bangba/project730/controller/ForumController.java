@@ -1,7 +1,6 @@
 package com.bangba.project730.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangba.project730.model.dto.ForumDto;
@@ -58,6 +56,13 @@ public class ForumController {
 		return forumService.searchForumKeyword(keyword);
 	}
 	
+	
+	@ApiOperation(value = "자유게시판 상세페이지")
+	@GetMapping("/{pk_forum}")
+	public ForumDto detailForum(@PathVariable @ApiParam(value = "자유게시판 하나에 대한 상세정보", required = true) int pk_forum) throws Exception {
+		forumService.updateHits(pk_forum);
+		return forumService.detailForum(pk_forum);
+	}
 	
 	@ApiOperation(value = "자유게시판 수정")
 	@PutMapping("/update-forum")
