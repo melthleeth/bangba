@@ -45,7 +45,7 @@
     	or content_kor like #{tag10} or content_eng like #{tag10}
   		</if>
   		)) 
-		and title_kor like "%" + #{searchtxt} + "%" or title_eng like "%" + #{searchtxt} + "%" 
+		and (title_kor like concat('%', #{searchtxt}, '%') or title_eng like concat('%', #{searchtxt}, '%')) 
 	</select>
 	
 	<select id="searchArticlePK" resultType="int" parameterType="ArticleDto">
@@ -54,12 +54,17 @@
 	</select>
 	
 	<update id="updateArticle" parameterType="ArticleDto">
-		update article set user_no = #{user_no}, title_kor = #{title_kor}, title_eng = #{title_eng}, like_cnt = #{like_cnt},
-		bookmark_cnt = #{bookmark_cnt}, hits = #{hits}, created_at = #{created_at}, updated_at = #{updated_at}
+		update article set 
+		title_kor = #{title_kor}, title_eng = #{title_eng}, updated_at = #{updated_at}, content = #{content}, img_path = #{img_path}, 
 		where pk_article = #{pk_article}
 	</update>
 	
-	<delete id="deleteArticle" parameterType="String">
+	<select id="searchUpdateArticlePK" resultType="int" parameterType="ArticleDto">
+		select max(pk_article) from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and updated_at = #{updated_at}
+	</select>
+	
+	<delete id="deleteArticle" parameterType="int">
 		delete from article
 		where pk_article = #{pk_article}
 	</delete>
