@@ -31,8 +31,11 @@ import BoardDetail from "@/pages/board/BoardDetail";
 
 // recipe
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
+<<<<<<< HEAD
 // test vue
 import TEST from "@/pages/account/test.vue";
+=======
+>>>>>>> 463de4f0f09b3b047ed2e46ae795bc87de8ee382
 
 const router = createRouter({
   history: createWebHistory(),
@@ -78,9 +81,12 @@ const router = createRouter({
       props: true,
       component: RecipeRegistration,
     },
+<<<<<<< HEAD
 
     //test
     { path: "/test", component: TEST },
+=======
+>>>>>>> 463de4f0f09b3b047ed2e46ae795bc87de8ee382
   ],
 });
 
