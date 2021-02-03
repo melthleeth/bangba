@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:7300")
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
@@ -41,7 +41,6 @@ public class UserController {
 	@Autowired
 	private FollowService followService;
 
-	@CrossOrigin(origins = "http://localhost:8080")
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
 	public UserDto createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,

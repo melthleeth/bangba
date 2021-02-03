@@ -61,11 +61,9 @@ export default {
     localStorage.setItem('token', responseData.idToken);
     localStorage.setItem('userId', responseData.userId);
     localStorage.setItem('user_name', responseData.user_name);
-    // localStorage.setItem('pk_user', responseData.pk_user);
+    localStorage.setItem('pk_user', responseData.pk_user);
     localStorage.setItem('tokenExpiration', expirationDate);
-
-    // console.log(localStorage.getItem('userId'));
-
+    
     // timer = setTimeout(function() {
     //   context.dispatch('autoLogout');
     // }, expiresIn);
@@ -74,6 +72,7 @@ export default {
       token: responseData.idToken,
       userId: responseData.localId,
       user_name: responseData.user_name,
+      pk_user: responseData.pk_user
     });
   },
   // tryLogin(context) {

@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,7 @@ import com.bangba.project730.model.service.ArticleService;
 
 import io.swagger.annotations.ApiOperation;
 
+@CrossOrigin(origins = "http://localhost:7300")
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
@@ -33,7 +35,7 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@ApiOperation(value = "레시피 작성", response = String.class)
-	@PostMapping("/create")
+	@PostMapping(value = "/create",  headers = { "Content-type=application/json" })
 	public String createArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			articleService.createArticle(map);
