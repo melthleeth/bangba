@@ -28,7 +28,7 @@ import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 // board menus
 import BoardCreate from "@/pages/board/BoardCreate";
 import BoardDetail from "@/pages/board/BoardDetail";
-
+import BoardModify from "@/pages/board/BoardModify";
 // recipe
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
 
@@ -65,9 +65,14 @@ const router = createRouter({
       component: BoardCreate,
     },
     {
-      path: "/board/detail/:contentId",
+      path: "/board/detail/:contentId?",
       name: "BoardDetail",
       component: BoardDetail,
+    },
+    {
+      path: "/board/modify/:contentId?",
+      name: "BoardModify",
+      component: BoardModify,
     },
     // recipe
     {

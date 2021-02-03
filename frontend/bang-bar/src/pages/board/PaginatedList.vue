@@ -59,6 +59,7 @@ export default {
   data () {
     
     return {
+      pk_forum:'',
       keyword:"포럼",
       pageNum: 0
     }
@@ -74,7 +75,7 @@ export default {
       default: 10
     }
   },
-  
+
   methods: {
     nextPage () {
       this.pageNum += 1;
@@ -90,7 +91,7 @@ export default {
       // alert(item.content_id)
       
       this.$router.push({
-        path: `/board/detail/${item.content_id}`
+        path: `/board/detail/${item.pk_forum}`
       });
     },
     writeContent() {
