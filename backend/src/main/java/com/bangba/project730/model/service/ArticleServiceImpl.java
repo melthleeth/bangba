@@ -111,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		
 		s=map.get("recipe");
-		ss=s.split(",");
+		ss=s.split("<br>");
         int r=1;
 		for(String a:ss)
 		{
@@ -274,7 +274,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		
 		s=map.get("recipe");
-		ss=s.split(",");
+		ss=s.split("<br>");
         int r=1;
 		for(String a:ss)
 		{
@@ -294,15 +294,26 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 	
 	@Override
-	public ArticleDto detailArticle(int pk_article) throws Exception {
+	public Map<String, String> detailArticle(int pk_article) throws Exception {
 		// TODO Auto-generated method stub
-		return dao.detailArticle(pk_article);
-	}
-
-	@Override
-	public Map<String, String> detailArticleData(int pk_article) throws Exception {
-		// TODO Auto-generated method stub
+		dao.updateHit(pk_article);
+		ArticleDto dto=dao.detailArticle(pk_article);
 		Map<String, String> map = new HashMap<String, String>();
+		map.put("pk_article", Integer.toString(dto.getPk_article()));
+		map.put("user_no", Integer.toString(dto.getUser_no()));
+		map.put("title_kor", dto.getTitle_kor());
+		map.put("title_eng", dto.getTitle_eng());
+		map.put("like_cnt", Integer.toString(dto.getLike_cnt()));
+		map.put("bookmark_cnt", Integer.toString(dto.getBookmark_cnt()));
+		map.put("hits", Integer.toString(dto.getHits()));
+		map.put("created_at", dto.getCreated_at());
+		map.put("updated_at", dto.getUpdated_at());
+		map.put("like_weekly", Integer.toString(dto.getLike_weekly()));
+		map.put("content", dto.getContent());
+		map.put("img_path", dto.getImg_path());
+		map.put("category", Boolean.toString(dto.isCategory()));
+		map.put("abv", Integer.toString(dto.getAbv()));
+		map.put("cup_no", Integer.toString(dto.getCup_no()));
 		String a="";
 		List<Article_alcoholDto> laa = dao.searchArticleAlcohol(pk_article);
 		int c=1;
@@ -315,7 +326,7 @@ public class ArticleServiceImpl implements ArticleService{
 			a+="/";
 			a+=aa.getUnit();
 			if(c<laa.size())
-				a+=",";
+				a+="<br>";
 			c++;
 		}
 		map.put("alcohol", a);
@@ -331,7 +342,7 @@ public class ArticleServiceImpl implements ArticleService{
 			i+="/";
 			i+=ai.getUnit();
 			if(c<lai.size())
-				i+=",";
+				i+="<br>";
 			c++;
 		}
 		map.put("ingredient", i);
@@ -343,7 +354,7 @@ public class ArticleServiceImpl implements ArticleService{
 			TagDto tdto = tdao.searchTagbyPK(at.getTag_no());
 			t+=tdto.getContent_kor();
 			if(c<lat.size())
-				t+=",";
+				t+="<br>";
 			c++;
 		}
 		map.put("tag", t);

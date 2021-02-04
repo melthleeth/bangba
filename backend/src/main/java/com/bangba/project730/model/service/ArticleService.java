@@ -13,8 +13,7 @@ public interface ArticleService {
 	public List<ArticleDto> searchArticle(Map<String, String> map) throws Exception;
 	public void updateArticle(Map<String, String> map) throws Exception;
 	public void deleteArticle(int pk_article) throws Exception;
-	public ArticleDto detailArticle(int pk_article) throws Exception;
-	public Map<String,String> detailArticleData(int pk_article) throws Exception;
+	public Map<String,String> detailArticle(int pk_article) throws Exception;
 
 	public List<AlcoholDto> searchAlcohol(String searchtxt) throws Exception;
 	public void createIngredient(String name) throws Exception;

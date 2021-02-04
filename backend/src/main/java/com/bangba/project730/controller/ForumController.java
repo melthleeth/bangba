@@ -1,7 +1,6 @@
 package com.bangba.project730.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,19 +33,19 @@ public class ForumController {
 	public String createForum(@RequestBody @ApiParam(value = "자유게시판 하나에 대한 정보", required = true) ForumDto forumDto, Model model) throws Exception {
 		try {
 			forumService.createForum(forumDto);
-			model.addAttribute("msg", "Create Forum Success");
+			model.addAttribute("msg", "생성 Forum Success");
 			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "Create Forum Internal Server Error!!");
+			model.addAttribute("msg", "생성 Forum Internal Server Error!!");
 			return "error";
 		}
 	}
-	
+
 	@ApiOperation(value = "자유게시판 목록 조회")
 	@GetMapping("/search-forum-list")
-	public List<SearchForumDto> searchForumList() throws Exception {
-		return forumService.searchForumList();
+	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
+		return forumService.searchForumList(page_num);
 	}
 	
 
@@ -64,6 +63,7 @@ public class ForumController {
 		return forumService.detailForum(pk_forum);
 	}
 	
+
 	@ApiOperation(value = "자유게시판 수정")
 	@PutMapping("/update-forum")
 	public String updateForum(@RequestBody @ApiParam(value = "자유게시판 하나에 대한 수정 정보", required = true) ForumDto forumDto, Model model) throws Exception {
