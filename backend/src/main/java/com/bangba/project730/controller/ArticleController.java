@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.IngredientDto;
+import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.service.ArticleService;
 
@@ -165,6 +167,31 @@ public class ArticleController {
 			return "error";
 		}
 	}
+	@ApiOperation(value = "레시피 상세", response = String.class)
+	@PostMapping("/detail/{pk_article}")
+	public ArticleDto detailArticle(@RequestParam int pk_article, Model model) throws Exception {
+		try {
+			model.addAttribute("msg", "레시피 상세 검색 완료");
+			return articleService.detailArticle(pk_article);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "레시피 상세 검색중 문제가 발생했습니다.");
+			return null;
+		}
+	}
+	@ApiOperation(value = "레시피 기타 상세", response = String.class)
+	@PostMapping("/detail/article/{pk_article}")
+	public Map<String,String> detailAlcohol(@RequestParam int pk_article, Model model) throws Exception {
+		try {
+			model.addAttribute("msg", "레시피 연계 데이터 검색 완료");
+			return articleService.detailArticleData(pk_article);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "레시피 연계 데이터 검색중 문제가 발생했습니다.");
+			return null;
+		}
+	}
+	
 	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
  

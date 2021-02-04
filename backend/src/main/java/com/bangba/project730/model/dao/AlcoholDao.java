@@ -10,6 +10,7 @@ public interface AlcoholDao {
 	
 	public void addAlcohol(AlcoholDto alcoholDto) throws Exception;
 	public List<AlcoholDto> searchAlcohol(String searchtxt) throws Exception;
+	public AlcoholDto searchAlcoholbyPK(int pk_alcohol) throws Exception;
 	public int searchAlcoholPK(String name) throws Exception;
 	
 }
