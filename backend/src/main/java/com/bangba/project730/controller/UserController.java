@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "http://localhost:7300")
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
@@ -62,16 +62,17 @@ public class UserController {
 		}
 		return userService.getMyPage(-1);
 	}
-
+	
+	
 	@ApiOperation(value = "로그인", response = String.class)
-	@GetMapping(value = "/login")
-	@ResponseBody
+	@PostMapping(value = "/login",  headers = { "Content-type=application/json" })
 	public UserDto login(@RequestBody @ApiParam(value = "로그인 정보를 담는 객체", required = true) Map<String, String> map,
-			Model model, HttpSession session) {
+			Model model) {
+//		System.out.println(map);
 		try {
 			UserDto user = userService.login(map);
 			if (user != null) {
-				session.setAttribute("userinfo", user);
+				System.out.println(user.getPk_user());
 				return userService.getMyPage(user.getPk_user());
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 로그인해 주세요.");

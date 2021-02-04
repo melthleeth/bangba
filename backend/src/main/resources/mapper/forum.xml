@@ -5,12 +5,13 @@
 <mapper namespace="com.bangba.project730.model.dao.ForumDao">
 	<!-- 포럼 생성 -->
 	<insert id="createForum" parameterType="ForumDto">
-		insert into article (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
+		insert into forum (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
 		values (#{user_no}, #{title}, #{category}, #{like_cnt}, #{hits}, #{created_at}, #{updated_at}, #{content})	
 	</insert>
 	
 	<!-- 포럼 리스트 보기 -->
-	<select id="searchForumList" resultType="searchForumDto" parameterType="searchForumDto">
+	<select id="searchForumList" resultType="searchForumDto">
+	<!-- 우선은 제목만 검색 기능 넣어요 -->
 		select 
 			a.pk_forum
 			, a.title
@@ -21,11 +22,28 @@
 		from forum as a
 		inner join user as b on a.user_no = b.pk_user
 		order by pk_forum DESC
+		LIMIT #{page_num}, 10
+	</select>
+	
+	<!-- 포럼 리스트 보기 -->
+	<select id="searchForumKeyword" resultType="searchForumDto" parameterType="String">
+	<!-- 우선은 제목만 검색 기능 넣어요 -->
+		select 
+			a.pk_forum
+			, a.title
+			, a.category
+			, a.hits
+			, a.created_at
+			, b.user_name
+		from forum as a
+		inner join user as b on a.user_no = b.pk_user
+		where title like concat('%', #{keyword}, '%')
+		order by pk_forum DESC
 	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
 	</select>
 	
 	<!-- 포럼 상세보기 -->
-	<select id="detailForum" resultType="int" parameterType="ForumDto">
+	<select id="detailForum" resultType="ForumDto" parameterType="ForumDto">
 		select 
 			A.pk_forum
 			, A.title
@@ -41,6 +59,11 @@
         where pk_forum = #{pk_forum};
 	</select>
 	
+	<!-- 조회수 1 증가 -->
+	<update id="updateHits" parameterType="int"> 
+		update forum set hits=hits+1 where pk_forum = #{pk_forum}
+	</update>
+
 	<!-- 포럼 삭제 -->
 	<delete id="deleteForum">
 		delete from forum where pk_forum = #{pk_forum}

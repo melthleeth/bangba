@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,15 +17,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bangba.project730.model.dto.AlcoholDto;
+import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.IngredientDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.service.ArticleService;
 
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:7300")
+@RestController
 @RequestMapping("/article")
 public class ArticleController {
 	
@@ -32,11 +37,7 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@ApiOperation(value = "레시피 작성", response = String.class)
-	@ApiImplicitParams({ 
-		//@ApiImplicitParam(name = "id", value = "아이디", required = true, dataType = "string", paramType = "query", defaultValue = ""), 
-		//@ApiImplicitParam(name = "password", value = "패스워드", required = true, dataType = "string", paramType = "query", defaultValue = "") 
-	})
-	@PostMapping("/create")
+	@PostMapping(value = "/create",  headers = { "Content-type=application/json" })
 	public String createArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			articleService.createArticle(map);
@@ -50,11 +51,12 @@ public class ArticleController {
 	}
 
 	@ApiOperation(value = "레시피 검색", response = String.class)
-	@ApiImplicitParams({})
-	@GetMapping("/keyword")
+	@PostMapping("/keyword")
 	public String searchArticle(@RequestBody Map<String, String> map , Model model) throws Exception {
 		try {
-			articleService.searchArticle(map);
+			List<ArticleDto> dto = articleService.searchArticle(map);
+			for(ArticleDto a:dto)
+				System.out.println(a.getTitle_kor());
 			model.addAttribute("msg", "레시피 검색 완료");
 			return "main";
 		} catch (Exception e) {
@@ -63,8 +65,8 @@ public class ArticleController {
 			return "error";
 		}
 	}
+	
 	@ApiOperation(value = "레시피 수정", response = String.class)
-	@ApiImplicitParams({})
 	@PutMapping("/recipe/{pk_article}")
 	public String updateArticle(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
@@ -78,7 +80,6 @@ public class ArticleController {
 		}
 	}
 	@ApiOperation(value = "레시피 삭제", response = String.class)
-	@ApiImplicitParams({})
 	@DeleteMapping("/recipe/{pk_article}")
 	public String deleteArticle(@RequestParam Integer pk_article, Model model) throws Exception {
 		try {
@@ -91,8 +92,22 @@ public class ArticleController {
 			return "error";
 		}
 	}
+	@ApiOperation(value = "주류 검색", response = String.class)
+	@PostMapping("/alcohol/{searchtxt}")
+	public String searchAlcohol(@RequestParam String searchtxt, Model model) throws Exception {
+		try {
+			List<AlcoholDto> adto = articleService.searchAlcohol(searchtxt);
+			for(AlcoholDto a:adto)
+				System.out.println(a.getName_kor());
+			model.addAttribute("msg", "재료 검색 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
 	@ApiOperation(value = "재료 추가", response = String.class)
-	@ApiImplicitParams({})
 	@PostMapping("/ingredient")
 	public String createIngredient(@RequestParam String ingredient, Model model) throws Exception {
 		try {
@@ -107,8 +122,22 @@ public class ArticleController {
 			return "error";
 		}
 	}
+	@ApiOperation(value = "재료 검색", response = String.class)
+	@PostMapping("/ingredient/{searchtxt}")
+	public String searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
+		try {
+			List<IngredientDto> idto = articleService.searchIngredient(searchtxt);
+			for(IngredientDto a:idto)
+				System.out.println(a.getName_kor());
+			model.addAttribute("msg", "재료 검색 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
 	@ApiOperation(value = "태그 추가", response = String.class)
-	@ApiImplicitParams({})
 	@PostMapping("/tag")
 	public String createTag(@RequestParam String tag, Model model) throws Exception {
 		try {
@@ -121,7 +150,21 @@ public class ArticleController {
 			return "error";
 		}
 	}	
-	
+	@ApiOperation(value = "태그 검색", response = String.class)
+	@PostMapping("/tag/{searchtxt}")
+	public String searchTag(@RequestParam String searchtxt, Model model) throws Exception {
+		try {
+			List<TagDto> tdto = articleService.searchTag(searchtxt);
+			for(TagDto a:tdto)
+				System.out.println(a.getContent_kor());
+			model.addAttribute("msg", "태그 검색 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "태그 검색중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
 	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
  

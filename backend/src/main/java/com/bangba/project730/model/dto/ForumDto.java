@@ -15,6 +15,7 @@ public class ForumDto {
 	private String updated_at;
 	private String content;
 	
+	private String user_name;
 	
 	public int getPk_forum() {
 		return pk_forum;
@@ -70,5 +71,13 @@ public class ForumDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-
+	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	
+	
 }
