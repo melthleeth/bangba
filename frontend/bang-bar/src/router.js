@@ -31,6 +31,7 @@ import BoardDetail from "@/pages/board/BoardDetail";
 import BoardModify from "@/pages/board/BoardModify";
 // recipe
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
+import RecipeDetail from "./pages/recipe/RecipeDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -82,9 +83,6 @@ const router = createRouter({
       component: RecipeRegistration,
     },
     { path: "/recipe/detail/:pk_article", props: true, component: RecipeDetail },
-
-    //test
-    { path: "/test", component: TEST },
   ],
 });
 
