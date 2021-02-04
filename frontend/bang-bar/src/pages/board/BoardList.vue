@@ -134,12 +134,16 @@ export default {
     },
     getList() {
 
+        let params = {
+          page_num : 0
+        };
+
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
         this.axios.get('http://localhost:8081/forum/search-forum-list', {
         headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json; charset = utf-8'
-        }
+        }, params
       })
       .then((result)=>{
         // this.items=result;
