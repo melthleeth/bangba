@@ -111,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		
 		s=map.get("recipe");
-		ss=s.split(",");
+		ss=s.split("<br>");
         int r=1;
 		for(String a:ss)
 		{
@@ -239,7 +239,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		
 		s=map.get("recipe");
-		ss=s.split(",");
+		ss=s.split("<br>");
         int r=1;
 		for(String a:ss)
 		{
@@ -261,6 +261,7 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public ArticleDto detailArticle(int pk_article) throws Exception {
 		// TODO Auto-generated method stub
+		dao.updateHit(pk_article);
 		return dao.detailArticle(pk_article);
 	}
 

@@ -21,6 +21,7 @@ public interface ArticleDao {
 	public int  searchUpdateArticlePK(ArticleDto articledto) throws Exception;
 	public void deleteArticle(int pk_article) throws Exception;
 	public ArticleDto detailArticle(int pk_article) throws Exception;
+	public void updateHit(int pk_article) throws Exception;
 
 	public void addArticleAlcohol(Article_alcoholDto article_alcoholdto) throws Exception;
 	public void addArticleCup(Article_cupDto article_cupdto) throws Exception;

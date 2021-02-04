@@ -69,12 +69,17 @@
 		where pk_article = #{pk_article}
 	</delete>
 	
-	
 	<select id="detailArticle" resultType="ArticleDto" parameterType="int">
 		select * from article
 		where pk_article = #{pk_article}
 	</select>
 	
+	
+	<update id="updateHit" parameterType="int">
+		update article set 
+		hits = (hits+1)
+		where pk_article = #{pk_article}
+	</update>
 	
 	<insert id="addArticleAlcohol" parameterType="Article_alcoholDto">
 		insert into article_alcohol (article_no, alcohol_no, quantity, unit)
