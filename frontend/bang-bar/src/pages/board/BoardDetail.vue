@@ -30,7 +30,7 @@
       </div>
       <div class="content-detail-button">
         
-        <span>
+        <span v-if="forum.user_name===owner_check">
           <base-button @click="updateData">수정</base-button>
           <base-button @click="deleteData">삭제</base-button>
         </span>
@@ -59,6 +59,7 @@ export default {
       // contentItem => contentItem.content_id === contentId
     // )[0];
     return {
+      owner_check:localStorage.getItem('user_name'),
       forum:[],
       forumId:this.$route.params.contentId,
     };
@@ -66,7 +67,7 @@ export default {
 
   created(){
     // console.log(this.forum.forumId);
-
+    
     this.forum_Detail();
   },
   methods: {

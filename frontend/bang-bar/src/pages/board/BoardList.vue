@@ -6,20 +6,23 @@
     >
     <section id="search-bar" class="flex flex-row mb-6 px-16 font-S-CoreDream-light">
       <article class="flex justify-center justify-self-start">
-        <base-button mode="important" @click="writeContent">글쓰기</base-button>
+        <base-button mode="important" @click="writeContent" v-if="writemode!==null">글쓰기</base-button>
       </article>
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
-        <div class="inline-block relative w-max">
-          <!-- <select
+
+<!-- 제목검색으로 변경 -->
+
+        <!-- <div class="inline-block relative w-max">
+          <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>전체</option>
             <option>공지사항</option>
             <option>후기</option>
             <option>질문</option>
-          </select> -->
-          <!-- <div
+          </select>
+          <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
           >
            <svg
@@ -31,8 +34,8 @@
                 d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
               />
             </svg>
-          </div> -->
-        </div>
+          </div>
+        </div> -->
         <div class="mx-4 flex-auto inline-block">
           <input
             class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
@@ -82,6 +85,7 @@ export default {
     });
     
     return {
+      writemode:null,
       keyword:"",
       currentPage: 1, // 현재 페이지
       perPage: 10, // 페이지당 보여줄 갯수
@@ -147,7 +151,6 @@ export default {
       })
     },
 
-
     search_board(){
       this.axios.get('http://localhost:8081/forum/search-forum-list/'+this.keyword, {
         headers: {
@@ -165,18 +168,22 @@ export default {
       })
     }
   },
+  
   computed: {
+    
     rows() {
       return this.items.length;
     }
   },
   created() {
     this.pageArray=this.items;
+    this.writemode=localStorage.getItem("pk_user");
   },
   mounted() {
       this.getList()
       // console.log(this.items);
   },
+
 };
 
 /*

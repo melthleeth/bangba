@@ -49,7 +49,7 @@
               입니다.)
             </span>
             <section class="button-modal flex justify-center">
-              <base-button>로그인</base-button>
+              <base-button @click="login">로그인</base-button>
               <base-button @click="hideDialog" mode="outline">취소</base-button>
             </section>
           </form>
@@ -168,6 +168,7 @@ export default {
   computed: {
     setUsername() { return this.$store.getters.userName },
     setUserEmail() { return this.$store.getters.email},
+    
   },
   watch: {
     setUsername: function(newVal) {
@@ -193,6 +194,7 @@ export default {
     },
     login() {
       this.isAuth = true;
+      location.reload();
     },
     logout() {
       localStorage.removeItem("user_name");

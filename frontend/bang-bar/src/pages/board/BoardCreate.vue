@@ -63,9 +63,8 @@ export default {
     }
   },
   created() {
-        this.take_data();
       if(this.$route.params.contentId > 0) {
-
+        this.take_data();
     
         // console.log("create의",forum2);
 
