@@ -21,9 +21,8 @@ export default {
   }
     */
     // const userId = context.rootGetters.userId;
-    const userId = "test@test.com";
     const recipeData = {
-      userId: userId,
+      user_no: context.rootGetters.pkUser,
       created_at: new Date().toLocaleTimeString(), // 변경 가능
       category: payload.category,
       img_path: payload.img_path,
@@ -45,26 +44,22 @@ export default {
       {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
-          'Accept': '*/*',
+          'Accept': 'application/json;',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Headers': '*',
         },
-        method: "PUT",
+        method: "POST",
         body: JSON.stringify(recipeData),
       }
     );
-    const responseData = await response.json();
+    const responseData = await response;
     console.log("responseData")
     console.log(responseData);
 
     if (!response.ok) {
       // ...
     }
-
-    context.commit("registerRecipe", {
-      ...recipeData,
-      id: userId,
-    });
+    context.commit("registerRecipe", recipeData);
   },
   async loadRecipe(context, payload) {
     console.log("context: " + context);

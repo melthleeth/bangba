@@ -4,7 +4,7 @@ import getters from "./getters.js";
 
 export default {
   namespaced: true,
-  store() {
+  state() {
     return {
         lastFetch: null,
       // dummy data

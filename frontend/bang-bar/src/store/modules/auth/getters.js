@@ -13,5 +13,8 @@ export default {
     },
     userName(state) {
       return state.user_name;
+    }, 
+    pkUser(state) {
+      return state.pk_user;
     }
   };
