@@ -1,18 +1,18 @@
 <template>
-  <div class="flex flex-col justify-items-center mx-16">
+  <div class="flex flex-col justify-items-center mx-16 font-color-black-400">
     <span
-      class="title text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400"
+      class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400"
       >오피셜 레시피</span
     >
     <section class="flex justify-end mx-12">
-      <base-button class="w-max" mode="important" link to="register/official"
+      <base-button class="w-max px-8 py-2" mode="important" link to="register/official"
         >레시피 등록</base-button
       >
     </section>
     <section id="search-bar" class="flex items-center mx-64 mb-12">
       <div class="inline-block relative w-max">
         <select
-          class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-4 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
+          class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-8 py-3 rounded-full shadow-lg leading-tight border-3 border-transparent focus:outline-none focus:shadow-outline"
         >
           <option>통합</option>
           <option>오피셜</option>
@@ -34,7 +34,7 @@
       </div>
       <div class="ml-4 flex-auto inline-block">
         <input
-          class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-4 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
+          class="text-base text-left shadow-lg appearance-none rounded-full w-full px-8 py-3 leading-tight border-3 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
           id="search"
           type="text"
           placeholder="검색"
@@ -96,7 +96,7 @@ export default {
       const recipes = this.$store.getters["recipes/recipes"];
       console.log(recipes);
       return recipes.filter((recipeItem) => {
-        if (recipeItem.category.includes("official")) return true;
+        if (recipeItem.category === true) return true;
       });
     },
     hasRecipes() {
@@ -128,7 +128,7 @@ export default {
 
 <style scoped>
 .title {
-  font-size: 64px;
+  font-size: 42px;
   line-height: 93px;
 }
 

@@ -9,7 +9,7 @@
       alt="Sunset in the mountains"
     />
 
-    <span class="font-bold text-xl mt-4 mb-6 text-center">{{
+    <span class="font-S-CoreDream-medium font-semibold text-xl mt-4 mb-6 text-center">{{
       cocktailname
     }}</span>
 
@@ -17,32 +17,35 @@
       <span
         v-for="tag in tags"
         :key="tag"
-        class="w-max inline-block bg-red-200 rounded-full px-3 py-1 text-sm font-semibold ml-2 mb-2"
+        class="w-max inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold ml-2 mb-2"
         >#{{ tag }}</span
       >
     </section>
     <section class="flex items-center mt-4">
       <img
         src="../../assets/img/mr.fox.jpg"
-        class="w-10 h-10 rounded-full ml-4 mr-2"
+        class="w-8 h-8 rounded-full ml-6 mr-2"
+        alt="profile image"
       />
-      <span class="ml-2 text-base font-semibold">{{ username }}</span>
+      <span class="ml-2 text-sm font-semibold">{{ username }}</span>
       <section class="flex justify-center justify-self-end ml-auto mr-4">
         <article class="flex items-center">
           <img
-            src="../../assets/icon/like.png"
-            class="w-6 h-6 object-contain ml-4 mr-2"
+            src="../../assets/icon/like@0.75x.png"
+            class="object-contain ml-2 mr-0"
+            alt="like icon"
           />
-          <span class="font-xs font-medium">
+          <span class="font-xs font-semibold font-color-black-300">
             {{ like_cnt }}
           </span>
         </article>
         <article class="flex items-center">
           <img
-            src="../../assets/icon/bookmarked.png"
-            class="w-4 h-4 object-contain ml-4 mr-2"
+            src="../../assets/icon/bookmark@0.75x.png"
+            class="object-contain ml-1 mr-0"
+            alt="bookmark icon"
           />
-          <span class="font-xs font-medium">
+          <span class="mr-2 font-xs font-semibold font-color-black-300">
             {{ bookmark_cnt }}
           </span>
         </article>
@@ -65,7 +68,7 @@ export default {
   data() {
     return {
       tags: [],
-      imgsrc: require(this.img_path),
+      imgsrc: require("../../assets/" + this.img_path),
     };
   },
   created() {

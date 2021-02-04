@@ -1,80 +1,40 @@
 <template>
-  <div class="flex flex-col justify-items-center mx-16">
-    <span class="title text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400">커스텀 레시피</span>
+  <div class="flex flex-col justify-items-center mx-16 font-color-black-400">
+    <span class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400">커스텀 레시피</span>
     <section class="flex justify-center px-32 mb-6 font-S-CoreDream-light">
-      <base-card size="box-340" class="flex flex-col justify-items-center">
-        <span class="text-3xl text-center py-4 font-S-CoreDream-medium font-semibold font-color-black-400">금주의 랭킹</span>
-        <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-        >
-          <div class="flex items-center mt-4">
-            <span class="text-2xl font-extrabold mx-4">1</span>
-            <img
-              src="../../assets/img/mr.fox.jpg"
-              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
-            />
-            <span class="font-medium ml-2 text-lg">미스터 여우씨</span>
-          </div>
-        </section>
-        <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-        >
-          <div class="flex items-center mt-4">
-            <span class="text-2xl font-extrabold mx-4">2</span>
-            <img
-              src="../../assets/img/profile2.png"
-              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
-            />
-            <span class="font-medium ml-2 text-lg">의문의 루피</span>
-          </div>
-        </section>
-        <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-        >
-          <div class="flex items-center mt-4">
-            <span class="text-2xl font-extrabold mx-4">3</span>
-            <img
-              src="../../assets/img/profile3.jpg"
-              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
-            />
-            <span class="font-medium ml-2 text-lg">베르나르 무민무민</span>
-          </div>
-        </section>
-        <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-        >
-          <div class="flex items-center mt-4">
-            <span class="text-2xl font-extrabold mx-4">4</span>
-            <img
-              src="../../assets/img/profile4.jpeg"
-              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
-            />
-            <span class="font-medium ml-2 text-lg">이시국 칵테일</span>
-          </div>
-        </section>
-        <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-        >
-          <div class="flex items-center mt-4">
-            <span class="text-2xl font-extrabold mx-4">5</span>
-            <img
-              src="../../assets/img/profile5.jpg"
-              class="w-12 h-12 object-cover rounded-full ml-4 mr-2"
-            />
-            <span class="font-medium ml-2 text-lg">개발 안맞아</span>
-          </div>
-        </section>
-      </base-card>
+      <base-card size="box-290" class="flex flex-col justify-items-center">
+          <span
+            class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+            >금주의 랭킹</span
+          >
+          <section
+            class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+            v-for="(user, index) in ranking"
+            :key="user.pk_user"
+          >
+            <div class="flex items-center mt-4">
+              <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
+              <img
+                :src="user.imgsrc"
+                class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
+                alt="profile image"
+              />
+              <span class="text-base font-medium ml-2">{{
+                user.username
+              }}</span>
+            </div>
+          </section>
+        </base-card>
       <base-card
         class="flex-auto inline-block flex flex-col justify-items-center"
       >
-        <span class="text-3xl text-center py-4 font-S-CoreDream-medium font-semibold font-color-black-400">주간 베스트</span>
+        <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4">주간 베스트</span>
         <section class="font-S-CoreDream-light"></section>
       </base-card>
     </section>
     <section class="flex justify-end mx-12">
       <base-button
-        class="w-max"
+        class="w-max  px-8 py-2"
         mode="important"
         link
         to="register/custom"
@@ -84,7 +44,7 @@
     <section class="flex items-center mx-64 mb-12 font-S-CoreDream-light">
       <div class="inline-block relative w-max">
             <select
-              class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-4 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
+              class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-8 py-3 rounded-full shadow-lg leading-tight border-3 border-transparent focus:outline-none focus:shadow-outline"
             >
               <option>통합</option>
               <option>오피셜</option>
@@ -106,7 +66,7 @@
           </div>
       <div class="ml-4 flex-auto inline-block">
         <input
-          class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-4 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
+          class="text-base text-left shadow-lg appearance-none rounded-full w-full px-8 py-3 leading-tight border-3 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
           id="search"
           type="text"
           placeholder="검색"
@@ -130,21 +90,22 @@
     </section>
     <div class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto">
       <recipe-card
-        v-for="cocktail in cocktails"
-        :key="cocktail.no"
-        :cocktailname="cocktail.cocktailname"
-        :tag="cocktail.tag"
-        :username="cocktail.username"
-        :like="cocktail.like"
-        :bookmarked="cocktail.bookmarked"
-      >
-      </recipe-card>
+          v-for="cocktail in filteredRecipes"
+          :key="cocktail.pk_article"
+          :pk_article="cocktail.pk_article"
+          :img_path="cocktail.img_path"
+          :username="cocktail.username"
+          :cocktailname="cocktail.title_kor"
+          :tag="cocktail.tag"
+          :like_cnt="cocktail.like_cnt"
+          :bookmark_cnt="cocktail.bookmark_cnt"
+        >
+        </recipe-card>
     </div>
   </div>
 </template>
 
 <script>
-import recipe from "../../data/recipe.js";
 import RecipeCard from "../../components/recipes/RecipeCard.vue";
 export default {
   components: {
@@ -152,8 +113,68 @@ export default {
   },
   data() {
     return {
-      cocktails: recipe.data,
+      isLoading: false,
+      error: null,
+      ranking: [
+        {
+          pk_user: 22,
+          imgsrc: require("../../assets/img/mr.fox.jpg"),
+          username: "미스터 여우씨",
+        },
+        {
+          pk_user: 3,
+          imgsrc: require("../../assets/img/profile2.png"),
+          username: "의문의 루피",
+        },
+        {
+          pk_user: 5,
+          imgsrc: require("../../assets/img/profile3.jpg"),
+          username: "베르나르 무민무민",
+        },
+        {
+          pk_user: 46,
+          imgsrc: require("../../assets/img/profile4.jpeg"),
+          username: "이시국 칵테일",
+        },
+        {
+          pk_user: 1,
+          imgsrc: require("../../assets/img/profile5.jpg"),
+          username: "개발 안맞아",
+        },
+      ],
     };
+  },
+  computed: {
+    filteredRecipes() {
+      const recipes = this.$store.getters["recipes/recipes"];
+      console.log(recipes);
+      return recipes.filter((recipeItem) => {
+        if (recipeItem.category === false) return true;
+      });
+    },
+    hasRecipes() {
+      return !this.isLoading && this.$store.getters["recipes/hasRecipes"];
+    },
+  },
+  created() {
+    // this.loadRecipes();
+  },
+  methods: {
+    async loadRecipes(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("recipes/loadRecipes", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "레시피를 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
+    },
   },
 };
 </script>
@@ -166,9 +187,6 @@ p {
 }
 
 .title {
-  font-size: 64px;
-  line-height: 93px;
-
   color: #23232f;
 }
 
