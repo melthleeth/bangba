@@ -160,7 +160,7 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "레시피 상세", response = String.class)
 	@PostMapping("/detail/{pk_article}")
-	public ArticleDto detailArticle(@RequestParam int pk_article, Model model) throws Exception {
+	public Map<String,String> detailArticle(@RequestParam int pk_article, Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "레시피 상세 검색 완료");
 			return articleService.detailArticle(pk_article);
@@ -170,18 +170,7 @@ public class ArticleController {
 			return null;
 		}
 	}
-	@ApiOperation(value = "레시피 기타 상세", response = String.class)
-	@PostMapping("/detail/article/{pk_article}")
-	public Map<String,String> detailAlcohol(@RequestParam int pk_article, Model model) throws Exception {
-		try {
-			model.addAttribute("msg", "레시피 연계 데이터 검색 완료");
-			return articleService.detailArticleData(pk_article);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "레시피 연계 데이터 검색중 문제가 발생했습니다.");
-			return null;
-		}
-	}
+
 	
 	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
