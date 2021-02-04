@@ -44,4 +44,16 @@
 		from user
 		where pk_user = #{pk_user}
 	</delete>
+	
+	<select id="bookmarkMyPage" parameterType="int" resultType="ArticleDto">
+		select *
+		from article
+		where pk_article in (select article_no from alike where user_no = #{pk_user} and bookmark = true)
+	</select>
+	
+	<select id="articleMyPage" parameterType="int" resultType="ArticleDto">
+		select *
+		from article
+		where user_no = #{pk_user}
+	</select>
 </mapper>
