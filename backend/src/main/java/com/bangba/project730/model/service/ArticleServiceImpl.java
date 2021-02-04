@@ -132,44 +132,79 @@ public class ArticleServiceImpl implements ArticleService{
 		int i=0;
 		for(String a:ss)
 		{
-			switch (i) {
-			case 0:
-				tldto.setTag1(a);
-				break;
-			case 1:
-				tldto.setTag2(a);
-				break;
-			case 2:
-				tldto.setTag3(a);
-				break;
-			case 3:
-				tldto.setTag4(a);
-				break;
-			case 4:
-				tldto.setTag5(a);
-				break;
-			case 5:
-				tldto.setTag6(a);
-				break;
-			case 6:
-				tldto.setTag7(a);
-				break;
-			case 7:
-				tldto.setTag8(a);
-				break;
-			case 8:
-				tldto.setTag9(a);
-				break;
-			case 9:
-				tldto.setTag10(a);
-				break;
-			default:
-				break;
+			if(a != "") {
+				switch (i) {
+				case 0:
+					tldto.setTag1(a);
+					break;
+				case 1:
+					tldto.setTag2(a);
+					break;
+				case 2:
+					tldto.setTag3(a);
+					break;
+				case 3:
+					tldto.setTag4(a);
+					break;
+				case 4:
+					tldto.setTag5(a);
+					break;
+				case 5:
+					tldto.setTag6(a);
+					break;
+				case 6:
+					tldto.setTag7(a);
+					break;
+				case 7:
+					tldto.setTag8(a);
+					break;
+				case 8:
+					tldto.setTag9(a);
+					break;
+				case 9:
+					tldto.setTag10(a);
+					break;
+				default:
+					break;
+				}
+				i++;switch (i) {
+				case 0:
+					tldto.setTag1(a);
+					break;
+				case 1:
+					tldto.setTag2(a);
+					break;
+				case 2:
+					tldto.setTag3(a);
+					break;
+				case 3:
+					tldto.setTag4(a);
+					break;
+				case 4:
+					tldto.setTag5(a);
+					break;
+				case 5:
+					tldto.setTag6(a);
+					break;
+				case 6:
+					tldto.setTag7(a);
+					break;
+				case 7:
+					tldto.setTag8(a);
+					break;
+				case 8:
+					tldto.setTag9(a);
+					break;
+				case 9:
+					tldto.setTag10(a);
+					break;
+				default:
+					break;
+				}
+				i++;
 			}
-			i++;
 		}
 		return dao.searchArticle(tldto);
-		
 	}
 
 	@Override

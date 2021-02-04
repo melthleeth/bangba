@@ -75,6 +75,8 @@ public class UserController {
 				return userService.getMyPage(user.getPk_user());
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 로그인해 주세요.");
+				System.out.println(map.get("email"));
+				System.out.println(map.get(("password")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

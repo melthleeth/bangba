@@ -52,18 +52,18 @@ public class ArticleController {
 
 	@ApiOperation(value = "레시피 검색", response = String.class)
 	@PostMapping("/keyword")
-	public String searchArticle(@RequestBody Map<String, String> map , Model model) throws Exception {
+	public List<ArticleDto> searchArticle(@RequestBody Map<String, String> map , Model model) throws Exception {
 		try {
 			List<ArticleDto> dto = articleService.searchArticle(map);
 			for(ArticleDto a:dto)
 				System.out.println(a.getTitle_kor());
 			model.addAttribute("msg", "레시피 검색 완료");
-			return "main";
+			return articleService.searchArticle(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "레시피 검색중 문제가 발생했습니다.");
-			return "error";
 		}
+		return null;
 	}
 	
 	@ApiOperation(value = "레시피 수정", response = String.class)
