@@ -11,15 +11,15 @@
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
         <div class="inline-block relative w-max">
-          <select
+          <!-- <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>전체</option>
             <option>공지사항</option>
             <option>후기</option>
             <option>질문</option>
-          </select>
-          <div
+          </select> -->
+          <!-- <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
           >
            <svg
@@ -31,7 +31,7 @@
                 d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
               />
             </svg>
-          </div>
+          </div> -->
         </div>
         <div class="mx-4 flex-auto inline-block">
           <input
@@ -39,9 +39,11 @@
             id="search"
             type="text"
             placeholder="검색"
+            v-model="keyword"
+            @keydown.enter="search_board()"
           />
         </div>
-        <base-button>검색</base-button>
+        <base-button @click="search_board()">검색</base-button>
       </article>
     </section>
     <paginated-list :list-array="items" />
@@ -58,8 +60,10 @@ export default {
   components: { 
     PaginatedList,
   },
+  
   name: "BoardList",
   data() {
+    
     // 정렬 : https://blog.naver.com/haskim0716n/221681695401
     let contentItems = data.Content.sort((a, b) => {
       return b.content_id - a.content_id;
@@ -78,7 +82,7 @@ export default {
     });
     
     return {
-      // pageArray: [],
+      keyword:"",
       currentPage: 1, // 현재 페이지
       perPage: 10, // 페이지당 보여줄 갯수
       pageSize:10,
@@ -86,8 +90,8 @@ export default {
             // bootstrap 'b-table' 필드 설정
       fields: [
         {
-          key: "content_id",
-          label: "번호"
+          key: "category",
+          label: "카테고리"
         },
         {
           key: "title",
@@ -100,9 +104,14 @@ export default {
         {
           key: "created_at",
           label: "작성일"
+        },
+        {
+          key: "hits",
+          label : "조회수"
+
         }
       ],
-      items: items,
+      items: [],
       pageArray:items
     };
   },
@@ -118,6 +127,42 @@ export default {
       this.$router.push({
         path: `/board/create`
       });
+    },
+    getList() {
+
+        // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
+        this.axios.get('http://localhost:8081/forum/search-forum-list', {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json; charset = utf-8'
+        }
+      })
+      .then((result)=>{
+        // this.items=result;
+        // console.log(result)
+        this.items = result.data
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
+    },
+
+
+    search_board(){
+      this.axios.get('http://localhost:8081/forum/search-forum-list/'+this.keyword, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json; charset = utf-8'
+        }
+      })
+      .then((result)=>{
+        // this.items=result;
+        console.log(result)
+        this.items = result.data
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
     }
   },
   computed: {
@@ -127,7 +172,10 @@ export default {
   },
   created() {
     this.pageArray=this.items;
-
+  },
+  mounted() {
+      this.getList()
+      // console.log(this.items);
   },
 };
 

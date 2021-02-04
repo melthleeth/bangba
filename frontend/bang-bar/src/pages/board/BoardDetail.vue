@@ -1,70 +1,146 @@
 <template>
   <div style="text-align: center;">
-      <div >
-        <div class="whiteboard">
-          <div class="content-detail-content-info-left-number">{{contentId}}</div>
-          <div class="content-detail-content-info-left-subject">{{title}}</div>
-        </div>
-        <div class="whiteboard">
-          <div class="content-detail-content-info-right-user">글쓴이: {{user}}</div>
-          <div class="content-detail-content-info-right-created">등록일: {{created}}</div>
-        </div>
+     
+      <div class="whiteboard">
+        <div class="content-detail-content-info-left-number" >[{{forum.category}}]</div>
+        <div class="content-detail-content-info-left-subject" >{{forum.title}}</div>
       </div>
-      <div class="whiteboard" style="min-height:500px">{{context}}</div>
+      <div class="whiteboard">
+        <div class="content-detail-content-info-right-user">{{forum.user_name}}
+          <base-button>팔로우</base-button>
+
+        </div>
+        <div class="content-detail-content-info-right-created">
+          <!-- 날짜 가공할 것 2021.01.24. 23:23 순으로 -->
+          {{forum.created_at}}
+          -----
+          <span>조회수 : {{forum.hits}} </span>
+          
+          -----
+          <span>코멘트수</span>
+          ---------
+          <span>추천수  {{forum.like_cnt}} </span>
+
+          </div>
+      </div>
+      <div class="whiteboard" style="min-height:500px" >{{forum.content}}</div>
+     
+      <div class ="flex flex-col">
+        <base-button>추천수 {{forum.like_cnt}}</base-button>
+      </div>
       <div class="content-detail-button">
-        <base-button @click="updateData">수정</base-button>
-        <base-button @click="deleteData">삭제</base-button>
+        
+        <span>
+          <base-button @click="updateData">수정</base-button>
+          <base-button @click="deleteData">삭제</base-button>
+        </span>
         <base-button @click="golist">목록</base-button>
         
       </div>
-      <div class="content-detail-comment">
+      <!-- <div class="content-detail-comment">
         <CommentList :contentId="contentId"></CommentList>
-      </div>
+      </div> -->
     
   </div>
 </template>
 
 <script>
-import data from "@/data";
-import CommentList from "./CommentList";
+// import BaseButton from '../../components/ui/BaseButton.vue';
+// import data from "@/data";
+// import CommentList from "./CommentList";
 
 export default {
   name: "BoardDetail",
+
+  
   data() {
-    const contentId = Number(this.$route.params.contentId);
-    const contentData = data.Content.filter(
-      contentItem => contentItem.content_id === contentId
-    )[0];
+    // const contentId = Number(this.$route.params.contentId);
+    // const contentData = data.Content.filter(
+      // contentItem => contentItem.content_id === contentId
+    // )[0];
     return {
-      contentId: contentId,
-      title: contentData.title,
-      context: contentData.context,
-      user: data.User.filter(item => item.user_id === contentData.user_id)[0]
-        .name,
-      created: contentData.created_at
+      forum:[],
+      forumId:this.$route.params.contentId,
     };
   },
+
+  created(){
+    // console.log(this.forum.forumId);
+
+    this.forum_Detail();
+  },
   methods: {
+    //삭제
+
+
+    forum_Detail(){
+
+        this.axios.get(`http://localhost:8081/forum/` + this.forumId, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json; charset = utf-8'
+        }
+      })
+      .then((result)=>{
+        // this.items=result;
+        // console.log(result)
+        this.forum = result.data
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
+
+
+    },
+
+
     deleteData() {
-      const content_index = data.Content.findIndex(
-        contentItem => contentItem.content_id === this.contentId
-      );
-      data.Content.splice(content_index, 1); // 데이터 삭제
+      // const content_index = data.Content.findIndex(
+        // contentItem => contentItem.content_id === this.contentId
+      // );
+      // data.Content.splice(content_index, 1); // 데이터 삭제
+        // var repl=this.date.replace("-","");
+        // let params={
+        //   forum: this.forumId,
+          
+        // }
+        const headers = {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+      }
+
+        this.axios.delete('http://localhost:8081/forum/delete-forum/'+this.forumId,
+        // JSON.stringify(params),
+        { headers }
+      )
+      .then((result)=>{
+          console.log(result)
       this.$router.push({
         path: "/board/list"
       });
+      })
+      .catch(e=>{
+          console.log('error:',e)
+      })
     },
+
+    //수정
     updateData() {
       this.$router.push({
-        path: `/board/create/${this.contentId}`
+        // path: `/board/modify/${this.forumId}`
+        path: `/board/create/${this.forumId}`
       });
     },
+
+    //목록으로가기
     golist(){
       this.$router.go(-1)
     }
   },
   components: {
-    CommentList,
+    // CommentList,
+    
   }
 };
 </script>

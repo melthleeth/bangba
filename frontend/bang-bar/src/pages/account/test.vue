@@ -11,6 +11,7 @@ export default {
             result:[]
         }
     },
+    
     methods: {
           getMembers () {
             this.axios.get('http://localhost:8081/admin/members', {
