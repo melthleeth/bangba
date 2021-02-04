@@ -13,4 +13,5 @@ public interface ForumService {
 	public void updateForum(ForumDto forumDto) throws Exception;
 	public void deleteForum(int pk_forum) throws Exception;
 	public void updateHits(int hits) throws Exception;
+	public List<SearchForumDto> searchNotices() throws Exception;
 }
