@@ -70,10 +70,21 @@
 	</delete>
 	
 	
+	<select id="detailArticle" resultType="ArticleDto" parameterType="int">
+		select * from article
+		where pk_article = #{pk_article}
+	</select>
+	
+	
 	<insert id="addArticleAlcohol" parameterType="Article_alcoholDto">
 		insert into article_alcohol (article_no, alcohol_no, quantity, unit)
 		values (#{article_no}, #{alcohol_no}, #{quantity}, #{unit})	
 	</insert>
+	
+	<select id="searchArticleAlcohol" resultType="Article_alcoholDto" parameterType="int">
+		select * from article_alcohol
+		where article_no = #{pk_article}
+	</select>
 	
 	<delete id="deleteArticleAlcohol" parameterType="int">
 		delete from article_alcohol
@@ -81,17 +92,16 @@
 	</delete>
 	
 	
-	<insert id="addArticleCup" parameterType="Article_cupDto">
-	</insert>
-	
-	<delete id="deleteArticleCup" parameterType="int">
-	</delete>
-	
-	
 	<insert id="addArticleIngredient" parameterType="Article_ingredientDto">
 		insert into article_ingredient (article_no, ingredient_no, type, quantity, unit)
 		values (#{article_no}, #{ingredient_no}, #{type}, #{quantity}, #{unit})	
 	</insert>
+	
+	<select id="searchArticleIngredient" resultType="Article_ingredientDto" parameterType="int">
+		select * from article_ingredient
+		where article_no = #{pk_article}
+	</select>
+	
 	<delete id="deleteArticleIngredient" parameterType="int">
 		delete from article_ingredient
 		where article_no = #{article_no} 
@@ -102,6 +112,12 @@
 		insert into article_tag (article_no, tag_no)
 		values (#{pk_article}, #{pk_tag})	
 	</insert>
+	
+	<select id="searchArticleTag" resultType="Article_tagDto" parameterType="int">
+		select * from article_tag
+		where article_no = #{pk_article}
+	</select>
+	
 	<delete id="deleteArticleTag" parameterType="int">
 		delete from article_tag
 		where article_no = #{article_no} 
@@ -112,6 +128,12 @@
 		insert into recipe (article_no, content, num)
 		values (#{article_no}, #{content}, #{num})	
 	</insert>
+	
+	<select id="searchRecipe" resultType="RecipeDto" parameterType="int">
+		select * from recipe
+		where article_no = #{pk_article} order by num
+	</select>
+	
 	<delete id="deleteRecipe" parameterType="int">
 		delete from recipe
 		where article_no = #{pk_article}
