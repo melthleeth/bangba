@@ -22,17 +22,12 @@ public class ForumServicelmpl implements ForumService{
 	}
 
 	@Override
-<<<<<<< HEAD
-	public List<SearchForumDto> searchForumList() throws Exception {
-		return dao.searchForumList();
-=======
 	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
 		if (page_num <=0 ) {
 			page_num = 1;
 		}
 		page_num = (page_num -1) * 10;
 		return dao.searchForumList(page_num);
->>>>>>> feature/forum
 	}
 	
 	@Override
