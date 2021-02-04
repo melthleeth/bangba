@@ -5,67 +5,66 @@
 <mapper namespace="com.bangba.project730.model.dao.ArticleDao">
 
 	<insert id="createArticle" parameterType="ArticleDto">
-		insert into article (user_no, title_kor, title_eng, like_cnt, bookmark_cnt, hits, created_at, updated_at, like_weekly, content, img_path, category, abv)
+		insert into article (user_no, title_kor, title_eng, like_cnt, bookmark_cnt, hits, created_at, updated_at, like_weekly, content, img_path, category, abv, cup_no)
 		values (#{user_no}, #{title_kor}, #{title_eng}, #{like_cnt}, #{bookmark_cnt}, #{hits}, #{created_at}, #{updated_at}
-		, #{like_weekly}, #{content}, #{img_path}, #{category}, #{abv})	
-		<selectKey resultType="int" keyProperty="pk_article" order="AFTER">
-            SELECT LAST_INSERT_ID()
-        </selectKey>		
+		, #{like_weekly}, #{content}, #{img_path}, #{category}, #{abv}, #{cup_no})		
 	</insert>
-	<select id="searchArticle" resultType="int" parameterType="ArticleDto">
+	
+	<select id="searchArticle" resultType="ArticleDto" parameterType="TaglistDto">
 		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
+		where pk_article in (select distinct article_no from article_tag 
+		where tag_no in (select pk_tag from tag 
+		<if test="tag1 != null">
+    	where content_kor like #{tag1} or content_eng like #{tag1}
+  		</if>
+  		<if test="tag2 != null">
+    	or content_kor like #{tag2} or content_eng like #{tag2}
+  		</if>
+  		<if test="tag3 != null">
+    	or content_kor like #{tag3} or content_eng like #{tag3}
+  		</if>
+  		<if test="tag4 != null">
+    	or content_kor like #{tag4} or content_eng like #{tag4}
+  		</if>
+  		<if test="tag5 != null">
+    	or content_kor like #{tag5} or content_eng like #{tag5}
+  		</if>
+  		<if test="tag6 != null">
+    	or content_kor like #{tag6} or content_eng like #{tag6}
+  		</if>
+  		<if test="tag7 != null">
+    	or content_kor like #{tag7} or content_eng like #{tag7}
+  		</if>
+  		<if test="tag8 != null">
+    	or content_kor like #{tag8} or content_eng like #{tag8}
+  		</if>
+  		<if test="tag9 != null">
+    	or content_kor like #{tag9} or content_eng like #{tag9}
+  		</if>
+  		<if test="tag10 != null">
+    	or content_kor like #{tag10} or content_eng like #{tag10}
+  		</if>
+  		)) 
+		and (title_kor like concat('%', #{searchtxt}, '%') or title_eng like concat('%', #{searchtxt}, '%')) 
 	</select>
-	<select id="searchArticle1" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle2" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle3" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle4" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle5" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle6" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle7" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle8" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle9" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
-	<select id="searchArticle10" resultType="int" parameterType="ArticleDto">
-		select * from article
-		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
-	</select>
+	
 	<select id="searchArticlePK" resultType="int" parameterType="ArticleDto">
 		select max(pk_article) from article
 		where user_no = #{user_no} and title_kor = #{title_kor} and created_at = #{created_at}
 	</select>
+	
 	<update id="updateArticle" parameterType="ArticleDto">
-		update article set user_no = #{user_no}, title_kor = #{title_kor}, title_eng = #{title_eng}, like_cnt = #{like_cnt},
-		bookmark_cnt = #{bookmark_cnt}, hits = #{hits}, created_at = #{created_at}, updated_at = #{updated_at}
+		update article set 
+		title_kor = #{title_kor}, title_eng = #{title_eng}, updated_at = #{updated_at}, content = #{content}, img_path = #{img_path}, 
 		where pk_article = #{pk_article}
 	</update>
-	<delete id="deleteArticle" parameterType="String">
+	
+	<select id="searchUpdateArticlePK" resultType="int" parameterType="ArticleDto">
+		select max(pk_article) from article
+		where user_no = #{user_no} and title_kor = #{title_kor} and updated_at = #{updated_at}
+	</select>
+	
+	<delete id="deleteArticle" parameterType="int">
 		delete from article
 		where pk_article = #{pk_article}
 	</delete>
@@ -100,7 +99,7 @@
 	
 	
 	<insert id="addArticleTag" parameterType="int">
-		insert into article_tag (article_no, article_no)
+		insert into article_tag (article_no, tag_no)
 		values (#{pk_article}, #{pk_tag})	
 	</insert>
 	<delete id="deleteArticleTag" parameterType="int">
@@ -110,12 +109,12 @@
 	
 	
 	<insert id="addRecipe" parameterType="RecipeDto">
-		insert into recipe (article_no, content, order)
-		values (#{article_no}, #{content}, #{order})	
+		insert into recipe (article_no, content, num)
+		values (#{article_no}, #{content}, #{num})	
 	</insert>
 	<delete id="deleteRecipe" parameterType="int">
 		delete from recipe
-		where article_no = #{article_no} and order = #{order}
+		where article_no = #{pk_article} and order = #{num}
 	</delete>
 	
 </mapper>

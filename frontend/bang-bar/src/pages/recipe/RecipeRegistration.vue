@@ -1,13 +1,24 @@
 <template>
   <div class="font-S-CoreDream-light flex flex-col justify-items-center mx-16">
     <span class="title text-center my-10 font-S-CoreDream-medium font-bold"
-      >{{ mode }} 레시피 등록</span
+      >{{ category }} 레시피 등록</span
     >
     <base-card>
-      <form class="text-lg" id="form-recipe" @submit.prevent="submitForm">
-        <div class="form-control" :class="{ invalid: !img_path.isValid }">
+      <form
+        class="text-lg flex flex-col justify-items-start"
+        id="form-recipe"
+        @submit.prevent=""
+      >
+        <div
+          class="form-control flex flex-col items-center"
+          :class="{ invalid: !img_path.isValid }"
+        >
           <label for="img_path">사진 등록</label>
-          <img src="img_path.val" alt="cocktail image" />
+          <img
+            class="w-64 h-96 rounded-3xl object-cover"
+            :src="img_path.val"
+            alt="cocktail image"
+          />
           <base-button @click="showImgRegDialog">사진 등록</base-button>
           <p v-if="!img_path.isValid">등록된 사진이 없습니다.</p>
         </div>
@@ -21,7 +32,7 @@
             v-model.trim="title_kor.val"
             @blur="clearValidity('title_kor')"
           />
-          <p v-if="!title_kor.isValid">칵테일 이름은 비어있으면 안됩니다.</p>
+          <p v-if="!title_kor.isValid">칵테일 이름을 적어주세요.</p>
         </div>
         <div class="form-control" :class="{ invalid: !title_eng.isValid }">
           <label for="title_eng.val">칵테일 이름 (eng)</label>
@@ -33,9 +44,24 @@
             v-model.trim="title_eng.val"
             @blur="clearValidity('title_eng')"
           />
-          <p v-if="!title_eng.isValid">칵테일 영문명은 비어있으면 안됩니다.</p>
+          <p v-if="!title_eng.isValid">칵테일 영문명을 적어주세요.</p>
         </div>
-        <div class="form-control" :class="{ invalid: !content.isValid }">
+        <div class="form-control" :class="{ invalid: !abv.isValid }">
+          <label for="abv.val">칵테일 도수 (ABV)</label>
+          <input
+            class="w-28"
+            type="number"
+            id="abv"
+            placeholder="22"
+            v-model.number="abv.val"
+            @blur="clearValidity('abv')"
+          />
+          <p v-if="!abv.isValid">칵테일 도수를 적어주세요.</p>
+        </div>
+        <div
+          class="form-control flex flex-row items-center"
+          :class="{ invalid: !content.isValid }"
+        >
           <label for="content">칵테일 소개</label>
           <textarea
             class="w-1/3"
@@ -47,6 +73,20 @@
           ></textarea>
           <p v-if="!content.isValid">칵테일 소개는 비어있으면 안됩니다.</p>
         </div>
+        <div class="form-control" :class="{ invalid: !cupinfo.isValid }">
+          <label for="cupinfo">컵 정보 추가하기</label>
+          <select
+            class="w-1/12"
+            name="cupinfo"
+            id="cupinfo"
+            v-model="cupinfo.val"
+          >
+            <option v-for="cup in cups" :key="cup.index" :value="cup.index">{{
+              cup.val
+            }}</option>
+          </select>
+          <p v-if="!cupinfo.isValid">컵을 선택해주세요.</p>
+        </div>
         <div class="form-control" :class="{ invalid: !tags.isValid }">
           <label for="tag">태그</label>
           <input class="w-1/12" type="text" id="tag" v-model.trim="tag" />
@@ -55,7 +95,9 @@
             <!-- 중복 항목 검사 테스트 필요 -->
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
               {{ tag }}
-              <span class="ml-2 text-grey-400 cursor-pointer hover:text-red-400" @click="removeTag(index)"
+              <span
+                class="ml-2 text-grey-400 cursor-pointer hover:text-red-400"
+                @click="removeTag(index)"
                 >x</span
               >
             </span>
@@ -66,9 +108,9 @@
           <label for="ingredients">재료 추가하기</label>
           <select class="w-1/12" name="type" id="type" v-model="type">
             <option value="">분류</option>
-            <option value="type-alcohol">주류</option>
-            <option value="type-ingredient">재료</option>
-            <option value="type-garnish">가니쉬</option>
+            <option value="주류">주류</option>
+            <option value="재료">재료</option>
+            <option value="가니쉬">가니쉬</option>
           </select>
           <input
             class="w-1/12"
@@ -78,14 +120,14 @@
             v-model.trim="ingredient"
           />
           <input
-            class="w-1/12"
+            class="w-28"
             type="number"
             id="quantity"
             placeholder="30"
             v-model.number="quantity"
           />
           <input
-            class="w-1/12"
+            class="w-28"
             type="text"
             id="unit"
             placeholder="ml"
@@ -93,16 +135,31 @@
           />
           <base-button @click="addIngredient">추가하기</base-button>
           <ul>
-            <li
-              v-for="(ingredientItem, index) in ingredientTemp"
-              :key="ingredientItem">
-              <span> - {{ ingredientItem }}</span>
-              <span class="ml-2 text-grey-400 cursor-pointer hover:text-red-400" @click="removeIngredient(index)"
+            <li v-for="(alcoholItem, index) in alcoholTemp" :key="alcoholItem">
+              <span class="ml-2">🍸 {{ alcoholItem }}</span>
+              <span
+                class="ml-2 text-grey-400 cursor-pointer hover:text-red-400"
+                @click="removeAlcohol(index)"
                 >x</span
               >
             </li>
           </ul>
-          <p v-if="!ingredients.isValid">최소 한 가지의 재료를 추가해주세요.</p>
+          <ul>
+            <li
+              v-for="(ingredientItem, index) in ingredientTemp"
+              :key="ingredientItem"
+            >
+              <span class="ml-2">🥄 {{ ingredientItem }}</span>
+              <span
+                class="ml-2 text-grey-400 cursor-pointer hover:text-red-400"
+                @click="removeIngredient(index)"
+                >x</span
+              >
+            </li>
+          </ul>
+          <p v-if="!ingredients.isValid || !alcohols.isValid">
+            최소 한 가지의 재료를 추가해주세요.
+          </p>
         </div>
         <div class="form-control" :class="{ invalid: !recipes.isValid }">
           <label for="recipes">레시피 추가하기</label>
@@ -115,22 +172,27 @@
           />
           <base-button @click="addRecipe">추가하기</base-button>
           <ul>
-            <li
-              v-for="(recipeItem, index) in recipes.val"
-              :key="recipeItem"
-            >
+            <li v-for="(recipeItem, index) in recipes.val" :key="recipeItem">
               <span>{{ index + 1 }}. {{ recipeItem }}</span>
-              <span class="ml-2 text-grey-400 cursor-pointer hover:text-red-400" @click="removeRecipe(index)"
+              <span
+                class="ml-2 text-grey-400 cursor-pointer hover:text-red-400"
+                @click="removeRecipe(index)"
                 >x</span
               >
             </li>
           </ul>
           <p v-if="!recipes.isValid">최소 한 가지 순서를 추가해주세요.</p>
         </div>
-        <p v-if="!formIsValid">
-          비어있는 칸이 있습니다. 채운 후 다시 시도해주세요.
-        </p>
-        <base-button>레시피 등록하기</base-button>
+        <section
+          class="flex flex-col text-center justify-items-center items-center"
+        >
+          <span class="font-red" v-if="!formIsValid">
+            비어있는 칸이 있습니다. 채운 후 다시 시도해주세요.
+          </span>
+          <base-button mode="important" class="w-max" @click="submitForm"
+            >레시피 등록하기</base-button
+          >
+        </section>
       </form>
     </base-card>
   </div>
@@ -139,7 +201,7 @@
 <script>
 export default {
   props: {
-    mode: {
+    category: {
       type: String,
       required: true,
       default: "official",
@@ -150,15 +212,46 @@ export default {
       formIsValid: true,
       isLoading: false,
       error: null,
+      cups: [
+        { index: 0, name: "none", val: "없음" },
+        { index: 1, name: "highball", val: "하이볼 글라스" },
+        { index: 2, name: "sling", val: "슬링 글라스" },
+        { index: 3, name: "shot", val: "샷 글라스" },
+        { index: 4, name: "straight", val: "스트레이트 글라스" },
+        { index: 5, name: "pint", val: "파인트" },
+        { index: 6, name: "rock", val: "락 글라스" },
+        { index: 7, name: "collins", val: "콜린스 글라스" },
+        { index: 8, name: "oldfashioned", val: "올드패션드/락 글라스" },
+        { index: 9, name: "martini", val: "마티니 글라스" },
+        { index: 10, name: "pilsner", val: "필스너 글라스" },
+        {
+          index: 11,
+          name: "irish-coffee-fizz",
+          val: "아이리쉬 커피/피즈 글라스",
+        },
+        { index: 12, name: "brandy-sniffer", val: "브랜디 스니퍼" },
+        { index: 13, name: "punch-cup", val: "펀치 컵" },
+        { index: 14, name: "cordial", val: "코디얼 글라스" },
+        { index: 15, name: "sour", val: "소어 글라스" },
+        { index: 16, name: "parfait", val: "파르페 글라스" },
+        { index: 17, name: "sherry", val: "쉐리 글라스" },
+        { index: 18, name: "champagne-flute", val: "샴페인 플룻" },
+        { index: 19, name: "champagne-saucer", val: "샴페인 소서 (쿱)" },
+        { index: 20, name: "red-wine", val: "레드 와인 글라스" },
+        { index: 21, name: "white-wine", val: "화이트 와인 글라스" },
+        { index: 22, name: "margarita", val: "마가리타 글라스" },
+        { index: 23, name: "cocktail", val: "칵테일 글라스" },
+      ],
       tag: "",
       type: "",
       ingredient: "",
       quantity: null,
       unit: "",
       recipe: "",
+      alcoholTemp: [],
       ingredientTemp: [],
       img_path: {
-        val: "../../assets/img/defaultCocktailImage.png",
+        val: require("../../assets/img/defaultCocktailImage.png"),
         isValid: true,
       },
       title_kor: {
@@ -169,11 +262,23 @@ export default {
         val: "",
         isValid: true,
       },
+      abv: {
+        val: null,
+        isValid: true,
+      },
       content: {
         val: "",
         isValid: true,
       },
+      cupinfo: {
+        val: "",
+        isValid: true,
+      },
       tags: {
+        val: [],
+        isValid: true,
+      },
+      alcohols: {
         val: [],
         isValid: true,
       },
@@ -190,6 +295,8 @@ export default {
   methods: {
     showImgRegDialog() {
       console.log("사진 등록 중");
+      console.log(this.img_path.val);
+      this.img_path.val = require("../../assets/img/cocktails/tequila_strawberry_shower.jpg");
       alert("사진 등록 기능 준비중");
     },
     addTag() {
@@ -210,8 +317,8 @@ export default {
         alert("재료명을 입력해주세요.");
         return;
       }
-      if (!this.quantity || this.quantity < 0) {
-        alert("용량을 입력해주세요.");
+      if (!this.quantity || this.quantity <= 0) {
+        alert("용량을 입력해주세요. (용량은 0보다 커야 합니다.");
         return;
       }
       if (this.unit === "") {
@@ -219,20 +326,27 @@ export default {
         return;
       }
 
-      const ingredientTempItem = `${this.ingredient} ${this.quantity}${this.unit}`;
-      const ingredientItem = `${this.type}/${this.ingredient}/${this.quantity}/${this.unit}`;
+      const tempItem = `${this.ingredient} ${this.quantity}${this.unit}`;
 
-      this.ingredientTemp.push(ingredientTempItem);
-      this.ingredients.val.push(ingredientItem);
+      if (this.type === "주류") {
+        const alcoholItem = `${this.ingredient}/${this.quantity}/${this.unit}`;
+        this.alcoholTemp.push(tempItem);
+        this.alcohols.val.push(alcoholItem);
+      } else {
+        const ingredientItem = `${this.type}/${this.ingredient}/${this.quantity}/${this.unit}`;
+        this.ingredientTemp.push(tempItem);
+        this.ingredients.val.push(ingredientItem);
+      }
       alert(this.type + " (" + this.ingredient + ")가 추가되었습니다.");
 
       this.type = "";
       this.ingredient = "";
       this.quantity = null;
       this.unit = "";
-      
-      console.log(this.ingredients.val);
-      console.log(this.ingredientTemp);
+    },
+    removeAlcohol(index) {
+      this.alcoholTemp.splice(index, 1);
+      this.alcohols.val.splice(index, 1);
     },
     removeIngredient(index) {
       this.ingredientTemp.splice(index, 1);
@@ -255,16 +369,28 @@ export default {
         this.title_kor.isValid = false;
         this.formIsValid = false;
       }
-      if (this.title_eng.val === "") {
-        this.title_eng.isValid = false;
+      // if (this.title_eng.val === "") {
+      //   this.title_eng.isValid = false;
+      //   this.formIsValid = false;
+      // }
+      if (!this.abv.val || this.abv.val < 0) {
+        this.abv.isValid = false;
         this.formIsValid = false;
       }
       if (this.content.val === "") {
         this.content.isValid = false;
         this.formIsValid = false;
       }
+      if (this.cupinfo.val === "") {
+        this.cupinfo.isValid = false;
+        this.formIsValid = false;
+      }
       if (this.tags.val.length === 0) {
         this.tags.isValid = false;
+        this.formIsValid = false;
+      }
+      if (this.alcohols.val.length === 0) {
+        this.alcohols.isValid = false;
         this.formIsValid = false;
       }
       if (this.ingredients.val.length === 0) {
@@ -282,18 +408,23 @@ export default {
       if (!this.formIsValid) return;
 
       const formData = {
-        category: this.mode,
+        category: this.category,
         img_path: this.img_path.val,
         title_kor: this.title_kor.val,
         title_eng: this.title_eng.val,
+        abv: this.abv.val,
         content: this.content.val,
-        tags: this.tags.val,
-        ingredients: this.ingredients.val,
-        recipes: this.recipes.val,
+        cupinfo: this.cupinfo.val,
+        tags: this.tags.val.join(), // default separator: ','
+        alcohols: this.alcohols.val.join(),
+        ingredients: this.ingredients.val.join(),
+        recipes: this.recipes.val.join(),
       };
 
-      await this.$store.dispatch("registerRecipe", formData);
-      this.$router.replace("/recipe/" + this.mode);
+      console.log(formData);
+
+      await this.$store.dispatch("recipes/registerRecipe", formData);
+      this.$router.replace("/recipe/" + this.category);
     },
   },
 };
@@ -311,6 +442,21 @@ export default {
     "alcohol": "보드카/15/ml,주류/진/15/ml,화이트 럼/15/ml,테킬라/15/ml,트리플 섹/15/ml",
     "ingredient": "재료/레몬 주스/25/ml,재료/설탕 시럽/30/ml,재료/콜라/1/캔,가니쉬/레몬 슬라이스/1/개",
     "tag": "tag1,tag2,tag3,tag4",
+    "recipe": "recipe1,recipe2,recipe3"
+},
+{
+    "user_no": "1", 
+    "title_kor": "title_kor",
+    "title_eng": "title_eng",
+    "created_at": "202102021447", 
+    "content": "content",
+    "img_path": "img_path2",
+    "category": "admin",
+    "abv": "16", 
+    "cup_no": "1",
+    "alcohol": "그레이 구스/15/ml,진/15/ml,스미노프 No.21/15/ml,데킬라/15/ml,Kahlúa/15/ml",
+    "ingredient": "재료/레몬 주스/25/ml,재료/토닉 워터/30/ml,재료/콜라/1/캔,가니쉬/레몬/1/개",
+    "tag": "데킬라,보드카,레몬,맛있는",
     "recipe": "recipe1,recipe2,recipe3"
 }
 */
@@ -347,12 +493,12 @@ div {
 }
 
 .invalid p {
-  color: red;
+  color: #FF0000;
 }
 
 .invalid input,
 .invalid select,
 .invalid textarea {
-  border: 1px solid red;
+  border: 1px solid #FF0000;
 }
 </style>

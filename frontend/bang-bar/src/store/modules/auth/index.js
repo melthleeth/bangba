@@ -6,6 +6,7 @@ export default {
   state() {
     return {
       userId: null,
+      user_name: null,
       token: null,
       pk_user: null,
       didAutoLogout: false
@@ -13,5 +14,5 @@ export default {
   },
   mutations,
   actions,
-  getters
+  getters,
 };

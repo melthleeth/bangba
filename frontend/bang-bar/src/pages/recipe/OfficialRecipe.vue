@@ -9,7 +9,7 @@
         class="w-max"
         mode="important"
         link
-        to="{name: 'RecipeRegistration', params: { mode: 'official' }}"
+        to="register/official"
         >레시피 등록</base-button
       >
     </section>

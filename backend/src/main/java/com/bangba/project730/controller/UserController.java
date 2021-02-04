@@ -41,35 +41,38 @@ public class UserController {
 	@Autowired
 	private FollowService followService;
 
+	@CrossOrigin(origins = "http://localhost:8080")
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
-	public String createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
+	public UserDto createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
 			Model model) throws Exception {
 		if (userService.isDuplicatedEmail(userDto.getEmail()) != 0
 				|| userService.isDuplicatedName(userDto.getUser_name()) != 0) {
+			return userService.getMyPage(-1);
 		} else {
 			try {
 				userService.createUser(userDto);
 				model.addAttribute("msg", "회원가입 완료");
-				return "SUCCESS";
+				return userService.getMyPage(userDto.getPk_user());
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "회원가입중 문제가 발생했습니다.");
 				
 			}
 		}
-		return "FAIL";
+		return userService.getMyPage(-1);
 	}
-
+	
+	
 	@ApiOperation(value = "로그인", response = String.class)
-	@GetMapping(value = "/login")
-	@ResponseBody
+	@PostMapping(value = "/login",  headers = { "Content-type=application/json" })
 	public UserDto login(@RequestBody @ApiParam(value = "로그인 정보를 담는 객체", required = true) Map<String, String> map,
-			Model model, HttpSession session) {
+			Model model) {
+//		System.out.println(map);
 		try {
 			UserDto user = userService.login(map);
 			if (user != null) {
-				session.setAttribute("userinfo", user);
+				System.out.println(user.getPk_user());
 				return userService.getMyPage(user.getPk_user());
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 로그인해 주세요.");
