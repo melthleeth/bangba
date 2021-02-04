@@ -8,7 +8,8 @@
             class="appearance-none w-auto m-3 text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
             v-model="category"
           >
-            <option>공지사항</option>
+          <!-- 나중에 수정할 것  -->
+            <!-- <option>공지사항</option> -->
             <option>후기</option>
             <option>질문</option>
           </select>

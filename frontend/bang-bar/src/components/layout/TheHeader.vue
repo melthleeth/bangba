@@ -186,6 +186,8 @@ export default {
       console.log(this.email);
     },
     showDialog() {
+      this.email='';
+      this.password='';
       this.dialogIsVisible = true;
       this.formIsValid = true;
     },
@@ -194,13 +196,15 @@ export default {
     },
     login() {
       this.isAuth = true;
-      location.reload();
+      // location.reload();
     },
     logout() {
       localStorage.removeItem("user_name");
       localStorage.removeItem("pk_user");
       localStorage.removeItem("email");
+      
       this.username = null;
+      this.password='';
       this.email = '';
       this.dialogIsVisible = false;
       this.$router.replace("/");

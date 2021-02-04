@@ -6,7 +6,7 @@
     >
     <section id="search-bar" class="flex flex-row mb-6 px-16 font-S-CoreDream-light">
       <article class="flex justify-center justify-self-start">
-        <base-button mode="important" @click="writeContent" v-if="writemode!==null">글쓰기</base-button>
+        <base-button mode="important" @click="writeContent" >글쓰기</base-button>
       </article>
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
@@ -128,9 +128,13 @@ export default {
       });
     },
     writeContent() {
+      if(localStorage.getItem('pk_user')!=null){
       this.$router.push({
         path: `/board/create`
       });
+    }else{
+      alert("로그인을 해주세요.")
+    }
     },
     getList() {
 
