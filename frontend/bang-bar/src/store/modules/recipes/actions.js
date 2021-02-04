@@ -38,22 +38,19 @@ export default {
     };
 
     // const token = context.rootGetters.token;
-    const url = 'http://localhost:8081/article/create';
-    const response = await fetch(
-      url,
-      {
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-          'Accept': 'application/json;',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-        },
-        method: "POST",
-        body: JSON.stringify(recipeData),
-      }
-    );
-    const responseData = await response;
-    console.log("responseData")
+    const url = "http://localhost:8081/article/create";
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "POST",
+      body: JSON.stringify(recipeData),
+    });
+    const responseData = await response.text();
+    console.log("responseData");
     console.log(responseData);
 
     if (!response.ok) {
@@ -61,8 +58,39 @@ export default {
     }
     context.commit("registerRecipe", recipeData);
   },
-  async loadRecipe(context, payload) {
-    console.log("context: " + context);
-    console.log("payload: " + payload);
+  async loadRecipes(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    }
+
+    const response = await fetch("http://localhost:8081/article/all");
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      // error..
+    }
+
+    const recipes = [];
+
+    for (const key in responseData) {
+      const recipe = {
+        pk_article: responseData[key].pk_article,
+        user_no: responseData[key].user_no,
+        title_kor: responseData[key].title_kor,
+        title_eng: responseData[key].title_eng,
+        like_cnt: responseData[key].like_cnt,
+        bookmark_cnt: responseData[key].bookmark_cnt,
+        hits: responseData[key].hits,
+        created_at: responseData[key].created_at,
+        updated_at: responseData[key].updated_at,
+        like_weekly: responseData[key].like_weekly,
+        content: responseData[key].content,
+        img_path: responseData[key].img_path,
+        category: responseData[key].category,
+        abv: responseData[key].abv,
+        cup_no: responseData[key].cup_no,
+      };
+      recipes.push(recipe);
+    }
   },
 };

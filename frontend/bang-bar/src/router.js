@@ -81,6 +81,10 @@ const router = createRouter({
       props: true,
       component: RecipeRegistration,
     },
+    { path: "/recipe/detail/:pk_article", props: true, component: RecipeDetail },
+
+    //test
+    { path: "/test", component: TEST },
   ],
 });
 

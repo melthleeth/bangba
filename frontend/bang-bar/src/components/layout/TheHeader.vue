@@ -6,19 +6,19 @@
     <nav>
       <router-link to="/">
         <section class="logo">
-          <img src="../../assets/img/logo.png" alt="logo-image" />
-          <span class="text-2xl text-center font-color-black-400 font-Mapo-DPPA">방구석 바텐더</span>
+          <img class="mr-2" src="../../assets/img/logo.png" alt="logo-image" />
+          <span class="text-lg text-center font-color-black-400 font-Mapo-DPPA">방구석 바텐더</span>
         </section>
       </router-link>
       <ul class="ul-menu tracking-wider">
-        <li><router-link to="/search">통합검색</router-link></li>
+        <li><router-link to="/search">검색</router-link></li>
         <li><router-link to="/recommendation">칵테일 추천</router-link></li>
         <li><router-link to="/recipe/official">오피셜 레시피</router-link></li>
         <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
         <li><router-link to="/board/list">게시판</router-link></li>
       </ul>
       <section v-if="!isAuth">
-        <base-button link mode="outline" to="/signup">회원가입</base-button>
+        <base-button id="button-signup" class="px-4 py-2" link mode="outline" to="/signup">회원가입</base-button>
         <base-modal
           @close="hideDialog"
           :open="dialogIsVisible"
@@ -49,8 +49,8 @@
               입니다.)
             </span>
             <section class="button-modal flex justify-center">
-              <base-button>로그인</base-button>
-              <base-button @click="hideDialog" mode="outline">취소</base-button>
+              <base-button class="w-24 py-2">로그인</base-button>
+              <base-button class="w-24 py-2" @click="hideDialog" mode="outline">취소</base-button>
             </section>
           </form>
           <section class="sub-menu flex justify-center">
@@ -62,7 +62,7 @@
             >
           </section>
         </base-modal>
-        <base-button class="ml-4" @click="showDialog">로그인</base-button>
+        <base-button class="ml-4 px-4 py-2.5" @click="showDialog">로그인</base-button>
       </section>
       <section v-else>
         <base-dropdown class="z-40">
@@ -245,7 +245,7 @@ header a {
   text-decoration: none;
   color: #23232f;
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1rem 0.25rem 1rem;
   border: 1px solid transparent;
 }
 
@@ -269,11 +269,12 @@ a.router-link-active {
 .ul-menu li a:active,
 .ul-menu li a.router-link-active {
   /* border-color: transparent; */
-  border-bottom: 5px solid #ff5e46;
+  border-bottom: 4px solid #ff5e46;
+  border-radius: 4px;
 }
 
 .router-link-active {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 header nav {
@@ -295,7 +296,7 @@ header .ul-menu {
 
 .ul-menu li {
   margin: 0 0.5rem;
-  font-size: 15pt;
+  font-size: 12pt;
 }
 
 .modal-header {
@@ -309,7 +310,7 @@ header .ul-menu {
 .input-modal {
   font-size: 12pt;
   text-align: left;
-  padding: 1rem 2rem;
+  padding: 0.75rem 2rem;
   width: 257px;
   border-radius: 25px;
   border: 3px solid white;
@@ -329,7 +330,8 @@ header .ul-menu {
 }
 
 u {
-  color: #9a9a9a;
+  font-size: 0.8rem;
+  color: #747475;
   transition: 0.3s ease-out;
 }
 
@@ -374,4 +376,9 @@ u:active {
 .logo:hover {
   background: #ff5e46;
 }
+
+#button-signup {
+  padding: 0.5rem 1rem;
+}
+
 </style>
