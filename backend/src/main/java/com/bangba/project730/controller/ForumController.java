@@ -91,4 +91,10 @@ public class ForumController {
 		}
 	}
 	
+	@ApiOperation(value = "공지사항 불러오기")
+	@GetMapping("/notices")
+	public List<SearchForumDto> searchNotices() throws Exception {
+		return forumService.searchNotices();
+	}
+	
 }

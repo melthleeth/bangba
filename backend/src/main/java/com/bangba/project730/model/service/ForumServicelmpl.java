@@ -56,4 +56,8 @@ public class ForumServicelmpl implements ForumService{
 		
 	}
 	
+	@Override
+	public List<SearchForumDto> searchNotices() throws Exception {
+		return dao.searchNotices();
+	}
 }
