@@ -31,6 +31,8 @@ import BoardDetail from "@/pages/board/BoardDetail";
 
 // recipe
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
+import RecipeDetail from "./pages/recipe/RecipeDetail.vue";
+
 // test vue
 import TEST from "@/pages/account/test.vue";
 
@@ -78,6 +80,7 @@ const router = createRouter({
       props: true,
       component: RecipeRegistration,
     },
+    { path: "/recipe/detail/:pk_article", props: true, component: RecipeDetail },
 
     //test
     { path: "/test", component: TEST },

@@ -5,11 +5,7 @@
       >오피셜 레시피</span
     >
     <section class="flex justify-end mx-12">
-      <base-button
-        class="w-max"
-        mode="important"
-        link
-        to="register/official"
+      <base-button class="w-max" mode="important" link to="register/official"
         >레시피 등록</base-button
       >
     </section>
@@ -60,23 +56,30 @@
         </svg>
       </div>
     </section>
-    <div class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto">
-      <recipe-card
-        v-for="cocktail in cocktails"
-        :key="cocktail.no"
-        :cocktailname="cocktail.cocktailname"
-        :tag="cocktail.tag"
-        :username="cocktail.username"
-        :like="cocktail.like"
-        :bookmarked="cocktail.bookmarked"
-      >
-      </recipe-card>
-    </div>
+    <section>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <div v-else-if="hasRecipes" class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto">
+        <recipe-card
+          v-for="cocktail in filteredRecipes"
+          :key="cocktail.pk_article"
+          :pk_article="cocktail.pk_article"
+          :img_path="cocktail.img_path"
+          :username="cocktail.username"
+          :cocktailname="cocktail.title_kor"
+          :tag="cocktail.tag"
+          :like_cnt="cocktail.like_cnt"
+          :bookmark_cnt="cocktail.bookmark_cnt"
+        >
+        </recipe-card>
+      </div>
+      <h3 v-else>등록된 레시피가 없습니다.</h3>
+    </section>
   </div>
 </template>
 
 <script>
-import recipe from "../../data/recipe.js";
 import RecipeCard from "../../components/recipes/RecipeCard.vue";
 export default {
   components: {
@@ -84,8 +87,41 @@ export default {
   },
   data() {
     return {
-      cocktails: recipe.data,
+      isLoading: false,
+      error: null,
     };
+  },
+  computed: {
+    filteredRecipes() {
+      const recipes = this.$store.getters["recipes/recipes"];
+      console.log(recipes);
+      return recipes.filter((recipeItem) => {
+        if (recipeItem.category.includes("official")) return true;
+      });
+    },
+    hasRecipes() {
+      return !this.isLoading && this.$store.getters["recipes/hasRecipes"];
+    },
+  },
+  created() {
+    // this.loadRecipes();
+  },
+  methods: {
+    async loadRecipes(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("recipes/loadRecipes", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "레시피를 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
+    },
   },
 };
 </script>
