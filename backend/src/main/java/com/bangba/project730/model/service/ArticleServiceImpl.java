@@ -326,7 +326,7 @@ public class ArticleServiceImpl implements ArticleService{
 			a+="/";
 			a+=aa.getUnit();
 			if(c<laa.size())
-				a+=",";
+				a+="<br>";
 			c++;
 		}
 		map.put("alcohol", a);
@@ -342,7 +342,7 @@ public class ArticleServiceImpl implements ArticleService{
 			i+="/";
 			i+=ai.getUnit();
 			if(c<lai.size())
-				i+=",";
+				i+="<br>";
 			c++;
 		}
 		map.put("ingredient", i);
@@ -354,7 +354,7 @@ public class ArticleServiceImpl implements ArticleService{
 			TagDto tdto = tdao.searchTagbyPK(at.getTag_no());
 			t+=tdto.getContent_kor();
 			if(c<lat.size())
-				t+=",";
+				t+="<br>";
 			c++;
 		}
 		map.put("tag", t);
