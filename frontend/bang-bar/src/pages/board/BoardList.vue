@@ -11,15 +11,15 @@
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
         <div class="inline-block relative w-max">
-          <select
+          <!-- <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>전체</option>
             <option>공지사항</option>
             <option>후기</option>
             <option>질문</option>
-          </select>
-          <div
+          </select> -->
+          <!-- <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
           >
            <svg
@@ -31,7 +31,7 @@
                 d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
               />
             </svg>
-          </div>
+          </div> -->
         </div>
         <div class="mx-4 flex-auto inline-block">
           <input
@@ -82,7 +82,6 @@ export default {
     });
     
     return {
-      // pageArray: [],
       keyword:"",
       currentPage: 1, // 현재 페이지
       perPage: 10, // 페이지당 보여줄 갯수
@@ -140,7 +139,7 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        console.log(result)
+        // console.log(result)
         this.items = result.data
       })
       .catch(e=>{

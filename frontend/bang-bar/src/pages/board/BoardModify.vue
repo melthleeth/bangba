@@ -14,12 +14,12 @@
           </div>
         <div>
             <textarea class="whiteboard" placeholder="제목을 입력해주세요." v-model="title">
+              
             </textarea>
         </div>
         
         <div>
-            <textarea  class="whiteboard" style="min-height:500px" v-model="content" placeholder="내용을 입력해주세요.">
-            
+            <textarea  class="whiteboard" style="min-height:500px" v-model="content" placeholder="내용을 입력해주세요."> 
             </textarea>
         </div>
     <br>

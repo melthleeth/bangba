@@ -2,8 +2,8 @@
   <div style="text-align: center;">
      
       <div class="whiteboard">
-        <div class="content-detail-content-info-left-number">[{{forum.category}}]</div>
-        <div class="content-detail-content-info-left-subject">{{forum.title}}</div>
+        <div class="content-detail-content-info-left-number" >[{{forum.category}}]</div>
+        <div class="content-detail-content-info-left-subject" >{{forum.title}}</div>
       </div>
       <div class="whiteboard">
         <div class="content-detail-content-info-right-user">{{forum.user_name}}
@@ -23,10 +23,10 @@
 
           </div>
       </div>
-      <div class="whiteboard" style="min-height:500px">{{forum.content}}</div>
+      <div class="whiteboard" style="min-height:500px" >{{forum.content}}</div>
      
       <div class ="flex flex-col">
-        <base-button>추천이미지를넣어야합니다. {{forum.like_cnt}}</base-button>
+        <base-button>추천수 {{forum.like_cnt}}</base-button>
       </div>
       <div class="content-detail-button">
         
@@ -37,9 +37,9 @@
         <base-button @click="golist">목록</base-button>
         
       </div>
-      <div class="content-detail-comment">
+      <!-- <div class="content-detail-comment">
         <CommentList :contentId="contentId"></CommentList>
-      </div>
+      </div> -->
     
   </div>
 </template>
@@ -47,7 +47,7 @@
 <script>
 // import BaseButton from '../../components/ui/BaseButton.vue';
 // import data from "@/data";
-import CommentList from "./CommentList";
+// import CommentList from "./CommentList";
 
 export default {
   name: "BoardDetail",
@@ -65,11 +65,9 @@ export default {
   },
 
   created(){
-    console.log(this.forum.forumId);
+    // console.log(this.forum.forumId);
 
-    this.forum_Detail(this.forumId);
-
-    
+    this.forum_Detail();
   },
   methods: {
     //삭제
@@ -85,7 +83,7 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        console.log(result)
+        // console.log(result)
         this.forum = result.data
       })
       .catch(e=>{
@@ -130,7 +128,8 @@ export default {
     //수정
     updateData() {
       this.$router.push({
-        path: `/board/modify/${this.forumId}`
+        // path: `/board/modify/${this.forumId}`
+        path: `/board/create/${this.forumId}`
       });
     },
 
@@ -140,7 +139,7 @@ export default {
     }
   },
   components: {
-    CommentList,
+    // CommentList,
     
   }
 };
