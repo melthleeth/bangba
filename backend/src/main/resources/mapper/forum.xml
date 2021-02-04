@@ -10,25 +10,21 @@
 	</insert>
 	
 	<!-- 포럼 리스트 보기 -->
-<<<<<<< HEAD
-	<select id="searchForumList" resultType="searchForumDto" parameterType="String">
-=======
 	<select id="searchForumList" resultType="searchForumDto">
->>>>>>> branch 'feature/forum' of https://lab.ssafy.com/s04-webmobile1-sub3/s04p13a401.git
-	<!-- 우선은 제목만 검색 기능 넣어요 -->
 		select 
 			a.pk_forum
 			, a.title
 			, a.category
 			, a.hits
 			, a.created_at
+			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
 		from forum as a
 		where title like concat('%', #{keyword}, '%')
 		order by pk_forum DESC
 		LIMIT #{page_num}, 10
 	</select>
 	
-	<!-- 포럼 리스트 보기 -->
+	<!-- 포럼 키워드 리스트 보기 -->
 	<select id="searchForumKeyword" resultType="searchForumDto" parameterType="String">
 	<!-- 우선은 제목만 검색 기능 넣어요 -->
 		select 
@@ -38,6 +34,7 @@
 			, a.hits
 			, a.created_at
 			, b.user_name
+			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
 		from forum as a
 		inner join user as b on a.user_no = b.pk_user
 		where title like concat('%', #{keyword}, '%')
