@@ -2,8 +2,6 @@
 
 export default {
   async login(context, payload) {
-    console.log(payload);
-    
     return context.dispatch('auth', {
       ...payload,
       mode: "login",
@@ -25,9 +23,7 @@ export default {
       url =
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAsR0CZ32xrFNB63aj3exZKVkoHnGqM8dA";
     }
-
-    console.log(payload.email);
-
+   
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -42,14 +38,17 @@ export default {
         returnSecureToken: true
       })
     });
+    console.log(response);
 
     const responseData = await response.json();
-    console.log(responseData);
+    
     if (!response.ok) {
       const error = new Error(
         responseData.message || '로그인에 실패하였습니다.'
       );
       throw error;
+    } else {
+      console.log(responseData);
     }
 
     const expiresIn = +responseData.expiresIn * 1000;
@@ -62,8 +61,9 @@ export default {
     localStorage.setItem('userId', responseData.userId);
     localStorage.setItem('user_name', responseData.user_name);
     localStorage.setItem('pk_user', responseData.pk_user);
+    localStorage.setItem('email', responseData.email);
     localStorage.setItem('tokenExpiration', expirationDate);
-    
+
     // timer = setTimeout(function() {
     //   context.dispatch('autoLogout');
     // }, expiresIn);
@@ -72,7 +72,8 @@ export default {
       token: responseData.idToken,
       userId: responseData.localId,
       user_name: responseData.user_name,
-      pk_user: responseData.pk_user
+      pk_user: responseData.pk_user,
+      email: responseData.email,
     });
   },
   // tryLogin(context) {

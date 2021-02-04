@@ -12,6 +12,10 @@
 		where type_kor like concat('%', #{searchtxt}, '%') or type_eng like concat('%', #{searchtxt}, '%')
 		or name_kor like concat('%', #{searchtxt}, '%') or name_eng like concat('%', #{searchtxt}, '%')
 	</select>
+	<select id="searchAlcoholbyPK" resultType="AlcoholDto" parameterType="int">
+		select * from alcohol
+		where pk_alcohol = #{pk_alcohol}
+	</select>
 	<select id="searchAlcoholPK" resultType="int" parameterType="String">
 		select pk_alcohol from alcohol
 		where name_kor like #{name} or name_eng like #{name}

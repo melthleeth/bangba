@@ -1,10 +1,10 @@
 package com.bangba.project730.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangba.project730.model.dto.ForumDto;
@@ -23,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:7300")
 @RequestMapping("/forum")
 public class ForumController {
 	
@@ -42,11 +42,26 @@ public class ForumController {
 			return "error";
 		}
 	}
-		
-	@ApiOperation(value = "자유게시판 조회")
+	
+	@ApiOperation(value = "자유게시판 목록 조회")
+	@GetMapping("/search-forum-list")
+	public List<SearchForumDto> searchForumList() throws Exception {
+		return forumService.searchForumList();
+	}
+	
+
+	@ApiOperation(value = "자유게시판 키워드 조회")
 	@GetMapping("/search-forum-list/{keyword}")
-	public List<SearchForumDto> searchForumList(@PathVariable @ApiParam(value = "자유게시판 조회 목록에 대한 정보", required = true) String keyword, Model model) throws Exception {
-		return forumService.searchForumList(keyword);
+	public List<SearchForumDto> searchForumKeyword(@PathVariable @ApiParam(value = "자유게시판 키워드 조회 목록에 대한 정보", required = true) String keyword, Model model) throws Exception {
+		return forumService.searchForumKeyword(keyword);
+	}
+	
+	
+	@ApiOperation(value = "자유게시판 상세페이지")
+	@GetMapping("/{pk_forum}")
+	public ForumDto detailForum(@PathVariable @ApiParam(value = "자유게시판 하나에 대한 상세정보", required = true) int pk_forum) throws Exception {
+		forumService.updateHits(pk_forum);
+		return forumService.detailForum(pk_forum);
 	}
 	
 	@ApiOperation(value = "자유게시판 수정")

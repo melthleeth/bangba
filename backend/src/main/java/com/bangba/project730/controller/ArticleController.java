@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.IngredientDto;
+import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.service.ArticleService;
 
@@ -52,18 +54,18 @@ public class ArticleController {
 
 	@ApiOperation(value = "레시피 검색", response = String.class)
 	@PostMapping("/keyword")
-	public String searchArticle(@RequestBody Map<String, String> map , Model model) throws Exception {
+	public List<ArticleDto> searchArticle(@RequestBody Map<String, String> map , Model model) throws Exception {
 		try {
 			List<ArticleDto> dto = articleService.searchArticle(map);
 			for(ArticleDto a:dto)
 				System.out.println(a.getTitle_kor());
 			model.addAttribute("msg", "레시피 검색 완료");
-			return "main";
+			return articleService.searchArticle(map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "레시피 검색중 문제가 발생했습니다.");
-			return "error";
 		}
+		return null;
 	}
 	
 	@ApiOperation(value = "레시피 수정", response = String.class)
@@ -94,17 +96,14 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "주류 검색", response = String.class)
 	@PostMapping("/alcohol/{searchtxt}")
-	public String searchAlcohol(@RequestParam String searchtxt, Model model) throws Exception {
+	public List<AlcoholDto> searchAlcohol(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
-			List<AlcoholDto> adto = articleService.searchAlcohol(searchtxt);
-			for(AlcoholDto a:adto)
-				System.out.println(a.getName_kor());
-			model.addAttribute("msg", "재료 검색 완료");
-			return "main";
+			model.addAttribute("msg", "주류 검색 완료");
+			return articleService.searchAlcohol(searchtxt);
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
-			return "error";
+			model.addAttribute("msg", "주류 검색중 문제가 발생했습니다.");
+			return null;
 		}
 	}
 	@ApiOperation(value = "재료 추가", response = String.class)
@@ -124,17 +123,14 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "재료 검색", response = String.class)
 	@PostMapping("/ingredient/{searchtxt}")
-	public String searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
+	public List<IngredientDto>  searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
-			List<IngredientDto> idto = articleService.searchIngredient(searchtxt);
-			for(IngredientDto a:idto)
-				System.out.println(a.getName_kor());
 			model.addAttribute("msg", "재료 검색 완료");
-			return "main";
+			return articleService.searchIngredient(searchtxt);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
-			return "error";
+			return null;
 		}
 	}
 	@ApiOperation(value = "태그 추가", response = String.class)
@@ -152,19 +148,30 @@ public class ArticleController {
 	}	
 	@ApiOperation(value = "태그 검색", response = String.class)
 	@PostMapping("/tag/{searchtxt}")
-	public String searchTag(@RequestParam String searchtxt, Model model) throws Exception {
+	public List<TagDto> searchTag(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
-			List<TagDto> tdto = articleService.searchTag(searchtxt);
-			for(TagDto a:tdto)
-				System.out.println(a.getContent_kor());
 			model.addAttribute("msg", "태그 검색 완료");
-			return "main";
+			return articleService.searchTag(searchtxt);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "태그 검색중 문제가 발생했습니다.");
-			return "error";
+			return null;
 		}
 	}
+	@ApiOperation(value = "레시피 상세", response = String.class)
+	@PostMapping("/detail/{pk_article}")
+	public Map<String,String> detailArticle(@RequestParam int pk_article, Model model) throws Exception {
+		try {
+			model.addAttribute("msg", "레시피 상세 검색 완료");
+			return articleService.detailArticle(pk_article);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "레시피 상세 검색중 문제가 발생했습니다.");
+			return null;
+		}
+	}
+
+	
 	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
  

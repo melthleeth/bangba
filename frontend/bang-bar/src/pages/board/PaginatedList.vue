@@ -20,17 +20,15 @@
             v-for="item in paginatedData"
             :key="item.no"
           >
-            <td class="py-4 text-sm">{{ item.content_id }}</td>
+            <td class="py-4 text-sm">{{ item.category }}</td>
             <td class="text-left font-semibold">{{ item.title }}</td>
             <td class="">{{ item.user_name }}</td>
             <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
-            <td class="text-sm">{{ item.user_id }}</td>
+            <td class="text-sm">{{ item.hits }}</td>
           </tr>
           </tbody>
       </table>
     </section>
-    <!-- 아니 왜 span 태그 style 안먹히는겨  -->
-    <!-- 이미지를 넣어야댐 -->
     <section class="font-sm flex justify-center items-center mt-2 mb-6">
       <base-button
         mode="outline"
@@ -52,12 +50,17 @@
 </template>
 
 <script>
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 
 export default {
   name: 'paginated-list',
+  
   data () {
+    
     return {
+      pk_forum:'',
+      keyword:"포럼",
       pageNum: 0
     }
   },
@@ -72,6 +75,7 @@ export default {
       default: 10
     }
   },
+
   methods: {
     nextPage () {
       this.pageNum += 1;
@@ -87,17 +91,17 @@ export default {
       // alert(item.content_id)
       
       this.$router.push({
-        path: `/board/detail/${item.content_id}`
+        path: `/board/detail/${item.pk_forum}`
       });
     },
     writeContent() {
       this.$router.push({
         path: `/board/create`
       });
-    }
-
+    },
 
   },
+
   computed: {
     pageCount () {
       let listLeng = this.listArray.length,

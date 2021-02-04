@@ -11,7 +11,10 @@
 		select * from ingredient
 		where name_kor like concat('%', #{searchtxt}, '%') or name_eng like concat('%', #{searchtxt}, '%')
 	</select>
-	
+	<select id="searchIngredientbyPK" resultType="IngredientDto" parameterType="int">
+		select * from ingredient
+		where pk_ingredient = #{pk_ingredient}
+	</select>
 	<select id="searchIngredientPK" resultType="int" parameterType="String">
 		select pk_ingredient from ingredient
 		where name_kor like #{name} or name_eng like #{name}
