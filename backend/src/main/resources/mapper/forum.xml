@@ -10,7 +10,7 @@
 	</insert>
 	
 	<!-- 포럼 리스트 보기 -->
-	<select id="searchForumList" resultType="searchForumDto">
+	<select id="searchForumList" resultType="searchForumDto" parameterType="Integer">
 		select 
 			a.pk_forum
 			, a.title
@@ -19,7 +19,6 @@
 			, a.created_at
 			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
 		from forum as a
-		where title like concat('%', #{keyword}, '%')
 		order by pk_forum DESC
 		LIMIT #{page_num}, 10
 	</select>
