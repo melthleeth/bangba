@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.bangba.project730.model.dao.UserDao;
+import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.UserDto;
 
 @Service
@@ -76,5 +77,17 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void deleteMyPage(int pk_user) {
 		dao.deleteMyPage(pk_user);
+	}
+
+	@Override
+	public List<ArticleDto> bookmarkMyPage(int pk_user) {
+		// TODO Auto-generated method stub
+		return dao.bookmarkMyPage(pk_user);
+	}
+
+	@Override
+	public List<ArticleDto> articleMyPage(int pk_user) {
+		// TODO Auto-generated method stub
+		return dao.articleMyPage(pk_user);
 	}
 }

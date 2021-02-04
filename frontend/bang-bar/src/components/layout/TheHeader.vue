@@ -17,8 +17,9 @@
         <li><router-link to="/recipe/custom">커스텀 레시피</router-link></li>
         <li><router-link to="/board/list">게시판</router-link></li>
       </ul>
-      <section v-if="!isAuth">
+      <section v-if="username == null">
         <base-button id="button-signup" class="px-4 py-2" link mode="outline" to="/signup">회원가입</base-button>
+
         <base-modal
           @close="hideDialog"
           :open="dialogIsVisible"
@@ -152,8 +153,7 @@
 export default {
   data() {
     return {
-      username: "미스터 여우씨",
-      // email: "mrfox@bangbar.com",
+      username: null,
       email: "",
       password: "",
       dialogIsVisible: false,
@@ -163,17 +163,32 @@ export default {
       error: null,
     };
   },
+  created() {
+    this.test()
+  },
   computed: {
-    setUsername() { return this.$store.getters.userName }
+    setUsername() { return this.$store.getters.userName },
+    setUserEmail() { return this.$store.getters.email},
+
   },
   watch: {
     setUsername: function(newVal) {
       this.username = newVal;
-      console.log(this.$store.getters.pk_user);
+    },
+    setUserEmail: function(newVal) {
+      this.username = newVal;
     }
   },
   methods: {
+    test() {
+      this.username = localStorage.getItem("user_name");
+      this.email = localStorage.getItem("email");
+      console.log(this.username);
+      console.log(this.email);
+    },
     showDialog() {
+      this.email='';
+      this.password='';
       this.dialogIsVisible = true;
       this.formIsValid = true;
     },
@@ -182,9 +197,16 @@ export default {
     },
     login() {
       this.isAuth = true;
+      // location.reload();
     },
     logout() {
-      this.isAuth = false;
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("pk_user");
+      localStorage.removeItem("email");
+
+      this.username = null;
+      this.password='';
+      this.email = '';
       this.dialogIsVisible = false;
       this.$router.replace("/");
     },
@@ -205,14 +227,14 @@ export default {
       };
 
       try {
-        if (this.isAuth === false) {
+        if (this.username === null) {
           await this.$store.dispatch("login", actionPayload);
         }
       } catch (error) {
         this.error =
           error.message || "로그인에 실패하였습니다. 다시 시도바랍니다.";
       }
-      this.isAuth = true;
+      this.username = localStorage.getItem("user_name");
     },
     handleError() {
       this.error = null;

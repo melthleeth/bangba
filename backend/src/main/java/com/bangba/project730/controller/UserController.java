@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.FollowDto;
 import com.bangba.project730.model.dto.UserDto;
 import com.bangba.project730.model.service.FollowService;
@@ -41,7 +42,7 @@ public class UserController {
 	@Autowired
 	private FollowService followService;
 
-	@CrossOrigin(origins = "http://localhost:8080")
+//	@CrossOrigin(origins = "http://localhost:8080")
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
 	public UserDto createUser(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto,
@@ -76,6 +77,8 @@ public class UserController {
 				return userService.getMyPage(user.getPk_user());
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 로그인해 주세요.");
+				System.out.println(map.get("email"));
+				System.out.println(map.get(("password")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -139,6 +142,20 @@ public class UserController {
 		return userService.getMyPage(userDto.getPk_user());
 	}
 
+	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
+	@PutMapping(value = "/mypage/options/bookmark")
+	@ResponseBody
+	public List<ArticleDto> bookmarkMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
+		return userService.bookmarkMyPage(userDto.getPk_user());
+	}
+	
+	@ApiOperation(value = "마이페이지 내가 쓴 레시피", response = String.class)
+	@PutMapping(value = "/mypage/options/article")
+	@ResponseBody
+	public List<ArticleDto> articleMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
+		return userService.articleMyPage(userDto.getPk_user());
+	}
+	
 	@ApiOperation(value = "회원 탈퇴", response = String.class)
 	@DeleteMapping(value = "/mypage/{pk_user}")
 	@ResponseBody

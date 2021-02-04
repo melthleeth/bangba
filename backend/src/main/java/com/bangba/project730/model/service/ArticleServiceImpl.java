@@ -1,5 +1,6 @@
 package com.bangba.project730.model.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.Article_ingredientDto;
+import com.bangba.project730.model.dto.Article_tagDto;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
@@ -109,7 +111,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		
 		s=map.get("recipe");
-		ss=s.split(",");
+		ss=s.split("<br>");
         int r=1;
 		for(String a:ss)
 		{
@@ -132,44 +134,79 @@ public class ArticleServiceImpl implements ArticleService{
 		int i=0;
 		for(String a:ss)
 		{
-			switch (i) {
-			case 0:
-				tldto.setTag1(a);
-				break;
-			case 1:
-				tldto.setTag2(a);
-				break;
-			case 2:
-				tldto.setTag3(a);
-				break;
-			case 3:
-				tldto.setTag4(a);
-				break;
-			case 4:
-				tldto.setTag5(a);
-				break;
-			case 5:
-				tldto.setTag6(a);
-				break;
-			case 6:
-				tldto.setTag7(a);
-				break;
-			case 7:
-				tldto.setTag8(a);
-				break;
-			case 8:
-				tldto.setTag9(a);
-				break;
-			case 9:
-				tldto.setTag10(a);
-				break;
-			default:
-				break;
+			if(a != "") {
+				switch (i) {
+				case 0:
+					tldto.setTag1(a);
+					break;
+				case 1:
+					tldto.setTag2(a);
+					break;
+				case 2:
+					tldto.setTag3(a);
+					break;
+				case 3:
+					tldto.setTag4(a);
+					break;
+				case 4:
+					tldto.setTag5(a);
+					break;
+				case 5:
+					tldto.setTag6(a);
+					break;
+				case 6:
+					tldto.setTag7(a);
+					break;
+				case 7:
+					tldto.setTag8(a);
+					break;
+				case 8:
+					tldto.setTag9(a);
+					break;
+				case 9:
+					tldto.setTag10(a);
+					break;
+				default:
+					break;
+				}
+				i++;switch (i) {
+				case 0:
+					tldto.setTag1(a);
+					break;
+				case 1:
+					tldto.setTag2(a);
+					break;
+				case 2:
+					tldto.setTag3(a);
+					break;
+				case 3:
+					tldto.setTag4(a);
+					break;
+				case 4:
+					tldto.setTag5(a);
+					break;
+				case 5:
+					tldto.setTag6(a);
+					break;
+				case 6:
+					tldto.setTag7(a);
+					break;
+				case 7:
+					tldto.setTag8(a);
+					break;
+				case 8:
+					tldto.setTag9(a);
+					break;
+				case 9:
+					tldto.setTag10(a);
+					break;
+				default:
+					break;
+				}
+				i++;
 			}
-			i++;
 		}
 		return dao.searchArticle(tldto);
-		
 	}
 
 	@Override
@@ -237,7 +274,7 @@ public class ArticleServiceImpl implements ArticleService{
 		}
 		
 		s=map.get("recipe");
-		ss=s.split(",");
+		ss=s.split("<br>");
         int r=1;
 		for(String a:ss)
 		{
@@ -256,6 +293,85 @@ public class ArticleServiceImpl implements ArticleService{
 		dao.deleteArticle(pk_article);
 	}
 	
+	@Override
+	public Map<String, String> detailArticle(int pk_article) throws Exception {
+		// TODO Auto-generated method stub
+		dao.updateHit(pk_article);
+		ArticleDto dto=dao.detailArticle(pk_article);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("pk_article", Integer.toString(dto.getPk_article()));
+		map.put("user_no", Integer.toString(dto.getUser_no()));
+		map.put("title_kor", dto.getTitle_kor());
+		map.put("title_eng", dto.getTitle_eng());
+		map.put("like_cnt", Integer.toString(dto.getLike_cnt()));
+		map.put("bookmark_cnt", Integer.toString(dto.getBookmark_cnt()));
+		map.put("hits", Integer.toString(dto.getHits()));
+		map.put("created_at", dto.getCreated_at());
+		map.put("updated_at", dto.getUpdated_at());
+		map.put("like_weekly", Integer.toString(dto.getLike_weekly()));
+		map.put("content", dto.getContent());
+		map.put("img_path", dto.getImg_path());
+		map.put("category", Boolean.toString(dto.isCategory()));
+		map.put("abv", Integer.toString(dto.getAbv()));
+		map.put("cup_no", Integer.toString(dto.getCup_no()));
+		String a="";
+		List<Article_alcoholDto> laa = dao.searchArticleAlcohol(pk_article);
+		int c=1;
+		for(Article_alcoholDto aa :laa)
+		{
+			AlcoholDto adto = adao.searchAlcoholbyPK(aa.getAlcohol_no());
+			a+=adto.getName_kor();
+			a+="/";
+			a+=aa.getQuantity();
+			a+="/";
+			a+=aa.getUnit();
+			if(c<laa.size())
+				a+="<br>";
+			c++;
+		}
+		map.put("alcohol", a);
+		String i="";
+		List<Article_ingredientDto> lai = dao.searchArticleIngredient(pk_article);
+		c=1;
+		for(Article_ingredientDto ai :lai)
+		{
+			IngredientDto idto = idao.searchIngredientbyPK(ai.getIngredient_no());
+			i+=idto.getName_kor();
+			i+="/";
+			i+=ai.getQuantity();
+			i+="/";
+			i+=ai.getUnit();
+			if(c<lai.size())
+				i+="<br>";
+			c++;
+		}
+		map.put("ingredient", i);
+		String t="";
+		List<Article_tagDto> lat = dao.searchArticleTag(pk_article);
+		c=1;
+		for(Article_tagDto at :lat)
+		{
+			TagDto tdto = tdao.searchTagbyPK(at.getTag_no());
+			t+=tdto.getContent_kor();
+			if(c<lat.size())
+				t+="<br>";
+			c++;
+		}
+		map.put("tag", t);
+		String r="";
+		List<RecipeDto> lr = dao.searchRecipe(pk_article);
+		c=1;
+		for(RecipeDto rdto : lr)
+		{
+			r+=rdto.getContent();
+			if(c<lr.size())
+				r+="<br>";
+			c++;
+		}
+		map.put("recipe", r);
+		return map;
+	}
+
 	@Override
 	public List<AlcoholDto> searchAlcohol(String searchtxt) throws Exception {
 		// TODO Auto-generated method stub
@@ -294,5 +410,4 @@ public class ArticleServiceImpl implements ArticleService{
 	}
 
 
-	
 }

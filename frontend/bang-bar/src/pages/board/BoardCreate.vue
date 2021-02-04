@@ -1,67 +1,87 @@
 <template>
   <div style="text-align: center;">
-          <h1 style="font-size:50px; text-align: center;">글쓰기</h1>
+          
+          <h1 style="font-size:50px; text-align: center;" v-if="!updateMode">글쓰기</h1>
+          <h1 style="font-size:50px; text-align: center;" v-else>글수정하기</h1>
           <div>
           <select
             class="appearance-none w-auto m-3 text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
             v-model="category"
           >
-            <option>공지사항</option>
+          <!-- 나중에 수정할 것  -->
+            <!-- <option>공지사항</option> -->
             <option>후기</option>
             <option>질문</option>
           </select>
           </div>
+
+
         <div>
             <textarea class="whiteboard" placeholder="제목을 입력해주세요." v-model="title">
+             
             </textarea>
         </div>
-        
+
         <div>
             <textarea  class="whiteboard" style="min-height:500px" v-model="content" placeholder="내용을 입력해주세요.">
-            
+    
             </textarea>
         </div>
+
+
     <br>
     <!-- <button @click="test()">클릭</button> -->
 
     <span >
-      <base-button @click="uploadContent()">저장</base-button>
+      <base-button @click="updateMode ? updateContent() : uploadContent()">저장</base-button>
       <base-button @click="cancle">취소</base-button>
     </span>
   </div>
 </template>
 
 <script>
-import data from '@/data'
-import BaseButton from '../../components/ui/BaseButton.vue'
+// import data from '@/data'
 
 // var date=new Date();
+// var forum2=this.forum;
+const user_pk=localStorage.getItem("pk_user");
 
 export default {
-  components: { BaseButton },
   name: 'BoardCreate',
   data() {
+    
     return {
+      forum:[],
       category:'후기',
       title: '',
       context: '',
-      user_id: 9,
+      user_id: user_pk,
       created_at:this.time_cal(),
       updated_at: "",
       updateObject: null,
       updateMode: this.$route.params.contentId > 0 ? true : false,
+      pk_forum:this.$route.params.contentId
     }
   },
   created() {
       if(this.$route.params.contentId > 0) {
-        const contentId = Number(this.$route.params.contentId)
-        this.updateObject = data.Content.filter(contentItem => contentItem.content_id === contentId)[0]
-        this.subject = this.updateObject.title;
-        this.context = this.updateObject.context;
+        this.take_data();
+    
+        // console.log("create의",forum2);
+
+        // const contentId = Number(this.$route.params.contentId)
+        // this.updateObject = data.Content.filter(contentItem => contentItem.content_id === contentId)[0]
+        // this.subject = this.updateObject.title;
+        // this.context = this.updateObject.context;
+
+        this.category=this.forum.category;
+        this.title=this.forum.title;
+        this.content=this.forum.content;
         
       } 
-      console.log(this.user_id);
   },
+
+
   methods: {
     test(){
       console.log(this.user_id);
@@ -97,6 +117,28 @@ export default {
 
         this.created_at=year+""+month+""+date+""+hour+""+min+""+sec
     },
+
+    take_data(){
+
+        this.axios.get(`http://localhost:8081/forum/` + this.$route.params.contentId, {
+        headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json; charset = utf-8'
+        }
+      })
+      .then((result)=>{
+        // console.log(result) 
+        
+        this.category=result.data.category
+        this.title=result.data.title
+        this.content=result.data.content
+        console.log(this.forum);
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
+    },
+
 
     uploadContent() { // 저장
 
@@ -139,13 +181,37 @@ export default {
     },
 
     
-    // updateContent() { // 수정
-    //     this.updateObject.title = this.subject;
-    //     this.updateObject.context = this.context;
-    //     this.$router.push({
-    //       path: '/board/list'
-    //     })
-    // },
+    updateContent() { // 수정
+        this.time_cal();
+
+        let params={
+          title: this.title,
+          category: this.category,
+          content: this.content,
+          updated_at:this.created_at,
+          pk_forum:this.pk_forum,
+        }
+        const headers = {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+      }
+
+        this.axios.put('http://localhost:8081/forum/update-forum',
+        JSON.stringify(params),
+        { headers }
+      )
+      .then((result)=>{
+          console.log(result)
+          this.$router.push({
+            path:'/board/list'
+          });
+      })
+      .catch(e=>{
+          console.log('error:',e)
+      })
+
+    },
     cancle() {
       this.$router.push({
         path: '/board/list'

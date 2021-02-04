@@ -6,11 +6,14 @@
     >
     <section id="search-bar" class="flex flex-row mb-6 px-16 font-S-CoreDream-light">
       <article class="flex justify-center justify-self-start">
-        <base-button mode="important" @click="writeContent">글쓰기</base-button>
+        <base-button mode="important" @click="writeContent" >글쓰기</base-button>
       </article>
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
-        <div class="inline-block relative w-max">
+
+<!-- 제목검색으로 변경 -->
+
+        <!-- <div class="inline-block relative w-max">
           <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
@@ -32,7 +35,7 @@
               />
             </svg>
           </div>
-        </div>
+        </div> -->
         <div class="mx-4 flex-auto inline-block">
           <input
             class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
@@ -82,7 +85,7 @@ export default {
     });
     
     return {
-      // pageArray: [],
+      writemode:null,
       keyword:"",
       currentPage: 1, // 현재 페이지
       perPage: 10, // 페이지당 보여줄 갯수
@@ -125,29 +128,36 @@ export default {
       });
     },
     writeContent() {
+      if(localStorage.getItem('pk_user')!=null){
       this.$router.push({
         path: `/board/create`
       });
+    }else{
+      alert("로그인을 해주세요.")
+    }
     },
     getList() {
+
+        let params = {
+          page_num : 0
+        };
 
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
         this.axios.get('http://localhost:8081/forum/search-forum-list', {
         headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json; charset = utf-8'
-        }
+        }, params
       })
       .then((result)=>{
         // this.items=result;
-        console.log(result)
+        // console.log(result)
         this.items = result.data
       })
       .catch(e=>{
         console.log('error:',e)
       })
     },
-
 
     search_board(){
       this.axios.get('http://localhost:8081/forum/search-forum-list/'+this.keyword, {
@@ -166,18 +176,22 @@ export default {
       })
     }
   },
+  
   computed: {
+    
     rows() {
       return this.items.length;
     }
   },
   created() {
     this.pageArray=this.items;
+    this.writemode=localStorage.getItem("pk_user");
   },
   mounted() {
       this.getList()
       // console.log(this.items);
   },
+
 };
 
 /*

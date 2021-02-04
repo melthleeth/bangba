@@ -16,5 +16,8 @@ export default {
     }, 
     pkUser(state) {
       return state.pk_user;
+    },
+    userEmail(state) {
+      return state.email;
     }
   };
