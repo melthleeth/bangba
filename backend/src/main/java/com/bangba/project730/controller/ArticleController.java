@@ -96,17 +96,14 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "주류 검색", response = String.class)
 	@PostMapping("/alcohol/{searchtxt}")
-	public String searchAlcohol(@RequestParam String searchtxt, Model model) throws Exception {
+	public List<AlcoholDto> searchAlcohol(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
-			List<AlcoholDto> adto = articleService.searchAlcohol(searchtxt);
-			for(AlcoholDto a:adto)
-				System.out.println(a.getName_kor());
-			model.addAttribute("msg", "재료 검색 완료");
-			return "main";
+			model.addAttribute("msg", "주류 검색 완료");
+			return articleService.searchAlcohol(searchtxt);
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
-			return "error";
+			model.addAttribute("msg", "주류 검색중 문제가 발생했습니다.");
+			return null;
 		}
 	}
 	@ApiOperation(value = "재료 추가", response = String.class)
@@ -126,17 +123,14 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "재료 검색", response = String.class)
 	@PostMapping("/ingredient/{searchtxt}")
-	public String searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
+	public List<IngredientDto>  searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
-			List<IngredientDto> idto = articleService.searchIngredient(searchtxt);
-			for(IngredientDto a:idto)
-				System.out.println(a.getName_kor());
 			model.addAttribute("msg", "재료 검색 완료");
-			return "main";
+			return articleService.searchIngredient(searchtxt);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "재료 검색중 문제가 발생했습니다.");
-			return "error";
+			return null;
 		}
 	}
 	@ApiOperation(value = "태그 추가", response = String.class)
@@ -154,17 +148,14 @@ public class ArticleController {
 	}	
 	@ApiOperation(value = "태그 검색", response = String.class)
 	@PostMapping("/tag/{searchtxt}")
-	public String searchTag(@RequestParam String searchtxt, Model model) throws Exception {
+	public List<TagDto> searchTag(@RequestParam String searchtxt, Model model) throws Exception {
 		try {
-			List<TagDto> tdto = articleService.searchTag(searchtxt);
-			for(TagDto a:tdto)
-				System.out.println(a.getContent_kor());
 			model.addAttribute("msg", "태그 검색 완료");
-			return "main";
+			return articleService.searchTag(searchtxt);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "태그 검색중 문제가 발생했습니다.");
-			return "error";
+			return null;
 		}
 	}
 	@ApiOperation(value = "레시피 상세", response = String.class)
