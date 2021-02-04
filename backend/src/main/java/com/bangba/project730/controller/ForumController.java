@@ -1,7 +1,10 @@
 package com.bangba.project730.controller;
 
 import java.util.List;
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/forum
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -42,11 +45,19 @@ public class ForumController {
 			return "error";
 		}
 	}
+<<<<<<< HEAD
 	
 	@ApiOperation(value = "자유게시판 목록 조회")
 	@GetMapping("/search-forum-list")
 	public List<SearchForumDto> searchForumList() throws Exception {
 		return forumService.searchForumList();
+=======
+
+	@ApiOperation(value = "자유게시판 목록 조회")
+	@GetMapping("/search-forum-list")
+	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
+		return forumService.searchForumList(page_num);
+>>>>>>> feature/forum
 	}
 	
 
@@ -54,6 +65,17 @@ public class ForumController {
 	@GetMapping("/search-forum-list/{keyword}")
 	public List<SearchForumDto> searchForumKeyword(@PathVariable @ApiParam(value = "자유게시판 키워드 조회 목록에 대한 정보", required = true) String keyword, Model model) throws Exception {
 		return forumService.searchForumKeyword(keyword);
+<<<<<<< HEAD
+	}
+	
+	
+	@ApiOperation(value = "자유게시판 상세페이지")
+	@GetMapping("/{pk_forum}")
+	public ForumDto detailForum(@PathVariable @ApiParam(value = "자유게시판 하나에 대한 상세정보", required = true) int pk_forum) throws Exception {
+		forumService.updateHits(pk_forum);
+		return forumService.detailForum(pk_forum);
+=======
+>>>>>>> feature/forum
 	}
 	
 	
@@ -64,6 +86,7 @@ public class ForumController {
 		return forumService.detailForum(pk_forum);
 	}
 	
+
 	@ApiOperation(value = "자유게시판 수정")
 	@PutMapping("/update-forum")
 	public String updateForum(@RequestBody @ApiParam(value = "자유게시판 하나에 대한 수정 정보", required = true) ForumDto forumDto, Model model) throws Exception {

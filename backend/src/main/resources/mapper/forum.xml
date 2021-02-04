@@ -11,6 +11,24 @@
 	
 	<!-- 포럼 리스트 보기 -->
 	<select id="searchForumList" resultType="searchForumDto">
+<<<<<<< HEAD
+=======
+		select 
+			a.pk_forum
+			, a.title
+			, a.category
+			, a.hits
+			, a.created_at
+			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
+		from forum as a
+		where title like concat('%', #{keyword}, '%')
+		order by pk_forum DESC
+		LIMIT #{page_num}, 10
+	</select>
+	
+	<!-- 포럼 키워드 리스트 보기 -->
+	<select id="searchForumKeyword" resultType="searchForumDto" parameterType="String">
+>>>>>>> feature/forum
 	<!-- 우선은 제목만 검색 기능 넣어요 -->
 		select 
 			a.pk_forum
@@ -19,6 +37,7 @@
 			, a.hits
 			, a.created_at
 			, b.user_name
+<<<<<<< HEAD
 		from forum as a
 		inner join user as b on a.user_no = b.pk_user
 		order by pk_forum DESC
@@ -37,6 +56,11 @@
 			, b.user_name
 		from forum as a
 		inner join user as b on a.user_no = b.pk_user
+=======
+			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
+		from forum as a
+		inner join user as b on a.user_no = b.pk_user
+>>>>>>> feature/forum
 		where title like concat('%', #{keyword}, '%')
 		order by pk_forum DESC
 	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
