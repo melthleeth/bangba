@@ -1,7 +1,6 @@
 package com.bangba.project730.model.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +22,7 @@ public class ForumServicelmpl implements ForumService{
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<SearchForumDto> searchForumList(String keyword) throws Exception {
 		
 		/*
@@ -38,11 +38,29 @@ public class ForumServicelmpl implements ForumService{
 		 * */
 		// return (페이지 당 개시물 수),(페이지번호),(검색결과)에 해당하는 글
 		return dao.searchForumList(keyword);
+=======
+	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
+		if (page_num <=0 ) {
+			page_num = 1;
+		}
+		page_num = (page_num -1) * 10;
+		return dao.searchForumList(page_num);
+	}
+	
+	@Override
+	public List<SearchForumDto> searchForumKeyword(String keyword) throws Exception {
+		return dao.searchForumKeyword(keyword);
+>>>>>>> branch 'feature/forum' of https://lab.ssafy.com/s04-webmobile1-sub3/s04p13a401.git
 	}
 
 	@Override
-	public ForumDto read(int pk_forum) throws Exception {
-		return dao.read(pk_forum);
+	public ForumDto detailForum(int pk_forum) throws Exception {
+		return dao.detailForum(pk_forum);
+	}
+	
+	@Override
+	public void updateHits(int hits) throws Exception {
+		dao.updateHits(hits);
 	}
 
 	@Override

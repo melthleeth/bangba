@@ -14,7 +14,7 @@ public class SearchForumDto {
 	private String created_at;	// 작성일
 //	private String updated_at;	// 마지막 업데이트 날짜
 	private int forum_cnt_per_page; // 페이지 당 게시글 노출시킬 갯수
-	private int page_no; // 보여줄 페이지 번호
+	private int page_num; // 보여줄 페이지 번호
 	
 
 	public int getPk_forum() {
@@ -66,10 +66,10 @@ public class SearchForumDto {
 		this.forum_cnt_per_page = forum_cnt_per_page;
 	}
 	public int getPage_no() {
-		return page_no;
+		return page_num;
 	}
-	public void setPage_no(int page_no) {
-		this.page_no = page_no;
+	public void setPage_no(int page_num) {
+		this.page_num = page_num;
 	}
 	
 }
