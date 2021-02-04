@@ -1,19 +1,19 @@
 <template>
-  <footer class="my-10">
+  <footer class="mt-12 mb-10">
     <div class="flex flex-col justify-items-center">
       <section>
       <router-link to="/">
         <article class="logo flex flex-col justify-items-center w-max">
           <img src="../../assets/img/logo.png" alt="logo-image" />
           <span
-            class="text-xl text-center font-color-black-400 font-Mapo-DPPA mt-2"
+            class="text-lg text-center font-color-black-400 font-Mapo-DPPA mt-2"
             >방구석 바텐더</span
           >
         </article>
       </router-link>
       </section>
       <section class="">
-        <nav class="font-color-black-400 text-lg">
+        <nav class="font-color-black-400 text-base">
           <ul>
             <li><router-link to="/footer/guide">방바 가이드</router-link></li>
             <li><router-link to="/footer/people">방바 사람들</router-link></li>
@@ -22,7 +22,7 @@
         </nav>
       </section>
       <section class="my-6">
-        <span class="font-S-CoreDream-light"
+        <span class="font-S-CoreDream-light text-sm"
           >2021 ⓒ 방구석 바텐더 All rights reserved</span
         >
       </section>
@@ -52,7 +52,7 @@ img {
 }
 
 .logo {
-  font-size: 15pt;
+  font-size: 12pt;
   border-radius: 50%;
   margin: 1rem;
   padding: 0.5rem;
@@ -81,7 +81,7 @@ footer a {
   text-decoration: none;
   color: #23232f;
   display: inline-block;
-  padding: 0.25rem 1.5rem;
+  padding: 0.25rem 1rem;
   border: 1px solid transparent;
   transition: 0.3s ease-out;
 }
