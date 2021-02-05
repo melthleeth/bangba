@@ -229,12 +229,16 @@ export default {
       try {
         if (this.username === null) {
           await this.$store.dispatch("login", actionPayload);
-        }
+        } 
       } catch (error) {
         this.error =
           error.message || "로그인에 실패하였습니다. 다시 시도바랍니다.";
       }
       this.username = localStorage.getItem("user_name");
+      if(this.username === null) {
+        this.formIsValid = false;
+        return;
+      }
     },
     handleError() {
       this.error = null;

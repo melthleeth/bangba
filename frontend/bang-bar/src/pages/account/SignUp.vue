@@ -35,13 +35,14 @@
           <div class="joindiv">
             <label for="phone_numver">전화번호</label>
             <input
-              type="number"
+              type="text"
               id="phone_numver"
               v-model="phone_number"
               class="textarea"
               placeholder="01012345678"
               required
-              pattern="[0-9]{10,11}+"
+              maxlength="11"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
             />
             
           </div>
@@ -94,8 +95,10 @@
               id="passwordConfirm"
               v-model="passwordConfirm"
               class="textarea"
+              minlength="8"
+              maxlength="20"
               required
-              pattern="[A-Za-z0-9]{8,20}+"
+              pattern="^(?=.*[A-Za-z])(?=.[0-9])[A-Za-z0-9]+{8,20}$"
               @keyup="passDupl_Check()"
             />
             <!-- <a>{{ message }}</a> -->
@@ -299,8 +302,9 @@ export default {
         JSON.stringify(params),
         { headers }
       )
-      .then((result)=>{
-          console.log(result)
+      .then(()=>{
+          // console.log(result)
+          alert("회원가입이 완료되었습니다.");
           this.$router.push({
             path:'/home'
           });
