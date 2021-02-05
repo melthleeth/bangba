@@ -19,7 +19,7 @@ import com.bangba.project730.model.service.AdminService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

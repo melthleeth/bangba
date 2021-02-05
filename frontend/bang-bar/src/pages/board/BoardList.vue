@@ -146,7 +146,8 @@ export default {
         this.axios.get('http://localhost:8081/forum/search-forum-list', {
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8'
+        'Content-Type': 'application/json; charset = utf-8',
+        "Access-Control-Allow-Headers": "*",
         }, params
       })
       .then((result)=>{
@@ -163,7 +164,8 @@ export default {
       this.axios.get('http://localhost:8081/forum/search-forum-list/'+this.keyword, {
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8'
+        'Content-Type': 'application/json; charset = utf-8',
+        "Access-Control-Allow-Headers": "*",
         }
       })
       .then((result)=>{

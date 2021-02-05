@@ -123,7 +123,8 @@ export default {
         this.axios.get(`http://localhost:8081/forum/` + this.$route.params.contentId, {
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8'
+        'Content-Type': 'application/json; charset = utf-8',
+        "Access-Control-Allow-Headers": "*",
         }
       })
       .then((result)=>{
@@ -159,6 +160,7 @@ export default {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
         this.axios.post('http://localhost:8081/forum/create-forum',
@@ -195,6 +197,7 @@ export default {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
         this.axios.put('http://localhost:8081/forum/update-forum',

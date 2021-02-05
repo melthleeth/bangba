@@ -190,6 +190,7 @@ export default {
       'Content-type': 'application/json; charset=UTF-8',
       'Accept': '*/*',
       'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
         
       this.axios.post('http://localhost:8081/user/join/mail/'+this.email,
@@ -236,6 +237,7 @@ export default {
       'Content-type': 'application/json; charset=UTF-8',
       'Accept': '*/*',
       'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
         this.axios.post('http://localhost:8081/user/join/'+this.nickname,
@@ -296,6 +298,7 @@ export default {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
         this.axios.post('http://localhost:8081/user/join',

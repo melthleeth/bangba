@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:7300")
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/forum")
 public class ForumController {
 	
