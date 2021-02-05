@@ -37,12 +37,12 @@
         />
       </div>
     </section>
-    <section>
+    <section class="flex flex-col">
       <div v-if="isLoading">
         <base-spinner></base-spinner>
       </div>
       <div
-        v-else-if="filteredRecipes.length > 0"
+        v-else-if="searchCondition"
         class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto"
       >
         <recipe-card
@@ -81,6 +81,9 @@ export default {
     };
   },
   computed: {
+    searchCondition() {
+      return this.filteredRecipes.length > 0 && this.searchKeyword.trim().length > 0;
+    },
     filteredRecipes() {
       const recipes = this.$store.getters["recipes/recipes"];
       return recipes.filter((recipe) => {
