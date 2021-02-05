@@ -4,7 +4,7 @@
     class="font-S-CoreDream-light flex flex-col justify-center card-corner max-w-sm rounded overflow-hidden bg-white m-4 shadow-lg pb-2 transition duration-200 ease-in-out transform hover:scale-105"
   >
     <img
-      class="w-full h-64 object-cover"
+      class="w-full h-64 object-cover mr-0"
       :src="imgsrc"
       alt="Sunset in the mountains"
     />
@@ -15,7 +15,7 @@
 
     <section class="">
       <span
-        v-for="tag in tags"
+        v-for="tag in tags.slice(0, 5)"
         :key="tag"
         class="w-max inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold ml-2 mb-2"
         >#{{ tag }}</span
@@ -35,7 +35,7 @@
             class="object-contain ml-2 mr-0"
             alt="like icon"
           />
-          <span class="font-xs font-semibold font-color-black-300">
+          <span class="font-2xs font-semibold font-color-black-300">
             {{ like_cnt }}
           </span>
         </article>
@@ -45,7 +45,7 @@
             class="object-contain ml-1 mr-0"
             alt="bookmark icon"
           />
-          <span class="mr-2 font-xs font-semibold font-color-black-300">
+          <span class="mr-2 font-2xs font-semibold font-color-black-300">
             {{ bookmark_cnt }}
           </span>
         </article>

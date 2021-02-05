@@ -5,7 +5,11 @@
       >오피셜 레시피</span
     >
     <section class="flex justify-end mx-12">
-      <base-button class="w-max px-8 py-2" mode="important" link to="register/official"
+      <base-button
+        class="w-max px-8 py-2"
+        mode="important"
+        link
+        to="register/official"
         >레시피 등록</base-button
       >
     </section>
@@ -60,7 +64,10 @@
       <div v-if="isLoading">
         <base-spinner></base-spinner>
       </div>
-      <div v-else-if="hasRecipes" class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto">
+      <div
+        v-else-if="hasRecipes"
+        class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto"
+      >
         <recipe-card
           v-for="cocktail in filteredRecipes"
           :key="cocktail.pk_article"
@@ -74,7 +81,11 @@
         >
         </recipe-card>
       </div>
-      <h3 v-else>등록된 레시피가 없습니다.</h3>
+      <span
+        v-else
+        class="text-2xl text-center my-10 font-S-CoreDream-medium font-bold font-color-black-200"
+        >등록된 레시피가 없습니다.</span
+      >
     </section>
   </div>
 </template>

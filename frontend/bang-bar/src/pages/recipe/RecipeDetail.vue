@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center font-S-CoreDream-light mt-20">
+  <div class="flex justify-center font-S-CoreDream-light mt-20 font-color-black-400">
     <section class="w-1/3 flex flex-col justify-items-center">
       <base-card class="flex flex-col justify-items-center">
         <img
@@ -21,7 +21,7 @@
             class="mr-0 w-12 h-12 object-contain"
             alt="like icon"
           />
-          <span class="mt-2">{{ like_cnt }}</span>
+          <span class="mt-2 font-S-CoreDream-medium">{{ like_cnt }}</span>
         </base-card>
         <base-card
           class="flex-1 flex flex-col justify-items-center items-center transition duration-200 ease-in-out transform hover:scale-105"
@@ -31,7 +31,7 @@
             class="mr-0 w-12 h-12 object-contain"
             alt="bookmark icon"
           />
-          <span class="mt-2">{{ bookmark_cnt }}</span>
+          <span class="mt-2 font-S-CoreDream-medium">{{ bookmark_cnt }}</span>
         </base-card>
       </article>
     </section>
