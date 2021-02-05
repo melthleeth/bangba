@@ -1,5 +1,5 @@
 // let timer;
-
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   async login(context, payload) {
     return context.dispatch('auth', {
@@ -17,7 +17,7 @@ export default {
   async auth(context, payload) {
     const mode = payload.mode;
 
-    let url = "http://localhost:8081/user/login";
+    let url = `${SERVER_URL}/user/login`;
     // 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAsR0CZ32xrFNB63aj3exZKVkoHnGqM8dA';
     if (mode === "signup") {
       url =

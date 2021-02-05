@@ -160,6 +160,7 @@
 </template>
 
 <script>
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   data() {  
     return {
@@ -193,7 +194,7 @@ export default {
         "Access-Control-Allow-Headers": "*",
       }
         
-      this.axios.post('http://localhost:8081/user/join/mail/'+this.email,
+      this.axios.post(`${SERVER_URL}/user/join/mail/`+this.email,
         JSON.stringify(params),
          { headers }
       )
@@ -240,7 +241,7 @@ export default {
         "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post('http://localhost:8081/user/join/'+this.nickname,
+        this.axios.post(`${SERVER_URL}/user/join/`+this.nickname,
         JSON.stringify(params),
         { headers }
       )
@@ -301,7 +302,7 @@ export default {
         "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post('http://localhost:8081/user/join',
+        this.axios.post(`${SERVER_URL}/user/join`,
         JSON.stringify(params),
         { headers }
       )

@@ -45,6 +45,7 @@
 // var date=new Date();
 // var forum2=this.forum;
 const user_pk=localStorage.getItem("pk_user");
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: 'BoardCreate',
@@ -120,7 +121,7 @@ export default {
 
     take_data(){
 
-        this.axios.get(`http://localhost:8081/forum/` + this.$route.params.contentId, {
+        this.axios.get(`${SERVER_URL}/forum/` + this.$route.params.contentId, {
         headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json; charset = utf-8',
@@ -163,7 +164,7 @@ export default {
         "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post('http://localhost:8081/forum/create-forum',
+        this.axios.post(`${SERVER_URL}/forum/create-forum`,
         JSON.stringify(params),
         { headers }
       )
@@ -200,7 +201,7 @@ export default {
         "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.put('http://localhost:8081/forum/update-forum',
+        this.axios.put(`${SERVER_URL}/forum/update-forum`,
         JSON.stringify(params),
         { headers }
       )

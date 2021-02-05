@@ -1,4 +1,6 @@
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
+  
   async registerRecipe(context, payload) {
     console.log(context);
     console.log(payload);
@@ -63,7 +65,7 @@ export default {
       return;
     }
 
-    const response = await fetch("http://localhost:8081/article/all");
+    const response = await fetch(`${SERVER_URL}/article/all`);
     const responseData = await response.json();
 
     if (!response.ok) {

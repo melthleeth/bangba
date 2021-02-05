@@ -57,7 +57,7 @@
 <script>
 import data from "@/data";
 import PaginatedList from './PaginatedList.vue';
-
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   components: { 
@@ -143,7 +143,7 @@ export default {
         };
 
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-        this.axios.get('http://localhost:8081/forum/search-forum-list', {
+        this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
         headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json; charset = utf-8',
@@ -161,7 +161,7 @@ export default {
     },
 
     search_board(){
-      this.axios.get('http://localhost:8081/forum/search-forum-list/'+this.keyword, {
+      this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
         headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json; charset = utf-8',
