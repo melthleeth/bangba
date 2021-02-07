@@ -90,4 +90,9 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.articleMyPage(pk_user);
 	}
+
+	@Override
+	public int isDuplicatedPhoneNumber(String phone_number) {
+		return dao.isDuplicatedPhoneNumber(phone_number);
+	}
 }

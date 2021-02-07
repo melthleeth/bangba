@@ -183,8 +183,8 @@ export default {
     test() {
       this.username = localStorage.getItem("user_name");
       this.email = localStorage.getItem("email");
-      console.log(this.username);
-      console.log(this.email);
+      // console.log(this.username);
+      // console.log(this.email);
     },
     showDialog() {
       this.email='';
