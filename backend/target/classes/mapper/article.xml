@@ -55,7 +55,7 @@
 	
 	<update id="updateArticle" parameterType="ArticleDto">
 		update article set 
-		title_kor = #{title_kor}, title_eng = #{title_eng}, updated_at = #{updated_at}, content = #{content}, img_path = #{img_path}, 
+		title_kor = #{title_kor}, title_eng = #{title_eng}, updated_at = #{updated_at}, content = #{content}, img_path = #{img_path}
 		where pk_article = #{pk_article}
 	</update>
 	
@@ -137,6 +137,28 @@
 	<delete id="deleteRecipe" parameterType="int">
 		delete from recipe
 		where article_no = #{pk_article}
+	</delete>
+	
+	
+	<insert id="createComment" parameterType="AcommentDto">
+		insert into acomment (article_no, user_no, content)
+		values (#{article_no}, #{user_no}, #{content})	
+	</insert>
+	
+	<select id="searchComment" resultType="AcommentDto" parameterType="int">
+		select * from acomment
+		where article_no = #{pk_article} order by pk_acomment desc
+	</select>
+	
+	<update id="updateComment" parameterType="AcommentDto">
+		update acomment set 
+		content = #{content} 
+		where pk_acomment = #{pk_acomment}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from acomment
+		where pk_acomment = #{pk_acomment}
 	</delete>
 	
 </mapper>

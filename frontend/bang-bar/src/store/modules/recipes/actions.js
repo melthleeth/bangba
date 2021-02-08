@@ -26,6 +26,10 @@ export default {
     if (payload.category === "custom") {
       isOfficial = false;
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/backend
     const recipeData = {
       user_no: context.rootGetters.pkUser,
       created_at: new Date().toLocaleTimeString(), // 변경 가능
@@ -63,6 +67,7 @@ export default {
       // ...
     }
     context.commit("registerRecipe", recipeData);
+    alert("등록이 완료되었습니다.");
   },
 
   //글을 불러오는 것

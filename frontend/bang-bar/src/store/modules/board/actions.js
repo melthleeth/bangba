@@ -1,4 +1,8 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/backend
 export default {
   
   async registerRecipe(context, payload) {
@@ -45,6 +49,12 @@ export default {
     context.commit("registerRecipe", recipeData);
   },
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> origin/backend
   //글을 불러오는 곳
   async loadBoard(context, payload) {
     
@@ -53,6 +63,7 @@ export default {
       return;
     }
 
+<<<<<<< HEAD
     const pageData = {
       page_num: payload.page_num,
       page_range: payload.page_range,
@@ -62,6 +73,12 @@ export default {
     
     const url = `${SERVER_URL}/forum/search-forum-list` ;
     // console.log(pageData.page_num+" pageNum");
+=======
+    const page_num = 0;
+    
+    const url = `${SERVER_URL}/forum/search-forum-list/page=` + page_num;
+    console.log(url);
+>>>>>>> origin/backend
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -69,17 +86,31 @@ export default {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
       },
+<<<<<<< HEAD
       method: "POST",
       body: JSON.stringify(pageData),
     });
     const responseData = await response.json();
     console.log(responseData);
+=======
+      method: "GET",
+    });
+    console.log(response);
+    const responseData = await response.json();
+
+    console.log(responseData);
+    // console.log(responseData);
+>>>>>>> origin/backend
     if (!response.ok) {
       console.log("error")
     }
 
     const boards = [];
+<<<<<<< HEAD
     // const paginated = [];
+=======
+
+>>>>>>> origin/backend
     for (const key in responseData) {
       const board = {
         pk_forum: responseData[key].pk_forum,
@@ -92,6 +123,7 @@ export default {
         updated_at: responseData[key].updated_at,
         content:responseData[key].content,
 
+<<<<<<< HEAD
         range_total_cnt: responseData[key].range_total_cnt,
         page_start: responseData[key].page_start,
         page_end: responseData[key].page_end,
@@ -104,6 +136,11 @@ export default {
       boards.push(board);
     }
     console.log(boards);
+=======
+      };
+      boards.push(board);
+    }
+>>>>>>> origin/backend
     context.commit("setBoards", boards);
   },
 

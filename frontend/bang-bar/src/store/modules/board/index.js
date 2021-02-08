@@ -9,6 +9,7 @@ export default {
         lastFetch: null,
       // dummy data
       boards: [],
+<<<<<<< HEAD
       paginaged:[],
 
       //넘겨주기위한 데이터
@@ -17,6 +18,8 @@ export default {
       search_type: '',
       keyword: '',
       forum_cnt_per_page:'',
+=======
+>>>>>>> origin/backend
     };
   },
   mutations,

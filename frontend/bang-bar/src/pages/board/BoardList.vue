@@ -13,13 +13,20 @@
 
 <!-- 제목검색으로 변경 -->
 
+<<<<<<< HEAD
          <div class="inline-block relative w-max">
+=======
+        <div class="inline-block relative w-max">
+>>>>>>> origin/backend
           <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>전체</option>
             <option>제목</option>
+<<<<<<< HEAD
             <option>내용</option>
+=======
+>>>>>>> origin/backend
             <option>작성자</option>
           </select>
           <div
@@ -49,7 +56,7 @@
         <base-button @click="search_board()">검색</base-button>
       </article>
     </section>
-    <paginated-list :list-array="items" />
+    <paginated-list :list-array="boardList" />
   </div>
 </template>
 
@@ -64,12 +71,17 @@ export default {
   },
   
   name: "BoardList",
+<<<<<<< HEAD
   data() {
     
     // 정렬 : https://blog.naver.com/haskim0716n/221681695401
     // User 와 Content 의 user_id 의 같은 번호를 찾아 Content 에 기존자료 + 'user_name' 으로 추가한다.
     // let items = [];
     
+=======
+  data() {    
+    // User 와 Content 의 user_id 의 같은 번호를 찾아 Content 에 기존자료 + 'user_name' 으로 추가한다.
+>>>>>>> origin/backend
     return {
       writemode:null,
       keyword:"",
@@ -96,20 +108,26 @@ export default {
         {
           key: "hits",
           label : "조회수"
-
         }
       ],
+<<<<<<< HEAD
       items: [],
       pageArray:this.items
+=======
+      boards: [],
+      pageArray:this.boards
+>>>>>>> origin/backend
     };
   },
   methods: {
+    //글 상세보기로 이동
     rowClick(item) {
       
       this.$router.push({
         path: `/board/detail/${item.content_id}`
       });
     },
+    //로그인 체크
     writeContent() {
       if(localStorage.getItem('pk_user')!=null){
       this.$router.push({
@@ -119,6 +137,7 @@ export default {
       alert("로그인을 해주세요.")
     }
     },
+<<<<<<< HEAD
 
     
     getList() {
@@ -169,6 +188,28 @@ export default {
 
 
 
+=======
+
+    //글 목록 불러오기 - 목록을 boards에 저장
+    async loadBoard(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("boards/loadBoard", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "게시판을 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
+    },
+
+
+    //검색 
+>>>>>>> origin/backend
     search_board(){
       this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
         headers: {
@@ -179,8 +220,13 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
+<<<<<<< HEAD
         // console.log(result)
         this.items = result.data
+=======
+        console.log(result)
+        this.boards = result.data
+>>>>>>> origin/backend
       })
       .catch(e=>{
         console.log('error:',e)
@@ -189,48 +235,49 @@ export default {
   },
   
   computed: {
-    
+
+    //items에 데이터를 넣는 과정
+    boardList() {
+      const boards = this.$store.getters["boards/boards"]; //모듈/getters
+      console.log(boards);
+      return boards;
+    },
+
+    //데이터가 있는지 확인
+    hasRecipes() {
+      return !this.isLoading && this.$store.getters["boards/hasBoards"];
+    },
+
+
     rows() {
-      return this.items.length;
+      return this.boards.length;
     }
   },
+
+
+
   created() {
-    this.pageArray=this.items;
+    this.pageArray=this.boards;
     this.writemode=localStorage.getItem("pk_user");
+<<<<<<< HEAD
 
   },
   mounted() {
       this.getList()
       this.get_length();
+=======
+    console.log("112");
+    this.loadBoard();
+    console.log("111");
+  },
+  mounted() {
+      // this.loadBoard()
+>>>>>>> origin/backend
       // console.log(this.items);
   },
 
 };
 
-/*
-[예제] map --------------------
-const objArr = [{ a: "a" }, { b: "b" }];
-
-  0: {a: "a"}
-  1: {b: "b"}
-
-const altered = objArr.map(item => {
-  return {
-    ...item, // 기존자료 모두 추가
-    c: "c" // 신규추가
-  };
-});
-
-  0: {a: "a", c: "c"}
-  1: {b: "b", c: "c"}
-
-[예제] filter--------------------
-const onlyA = altered.filter(item => {
-  return item.a === "a"; // 'a' 인 값만 리턴
-});
-
-  0: {a: "a", c: "c"}
-*/
 </script>
 <style scoped>
     .board{

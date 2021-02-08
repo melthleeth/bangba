@@ -118,10 +118,16 @@ export default {
       return page;
     },
     paginatedData () {
+<<<<<<< HEAD
       // const start = this.pageNum * this.pageSize,
       //       end = start + this.pageSize;
       // console.log(this.pageNum);
       return this.listArray;
+=======
+      const start = this.pageNum * this.pageSize,
+            end = start + this.pageSize;
+      return this.listArray.slice(start, end);
+>>>>>>> origin/backend
     }
 
 

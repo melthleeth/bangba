@@ -91,6 +91,7 @@
         </div>
         <div class="form-control" :class="{ invalid: !tags.isValid }">
           <label for="tag">태그</label>
+<<<<<<< HEAD
           <input
             class="w-1/12"
             type="text"
@@ -99,6 +100,10 @@
             @blur="clearValidity('tags')"
           />
           <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
+=======
+          <input class="w-1/12" type="text" id="tag" v-model.trim="tag" @blur="clearValidity('tags')" />
+          <base-button @click="addTag">추가하기</base-button>
+>>>>>>> origin/backend
           <section>
             <!-- 중복 항목 검사 테스트 필요 -->
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
@@ -168,7 +173,7 @@
             </li>
           </ul>
           <p v-if="!ingredients.isValid || !alcohols.isValid">
-            최소 한 가지의 재료를 추가해주세요.
+            최소 한 가지의 주류, 재료를 추가해주세요.
           </p>
         </div>
         <div class="form-control" :class="{ invalid: !recipes.isValid }">
@@ -179,10 +184,15 @@
             id="recipe"
             placeholder="레시피를 입력하세요"
             v-model.trim="recipe"
+<<<<<<< HEAD
           />
           <base-button class="px-4 py-2" @click="addRecipe"
             >추가하기</base-button
           >
+=======
+          @blur="clearValidity('recipes')" />
+          <base-button @click="addRecipe">추가하기</base-button>
+>>>>>>> origin/backend
           <ul>
             <li v-for="(recipeItem, index) in recipes.val" :key="recipeItem">
               <span>{{ index + 1 }}. {{ recipeItem }}</span>
@@ -391,39 +401,50 @@ export default {
       if (this.title_kor.val === "") {
         this.title_kor.isValid = false;
         this.formIsValid = false;
+        console.log("1");
       }
       // if (this.title_eng.val === "") {
       //   this.title_eng.isValid = false;
       //   this.formIsValid = false;
       // }
-      if (!this.abv.val || this.abv.val < 0) {
+      else if (!this.abv.val || this.abv.val < 0) {
         this.abv.isValid = false;
         this.formIsValid = false;
+        console.log("2");
       }
-      if (this.content.val === "") {
+      else if (this.content.val === "") {
         this.content.isValid = false;
         this.formIsValid = false;
+        console.log("3");
       }
-      if (this.cupinfo.val === "") {
+      else if (this.cupinfo.val === "") {
         this.cupinfo.isValid = false;
         this.formIsValid = false;
-      }
-      if (this.tags.val.length === 0) {
+        console.log("4");
+      } 
+      else if (this.tags.val.length === 0) {
         this.tags.isValid = false;
         this.formIsValid = false;
+        console.log("5");
       }
-      if (this.alcohols.val.length === 0) {
+      else if (this.alcohols.val.length === 0) {
         this.alcohols.isValid = false;
         this.formIsValid = false;
+        console.log("6");
       }
-      if (this.ingredients.val.length === 0) {
+      else if (this.ingredients.val.length === 0) {
         this.ingredients.isValid = false;
         this.formIsValid = false;
+        console.log("7");
       }
-      if (this.recipes.val.length === 0) {
+      else if (this.recipes.val.length === 0) {
         this.recipes.isValid = false;
         this.formIsValid = false;
+        console.log("8");
+      } else {
+        this.formIsValid = true;
       }
+
     },
     async submitForm() {
       this.validateForm();
