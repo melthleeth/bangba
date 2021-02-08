@@ -13,14 +13,14 @@
       cocktailname
     }}</span>
 
-    <section class="">
+    <!-- <section class="">
       <span
         v-for="tag in tags.slice(0, 5)"
         :key="tag"
         class="w-max inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold ml-2 mb-2"
         >#{{ tag }}</span
       >
-    </section>
+    </section> -->
     <section class="flex items-center mt-4">
       <img
         src="../../assets/img/mr.fox.jpg"
@@ -68,11 +68,11 @@ export default {
   data() {
     return {
       tags: [],
-      imgsrc: require("../../assets/" + this.img_path),
+      imgsrc: this.img_path,
     };
   },
   created() {
-    this.tags = this.tag.split("<br>");
+    // this.tags = this.tag.split("<br>");
   },
   methods: {
     viewRecipeDetail() {

@@ -3,9 +3,9 @@
     <span class="title text-center my-10 font-S-CoreDream-medium font-bold"
       >{{ category }} 레시피 등록</span
     >
-    <base-card>
+    <base-card class="w-2/3" id="card-margin">
       <form
-        class="text-lg flex flex-col justify-items-start"
+        class="text-lg flex flex-col justify-items-start mx-4"
         id="form-recipe"
         @submit.prevent=""
       >
@@ -13,13 +13,14 @@
           class="form-control flex flex-col items-center"
           :class="{ invalid: !img_path.isValid }"
         >
-          <label for="img_path">사진 등록</label>
           <img
             class="w-64 h-96 rounded-3xl object-cover"
             :src="img_path.val"
             alt="cocktail image"
           />
-          <base-button @click="showImgRegDialog">사진 등록</base-button>
+          <base-button class="mt-4 px-4 py-2" @click="showImgRegDialog"
+            >사진 등록</base-button
+          >
           <p v-if="!img_path.isValid">등록된 사진이 없습니다.</p>
         </div>
         <div class="form-control" :class="{ invalid: !title_kor.isValid }">
@@ -80,6 +81,7 @@
             name="cupinfo"
             id="cupinfo"
             v-model="cupinfo.val"
+            @blur="clearValidity('cupinfo')"
           >
             <option v-for="cup in cups" :key="cup.index" :value="cup.index">{{
               cup.val
@@ -89,8 +91,14 @@
         </div>
         <div class="form-control" :class="{ invalid: !tags.isValid }">
           <label for="tag">태그</label>
-          <input class="w-1/12" type="text" id="tag" v-model.trim="tag" />
-          <base-button @click="addTag">추가하기</base-button>
+          <input
+            class="w-1/12"
+            type="text"
+            id="tag"
+            v-model.trim="tag"
+            @blur="clearValidity('tags')"
+          />
+          <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
           <section>
             <!-- 중복 항목 검사 테스트 필요 -->
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
@@ -133,7 +141,9 @@
             placeholder="ml"
             v-model.trim="unit"
           />
-          <base-button @click="addIngredient">추가하기</base-button>
+          <base-button class="px-4 py-2" @click="addIngredient"
+            >추가하기</base-button
+          >
           <ul>
             <li v-for="(alcoholItem, index) in alcoholTemp" :key="alcoholItem">
               <span class="ml-2">🍸 {{ alcoholItem }}</span>
@@ -170,7 +180,9 @@
             placeholder="레시피를 입력하세요"
             v-model.trim="recipe"
           />
-          <base-button @click="addRecipe">추가하기</base-button>
+          <base-button class="px-4 py-2" @click="addRecipe"
+            >추가하기</base-button
+          >
           <ul>
             <li v-for="(recipeItem, index) in recipes.val" :key="recipeItem">
               <span>{{ index + 1 }}. {{ recipeItem }}</span>
@@ -189,7 +201,10 @@
           <span class="font-red" v-if="!formIsValid">
             비어있는 칸이 있습니다. 채운 후 다시 시도해주세요.
           </span>
-          <base-button mode="important" class="w-max" @click="submitForm"
+          <base-button
+            mode="important"
+            class="w-max px-4 py-2"
+            @click="submitForm"
             >레시피 등록하기</base-button
           >
         </section>
@@ -242,6 +257,7 @@ export default {
         { index: 22, name: "margarita", val: "마가리타 글라스" },
         { index: 23, name: "cocktail", val: "칵테일 글라스" },
       ],
+      units: [{}],
       tag: "",
       type: "",
       ingredient: "",
@@ -252,6 +268,7 @@ export default {
       ingredientTemp: [],
       img_path: {
         val: require("../../assets/img/defaultCocktailImage.png"),
+        src: "img/defaultCocktailImage.png",
         isValid: true,
       },
       title_kor: {
@@ -296,14 +313,16 @@ export default {
     showImgRegDialog() {
       console.log("사진 등록 중");
       console.log(this.img_path.val);
-      this.img_path.val = require("../../assets/img/cocktails/tequila_strawberry_shower.jpg");
+      this.img_path.val = "https://images.unsplash.com/photo-1536935338788-846bb9981813?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=986&q=80";
       alert("사진 등록 기능 준비중");
     },
     addTag() {
-      if (this.tag !== "") {
+      if (this.tag === "") alert("태그 내용을 입력해주세요.");
+      else if (this.tags.val.includes(this.tag)) alert("이미 등록된 태그입니다.");
+      else {
         this.tags.val.push(this.tag);
         this.tag = "";
-      } else alert("태그 내용을 입력해주세요.");
+      }
     },
     removeTag(index) {
       this.tags.val.splice(index, 1);
@@ -332,10 +351,12 @@ export default {
         const alcoholItem = `${this.ingredient}/${this.quantity}/${this.unit}`;
         this.alcoholTemp.push(tempItem);
         this.alcohols.val.push(alcoholItem);
+        this.alcohols.isValid = true;
       } else {
         const ingredientItem = `${this.type}/${this.ingredient}/${this.quantity}/${this.unit}`;
         this.ingredientTemp.push(tempItem);
         this.ingredients.val.push(ingredientItem);
+        this.ingredients.isValid = true;
       }
       alert(this.type + " (" + this.ingredient + ")가 추가되었습니다.");
 
@@ -365,6 +386,8 @@ export default {
       this[input].isValid = true;
     },
     validateForm() {
+      this.formIsValid = true;
+
       if (this.title_kor.val === "") {
         this.title_kor.isValid = false;
         this.formIsValid = false;
@@ -415,10 +438,10 @@ export default {
         abv: this.abv.val,
         content: this.content.val,
         cupinfo: this.cupinfo.val,
-        tags: this.tags.val.join('<br>'), // default separator: ','
-        alcohols: this.alcohols.val.join('<br>'),
-        ingredients: this.ingredients.val.join('<br>'),
-        recipes: this.recipes.val.join('<br>'),
+        tags: this.tags.val.join("<br>"), // default separator: ','
+        alcohols: this.alcohols.val.join("<br>"),
+        ingredients: this.ingredients.val.join("<br>"),
+        recipes: this.recipes.val.join("<br>"),
       };
 
 
@@ -494,12 +517,17 @@ div {
 }
 
 .invalid p {
-  color: #FF0000;
+  color: #ff0000;
 }
 
 .invalid input,
 .invalid select,
 .invalid textarea {
-  border: 1px solid #FF0000;
+  border: 1px solid #ff0000;
 }
+
+#card-margin {
+  margin: 2rem auto;
+}
+
 </style>

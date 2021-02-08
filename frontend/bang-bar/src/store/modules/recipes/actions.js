@@ -1,20 +1,19 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
-  
   async registerRecipe(context, payload) {
     console.log(context);
     console.log(payload);
 
     /*
     {
-    "user_no": "1", 
+    "user_no": "1",
     "title_kor": "title_kor",
     "title_eng": "title_eng",
-    "created_at": "202102021447", 
+    "created_at": "202102021447",
     "content": "content",
     "img_path": "img_path2",
     "category": "admin",
-    "abv": "16", 
+    "abv": "16",
     "cup_no": "1",
     "alcohol": "그레이 구스/15/ml,진/15/ml,스미노프 No.21/15/ml,데킬라/15/ml,Kahlúa/15/ml",
     "ingredient": "재료/레몬 주스/25/ml,재료/토닉 워터/30/ml,재료/콜라/1/캔,가니쉬/레몬/1/개",
@@ -23,10 +22,14 @@ export default {
   }
     */
     // const userId = context.rootGetters.userId;
+    let isOfficial = true;
+    if (payload.category === "custom") {
+      isOfficial = false;
+    }
     const recipeData = {
       user_no: context.rootGetters.pkUser,
       created_at: new Date().toLocaleTimeString(), // 변경 가능
-      category: payload.category,
+      category: isOfficial,
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,
@@ -40,8 +43,7 @@ export default {
     };
 
     // const token = context.rootGetters.token;
-    const url = "http://localhost:8081/article/create";
-    //axios의 then이 response.ok 다
+    const url = `${SERVER_URL}/article/create`;
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -69,9 +71,23 @@ export default {
       return;
     }
 
-    const response = await fetch(`${SERVER_URL}/article/all`);
-    const responseData = await response.json();
+    const keyword = {
+      searchtxt: "",
+      tag: ""
+    };
 
+    const response = await fetch(`${SERVER_URL}article/keyword`, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "POST",
+      body: JSON.stringify(keyword),
+    });
+    const responseData = await response.json();
+    console.log(responseData);
     if (!response.ok) {
       // error..
     }
@@ -95,8 +111,14 @@ export default {
         category: responseData[key].category,
         abv: responseData[key].abv,
         cup_no: responseData[key].cup_no,
+        // alcohol: responseData[key].alcohol,
+        // ingredient: responseData[key].ingredient,
+        // recipe: responseData[key].recipe,
       };
       recipes.push(recipe);
     }
+
+    context.commit("setRecipes", recipes);
+    context.commit("setFetchTimestamp");
   },
 };
