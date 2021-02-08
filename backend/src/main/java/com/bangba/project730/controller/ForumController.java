@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangba.project730.model.dto.ForumDto;
@@ -44,7 +45,7 @@ public class ForumController {
 
 	@ApiOperation(value = "자유게시판 목록 조회")
 	@GetMapping("/search-forum-list")
-	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
+	public List<SearchForumDto> searchForumList(@RequestParam int page_num) throws Exception {
 		System.out.println(page_num);
 		return forumService.searchForumList(page_num);
 	}

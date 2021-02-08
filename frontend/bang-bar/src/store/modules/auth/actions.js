@@ -38,6 +38,7 @@ export default {
         returnSecureToken: true
       })
     });
+    console.log("잘되나");
     console.log(response);
 
     const responseData = await response.json();
@@ -67,7 +68,7 @@ export default {
     // timer = setTimeout(function() {
     //   context.dispatch('autoLogout');
     // }, expiresIn);
-
+    console.log("잘되나!!!?");
     context.commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,

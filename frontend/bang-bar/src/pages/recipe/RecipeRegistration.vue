@@ -421,6 +421,7 @@ export default {
         recipes: this.recipes.val.join('<br>'),
       };
 
+
       console.log(formData);
 
       await this.$store.dispatch("recipes/registerRecipe", formData);

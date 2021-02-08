@@ -13,14 +13,13 @@
 
 <!-- 제목검색으로 변경 -->
 
-        <!-- <div class="inline-block relative w-max">
+        <div class="inline-block relative w-max">
           <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>전체</option>
-            <option>공지사항</option>
-            <option>후기</option>
-            <option>질문</option>
+            <option>제목</option>
+            <option>작성자</option>
           </select>
           <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -35,7 +34,7 @@
               />
             </svg>
           </div>
-        </div> -->
+        </div> 
         <div class="mx-4 flex-auto inline-block">
           <input
             class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
@@ -49,7 +48,7 @@
         <base-button @click="search_board()">검색</base-button>
       </article>
     </section>
-    <paginated-list :list-array="items" />
+    <paginated-list :list-array="boardList" />
   </div>
 </template>
 
@@ -64,12 +63,8 @@ export default {
   },
   
   name: "BoardList",
-  data() {
-    
-    // 정렬 : https://blog.naver.com/haskim0716n/221681695401
+  data() {    
     // User 와 Content 의 user_id 의 같은 번호를 찾아 Content 에 기존자료 + 'user_name' 으로 추가한다.
-    // let items = [];
-    
     return {
       writemode:null,
       keyword:"",
@@ -96,14 +91,14 @@ export default {
         {
           key: "hits",
           label : "조회수"
-
         }
       ],
-      items: [],
-      pageArray:this.items
+      boards: [],
+      pageArray:this.boards
     };
   },
   methods: {
+    //글 상세보기로 이동
     rowClick(item) {
       // alert(item.content_id)
       
@@ -111,6 +106,7 @@ export default {
         path: `/board/detail/${item.content_id}`
       });
     },
+    //로그인 체크
     writeContent() {
       if(localStorage.getItem('pk_user')!=null){
       this.$router.push({
@@ -121,31 +117,25 @@ export default {
     }
     },
 
-    
-    getList() {
-
-        let params = {
-          page_num : 0
-        };
-
-        // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-        this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8',
-        "Access-Control-Allow-Headers": "*",
-        }, params
-      })
-      .then((result)=>{
-        // this.items=result;
-        // console.log(result)
-        this.items = result.data
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
+    //글 목록 불러오기 - 목록을 boards에 저장
+    async loadBoard(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("boards/loadBoard", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "게시판을 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     },
 
+
+    //검색 
     search_board(){
       this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
         headers: {
@@ -157,7 +147,7 @@ export default {
       .then((result)=>{
         // this.items=result;
         console.log(result)
-        this.items = result.data
+        this.boards = result.data
       })
       .catch(e=>{
         console.log('error:',e)
@@ -166,46 +156,41 @@ export default {
   },
   
   computed: {
-    
+
+    //items에 데이터를 넣는 과정
+    boardList() {
+      const boards = this.$store.getters["boards/boards"]; //모듈/getters
+      console.log(boards);
+      return boards.filter((boardItem) => {
+        if (boardItem.category === true) return true;
+      });
+    },
+
+    //데이터가 있는지 확인
+    hasRecipes() {
+      return !this.isLoading && this.$store.getters["boards/hasBoards"];
+    },
+
+
     rows() {
-      return this.items.length;
+      return this.boards.length;
     }
   },
+
+
+
   created() {
-    this.pageArray=this.items;
+    this.pageArray=this.boards;
     this.writemode=localStorage.getItem("pk_user");
+    this.loadBoard();
   },
   mounted() {
-      this.getList()
+      // this.loadBoard()
       // console.log(this.items);
   },
 
 };
 
-/*
-[예제] map --------------------
-const objArr = [{ a: "a" }, { b: "b" }];
-
-  0: {a: "a"}
-  1: {b: "b"}
-
-const altered = objArr.map(item => {
-  return {
-    ...item, // 기존자료 모두 추가
-    c: "c" // 신규추가
-  };
-});
-
-  0: {a: "a", c: "c"}
-  1: {b: "b", c: "c"}
-
-[예제] filter--------------------
-const onlyA = altered.filter(item => {
-  return item.a === "a"; // 'a' 인 값만 리턴
-});
-
-  0: {a: "a", c: "c"}
-*/
 </script>
 <style scoped>
     .board{

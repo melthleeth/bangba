@@ -41,25 +41,29 @@ export default {
 
     // const token = context.rootGetters.token;
     const url = "http://localhost:8081/article/create";
+    //axios의 then이 response.ok 다
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
-        Accept: "application/json;",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
+        'Accept': '*/*',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
       },
       method: "POST",
       body: JSON.stringify(recipeData),
     });
-    const responseData = await response.text();
+    const responseData = await response.text(); //"
     console.log("responseData");
     console.log(responseData);
 
+    //실패했을 때
     if (!response.ok) {
       // ...
     }
     context.commit("registerRecipe", recipeData);
   },
+
+  //글을 불러오는 것
   async loadRecipes(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
       return;
