@@ -23,10 +23,15 @@ export default {
   }
     */
     // const userId = context.rootGetters.userId;
+    let isOfficial = true;
+    if (payload.category === "custom") {
+      isOfficial = false;
+    }
+
     const recipeData = {
       user_no: context.rootGetters.pkUser,
       created_at: new Date().toLocaleTimeString(), // 변경 가능
-      category: payload.category,
+      category: isOfficial,
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,
@@ -59,6 +64,7 @@ export default {
       // ...
     }
     context.commit("registerRecipe", recipeData);
+    alert("등록이 완료되었습니다.");
   },
   async loadRecipes(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {

@@ -4,8 +4,24 @@
     </div>
 </template>
 
+<script>
+// const SERVER_URL = process.env.VUE_APP_SERVER_URL;
+
+export default {
+    data() {
+        return {
+            target_no:"",
+            user_no:localStorage.getItem("pk_user")
+        }
+    }, 
+    methods: {
+
+    }
+}
+</script>
+
 <style scoped>
 div {
     border-radius: 45px;
 }
-</style>
+</style> 
