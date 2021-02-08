@@ -41,7 +41,7 @@
 	<update id="updateMyPage" parameterType="UserDto">
 		update user
 		set password = #{password}
-		where pk_user = #{pk_user}
+		where email = #{email}
 	</update>
 	
 	
