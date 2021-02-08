@@ -84,7 +84,7 @@ export default {
       body: JSON.stringify(keyword),
     });
     const responseData = await response.json();
-    console.log(responseData);
+    // console.log(responseData);
     if (!response.ok) {
       // error..
     }
