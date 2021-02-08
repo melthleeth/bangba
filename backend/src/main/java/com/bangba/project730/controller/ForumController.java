@@ -161,4 +161,11 @@ public class ForumController {
 			return "error";
 		}
 	}
+	
+    @ApiOperation(value = "자유게시판 전체 게시글 수")
+    @GetMapping("/forum_cnt")
+    public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
+        return forumService.getForumListCnt(searchForumDto);
+    }
+	
 }
