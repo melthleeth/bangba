@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangba.project730.model.dto.ForumDto;
@@ -24,10 +25,10 @@ import io.swagger.annotations.ApiParam;
 @CrossOrigin(origins = { "*" })
 @RequestMapping("/forum")
 public class ForumController {
-	
+
 	@Autowired
 	private ForumService forumService;
-	
+
 	@ApiOperation(value = "자유게시판 생성")
 	@PostMapping("/create-forum")
 	public String createForum(@RequestBody @ApiParam(value = "자유게시판 하나에 대한 정보", required = true) ForumDto forumDto, Model model) throws Exception {
@@ -43,27 +44,34 @@ public class ForumController {
 	}
 
 	@ApiOperation(value = "자유게시판 목록 조회")
-	@PostMapping("/search-forum-list")
-	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
-		System.out.println(page_num);
-		return forumService.searchForumList(page_num);
-	}
-	
+	@GetMapping("/search-forum-list")
+	public List<ForumDto> searchForumList(Model model
+			, @RequestParam(required = false, defaultValue = "1") int page_num
+			, @RequestParam(required = false, defaultValue = "1") int page_range
+			, @RequestParam(required = false, defaultValue = "title") String search_type
+			, @RequestParam(required = false) String keyword
+			) throws Exception {
 
-	@ApiOperation(value = "자유게시판 키워드 조회")
-	@GetMapping("/search-forum-list/{keyword}")
-	public List<SearchForumDto> searchForumKeyword(@PathVariable @ApiParam(value = "자유게시판 키워드 조회 목록에 대한 정보", required = true) String keyword, Model model) throws Exception {
-		return forumService.searchForumKeyword(keyword);
+		SearchForumDto searchForumDto = new SearchForumDto();
+		searchForumDto.setSearch_type(search_type);
+		searchForumDto.setKeyword(keyword);
+
+		int forum_total_cnt = forumService.getForumListCnt(searchForumDto);
+
+		searchForumDto.page_info(page_num, page_range, forum_total_cnt);
+		model.addAttribute("pagination", searchForumDto);
+		model.addAttribute("searchForumList", forumService.searchForumList(searchForumDto));
+		return forumService.searchForumList(searchForumDto);
 	}
-	
-	
+
+
 	@ApiOperation(value = "자유게시판 상세페이지")
 	@GetMapping("/{pk_forum}")
 	public ForumDto detailForum(@PathVariable @ApiParam(value = "자유게시판 하나에 대한 상세정보", required = true) int pk_forum) throws Exception {
 		forumService.updateHits(pk_forum);
 		return forumService.detailForum(pk_forum);
 	}
-	
+
 
 	@ApiOperation(value = "자유게시판 수정")
 	@PutMapping("/update-forum")
@@ -78,8 +86,8 @@ public class ForumController {
 			return "error";
 		}
 	}
-	
-	
+
+
 	@ApiOperation(value = "자유게시판 삭제")
 	@DeleteMapping("/delete-forum/{pk_forum}")
 	public String deleteForum(@PathVariable @ApiParam(value = "자유게시판 하나 삭제", required = true) int pk_forum) throws Exception {
@@ -91,11 +99,11 @@ public class ForumController {
 			return "error";
 		}
 	}
-	
+
 	@ApiOperation(value = "공지사항 불러오기")
 	@GetMapping("/notices")
-	public List<SearchForumDto> searchNotices() throws Exception {
+	public List<ForumDto> searchNotices() throws Exception {
 		return forumService.searchNotices();
 	}
-	
+
 }

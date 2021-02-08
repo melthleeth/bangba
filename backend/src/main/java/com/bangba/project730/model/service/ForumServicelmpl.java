@@ -22,19 +22,15 @@ public class ForumServicelmpl implements ForumService{
 	}
 
 	@Override
-	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
-		if (page_num <=0 ) {
-			page_num = 1;
-		}
-		page_num = (page_num -1) * 10;
-		return dao.searchForumList(page_num);
+	public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
+		return dao.getForumListCnt(searchForumDto);
 	}
 	
 	@Override
-	public List<SearchForumDto> searchForumKeyword(String keyword) throws Exception {
-		return dao.searchForumKeyword(keyword);
+	public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception {
+		return dao.searchForumList(searchForumDto);
 	}
-
+	
 	@Override
 	public ForumDto detailForum(int pk_forum) throws Exception {
 		return dao.detailForum(pk_forum);
@@ -57,7 +53,7 @@ public class ForumServicelmpl implements ForumService{
 	}
 	
 	@Override
-	public List<SearchForumDto> searchNotices() throws Exception {
+	public List<ForumDto> searchNotices() throws Exception {
 		return dao.searchNotices();
 	}
 }

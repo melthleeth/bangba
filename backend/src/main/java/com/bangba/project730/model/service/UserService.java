@@ -12,6 +12,7 @@ public interface UserService {
 	public void sendEmail(String toAddress, String subject, String body);
 	public int isDuplicatedEmail(String toAddress);
 	public int isDuplicatedName(String name);
+	public int isDuplicatedPhoneNumber(String phone_number);
 	
 	// 로그인 관련 함수 
 	public UserDto login(Map<String, String> map) throws Exception;
