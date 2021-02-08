@@ -403,7 +403,9 @@ public class ArticleServiceImpl implements ArticleService{
 		{
 			String s="";
 			s+=udao.getUserName(acdto.getUser_no());
-			s+="/";
+			s+=";";
+			s+=udao.getImgPath(acdto.getUser_no());
+			s+=";";
 			s+=acdto.getContent();
 			map.put(Integer.toString(acdto.getPk_acomment()), s);
 		}

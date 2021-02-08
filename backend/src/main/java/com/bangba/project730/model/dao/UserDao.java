@@ -23,6 +23,7 @@ public interface UserDao {
 	public void deleteMyPage(int pk_user);
 	public List<ArticleDto> bookmarkMyPage(int pk_user);
 	public List<ArticleDto> articleMyPage(int pk_user);
-	
+
 	public String getUserName(int user_no) throws Exception;
+	public String getImgPath(int user_no) throws Exception;
 }

@@ -69,6 +69,7 @@ public class ForumServicelmpl implements ForumService{
 		FcommentDto fcdto = new FcommentDto();
 		fcdto.setForum_no(Integer.parseInt(map.get("pk_forum")));
 		fcdto.setUser_no(Integer.parseInt(map.get("user_no")));
+		fcdto.setCreated_at(map.get("created_at"));
 		fcdto.setContent(map.get("content"));
 		dao.createComment(fcdto);
 		return null;
@@ -83,7 +84,11 @@ public class ForumServicelmpl implements ForumService{
 		{
 			String s="";
 			s+=udao.getUserName(fcdto.getUser_no());
-			s+="/";
+			s+=";";
+			s+=udao.getImgPath(fcdto.getUser_no());
+			s+=";";
+			s+=fcdto.getCreated_at();
+			s+=";";
 			s+=fcdto.getContent();
 			map.put(Integer.toString(fcdto.getPk_fcomment()), s);
 		}
