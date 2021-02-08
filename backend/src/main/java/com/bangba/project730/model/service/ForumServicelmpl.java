@@ -32,11 +32,6 @@ public class ForumServicelmpl implements ForumService{
 	}
 	
 	@Override
-	public List<ForumDto> searchForumKeyword(String keyword) throws Exception {
-		return dao.searchForumKeyword(keyword);
-	}
-
-	@Override
 	public ForumDto detailForum(int pk_forum) throws Exception {
 		return dao.detailForum(pk_forum);
 	}

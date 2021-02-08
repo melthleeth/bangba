@@ -65,13 +65,6 @@ public class ForumController {
 	}
 	
 
-//	@ApiOperation(value = "자유게시판 키워드 조회")
-//	@GetMapping("/search-forum-list/{keyword}")
-//	public List<ForumDto> searchForumKeyword(@PathVariable @ApiParam(value = "자유게시판 키워드 조회 목록에 대한 정보", required = true) String keyword, Model model) throws Exception {
-//		return forumService.searchForumKeyword(keyword);
-//	}
-	
-	
 	@ApiOperation(value = "자유게시판 상세페이지")
 	@GetMapping("/{pk_forum}")
 	public ForumDto detailForum(@PathVariable @ApiParam(value = "자유게시판 하나에 대한 상세정보", required = true) int pk_forum) throws Exception {

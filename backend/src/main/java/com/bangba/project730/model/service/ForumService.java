@@ -8,7 +8,6 @@ import com.bangba.project730.model.dto.SearchForumDto;
 public interface ForumService {
 	public void createForum(ForumDto forumDto) throws Exception;
 	public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception;
-	public List<ForumDto> searchForumKeyword(String keyword) throws Exception;
 	public ForumDto detailForum(int pk_forum) throws Exception;
 	public void updateForum(ForumDto forumDto) throws Exception;
 	public void deleteForum(int pk_forum) throws Exception;
@@ -16,3 +15,5 @@ public interface ForumService {
 	public List<ForumDto> searchNotices() throws Exception;
 	public int getForumListCnt(SearchForumDto searchForumDto) throws Exception;
 }
+
+

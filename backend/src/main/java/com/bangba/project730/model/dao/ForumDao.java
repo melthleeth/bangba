@@ -11,7 +11,6 @@ import com.bangba.project730.model.dto.SearchForumDto;
 public interface ForumDao {
 	public int createForum(ForumDto forumdto) throws Exception;
 	public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception;
-	public List<ForumDto> searchForumKeyword(String keyword) throws Exception;
 	public ForumDto detailForum(int pk_forum) throws Exception;
 	public void updateForum(ForumDto forumDto) throws Exception;
 	public void deleteForum(int pk_forum) throws Exception;
