@@ -60,7 +60,7 @@
         </svg>
       </div>
     </section>
-    <section>
+    <section class="flex flex-col">
       <div v-if="isLoading">
         <base-spinner></base-spinner>
       </div>
@@ -83,7 +83,7 @@
       </div>
       <span
         v-else
-        class="text-2xl text-center my-10 font-S-CoreDream-medium font-bold font-color-black-200"
+        class="text-2xl text-center my-32 font-S-CoreDream-medium font-bold font-color-black-200"
         >등록된 레시피가 없습니다.</span
       >
     </section>
@@ -115,7 +115,7 @@ export default {
     },
   },
   created() {
-    // this.loadRecipes();
+    this.loadRecipes();
   },
   methods: {
     async loadRecipes(refresh = true) {

@@ -43,7 +43,7 @@ export default {
     };
 
     // const token = context.rootGetters.token;
-    const url = "http://localhost:8081/article/create";
+    const url = `${SERVER_URL}/article/create`;
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -68,9 +68,23 @@ export default {
       return;
     }
 
-    const response = await fetch(`${SERVER_URL}/article/keyword`);
-    const responseData = await response.json();
+    const keyword = {
+      searchtxt: "",
+      tag: ""
+    };
 
+    const response = await fetch(`${SERVER_URL}article/keyword`, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "POST",
+      body: JSON.stringify(keyword),
+    });
+    const responseData = await response.json();
+    console.log(responseData);
     if (!response.ok) {
       // error..
     }
@@ -94,9 +108,9 @@ export default {
         category: responseData[key].category,
         abv: responseData[key].abv,
         cup_no: responseData[key].cup_no,
-        alcohol: responseData[key].alcohol,
-        ingredient: responseData[key].ingredient,
-        recipe: responseData[key].recipe,
+        // alcohol: responseData[key].alcohol,
+        // ingredient: responseData[key].ingredient,
+        // recipe: responseData[key].recipe,
       };
       recipes.push(recipe);
     }

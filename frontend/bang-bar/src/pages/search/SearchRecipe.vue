@@ -86,21 +86,23 @@ export default {
     },
     filteredRecipes() {
       const recipes = this.$store.getters["recipes/recipes"];
+      // console.log(this.searchKeyword);
       return recipes.filter((recipe) => {
+        console.log(recipe.title_kor.includes(this.searchKeyword));
         if (recipe.title_kor.includes(this.searchKeyword)) return true;
-        if (
-          recipe.title_eng
-            .toLowerCase()
-            .includes(this.searchKeyword.toLowerCase())
-        )
-          return true;
-        if (recipe.tag.includes(this.searchKeyword)) return true;
+        // if (
+        //   recipe.title_eng
+        //     .toLowerCase()
+        //     .includes(this.searchKeyword.toLowerCase())
+        // )
+        //   return true;
+        // if (recipe.tag.includes(this.searchKeyword)) return true;
         return false;
       });
     },
   },
   created() {
-    // this.loadRecipes();
+    this.loadRecipes();
   },
   methods: {
     async loadRecipes(refresh = true) {
