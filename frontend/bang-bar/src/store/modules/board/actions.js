@@ -44,6 +44,7 @@ export default {
     }
     context.commit("registerRecipe", recipeData);
   },
+
   //글을 불러오는 곳
   async loadBoard(context, payload) {
     
@@ -51,13 +52,16 @@ export default {
       console.log("if Check")
       return;
     }
-    
+
     const pageData = {
-      page_num: 0,
+      page_num: payload.page_num,
+      page_range: payload.page_range,
+      search_type: payload.search_type,
+      keyword: payload.keyword,
     }
     
     const url = `${SERVER_URL}/forum/search-forum-list` ;
-    console.log(url);
+    // console.log(pageData.page_num+" pageNum");
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -69,14 +73,13 @@ export default {
       body: JSON.stringify(pageData),
     });
     const responseData = await response.json();
-    console.log("hi")
     console.log(responseData);
     if (!response.ok) {
       console.log("error")
     }
 
     const boards = [];
-    
+    // const paginated = [];
     for (const key in responseData) {
       const board = {
         pk_forum: responseData[key].pk_forum,
@@ -89,9 +92,21 @@ export default {
         updated_at: responseData[key].updated_at,
         content:responseData[key].content,
 
+        range_total_cnt: responseData[key].range_total_cnt,
+        page_start: responseData[key].page_start,
+        page_end: responseData[key].page_end,
+        forum_start: responseData[key].forum_start,
+        check_prev: responseData[key].check_prev,
+        check_next: responseData[key].check_next,
+
       };
+      
       boards.push(board);
     }
+    console.log(boards);
     context.commit("setBoards", boards);
   },
+
+
+
 };

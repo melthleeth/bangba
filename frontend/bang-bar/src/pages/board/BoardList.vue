@@ -13,14 +13,14 @@
 
 <!-- 제목검색으로 변경 -->
 
-        <!-- <div class="inline-block relative w-max">
+         <div class="inline-block relative w-max">
           <select
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>전체</option>
-            <option>공지사항</option>
-            <option>후기</option>
-            <option>질문</option>
+            <option>제목</option>
+            <option>내용</option>
+            <option>작성자</option>
           </select>
           <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -35,7 +35,7 @@
               />
             </svg>
           </div>
-        </div> -->
+        </div> 
         <div class="mx-4 flex-auto inline-block">
           <input
             class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
@@ -105,7 +105,6 @@ export default {
   },
   methods: {
     rowClick(item) {
-      // alert(item.content_id)
       
       this.$router.push({
         path: `/board/detail/${item.content_id}`
@@ -126,7 +125,10 @@ export default {
 
         let params = {
           // 이부분을 현재페이지로 고치면됨.
-          page_num : 3
+          page_num : 2,
+          page_range:1,
+          search_type:'',
+          keyword:'',
         };
 
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
@@ -141,6 +143,24 @@ export default {
         // this.items=result;
         console.log(result)
         this.items = result.data
+      })
+      .catch(e=>{
+        console.log('error:',e)
+      })
+    },
+
+    get_length(){
+      this.axios.get(`${SERVER_URL}/forum/search-forum-list/`, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json; charset = utf-8',
+          "Access-Control-Allow-Headers": "*",
+        }
+      })
+      .then((result)=>{
+        // this.items=result;
+        console.log(result)
+        this.pageSize=result
       })
       .catch(e=>{
         console.log('error:',e)

@@ -18,7 +18,7 @@ import SearchRecipe from "./pages/search/SearchRecipe.vue";
 import RecommendationLanding from "./pages/recommendation/RecommendationLanding.vue";
 import OfficialRecipe from "./pages/recipe/OfficialRecipe.vue";
 import CustomRecipe from "./pages/recipe/CustomRecipe.vue";
-import BoardList from "./pages/board_re/BoardList.vue";
+import BoardList from "./pages/board/BoardList.vue";
 
 // footer menus
 import BangbaGuide from "./pages/footers/BangbaGuide.vue";
@@ -26,8 +26,8 @@ import BangbaPeople from "./pages/footers/BangbaPeople.vue";
 import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 
 // board menus
-import BoardCreate from "@/pages/board_re/BoardCreate";
-import BoardDetail from "@/pages/board_re/BoardDetail";
+import BoardCreate from "@/pages/board/BoardCreate";
+import BoardDetail from "@/pages/board/BoardDetail";
 // recipe
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
 import RecipeDetail from "./pages/recipe/RecipeDetail.vue";

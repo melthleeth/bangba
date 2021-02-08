@@ -69,9 +69,6 @@ export default {
     return {
       writemode:null,
       keyword:"",
-      currentPage: 1, // 현재 페이지
-      perPage: 10, // 페이지당 보여줄 갯수
-      pageSize:10,
       fields: [
         {
           key: "category",
@@ -122,7 +119,6 @@ export default {
     async loadBoard(refresh = true) {
       this.isLoading = true;
       try {
-        
         await this.$store.dispatch("boards/loadBoard", {
           forceRefresh: refresh,
         });

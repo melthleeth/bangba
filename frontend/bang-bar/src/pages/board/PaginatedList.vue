@@ -51,7 +51,6 @@
 
 <script>
 
-
 export default {
   name: 'paginated-list',
   
@@ -76,6 +75,10 @@ export default {
   },
 
   methods: {
+    
+
+
+
     nextPage () {
       this.pageNum += 1;
     },
@@ -115,10 +118,10 @@ export default {
       return page;
     },
     paginatedData () {
-      const start = this.pageNum * this.pageSize,
-            end = start + this.pageSize;
+      // const start = this.pageNum * this.pageSize,
+      //       end = start + this.pageSize;
       // console.log(this.pageNum);
-      return this.listArray.slice(start, end);
+      return this.listArray;
     }
 
 
