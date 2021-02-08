@@ -62,4 +62,10 @@
 		from article
 		where user_no = #{pk_user}
 	</select>
+	
+	<select id="getUserName" parameterType="int" resultType="String">
+		select user_name
+		from user
+		where pk_user = #{user_no}
+	</select>
 </mapper>

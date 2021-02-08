@@ -92,4 +92,27 @@
 		order by pk_forum DESC
 	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
 	</select>
+	
+	
+	<insert id="createComment" parameterType="FcommentDto">
+		insert into fcomment (forum_no, user_no, content)
+		values (#{forum_no}, #{user_no}, #{content})	
+	</insert>
+	
+	<select id="searchComment" resultType="FcommentDto" parameterType="int">
+		select * from fcomment
+		where forum_no = #{pk_forum} order by pk_fcomment desc
+	</select>
+	
+	<update id="updateComment" parameterType="FcommentDto">
+		update fcomment set 
+		content = #{content} 
+		where pk_fcomment = #{pk_fcomment}
+	</update>
+	
+	<delete id="deleteComment" parameterType="int">
+		delete from fcomment
+		where pk_fcomment = #{pk_fcomment}
+	</delete>
+	
 </mapper>

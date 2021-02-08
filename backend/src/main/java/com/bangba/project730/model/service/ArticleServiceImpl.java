@@ -12,6 +12,8 @@ import com.bangba.project730.model.dao.ArticleDao;
 import com.bangba.project730.model.dao.CupDao;
 import com.bangba.project730.model.dao.IngredientDao;
 import com.bangba.project730.model.dao.TagDao;
+import com.bangba.project730.model.dao.UserDao;
+import com.bangba.project730.model.dto.AcommentDto;
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
@@ -39,6 +41,9 @@ public class ArticleServiceImpl implements ArticleService{
 
 	@Autowired
 	TagDao tdao;
+
+	@Autowired
+	UserDao udao;
 	
 	@Override
 	public void createArticle(Map<String, String> map) throws Exception {
@@ -109,7 +114,10 @@ public class ArticleServiceImpl implements ArticleService{
 			int tpk=tdao.searchTagPK(a);
 			dao.addArticleTag(pk, tpk);
 		}
-		
+		if(map.get("category").equals("admin"))
+			dao.addArticleTag(pk, tdao.searchTagPK("오피셜"));
+		else
+			dao.addArticleTag(pk, tdao.searchTagPK("커스텀"));
 		s=map.get("recipe");
 		ss=s.split("<br>");
         int r=1;
@@ -136,40 +144,6 @@ public class ArticleServiceImpl implements ArticleService{
 		{
 			if(a != "") {
 				switch (i) {
-				case 0:
-					tldto.setTag1(a);
-					break;
-				case 1:
-					tldto.setTag2(a);
-					break;
-				case 2:
-					tldto.setTag3(a);
-					break;
-				case 3:
-					tldto.setTag4(a);
-					break;
-				case 4:
-					tldto.setTag5(a);
-					break;
-				case 5:
-					tldto.setTag6(a);
-					break;
-				case 6:
-					tldto.setTag7(a);
-					break;
-				case 7:
-					tldto.setTag8(a);
-					break;
-				case 8:
-					tldto.setTag9(a);
-					break;
-				case 9:
-					tldto.setTag10(a);
-					break;
-				default:
-					break;
-				}
-				i++;switch (i) {
 				case 0:
 					tldto.setTag1(a);
 					break;
@@ -407,6 +381,50 @@ public class ArticleServiceImpl implements ArticleService{
 	public List<TagDto> searchTag(String searchtxt) throws Exception {
 		// TODO Auto-generated method stub
 		return tdao.searchTag(searchtxt);
+	}
+
+	@Override
+	public String createComment(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		AcommentDto acdto = new AcommentDto();
+		acdto.setArticle_no(Integer.parseInt(map.get("pk_article")));
+		acdto.setUser_no(Integer.parseInt(map.get("user_no")));
+		acdto.setContent(map.get("content"));
+		dao.createComment(acdto);
+		return null;
+	}
+
+	@Override
+	public Map<String, String> searchComment(int pk_article) throws Exception {
+		// TODO Auto-generated method stub
+		List<AcommentDto> lacdto =  dao.searchComment(pk_article);
+		Map<String,String> map = new HashMap<String, String>();
+		for(AcommentDto acdto : lacdto)
+		{
+			String s="";
+			s+=udao.getUserName(acdto.getUser_no());
+			s+="/";
+			s+=acdto.getContent();
+			map.put(Integer.toString(acdto.getPk_acomment()), s);
+		}
+		return map;
+	}
+
+	@Override
+	public String updateComment(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		AcommentDto acdto= new AcommentDto();
+		acdto.setPk_acomment(Integer.parseInt(map.get("pk_acomment")));
+		acdto.setContent(map.get("content"));
+		dao.updateComment(acdto);
+		return null;
+	}
+
+	@Override
+	public String deleteComment(int pk_acomment) throws Exception {
+		// TODO Auto-generated method stub
+		dao.deleteComment(pk_acomment);
+		return null;
 	}
 
 
