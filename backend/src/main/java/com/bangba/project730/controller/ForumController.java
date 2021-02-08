@@ -45,7 +45,6 @@ public class ForumController {
 	@ApiOperation(value = "자유게시판 목록 조회")
 	@GetMapping("/search-forum-list")
 	public List<SearchForumDto> searchForumList(int page_num) throws Exception {
-		System.out.println(page_num);
 		return forumService.searchForumList(page_num);
 	}
 	

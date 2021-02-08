@@ -139,7 +139,8 @@ export default {
     getList() {
 
         let params = {
-          page_num : 0
+          // 이부분을 현재페이지로 고치면됨.
+          page_num : 3
         };
 
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
@@ -152,7 +153,7 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        // console.log(result)
+        console.log(result)
         this.items = result.data
       })
       .catch(e=>{

@@ -26,6 +26,12 @@
 		where user_name = #{user_name}	
 	</select>
 	
+	<select id="isDuplicatedPhoneNumber" parameterType="String" resultType="Integer">
+		select count(*)
+		from user
+		where phone_number = #{phone_number}	
+	</select>
+	
 	<select id="getMyPage" parameterType="Integer" resultType="UserDto">
 		select pk_user, email, user_name, birth, phone_number, img_path
 		from user
