@@ -138,7 +138,7 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        // console.log(result)
+        console.log(result)
         this.items = result.data
       })
       .catch(e=>{

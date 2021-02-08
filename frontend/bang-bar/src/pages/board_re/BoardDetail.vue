@@ -45,35 +45,21 @@
 </template>
 
 <script>
-// import BaseButton from '../../components/ui/BaseButton.vue';
-// import data from "@/data";
-// import CommentList from "./CommentList";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "BoardDetail",
-
-  
   data() {
-    // const contentId = Number(this.$route.params.contentId);
-    // const contentData = data.Content.filter(
-      // contentItem => contentItem.content_id === contentId
-    // )[0];
     return {
       owner_check:localStorage.getItem('user_name'),
       forum:[],
       forumId:this.$route.params.contentId,
     };
   },
-
   created(){
-    // console.log(this.forum.forumId);
-    
     this.forum_Detail();
   },
   methods: {
     //삭제
-
-
     forum_Detail(){
 
         this.axios.get(`${SERVER_URL}/forum/${this.forumId}`, {

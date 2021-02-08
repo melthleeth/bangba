@@ -6,6 +6,7 @@ export default {
     },  
 
     setBoards(state, payload) {
+        console.log("setBoards")
         state.boards = payload;
     },
     

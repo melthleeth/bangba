@@ -44,10 +44,6 @@ export default {
     }
     context.commit("registerRecipe", recipeData);
   },
-
-
-
-
   //글을 불러오는 곳
   async loadBoard(context, payload) {
     
@@ -55,12 +51,13 @@ export default {
       console.log("if Check")
       return;
     }
-    let pageData = {
-      page_num : 0,
-    };
     
-    const url = `${SERVER_URL}/forum/search-forum-list`;
-    console.log("gg")
+    const pageData = {
+      page_num: 0,
+    }
+    
+    const url = `${SERVER_URL}/forum/search-forum-list` ;
+    console.log(url);
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -68,20 +65,18 @@ export default {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
       },
-      method: "GET",
+      method: "POST",
       body: JSON.stringify(pageData),
     });
-    console.log("gg2")
     const responseData = await response.json();
-
-   
-    // console.log(responseData);
+    console.log("hi")
+    console.log(responseData);
     if (!response.ok) {
       console.log("error")
     }
 
     const boards = [];
-
+    
     for (const key in responseData) {
       const board = {
         pk_forum: responseData[key].pk_forum,

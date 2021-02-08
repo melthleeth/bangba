@@ -19,6 +19,7 @@
           >
             <option>전체</option>
             <option>제목</option>
+            <option>내용</option>
             <option>작성자</option>
           </select>
           <div
@@ -121,6 +122,7 @@ export default {
     async loadBoard(refresh = true) {
       this.isLoading = true;
       try {
+        
         await this.$store.dispatch("boards/loadBoard", {
           forceRefresh: refresh,
         });
@@ -129,6 +131,7 @@ export default {
           error.message || "게시판을 불러오는데 문제가 발생했습니다.";
       }
       this.isLoading = false;
+      console.log(this.$store)
     },
     handleError() {
       this.error = null;
@@ -157,28 +160,20 @@ export default {
   
   computed: {
 
-    //items에 데이터를 넣는 과정
+    //boards에 데이터를 넣는 과정
     boardList() {
       const boards = this.$store.getters["boards/boards"]; //모듈/getters
-      console.log(boards);
-      return boards.filter((boardItem) => {
-        if (boardItem.category === true) return true;
-      });
+      console.log("boardList() 함수 실행 ")
+      return boards;
     },
-
     //데이터가 있는지 확인
     hasRecipes() {
       return !this.isLoading && this.$store.getters["boards/hasBoards"];
     },
-
-
     rows() {
       return this.boards.length;
     }
   },
-
-
-
   created() {
     this.pageArray=this.boards;
     this.writemode=localStorage.getItem("pk_user");
