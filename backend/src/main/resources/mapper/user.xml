@@ -68,4 +68,10 @@
 		from user
 		where pk_user = #{user_no}
 	</select>
+	
+	<select id="getImgPath" parameterType="int" resultType="String">
+		select img_path
+		from user
+		where pk_user = #{user_no}
+	</select>
 </mapper>
