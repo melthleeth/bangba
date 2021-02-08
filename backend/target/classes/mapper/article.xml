@@ -139,4 +139,28 @@
 		where article_no = #{pk_article}
 	</delete>
 	
+	<select id="getAlcohol" parameterType="Integer" resultType="AtoA">
+		select c.name_kor, a.quantity, a.unit
+		from alcohol as c
+        inner join article_alcohol as a on  a.alcohol_no = c.pk_alcohol
+        where a.article_no = #{pk_article};
+	</select>
+	<select id="getIngredient" parameterType="Integer" resultType="AtoI">
+		select i.name_kor, a.quantity, a.unit
+		from ingredient as i
+        inner join article_ingredient as a on  a.ingredient_no = i.pk_ingredient
+        where a.article_no = #{pk_article};
+	</select>
+	<select id="getRecipe" parameterType="Integer" resultType="RecipeDto">
+		select *
+		from recipe
+		where article_no = #{pk_article};
+	</select>
+	<select id="getTag" parameterType="Integer" resultType="TagDto">
+		select *
+		from tag
+		where pk_tag in (select tag_no 
+						 from article_tag
+		                 where article_no = #{pk_article});
+	</select>
 </mapper>

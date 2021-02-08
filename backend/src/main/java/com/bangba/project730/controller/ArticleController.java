@@ -3,6 +3,7 @@ package com.bangba.project730.controller;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,11 +23,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
+import com.bangba.project730.model.dto.AtoA;
+import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.service.ArticleService;
+import com.bangba.project730.model.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -37,6 +42,9 @@ public class ArticleController {
 	
 	@Autowired
 	private ArticleService articleService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@ApiOperation(value = "레시피 작성", response = String.class)
 	@PostMapping(value = "/create",  headers = { "Content-type=application/json" })
@@ -209,5 +217,79 @@ public class ArticleController {
  
         return "uploadok";
     }
+	
+	@ApiOperation(value = "레시피 검색", response = String.class)
+	@PostMapping("/all")
+	public List<ArticleTotalDto> searchAll(@RequestBody Map<String, String> map) throws Exception {
+		try {
+			List<ArticleTotalDto> tdtos = new ArrayList<ArticleTotalDto>();
+			List<ArticleDto> adto = articleService.searchArticle(map);
+			for(ArticleDto a:adto) {
+				System.out.println(a.getPk_article());
+				ArticleTotalDto tdto = new ArticleTotalDto();
+				// 기존 정보
+				tdto.setPk_article(a.getPk_article());
+				tdto.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
+				tdto.setTitle_kor(a.getTitle_kor());
+				tdto.setTitle_eng(a.getTitle_eng());
+				tdto.setLike_cnt(a.getLike_cnt());
+				tdto.setBookmark_cnt(a.getBookmark_cnt());
+				tdto.setHits(a.getHits());
+				tdto.setCreated_at(a.getCreated_at());
+				tdto.setUpdated_at(a.getUpdated_at());
+				tdto.setLike_weekly(a.getLike_weekly());
+				tdto.setContent(a.getContent());
+				tdto.setImg_path(a.getImg_path());
+				tdto.setCategory(a.isCategory());
+				tdto.setAbv(a.getAbv());
+				tdto.setCup_no(a.getCup_no());
+				
+				// 추가 정보
+				String temp = "";
+				List<RecipeDto> recipes = articleService.getRecipe(a.getPk_article());
+				for(RecipeDto recipe : recipes) {
+					temp += recipe.getContent();
+					temp += "<br>";
+				}
+				tdto.setRecipe(temp);
+				List<TagDto> tags = articleService.getTag(a.getPk_article());
+				temp = "";
+				for(TagDto tag : tags) {
+					temp += tag.getContent_kor();
+					temp += "<br>";
+				}
+				tdto.setTag(temp);
+				// 어려운거 
+				temp = "";
+				List<AtoA> alcohols = articleService.getAlcohol(a.getPk_article());
+				for(AtoA alcohol : alcohols) {
+					temp += alcohol.getName_kor();
+					temp += "/";
+					temp += alcohol.getQuantity();
+					temp += "/";
+					temp += alcohol.getUnit();
+					temp += "<br>";
+				}
+				tdto.setAlcohol(temp);
+				temp = "";
+				List<AtoI> ingredients = articleService.getIngredient(a.getPk_article());
+				for(AtoI ingredient: ingredients) {
+					temp += ingredient.getName_kor();
+					temp += "/";
+					temp += ingredient.getQuantity();
+					temp += "/";
+					temp += ingredient.getUnit();
+					temp += "<br>";
+				}
+				tdto.setIngredient(temp);
+				
+				tdtos.add(tdto);
+			}
+			return tdtos;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

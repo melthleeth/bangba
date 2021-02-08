@@ -17,6 +17,8 @@ import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.Article_ingredientDto;
 import com.bangba.project730.model.dto.Article_tagDto;
+import com.bangba.project730.model.dto.AtoA;
+import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
@@ -362,6 +364,28 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<TagDto> searchTag(String searchtxt) throws Exception {
 		// TODO Auto-generated method stub
 		return tdao.searchTag(searchtxt);
+	}
+	
+	// 추가로 구현된 함수
+
+	@Override
+	public List<AtoA> getAlcohol(int pk_article) throws Exception {
+		return dao.getAlcohol(pk_article);
+	}
+
+	@Override
+	public List<AtoI> getIngredient(int pk_article) throws Exception {
+		return dao.getIngredient(pk_article);
+	}
+
+	@Override
+	public List<RecipeDto> getRecipe(int pk_article) throws Exception {
+		return dao.getRecipe(pk_article);
+	}
+
+	@Override
+	public List<TagDto> getTag(int pk_article) throws Exception {
+		return dao.getTag(pk_article);
 	}
 
 }

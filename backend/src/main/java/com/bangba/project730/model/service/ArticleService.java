@@ -5,7 +5,11 @@ import java.util.Map;
 
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
+import com.bangba.project730.model.dto.AtoA;
+import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.IngredientDto;
+import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
 
 public interface ArticleService {
@@ -20,4 +24,10 @@ public interface ArticleService {
 	public List<IngredientDto> searchIngredient(String searchtxt) throws Exception;
 	public void createTag(String content,int type) throws Exception;
 	public List<TagDto> searchTag(String searchtxt) throws Exception;
+	
+	//추가로 구현된 함수
+	public List<AtoA> getAlcohol(int pk_article) throws Exception;
+	public List<AtoI> getIngredient(int pk_article) throws Exception;
+	public List<RecipeDto> getRecipe(int pk_article) throws Exception;
+	public List<TagDto> getTag(int pk_article) throws Exception;
 }

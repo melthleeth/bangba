@@ -4,12 +4,18 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.Article_cupDto;
 import com.bangba.project730.model.dto.Article_ingredientDto;
 import com.bangba.project730.model.dto.Article_tagDto;
+import com.bangba.project730.model.dto.AtoA;
+import com.bangba.project730.model.dto.AtoI;
+import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.TaglistDto;
 
 @Mapper
@@ -39,4 +45,11 @@ public interface ArticleDao {
 	public void deleteArticleIngredient(int pk_article) throws Exception;
 	public void deleteArticleTag(int pk_article) throws Exception;
 	public void deleteRecipe(int pk_article) throws Exception;
+	
+	
+	//추가로 구현된 함수
+	public List<AtoA> getAlcohol(int pk_article) throws Exception;
+	public List<AtoI> getIngredient(int pk_article) throws Exception;
+	public List<RecipeDto> getRecipe(int pk_article) throws Exception;
+	public List<TagDto> getTag(int pk_article) throws Exception;
 }
