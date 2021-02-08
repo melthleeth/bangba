@@ -95,7 +95,7 @@ export default {
       return this.selectedRecipe.title_kor;
     },
     imgsrc() {
-      return require("../../assets/" + this.selectedRecipe.img_path);
+      return this.selectedRecipe.img_path;
     },
     like_cnt() {
       return this.selectedRecipe.like_cnt;

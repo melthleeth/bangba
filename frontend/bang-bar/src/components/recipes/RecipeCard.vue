@@ -68,7 +68,7 @@ export default {
   data() {
     return {
       tags: [],
-      imgsrc: require("../../assets/" + this.img_path),
+      imgsrc: this.img_path,
     };
   },
   created() {

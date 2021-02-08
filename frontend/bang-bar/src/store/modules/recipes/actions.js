@@ -1,6 +1,5 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
-  
   async registerRecipe(context, payload) {
     console.log(context);
     console.log(payload);
@@ -23,10 +22,14 @@ export default {
   }
     */
     // const userId = context.rootGetters.userId;
+    let isOfficial = true;
+    if (payload.category === "custom") {
+      isOfficial = false;
+    }
     const recipeData = {
       user_no: context.rootGetters.pkUser,
       created_at: new Date().toLocaleTimeString(), // 변경 가능
-      category: payload.category,
+      category: isOfficial,
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,
@@ -65,7 +68,7 @@ export default {
       return;
     }
 
-    const response = await fetch(`${SERVER_URL}/article/all`);
+    const response = await fetch(`${SERVER_URL}/article/keyword`);
     const responseData = await response.json();
 
     if (!response.ok) {
@@ -91,8 +94,14 @@ export default {
         category: responseData[key].category,
         abv: responseData[key].abv,
         cup_no: responseData[key].cup_no,
+        alcohol: responseData[key].alcohol,
+        ingredient: responseData[key].ingredient,
+        recipe: responseData[key].recipe,
       };
       recipes.push(recipe);
     }
+
+    context.commit("setRecipes", recipes);
+    context.commit("setFetchTimestamp");
   },
 };
