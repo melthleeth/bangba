@@ -150,7 +150,7 @@ export default {
     },
 
     get_length(){
-      this.axios.get(`${SERVER_URL}/forum/search-forum-list/`, {
+      this.axios.get(`${SERVER_URL}/forum_cnt`, {
         headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json; charset = utf-8',
@@ -167,6 +167,8 @@ export default {
       })
     },
 
+
+
     search_board(){
       this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
         headers: {
@@ -177,7 +179,7 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        console.log(result)
+        // console.log(result)
         this.items = result.data
       })
       .catch(e=>{
@@ -195,9 +197,11 @@ export default {
   created() {
     this.pageArray=this.items;
     this.writemode=localStorage.getItem("pk_user");
+
   },
   mounted() {
       this.getList()
+      this.get_length();
       // console.log(this.items);
   },
 
