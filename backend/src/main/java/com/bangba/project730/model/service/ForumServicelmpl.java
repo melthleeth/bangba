@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.bangba.project730.model.dao.ForumDao;
 import com.bangba.project730.model.dao.UserDao;
-import com.bangba.project730.model.dto.AcommentDto;
 import com.bangba.project730.model.dto.FcommentDto;
 import com.bangba.project730.model.dto.ForumDto;
 import com.bangba.project730.model.dto.SearchForumDto;
@@ -19,53 +18,52 @@ import com.bangba.project730.model.dto.SearchForumDto;
 public class ForumServicelmpl implements ForumService{
 
 	@Autowired
-	ForumDao dao;
-
+    ForumDao dao;
+	
 	@Autowired
-	UserDao udao;
-	
-	@Override
-	public void createForum(ForumDto forumDto) throws Exception {
-		dao.createForum(forumDto);
-	}
+    UserDao udao;
+    
+    @Override
+    public void createForum(ForumDto forumDto) throws Exception {
+        dao.createForum(forumDto);
+    }
 
-	@Override
-	public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
-		return dao.getForumListCnt(searchForumDto);
-	}
-	
-	@Override
-	public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception {
-		return dao.searchForumList(searchForumDto);
-	}
-	
-	@Override
-	public ForumDto detailForum(int pk_forum) throws Exception {
-		return dao.detailForum(pk_forum);
-	}
-	
-	@Override
-	public void updateHits(int hits) throws Exception {
-		dao.updateHits(hits);
-	}
+    @Override
+    public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
+        return dao.getForumListCnt(searchForumDto);
+    }
+    
+    @Override
+    public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception {
+        return dao.searchForumList(searchForumDto);
+    }
+    
+    @Override
+    public ForumDto detailForum(int pk_forum) throws Exception {
+        return dao.detailForum(pk_forum);
+    }
+    
+    @Override
+    public void updateHits(int hits) throws Exception {
+        dao.updateHits(hits);
+    }
 
-	@Override
-	public void updateForum(ForumDto forumDto) throws Exception {
-		dao.updateForum(forumDto);
-	}
+    @Override
+    public void updateForum(ForumDto forumDto) throws Exception {
+        dao.updateForum(forumDto);
+    }
 
-	@Override
-	public void deleteForum(int pk_forum) throws Exception {
-		dao.deleteForum(pk_forum);
-		
-	}
-	
-	@Override
-	public List<ForumDto> searchNotices() throws Exception {
-		return dao.searchNotices();
-	}
-
-	@Override
+    @Override
+    public void deleteForum(int pk_forum) throws Exception {
+        dao.deleteForum(pk_forum);
+        
+    }
+    
+    @Override
+    public List<ForumDto> searchNotices() throws Exception {
+        return dao.searchNotices();
+    }
+    @Override
 	public String createComment(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		FcommentDto fcdto = new FcommentDto();
