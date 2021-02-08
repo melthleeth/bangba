@@ -35,15 +35,16 @@
           <div class="joindiv">
             <label for="phone_numver">전화번호</label>
             <input
-              type="number"
+              type="text"
               id="phone_numver"
               v-model="phone_number"
               class="textarea"
               placeholder="01012345678"
               required
-              pattern="[0-9]{10,11}+"
+              maxlength="11"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
             />
-            
+            <base-button class="redbutton" @click="phone_Check()">중복 확인</base-button>
           </div>
           <div class="joindiv">
             <label for="birthday">생년월일</label>
@@ -94,8 +95,10 @@
               id="passwordConfirm"
               v-model="passwordConfirm"
               class="textarea"
+              minlength="8"
+              maxlength="20"
               required
-              pattern="[A-Za-z0-9]{8,20}+"
+              pattern="^(?=.*[A-Za-z])(?=.[0-9])[A-Za-z0-9]+{8,20}$"
               @keyup="passDupl_Check()"
             />
             <!-- <a>{{ message }}</a> -->
@@ -157,6 +160,7 @@
 </template>
 
 <script>
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   data() {  
     return {
@@ -171,6 +175,9 @@ export default {
       dialogIsVisible_personal: false,
       errors:[],
       finalCheck:false,
+      phoneCheck:false,
+      nameCheck:false,
+      emailCheck:false
     };
   },
 
@@ -187,9 +194,10 @@ export default {
       'Content-type': 'application/json; charset=UTF-8',
       'Accept': '*/*',
       'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
         
-      this.axios.post('http://localhost:8081/user/join/mail/'+this.email,
+      this.axios.post(`${SERVER_URL}/user/join/mail/`+this.email,
         JSON.stringify(params),
          { headers }
       )
@@ -210,12 +218,10 @@ export default {
 
     authCode_Check(){
       if(this.authCode_Spring == this.code) {
-        this.auth=!this.auth
-        this.finalCheck=true;
+        // this.auth=!this.auth
+        this.emailCheck=true;
         alert("인증에 성공했습니다.")
-        
       } else {
-        this.finalCheck=false;
         alert("인증에 실패했습니다.")
       }
     },
@@ -233,20 +239,56 @@ export default {
       'Content-type': 'application/json; charset=UTF-8',
       'Accept': '*/*',
       'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post('http://localhost:8081/user/join/'+this.nickname,
+        this.axios.post(`${SERVER_URL}/user/join/`+this.nickname,
         JSON.stringify(params),
         { headers }
       )
       .then((result)=>{
 
         if(result.data=="FAIL"){
-          this.finalCheck=false
           alert("중복된 닉네임 입니다.")
         }else{
-          this.finalCheck=true
+          this.nameCheck=true
           alert("사용하실 수 있는 닉네임 입니다.")
+        }
+      })
+      .catch(e=>{
+          console.log('error:',e)
+          
+      })
+      }
+    },
+
+    phone_Check(){
+      if(this.phone_number == null || this.phone_number.length<10){
+        alert("전화번호를 모두 입력해주세요.");
+      }else{
+        let params={
+          phone_number:this.phone_number
+        }
+
+      const headers = {
+      'Content-type': 'application/json; charset=UTF-8',
+      'Accept': '*/*',
+      'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
+      }
+
+        this.axios.post(`${SERVER_URL}/user/join/phone/`+this.phone_number,
+        JSON.stringify(params),
+        { headers }
+      )
+      .then((result)=>{
+
+        if(result.data === 1){
+          alert("중복된 전화번호 입니다.")
+        }else{
+          console.log(result.data)
+          this.phoneCheck=true
+          alert("사용하실 수 있는 전화번호 입니다.")
         }
       })
       .catch(e=>{
@@ -262,21 +304,31 @@ export default {
       if(this.checked==false){
         alert("약관에 동의해주세요.");
       }
-      //전반적인 회원정보 체크
-      else if(this.finalCheck==false){
-        alert("회원정보를 확인해주세요.")
+       // 이메일 인증 체크
+      else if(this.emailCheck == false) {
+        alert("이메일 인증을 진행해 주세요.")
+      }
+      //전화번호 길이 
+      else if(this.phone_number.length<10 || this.phone_number.length>11 || this.phone_number.substr(0,3) != "010"){
+        alert("잘못된 전화번호입니다.")
+      } 
+      else if(this.phoneCheck == false) {
+        alert("이미 존재하는 핸드폰 번호입니다.")
       }
       //가입 생년월일
       else if(this.date.replace("-","").replace("-","")>20030000){
-        alert("어려")
+        alert("가입할 수 없는 생년월일입니다.")
       }
-      //전화번호 길이
-      else if(this.phone_number.length<10 || this.phone_number.length>11){
-        alert("전화번호를 확인해 주세요.")
+      else if(this.nameCheck == false) {
+        alert("닉네임 중복확인을 해주세요.")
       }
-       else if(this.password.length<8 || this.ispassCheck(this.password)){
+      else if(this.password.length<8 || this.ispassCheck(this.password)){
         alert("비밀번호를 확인해 주세요.")
       }
+      //비밀번호 체크
+      else if(this.finalCheck==false){
+        alert("비밀번호를 확인해주세요.")
+      } 
       else{
         // var repl=this.date.replace("-","");
         let params={
@@ -293,14 +345,16 @@ export default {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post('http://localhost:8081/user/join',
+        this.axios.post(`${SERVER_URL}/user/join`,
         JSON.stringify(params),
         { headers }
       )
-      .then((result)=>{
-          console.log(result)
+      .then(()=>{
+          // console.log(result)
+          alert("회원가입이 완료되었습니다.");
           this.$router.push({
             path:'/home'
           });

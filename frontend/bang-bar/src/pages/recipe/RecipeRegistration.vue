@@ -415,10 +415,10 @@ export default {
         abv: this.abv.val,
         content: this.content.val,
         cupinfo: this.cupinfo.val,
-        tags: this.tags.val.join(), // default separator: ','
-        alcohols: this.alcohols.val.join(),
-        ingredients: this.ingredients.val.join(),
-        recipes: this.recipes.val.join(),
+        tags: this.tags.val.join('<br>'), // default separator: ','
+        alcohols: this.alcohols.val.join('<br>'),
+        ingredients: this.ingredients.val.join('<br>'),
+        recipes: this.recipes.val.join('<br>'),
       };
 
       console.log(formData);

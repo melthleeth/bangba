@@ -30,7 +30,7 @@
       </div>
       <div class="content-detail-button">
         
-        <span>
+        <span v-if="forum.user_name===owner_check">
           <base-button @click="updateData">수정</base-button>
           <base-button @click="deleteData">삭제</base-button>
         </span>
@@ -48,7 +48,7 @@
 // import BaseButton from '../../components/ui/BaseButton.vue';
 // import data from "@/data";
 // import CommentList from "./CommentList";
-
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "BoardDetail",
 
@@ -59,6 +59,7 @@ export default {
       // contentItem => contentItem.content_id === contentId
     // )[0];
     return {
+      owner_check:localStorage.getItem('user_name'),
       forum:[],
       forumId:this.$route.params.contentId,
     };
@@ -66,7 +67,7 @@ export default {
 
   created(){
     // console.log(this.forum.forumId);
-
+    
     this.forum_Detail();
   },
   methods: {
@@ -75,10 +76,11 @@ export default {
 
     forum_Detail(){
 
-        this.axios.get(`http://localhost:8081/forum/` + this.forumId, {
+        this.axios.get(`${SERVER_URL}/forum/${this.forumId}`, {
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8'
+        'Content-Type': 'application/json; charset = utf-8',
+        "Access-Control-Allow-Headers": "*",
         }
       })
       .then((result)=>{
@@ -108,9 +110,10 @@ export default {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.delete('http://localhost:8081/forum/delete-forum/'+this.forumId,
+        this.axios.delete(`${SERVER_URL}/forum/delete-forum/${this.forumId}`,
         // JSON.stringify(params),
         { headers }
       )

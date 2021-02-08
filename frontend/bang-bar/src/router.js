@@ -28,9 +28,9 @@ import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 // board menus
 import BoardCreate from "@/pages/board/BoardCreate";
 import BoardDetail from "@/pages/board/BoardDetail";
-import BoardModify from "@/pages/board/BoardModify";
 // recipe
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
+import RecipeDetail from "./pages/recipe/RecipeDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -69,11 +69,7 @@ const router = createRouter({
       name: "BoardDetail",
       component: BoardDetail,
     },
-    {
-      path: "/board/modify/:contentId?",
-      name: "BoardModify",
-      component: BoardModify,
-    },
+
     // recipe
     {
       path: "/recipe/register/:category",
@@ -81,6 +77,9 @@ const router = createRouter({
       props: true,
       component: RecipeRegistration,
     },
+
+    { path: "/recipe/detail/:pk_article", props: true, component: RecipeDetail },
+
   ],
 });
 

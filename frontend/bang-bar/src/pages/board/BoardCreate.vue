@@ -8,7 +8,8 @@
             class="appearance-none w-auto m-3 text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
             v-model="category"
           >
-            <option>공지사항</option>
+          <!-- 나중에 수정할 것  -->
+            <!-- <option>공지사항</option> -->
             <option>후기</option>
             <option>질문</option>
           </select>
@@ -44,6 +45,7 @@
 // var date=new Date();
 // var forum2=this.forum;
 const user_pk=localStorage.getItem("pk_user");
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: 'BoardCreate',
@@ -63,9 +65,8 @@ export default {
     }
   },
   created() {
-        this.take_data();
       if(this.$route.params.contentId > 0) {
-
+        this.take_data();
     
         // console.log("create의",forum2);
 
@@ -120,10 +121,11 @@ export default {
 
     take_data(){
 
-        this.axios.get(`http://localhost:8081/forum/` + this.$route.params.contentId, {
+        this.axios.get(`${SERVER_URL}/forum/` + this.$route.params.contentId, {
         headers: {
         'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8'
+        'Content-Type': 'application/json; charset = utf-8',
+        "Access-Control-Allow-Headers": "*",
         }
       })
       .then((result)=>{
@@ -153,15 +155,16 @@ export default {
           content: this.content,
           created_at:this.created_at,
           updated_at:this.created_at,
-          user_no:this.user_id,
+          user_no:localStorage.getItem("pk_user"),
         }
         const headers = {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post('http://localhost:8081/forum/create-forum',
+        this.axios.post(`${SERVER_URL}/forum/create-forum`,
         JSON.stringify(params),
         { headers }
       )
@@ -195,9 +198,10 @@ export default {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
           'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.put('http://localhost:8081/forum/update-forum',
+        this.axios.put(`${SERVER_URL}/forum/update-forum`,
         JSON.stringify(params),
         { headers }
       )

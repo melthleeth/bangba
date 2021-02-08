@@ -26,7 +26,7 @@ import com.bangba.project730.model.service.ArticleService;
 
 import io.swagger.annotations.ApiOperation;
 
-@CrossOrigin(origins = "http://localhost:7300")
+@CrossOrigin(origins = { "*" })
 @RestController
 @RequestMapping("/article")
 public class ArticleController {

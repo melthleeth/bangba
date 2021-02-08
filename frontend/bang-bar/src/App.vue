@@ -126,6 +126,16 @@ export default {
   color: #DDDDDD;
 }
 
+.font-2xs {
+  font-size: 0.7rem;
+  line-height: 1.2rem;
+}
+
+.font-3xs {
+  font-size: 0.5rem;
+  line-height: 1rem;
+}
+
 .font-red {
   color: #FF0000;
 }

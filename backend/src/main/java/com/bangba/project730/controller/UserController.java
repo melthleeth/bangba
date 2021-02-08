@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:7300")
+@CrossOrigin(origins = { "*" })
 @RequestMapping("/user")
 public class UserController {
 	@Autowired
@@ -69,16 +69,12 @@ public class UserController {
 	@PostMapping(value = "/login",  headers = { "Content-type=application/json" })
 	public UserDto login(@RequestBody @ApiParam(value = "로그인 정보를 담는 객체", required = true) Map<String, String> map,
 			Model model) {
-//		System.out.println(map);
 		try {
 			UserDto user = userService.login(map);
 			if (user != null) {
-				System.out.println(user.getPk_user());
 				return userService.getMyPage(user.getPk_user());
 			} else {
 				model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 로그인해 주세요.");
-				System.out.println(map.get("email"));
-				System.out.println(map.get(("password")));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,6 +112,13 @@ public class UserController {
 			}
 		}
 		return "FAIL";
+	}
+	
+	@ApiOperation(value = "전화번호 중복 확인", response = String.class)
+	@PostMapping(value = "/join/phone/{phone_number}")
+	@ResponseBody
+	public int phoneSend(@PathVariable @ApiParam(value = "회원가입에 필요한 전화번호", required = true) String phone_number) {
+		return userService.isDuplicatedPhoneNumber(phone_number);
 	}
 
 	@ApiOperation(value = "닉네임 중복 확인", response = String.class)
