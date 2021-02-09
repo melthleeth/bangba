@@ -103,8 +103,8 @@
     
     
 	<insert id="createComment" parameterType="FcommentDto">
-		insert into fcomment (forum_no, user_no, content)
-		values (#{forum_no}, #{user_no}, #{content})	
+		insert into fcomment (forum_no, user_no, content, created_at)
+		values (#{forum_no}, #{user_no}, #{content}, #{created_at})	
 	</insert>
 	
 	<select id="searchComment" resultType="FcommentDto" parameterType="int">

@@ -67,10 +67,15 @@ public class ForumServicelmpl implements ForumService{
 	public String createComment(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		FcommentDto fcdto = new FcommentDto();
-		fcdto.setForum_no(Integer.parseInt(map.get("pk_forum")));
+		fcdto.setForum_no(Integer.parseInt(map.get("forum_no")));
 		fcdto.setUser_no(Integer.parseInt(map.get("user_no")));
 		fcdto.setCreated_at(map.get("created_at"));
 		fcdto.setContent(map.get("content"));
+		System.out.println(fcdto.getForum_no());
+		System.out.println(fcdto.getUser_no());
+		System.out.println(fcdto.getCreated_at());
+		System.out.println(fcdto.getContent());
+		
 		dao.createComment(fcdto);
 		return null;
 	}
