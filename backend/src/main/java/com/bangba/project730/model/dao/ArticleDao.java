@@ -58,4 +58,18 @@ public interface ArticleDao {
 	public void updateComment(AcommentDto acommentDto) throws Exception;
 	public void deleteComment(int pk_acomment) throws Exception;
 
+	
+	// 좋아요, 북마크 
+	public void insertLike(int user_no, int article_no) throws Exception;
+	public void deleteLike(int user_no, int article_no) throws Exception;
+	public void insertBmark(int user_no, int article_no) throws Exception;
+	public void deleteBmark(int user_no, int article_no) throws Exception;
+	
+	public void upLike(int user_no, int article_no) throws Exception;
+	public void downLike(int user_no, int article_no) throws Exception;
+	public void upBmark(int user_no, int article_no) throws Exception;
+	public void downBmark(int user_no, int article_no) throws Exception;
+
+	public int isLike(int user_no, int article_no) throws Exception;
+	public int isBmark(int user_no, int article_no) throws Exception;
 }

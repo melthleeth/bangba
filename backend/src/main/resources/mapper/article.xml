@@ -184,4 +184,69 @@
 		delete from acomment
 		where pk_acomment = #{pk_acomment}
 	</delete>
+	
+	<insert id="insertLike" parameterType="int">
+		insert into alike(article_no, user_no, bookmark)
+		values(#{article_no}, #{user_no}, false)
+	</insert>
+	
+	<delete id="deleteLike" parameterType="int">
+		delete 
+		from alike
+		where  article_no = #{article_no} and user_no = #{user_no} and bookmark = false;
+	</delete>
+	
+	<insert id="insertBmark" parameterType="int">
+		insert into alike(article_no, user_no, bookmark)
+		values(#{article_no}, #{user_no}, true)
+	</insert>
+	
+	<delete id="deleteBmark" parameterType="int">
+		delete 
+		from alike
+		where  article_no = #{article_no} and user_no = #{user_no} and bookmark = true;
+	</delete>
+	
+	<update id="upLike" parameterType="int">
+		update article
+		set like_cnt = like_cnt + 1
+		where pk_article = #{article_no} and pk_article in (select article_no
+															from alike
+															where user_no = #{user_no});
+	</update>
+	<update id="downLike" parameterType="int">
+		update article
+		set like_cnt = like_cnt - 1
+		where pk_article = #{article_no} and pk_article in (select article_no
+															from alike
+															where user_no = #{user_no});
+	</update>
+	<update id="upBmark" parameterType="int">
+		update article
+		set bookmark_cnt = bookmark_cnt + 1
+		where pk_article = #{article_no} and pk_article in (select article_no
+															from alike
+															where user_no = #{user_no});
+	</update>
+	
+	<update id="downBmark" parameterType="int">
+		update article
+		set bookmark_cnt = bookmark_cnt - 1
+		where pk_article = #{article_no} and pk_article in (select article_no
+															from alike
+															where user_no = #{user_no});
+	</update>
+	
+	<select id="isLike" parameterType="int" resultType="int">
+		select count(*)
+		from alike
+		where article_no = #{article_no} and user_no = #{user_no} and bookmark = false
+	</select>
+	
+	<select id="isBmark" parameterType="int" resultType="int">
+		select count(*)
+		from alike
+		where article_no = #{article_no} and user_no = #{user_no} and bookmark = true
+	</select>
+	
 </mapper>

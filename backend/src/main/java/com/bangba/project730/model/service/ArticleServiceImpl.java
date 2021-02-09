@@ -443,5 +443,60 @@ public class ArticleServiceImpl implements ArticleService {
 		return null;
 	}
 
+	@Override
+	public void insertLike(int user_no, int article_no) throws Exception {
+		// TODO Auto-generated method stub
+		dao.insertLike(user_no, article_no);
+	}
+
+	@Override
+	public void deleteLike(int user_no, int article_no) throws Exception {
+		// TODO Auto-generated method stub
+		dao.deleteLike(user_no, article_no);
+	}
+
+	@Override
+	public void insertBmark(int user_no, int article_no) throws Exception {
+		// TODO Auto-generated method stub
+		dao.insertBmark(user_no, article_no);
+	}
+
+	@Override
+	public void deleteBmark(int user_no, int article_no) throws Exception {
+		// TODO Auto-generated method stub
+		dao.deleteBmark(user_no, article_no);
+	}
+
+	@Override
+	public void upLike(int user_no, int article_no) throws Exception {
+		dao.upLike(user_no, article_no);
+	}
+
+	@Override
+	public void downLike(int user_no, int article_no) throws Exception {
+		dao.downLike(user_no, article_no);
+	}
+
+	@Override
+	public void upBmark(int user_no, int article_no) throws Exception {
+		dao.upBmark(user_no, article_no);
+	}
+
+	@Override
+	public void downBmark(int user_no, int article_no) throws Exception {
+		dao.downBmark(user_no, article_no);
+	}
+
+	@Override
+	public int isLike(int user_no, int article_no) throws Exception {
+		
+		return dao.isLike(user_no, article_no);
+	}
+
+	@Override
+	public int isBmark(int user_no, int article_no) throws Exception {
+		return dao.isBmark(user_no, article_no);
+	}
+
 
 }
