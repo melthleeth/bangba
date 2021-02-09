@@ -76,7 +76,6 @@
               @click="rowClick(item)"
               v-for="item in items"
               :key="item.no"
-              v-bind:pk_forum="item.pk_forum"
             >
               <td class="py-4 text-sm">{{ item.category }}</td>
               <td class="text-left font-semibold truncate">{{ item.title }}</td>

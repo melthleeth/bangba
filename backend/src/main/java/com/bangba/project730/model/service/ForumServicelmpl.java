@@ -71,10 +71,13 @@ public class ForumServicelmpl implements ForumService{
 		fcdto.setUser_no(Integer.parseInt(map.get("user_no")));
 		fcdto.setCreated_at(map.get("created_at"));
 		fcdto.setContent(map.get("content"));
+		
+		
 //		System.out.println(fcdto.getForum_no());
 //		System.out.println(fcdto.getUser_no());
 //		System.out.println(fcdto.getCreated_at());
 //		System.out.println(fcdto.getContent());
+//		System.out.println(fcdto.getUser_name());
 		
 		dao.createComment(fcdto);
 		return null;
@@ -95,6 +98,7 @@ public class ForumServicelmpl implements ForumService{
 			s+=fcdto.getCreated_at();
 			s+=";";
 			s+=fcdto.getContent();
+		
 			map.put(Integer.toString(fcdto.getPk_fcomment()), s);
 		}
 		return map;

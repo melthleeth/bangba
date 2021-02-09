@@ -108,8 +108,19 @@
 	</insert>
 	
 	<select id="searchComment" resultType="FcommentDto" parameterType="int">
-		select * from fcomment
-		where forum_no = #{pk_forum} order by pk_fcomment desc
+ 		select * from fcomment
+		where forum_no = #{pk_forum} order by pk_fcomment desc 
+<!-- 		select 
+			A.pk_fcomment
+			, A.forum_no
+			, A.user_no
+			, A.content
+			, A.created_at
+			, B.user_name
+			from fcomment as A
+			inner join user as B on A.user_no = B.pk_user
+			WHERE #{pk_forum}
+			order by pk_fcomment desc -->
 	</select>
 	
 	<update id="updateComment" parameterType="FcommentDto">

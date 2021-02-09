@@ -39,7 +39,7 @@
         
       </div>
       <div class="content-detail-comment">
-        <CommentList :contentId="contentId"></CommentList>
+        <CommentList :pk_forum="forum.pk_forum" ></CommentList>
       </div>
     
   </div>
