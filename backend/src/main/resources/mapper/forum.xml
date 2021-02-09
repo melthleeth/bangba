@@ -17,10 +17,10 @@
             forum
         <trim prefix="where" prefixOverrides="and|or">
             <if test="keyword != null and keyword != '' ">
-                <if test="search_type =='title'">
+                <if test="search_type =='제목'">
                     and title like concat('%', #{keyword}, '%')
                 </if>
-                <if test="search_type =='content'">
+                <if test="search_type =='내용'">
                     and content like concat('%', #{keyword}, '%')
                 </if>
              </if>
@@ -40,10 +40,10 @@
         from forum as a
         inner join user as b on a.user_no = b.pk_user
         <trim prefix="where"  prefixOverrides="and|or">
-            <if test="search_type =='title' and keyword != null and keyword != '' ">
+            <if test="search_type =='제목' and keyword != null and keyword != '' ">
                 and title like concat('%', #{keyword}, '%')
             </if>
-            <if test="search_type =='content' and keyword != null and keyword != '' ">
+            <if test="search_type =='내용' and keyword != null and keyword != '' ">
                 and content like concat('%', #{keyword}, '%')
             </if>
         </trim>
