@@ -114,10 +114,6 @@
         >
           이전
         </base-button>
-
-        <!-- 버튼  -->
-        
-        
         <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
 
         <base-button

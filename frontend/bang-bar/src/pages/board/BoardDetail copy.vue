@@ -2,28 +2,27 @@
   <div style="text-align: center;">
      
       <div class="whiteboard">
-        <div class="font-extrabold text-lg content-detail-content-info-left-number" >[{{forum.category}}]</div>
-        <div class="font-extrabold text-3xl content-detail-content-info-left-subject" >{{forum.title}}</div>
+        <div class="content-detail-content-info-left-number" >[{{forum.category}}]</div>
+        <div class="content-detail-content-info-left-subject" >{{forum.title}}</div>
       </div>
       <div class="whiteboard">
-        <img src="../../assets/icon/chunsik.png" class="float-left;" style="height:60px">
-              <div class="content-detail-content-info-right-user">{{forum.user_name}}
-                 <base-button>팔로우</base-button>
-              </div>
-                <div class="flex items-center mb-2">
-                  <div class="content-detail-content-info-right-created">
-                    {{forum.created_at}}
-                    조회 : {{forum.hits}}
-                  
-                  </div>
-                </div>
+        <div class="content-detail-content-info-right-user">{{forum.user_name}}
+          <base-button>팔로우</base-button>
 
-                <div>
-                 <img src="../../assets/icon/like.png" class="" style="width:20px; "> {{forum.like_cnt}}
-                 <img src="../../assets/icon/commentCount.png">  {{forum.like_cnt}}
-                </div>
         </div>
+        <div class="content-detail-content-info-right-created">
+          <!-- 날짜 가공할 것 2021.01.24. 23:23 순으로 -->
+          {{forum.created_at}}
+          -----
+          <span>조회수 : {{forum.hits}} </span>
+          
+          -----
+          <span>코멘트수</span>
+          ---------
+          <span>추천수  {{forum.like_cnt}} </span>
 
+          </div>
+      </div>
       <div class="whiteboard" style="min-height:500px" >{{forum.content}}</div>
      
       <div class ="flex flex-col">
@@ -38,9 +37,9 @@
         <base-button @click="golist">목록</base-button>
         
       </div>
-      <div class="content-detail-comment">
+      <!-- <div class="content-detail-comment">
         <CommentList :contentId="contentId"></CommentList>
-      </div>
+      </div> -->
     
   </div>
 </template>
@@ -48,7 +47,7 @@
 <script>
 // import BaseButton from '../../components/ui/BaseButton.vue';
 // import data from "@/data";
-import CommentList from "./CommentList";
+// import CommentList from "./CommentList";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "BoardDetail",
@@ -160,7 +159,7 @@ export default {
     
   },
   components: {
-    CommentList,
+    // CommentList,
     
   }
 };
