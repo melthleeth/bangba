@@ -6,7 +6,6 @@ export default {
     },  
 
     setBoards(state, payload) {
-<<<<<<< HEAD
         console.log("setBoards")
         state.boards = payload;
     },
@@ -19,11 +18,6 @@ export default {
         state.forum_cnt_per_page = payload.forum_cnt_per_page;
     },
 
-=======
-        state.boards = payload;
-    },
-    
->>>>>>> origin/backend
     setFetchTimestamp(state) {
         state.lastFetch = new Date().getTime();
     }

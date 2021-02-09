@@ -59,6 +59,7 @@ export default {
       // contentItem => contentItem.content_id === contentId
     // )[0];
     return {
+    
       owner_check:localStorage.getItem('user_name'),
       forum:[],
       forumId:this.$route.params.contentId,

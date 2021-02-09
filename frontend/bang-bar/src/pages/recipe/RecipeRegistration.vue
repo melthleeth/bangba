@@ -91,7 +91,6 @@
         </div>
         <div class="form-control" :class="{ invalid: !tags.isValid }">
           <label for="tag">태그</label>
-<<<<<<< HEAD
           <input
             class="w-1/12"
             type="text"
@@ -100,10 +99,6 @@
             @blur="clearValidity('tags')"
           />
           <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
-=======
-          <input class="w-1/12" type="text" id="tag" v-model.trim="tag" @blur="clearValidity('tags')" />
-          <base-button @click="addTag">추가하기</base-button>
->>>>>>> origin/backend
           <section>
             <!-- 중복 항목 검사 테스트 필요 -->
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
@@ -184,15 +179,8 @@
             id="recipe"
             placeholder="레시피를 입력하세요"
             v-model.trim="recipe"
-<<<<<<< HEAD
-          />
-          <base-button class="px-4 py-2" @click="addRecipe"
-            >추가하기</base-button
-          >
-=======
           @blur="clearValidity('recipes')" />
           <base-button @click="addRecipe">추가하기</base-button>
->>>>>>> origin/backend
           <ul>
             <li v-for="(recipeItem, index) in recipes.val" :key="recipeItem">
               <span>{{ index + 1 }}. {{ recipeItem }}</span>
