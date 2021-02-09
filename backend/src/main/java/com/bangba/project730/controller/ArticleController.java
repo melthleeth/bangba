@@ -235,7 +235,7 @@ public class ArticleController {
                 // 맥일 경우
                 // FileOutputStream fos = new FileOutputStream("/tmp/" +file.getOriginalFilename());
                 // 윈도우일 경우
-                FileOutputStream fos = new FileOutputStream("C:/Users/Jin/Downloads/USER_SIGNUP, LOGIN, LOGOUT/backend/imgs/" + file.getOriginalFilename());
+                FileOutputStream fos = new FileOutputStream("218.154.7.105:0.0/" + file.getOriginalFilename());
                 // 파일 저장할 경로 + 파일명을 파라미터로 넣고 fileOutputStream 객체 생성하고
                 InputStream is = file.getInputStream();) {
                 // file로 부터 inputStream을 가져온다.

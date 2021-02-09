@@ -50,7 +50,7 @@ public class ForumController {
     public List<ForumDto> searchForumList(Model model
             , @RequestParam(required = false, defaultValue = "1") int page_num
             , @RequestParam(required = false, defaultValue = "1") int page_range
-            , @RequestParam(required = false, defaultValue = "title") String search_type
+            , @RequestParam(required = false, defaultValue = "제목") String search_type
             , @RequestParam(required = false) String keyword
             ) throws Exception {
         
