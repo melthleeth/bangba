@@ -46,8 +46,7 @@
 </template>
 
 <script>
-// import BaseButton from '../../components/ui/BaseButton.vue';
-// import data from "@/data";
+
 import CommentList from "./CommentList";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
@@ -55,10 +54,7 @@ export default {
 
   
   data() {
-    // const contentId = Number(this.$route.params.contentId);
-    // const contentData = data.Content.filter(
-      // contentItem => contentItem.content_id === contentId
-    // )[0];
+
     return {
     
       owner_check:localStorage.getItem('user_name'),
