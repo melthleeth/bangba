@@ -103,7 +103,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		s = map.get("tag");
-		ss = s.split(",");
+		ss = s.split("<br>");
 		for (String a : ss) {
 			int tpk = tdao.searchTagPK(a);
 			dao.addArticleTag(pk, tpk);
@@ -128,7 +128,7 @@ public class ArticleServiceImpl implements ArticleService {
 		TaglistDto tldto = new TaglistDto();
 		tldto.setSearchtxt(map.get("searchtxt"));
 		String s = map.get("tag");
-		String[] ss = s.split(",");
+		String[] ss = s.split("<br>");
 		int i = 0;
 		for (String a : ss) {
 			if (a != "") {
@@ -197,7 +197,7 @@ public class ArticleServiceImpl implements ArticleService {
 		dao.deleteRecipe(pk);
 
 		String s = map.get("alcohol");
-		String[] ss = s.split(",");
+		String[] ss = s.split("<br>");
 		for (String a : ss) {
 			String[] sss = a.split("/");
 			int apk = adao.searchAlcoholPK(sss[0]);
@@ -227,7 +227,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		s = map.get("tag");
-		ss = s.split(",");
+		ss = s.split("<br>");
 		for (String a : ss) {
 			int tpk = tdao.searchTagPK(a);
 			dao.addArticleTag(pk, tpk);

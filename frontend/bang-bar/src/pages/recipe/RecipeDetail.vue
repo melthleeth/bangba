@@ -124,7 +124,7 @@ export default {
       const modified = [];
       for (const item of ingredientItem) {
         const ingredientInfo = item.split("/");
-        const modifiedItem = `${ingredientInfo[1]} ${ingredientInfo[2]}${ingredientInfo[3]}`;
+        const modifiedItem = `${ingredientInfo[0]} ${ingredientInfo[1]}${ingredientInfo[2]}`;
         modified.push(modifiedItem);
       }
       return modified;
