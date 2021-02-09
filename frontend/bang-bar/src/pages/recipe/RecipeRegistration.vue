@@ -18,7 +18,10 @@
             :src="img_path.val"
             alt="cocktail image"
           />
-          <base-button class="mt-4 px-4 py-2 text-base" @click="showImgRegDialog"
+          <input class="w-1/3" type="text" id="imgsrc" placeholder="이미지 주소 입력" v-model.trim="imgsrc" />
+          <base-button
+            class="mt-4 px-4 py-2 text-base"
+            @click="showImgRegDialog"
             >사진 등록</base-button
           >
           <p v-if="!img_path.isValid">등록된 사진이 없습니다.</p>
@@ -265,6 +268,7 @@ export default {
       recipe: "",
       alcoholTemp: [],
       ingredientTemp: [],
+      imgsrc: '',
       img_path: {
         val: require("../../assets/img/defaultCocktailImage.png"),
         src: "img/defaultCocktailImage.png",
@@ -310,14 +314,16 @@ export default {
   },
   methods: {
     showImgRegDialog() {
-      console.log("사진 등록 중");
-      console.log(this.img_path.val);
-      this.img_path.val = "https://images.unsplash.com/photo-1536935338788-846bb9981813?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=986&q=80";
-      alert("사진 등록 기능 준비중");
+      // console.log("사진 등록 중");
+      // console.log(this.img_path.val);
+      this.img_path.val = this.imgsrc;
+      this.imgsrc = "";
+      // alert("사진 등록 기능 준비중");
     },
     addTag() {
       if (this.tag === "") alert("태그 내용을 입력해주세요.");
-      else if (this.tags.val.includes(this.tag)) alert("이미 등록된 태그입니다.");
+      else if (this.tags.val.includes(this.tag))
+        alert("이미 등록된 태그입니다.");
       else {
         this.tags.val.push(this.tag);
         this.tag = "";
@@ -344,20 +350,21 @@ export default {
         return;
       }
 
-
-      const isAlcoholDuplicated = this.alcoholTemp.filter(alcohol => {
+      const isAlcoholDuplicated = this.alcoholTemp.filter((alcohol) => {
         if (alcohol.includes(this.ingredient)) return true;
         return false;
-        });
-      const isIngredientDuplicated = this.ingredientTemp.filter(ingredient => {
-        if (ingredient.includes(this.ingredient)) return true;
-        return false;
-        });
-
-       if (isAlcoholDuplicated || isIngredientDuplicated) {
-          alert("이미 등록된 재료입니다.");
-          return;
+      });
+      const isIngredientDuplicated = this.ingredientTemp.filter(
+        (ingredient) => {
+          if (ingredient.includes(this.ingredient)) return true;
+          return false;
         }
+      );
+
+      if (!isAlcoholDuplicated || !isIngredientDuplicated) {
+        alert("이미 등록된 재료입니다.");
+        return;
+      }
 
       const tempItem = `${this.ingredient} ${this.quantity}${this.unit}`;
 
@@ -542,5 +549,4 @@ div {
 #card-margin {
   margin: 2rem auto;
 }
-
 </style>
