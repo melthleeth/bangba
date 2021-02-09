@@ -54,7 +54,6 @@
       </article>
     </section>
 
-    <!-- <paginated-list :list-array="items" :page_total_cnt="page_total_cnt" @pageNum="pageNum"/> -->
     <!-- 본문 내용 -->
     <section class="font-S-CoreDream-light flex flex-col justify-items-center">
       <!-- 게시판 테이블 -->
@@ -99,10 +98,10 @@
                 <ul class="flex h-8 font-medium ">
                   <li
                     class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent" 
-                    v-for="pageNum in page_total_cnt" 
-                    :key="pageNum"
-                    @click="check()"
-                  >{{pageNum}}</li>
+                    v-for="(page, idx) in page_total_cnt" 
+                    :key="idx"
+                    @click="check(idx)"
+                  >{{page}}</li>
                 </ul>
                 <button class="h-8 w-8 ml-1 flex justify-center items-center  cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-4 h-4">
@@ -113,7 +112,7 @@
         </div>
       </section>
       <!-- 세진스표 페이지네이션 버튼 -->
-      <section class="font-sm flex justify-center items-center mt-2 mb-6">
+      <!-- <section class="font-sm flex justify-center items-center mt-2 mb-6">
         <base-button
           mode="outline"
           :disabled="pageNum === 0"
@@ -121,10 +120,6 @@
         >
           이전
         </base-button>
-
-        <!-- 버튼  -->
-        
-        
         <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ page_total_cnt }}</span>
 
         <base-button
@@ -134,7 +129,7 @@
         >
           다음
         </base-button>
-      </section>
+      </section> -->
     </section>
   </div>
 </template>
@@ -186,8 +181,10 @@ export default {
       this.getList();
     },
 
-    check () {
-      console.log("pageNum", this.pageNum)
+    check (idx) {
+      this.pageNum = idx;
+      console.log("pageNum", this.pageNum);
+      this.getList();
     },
 
     fnView(){
