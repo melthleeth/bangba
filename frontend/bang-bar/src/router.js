@@ -12,6 +12,8 @@ import BookmarkedRecipe from "./pages/users/BookmarkedRecipe.vue";
 import MyPosts from "./pages/users/MyPosts.vue";
 import ActivityLog from "./pages/users/ActivityLog.vue";
 import FollowingFollowers from "./pages/users/FollowingFollowers.vue";
+import MyPageOther from "./pages/users/MyPageOther.vue";
+import WithDraw from "./pages/users/WithDraw.vue";
 
 // footer
 import BangbaGuide from "./pages/footers/BangbaGuide.vue";
@@ -59,12 +61,16 @@ const router = createRouter({
     { path: "/header/myposts", component: MyPosts },
     { path: "/header/activitylog", component: ActivityLog },
     { path: "/header/followingfollowers", component: FollowingFollowers },
-    { path: "/board/list", component: BoardList },
+    { path: "/header/withdraw", component: WithDraw },
+    
+    { path: "/mypageother", component: MyPageOther },
+    
     // footer
     { path: "/footer/guide", component: BangbaGuide },
     { path: "/footer/people", component: BangbaPeople },
     { path: "/footer/ask", component: BangbaAsk },
     //board
+    { path: "/board/list", component: BoardList },
     {
       path: "/board/create/:contentId?",
       name: "BoardCreate",
