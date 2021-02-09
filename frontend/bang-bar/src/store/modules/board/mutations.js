@@ -1,9 +1,14 @@
 export default {
-    registerRecipe(state, payload) {
+    registerBoard(state, payload) {
         console.log("mutations");
         console.log(payload);
-        state.recipes.push(payload);
+        state.boards.push(payload);
     },  
+
+    setBoards(state, payload) {
+        state.boards = payload;
+    },
+    
     setFetchTimestamp(state) {
         state.lastFetch = new Date().getTime();
     }

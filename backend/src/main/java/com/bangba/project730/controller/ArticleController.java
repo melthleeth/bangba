@@ -8,11 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -179,6 +177,59 @@ public class ArticleController {
 		}
 	}
 
+	@ApiOperation(value = "댓글 작성", response = String.class)
+	@PostMapping(value = "/comment/create",  headers = { "Content-type=application/json" })
+	public String createComment(@RequestBody Map<String, String> map, Model model) throws Exception {
+		try {
+			articleService.createComment(map);
+			model.addAttribute("msg", "댓글 작성 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "댓글 작성중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
+
+	@ApiOperation(value = "댓글 검색", response = String.class)
+	@PostMapping("/comment/keyword")
+	public Map<String,String> searchComment(@RequestBody int pk_article , Model model) throws Exception {
+		try {
+			model.addAttribute("msg", "댓글 검색 완료");
+			return articleService.searchComment(pk_article);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "댓글 검색중 문제가 발생했습니다.");
+		}
+		return null;
+	}
+	
+	@ApiOperation(value = "댓글 수정", response = String.class)
+	@PutMapping("/comment/{pk_article}")
+	public String updateComment(@RequestBody Map<String, String> map, Model model) throws Exception {
+		try {
+			articleService.updateComment(map);
+			model.addAttribute("msg", "레시피 수정 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "레시피 수정중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
+	@ApiOperation(value = "댓글 삭제", response = String.class)
+	@DeleteMapping("/comment/{pk_article}")
+	public String deleteComment(@RequestParam Integer pk_acomment, Model model) throws Exception {
+		try {
+			articleService.deleteComment(pk_acomment);
+			model.addAttribute("msg", "레시피 삭제 완료");
+			return "main";
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("msg", "레시피 삭제중 문제가 발생했습니다.");
+			return "error";
+		}
+	}
 	
 	@PostMapping("/photo")
     public String upload(@RequestParam("file") MultipartFile file) {
@@ -194,7 +245,7 @@ public class ArticleController {
                 // 맥일 경우
                 // FileOutputStream fos = new FileOutputStream("/tmp/" +file.getOriginalFilename());
                 // 윈도우일 경우
-                FileOutputStream fos = new FileOutputStream("C:/Users/Jin/Downloads/USER_SIGNUP, LOGIN, LOGOUT/backend/imgs/" + file.getOriginalFilename());
+                FileOutputStream fos = new FileOutputStream("218.154.7.105:0.0/" + file.getOriginalFilename());
                 // 파일 저장할 경로 + 파일명을 파라미터로 넣고 fileOutputStream 객체 생성하고
                 InputStream is = file.getInputStream();) {
                 // file로 부터 inputStream을 가져온다.

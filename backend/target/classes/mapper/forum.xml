@@ -1,95 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">	
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">    
 
 <mapper namespace="com.bangba.project730.model.dao.ForumDao">
-	<!-- 포럼 생성 -->
-	<insert id="createForum" parameterType="ForumDto">
-		insert into forum (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
-		values (#{user_no}, #{title}, #{category}, #{like_cnt}, #{hits}, #{created_at}, #{updated_at}, #{content})	
-	</insert>
-	
-	<!-- 포럼 리스트 보기 -->
-	<select id="searchForumList" resultType="searchForumDto" parameterType="Integer">
-		select 
-			a.pk_forum
-			, a.title
-			, a.category
-			, a.hits
-			, a.created_at
-			, b.user_name
-			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
-		from forum as a
-		inner join user as b on a.user_no = b.pk_user
-		order by pk_forum DESC
-		LIMIT #{page_num}, 10
-	</select>
-	
-	<!-- 포럼 키워드 리스트 보기 -->
-	<select id="searchForumKeyword" resultType="searchForumDto" parameterType="String">
-	<!-- 우선은 제목만 검색 기능 넣어요 -->
-		select 
-			a.pk_forum
-			, a.title
-			, a.category
-			, a.hits
-			, a.created_at
-			, b.user_name
-			, (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
-		from forum as a
-		inner join user as b on a.user_no = b.pk_user
-		where title like concat('%', #{keyword}, '%')
-		order by pk_forum DESC
-	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
-	</select>
-	
-	<!-- 포럼 상세보기 -->
-	<select id="detailForum" resultType="ForumDto" parameterType="ForumDto">
-		select 
-			A.pk_forum
-			, A.title
-			, A.category
-			, A.hits
+    <!-- 포럼 생성 -->
+    <insert id="createForum" parameterType="ForumDto">
+        insert into forum (user_no, title, category, like_cnt, hits, created_at, updated_at, content)
+        values (#{user_no}, #{title}, #{category}, #{like_cnt}, #{hits}, #{created_at}, #{updated_at}, #{content})    
+    </insert>
+    
+    <!-- 전체 게시글 수 읽기 -->
+    <select id="getForumListCnt" resultType="Integer" parameterType="SearchForumDto">
+        select
+            count(*) as forum_total_cnt
+        from
+            forum
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="keyword != null and keyword != '' ">
+                <if test="search_type =='제목'">
+                    and title like concat('%', #{keyword}, '%')
+                </if>
+                <if test="search_type =='내용'">
+                    and content like concat('%', #{keyword}, '%')
+                </if>
+             </if>
+        </trim>
+    </select>
+    
+    <!-- 포럼 리스트 보기 -->
+    <select id="searchForumList" resultType="ForumDto" parameterType="SearchForumDto">
+        select 
+            a.pk_forum
+            , a.title
+            , a.category
+            , a.hits
+            , a.created_at
+            , b.user_name
+            , (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
+        from forum as a
+        inner join user as b on a.user_no = b.pk_user
+        <trim prefix="where"  prefixOverrides="and|or">
+            <if test="search_type =='제목' and keyword != null and keyword != '' ">
+                and title like concat('%', #{keyword}, '%')
+            </if>
+            <if test="search_type =='내용' and keyword != null and keyword != '' ">
+                and content like concat('%', #{keyword}, '%')
+            </if>
+        </trim>
+        order by pk_forum DESC
+        LIMIT #{forum_start}, #{forum_cnt_per_page}
+    </select>
+    
+    <!-- 포럼 상세보기 -->
+    <select id="detailForum" resultType="ForumDto" parameterType="ForumDto">
+        select 
+            A.pk_forum
+            , A.title
+            , A.category
+            , A.hits
             , A.like_cnt
-			, A.created_at
+            , A.created_at
             , A.updated_at
             , A.content
-			, B.user_name
-		from forum as A
-		inner join user as B on A.user_no = B.pk_user
+            , B.user_name
+        from forum as A
+        inner join user as B on A.user_no = B.pk_user
         where pk_forum = #{pk_forum};
-	</select>
-	
-	<!-- 조회수 1 증가 -->
-	<update id="updateHits" parameterType="int"> 
-		update forum set hits=hits+1 where pk_forum = #{pk_forum}
-	</update>
+    </select>
+    
+    <!-- 조회수 1 증가 -->
+    <update id="updateHits" parameterType="int"> 
+        update forum set hits=hits+1 where pk_forum = #{pk_forum}
+    </update>
 
-	<!-- 포럼 삭제 -->
-	<delete id="deleteForum">
-		delete from forum where pk_forum = #{pk_forum}
-	</delete>
+    <!-- 포럼 삭제 -->
+    <delete id="deleteForum">
+        delete from forum where pk_forum = #{pk_forum}
+    </delete>
+    
+    <!-- 포럼 수정 -->
+    <update id="updateForum" parameterType="ForumDto">
+        update forum set title = #{title}, category = #{category}, updated_at = #{updated_at}, content = #{content} 
+        where pk_forum = #{pk_forum}
+    </update>
+    
+    <!--공지사항 리스트 보기 -->
+    <select id="searchNotices" resultType="ForumDto">
+    <!-- 우선은 제목만 검색 기능 넣어요 -->
+        select 
+            a.pk_forum
+            , a.title
+            , a.category
+            , a.hits
+            , a.created_at
+            , b.user_name
+        from forum as a
+        inner join user as b on a.user_no = b.pk_user
+        where category = "공지사항"
+        order by pk_forum DESC
+    <!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->    
+    </select>
+    
+    
+	<insert id="createComment" parameterType="FcommentDto">
+		insert into fcomment (forum_no, user_no, content)
+		values (#{forum_no}, #{user_no}, #{content})	
+	</insert>
 	
-	<!-- 포럼 수정 -->
-	<update id="updateForum" parameterType="ForumDto">
-		update forum set title = #{title}, category = #{category}, updated_at = #{updated_at}, content = #{content} 
-		where pk_forum = #{pk_forum}
+	<select id="searchComment" resultType="FcommentDto" parameterType="int">
+		select * from fcomment
+		where forum_no = #{pk_forum} order by pk_fcomment desc
+	</select>
+	
+	<update id="updateComment" parameterType="FcommentDto">
+		update fcomment set 
+		content = #{content} 
+		where pk_fcomment = #{pk_fcomment}
 	</update>
 	
-	<!--공지사항 리스트 보기 -->
-	<select id="searchNotices" resultType="searchForumDto">
-	<!-- 우선은 제목만 검색 기능 넣어요 -->
-		select 
-			a.pk_forum
-			, a.title
-			, a.category
-			, a.hits
-			, a.created_at
-			, b.user_name
-		from forum as a
-		inner join user as b on a.user_no = b.pk_user
-		where category = "공지사항"
-		order by pk_forum DESC
-	<!-- LIMIT #{forum_cnt_per_page} OFFSET #{page_no-1} -->	
-	</select>
+	<delete id="deleteComment" parameterType="int">
+		delete from fcomment
+		where pk_fcomment = #{pk_fcomment}
+	</delete>
 </mapper>

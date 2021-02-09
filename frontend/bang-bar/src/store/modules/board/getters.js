@@ -1,9 +1,9 @@
 export default {
-  recipes(state) {
-    return state.recipes;
+  boards(state) {
+    return state.boards;
   },
-  hasRecipes(state) {
-    return state.recipes && state.recipes.length > 0;
+  hasBoards(state) {
+    return state.boards && state.boards.length > 0;
   },
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;

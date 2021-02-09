@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bangba.project730.model.dto.AlcoholDto;
+import com.bangba.project730.model.dto.AcommentDto;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.Article_alcoholDto;
@@ -52,4 +53,9 @@ public interface ArticleDao {
 	public List<AtoI> getIngredient(int pk_article) throws Exception;
 	public List<RecipeDto> getRecipe(int pk_article) throws Exception;
 	public List<TagDto> getTag(int pk_article) throws Exception;
+	public void createComment(AcommentDto acommentDto) throws Exception;
+	public List<AcommentDto> searchComment(int pk_article) throws Exception;
+	public void updateComment(AcommentDto acommentDto) throws Exception;
+	public void deleteComment(int pk_acomment) throws Exception;
+
 }
