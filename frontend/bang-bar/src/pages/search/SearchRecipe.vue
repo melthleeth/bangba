@@ -38,7 +38,7 @@
       </div>
     </section>
     <section class="flex flex-col">
-      <div v-if="isLoading">
+      <div v-if="isLoading" class="my-32">
         <base-spinner></base-spinner>
       </div>
       <div
@@ -50,7 +50,7 @@
           :key="cocktail.pk_article"
           :pk_article="cocktail.pk_article"
           :img_path="cocktail.img_path"
-          :username="cocktail.username"
+          :user_name="cocktail.user_name"
           :cocktailname="cocktail.title_kor"
           :tag="cocktail.tag"
           :like_cnt="cocktail.like_cnt"
@@ -60,7 +60,7 @@
       </div>
       <span
         v-else
-        class="text-2xl text-center my-10 font-S-CoreDream-medium font-bold font-color-black-200"
+        class="text-2xl text-center my-32 font-S-CoreDream-medium font-bold font-color-black-200"
         >검색된 레시피가 없습니다.</span
       >
     </section>
@@ -90,13 +90,13 @@ export default {
       return recipes.filter((recipe) => {
         console.log(recipe.title_kor.includes(this.searchKeyword));
         if (recipe.title_kor.includes(this.searchKeyword)) return true;
-        // if (
-        //   recipe.title_eng
-        //     .toLowerCase()
-        //     .includes(this.searchKeyword.toLowerCase())
-        // )
-        //   return true;
-        // if (recipe.tag.includes(this.searchKeyword)) return true;
+        if (
+          recipe.title_eng
+            .toLowerCase()
+            .includes(this.searchKeyword.toLowerCase())
+        )
+          return true;
+        if (recipe.tag.includes(this.searchKeyword)) return true;
         return false;
       });
     },

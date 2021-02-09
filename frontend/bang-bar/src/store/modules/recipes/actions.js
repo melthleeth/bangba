@@ -41,7 +41,7 @@ export default {
       ingredient: payload.ingredients,
       recipe: payload.recipes,
     };
-
+    console.log(recipeData);
     // const token = context.rootGetters.token;
     const url = `${SERVER_URL}/article/create`;
     const response = await fetch(url, {
@@ -58,10 +58,10 @@ export default {
     console.log("responseData");
     console.log(responseData);
 
-    if (!response.ok) {
+    if (responseData === "error") {
       // ...
     }
-    context.commit("registerRecipe", recipeData);
+    // context.commit("registerRecipe", recipeData);
   },
   async loadRecipes(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
@@ -73,7 +73,7 @@ export default {
       tag: ""
     };
 
-    const response = await fetch(`${SERVER_URL}article/keyword`, {
+    const response = await fetch(`${SERVER_URL}/article/all`, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Accept: "application/json;",
@@ -94,7 +94,7 @@ export default {
     for (const key in responseData) {
       const recipe = {
         pk_article: responseData[key].pk_article,
-        user_no: responseData[key].user_no,
+        user_name: responseData[key].user_name,
         title_kor: responseData[key].title_kor,
         title_eng: responseData[key].title_eng,
         like_cnt: responseData[key].like_cnt,
@@ -108,9 +108,10 @@ export default {
         category: responseData[key].category,
         abv: responseData[key].abv,
         cup_no: responseData[key].cup_no,
-        // alcohol: responseData[key].alcohol,
-        // ingredient: responseData[key].ingredient,
-        // recipe: responseData[key].recipe,
+        tag: responseData[key].tag,
+        alcohol: responseData[key].alcohol,
+        ingredient: responseData[key].ingredient,
+        recipe: responseData[key].recipe,
       };
       recipes.push(recipe);
     }

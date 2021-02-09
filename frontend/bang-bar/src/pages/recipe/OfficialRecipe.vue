@@ -61,7 +61,7 @@
       </div>
     </section>
     <section class="flex flex-col">
-      <div v-if="isLoading">
+      <div v-if="isLoading" class="my-32">
         <base-spinner></base-spinner>
       </div>
       <div
@@ -73,7 +73,7 @@
           :key="cocktail.pk_article"
           :pk_article="cocktail.pk_article"
           :img_path="cocktail.img_path"
-          :username="cocktail.username"
+          :user_name="cocktail.user_name"
           :cocktailname="cocktail.title_kor"
           :tag="cocktail.tag"
           :like_cnt="cocktail.like_cnt"

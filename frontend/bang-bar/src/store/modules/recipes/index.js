@@ -11,7 +11,7 @@ export default {
       recipes: [
         {
           pk_article: 1,
-          username: "관리자",
+          user_name: "관리자",
           category: true,
           img_path: "https://images.unsplash.com/photo-1544145945-f90425340c7e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
           title_kor: "롱 아일랜드 아이스 티",
@@ -32,7 +32,7 @@ export default {
         },
         {
           pk_article: 2,
-          username: "방구석 바텐더",
+          user_name: "방구석 바텐더",
           category: false,
           img_path: "https://images.unsplash.com/photo-1497534446932-c925b458314e?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=707&q=80",
           title_kor: "테킬라 스트로베리 샤워",

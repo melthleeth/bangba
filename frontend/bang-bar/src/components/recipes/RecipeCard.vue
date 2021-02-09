@@ -13,21 +13,21 @@
       cocktailname
     }}</span>
 
-    <!-- <section class="">
+    <section class="">
       <span
-        v-for="tag in tags.slice(0, 5)"
+        v-for="tag in tags.slice(0, 3)"
         :key="tag"
-        class="w-max inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold ml-2 mb-2"
+        class="w-max inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold ml-2 mb-2"
         >#{{ tag }}</span
       >
-    </section> -->
+    </section>
     <section class="flex items-center mt-4">
       <img
         src="../../assets/img/mr.fox.jpg"
         class="w-8 h-8 rounded-full ml-6 mr-2"
         alt="profile image"
       />
-      <span class="ml-2 text-sm font-semibold">{{ username }}</span>
+      <span class="ml-2 text-sm font-semibold">{{ user_name }}</span>
       <section class="flex justify-center justify-self-end ml-auto mr-4">
         <article class="flex items-center">
           <img
@@ -60,7 +60,7 @@ export default {
     "pk_article",
     "img_path",
     "cocktailname",
-    "username",
+    "user_name",
     "tag",
     "like_cnt",
     "bookmark_cnt",
@@ -72,7 +72,7 @@ export default {
     };
   },
   created() {
-    // this.tags = this.tag.split("<br>");
+    this.tags = this.tag.split("<br>");
   },
   methods: {
     viewRecipeDetail() {

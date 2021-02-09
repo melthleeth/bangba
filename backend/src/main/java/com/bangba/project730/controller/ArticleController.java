@@ -225,7 +225,7 @@ public class ArticleController {
 			List<ArticleTotalDto> tdtos = new ArrayList<ArticleTotalDto>();
 			List<ArticleDto> adto = articleService.searchArticle(map);
 			for(ArticleDto a:adto) {
-				System.out.println(a.getPk_article());
+//				System.out.println(a.getPk_article());
 				ArticleTotalDto tdto = new ArticleTotalDto();
 				// 기존 정보
 				tdto.setPk_article(a.getPk_article());
@@ -246,11 +246,14 @@ public class ArticleController {
 				
 				// 추가 정보
 				String temp = "";
+				StringBuilder sb = new StringBuilder();
 				List<RecipeDto> recipes = articleService.getRecipe(a.getPk_article());
 				for(RecipeDto recipe : recipes) {
 					temp += recipe.getContent();
 					temp += "<br>";
+					sb.append(recipe.getContent()).append("<br>");
 				}
+				temp = temp.substring(0, temp.length() - 4);
 				tdto.setRecipe(temp);
 				List<TagDto> tags = articleService.getTag(a.getPk_article());
 				temp = "";
@@ -258,6 +261,7 @@ public class ArticleController {
 					temp += tag.getContent_kor();
 					temp += "<br>";
 				}
+				temp = temp.substring(0, temp.length() - 4);
 				tdto.setTag(temp);
 				// 어려운거 
 				temp = "";
@@ -270,6 +274,7 @@ public class ArticleController {
 					temp += alcohol.getUnit();
 					temp += "<br>";
 				}
+				temp = temp.substring(0, temp.length() - 4);
 				tdto.setAlcohol(temp);
 				temp = "";
 				List<AtoI> ingredients = articleService.getIngredient(a.getPk_article());
@@ -281,6 +286,7 @@ public class ArticleController {
 					temp += ingredient.getUnit();
 					temp += "<br>";
 				}
+				temp = temp.substring(0, temp.length() - 4);
 				tdto.setIngredient(temp);
 				
 				tdtos.add(tdto);

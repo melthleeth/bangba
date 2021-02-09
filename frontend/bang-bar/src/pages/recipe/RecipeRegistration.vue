@@ -1,6 +1,6 @@
 <template>
   <div class="font-S-CoreDream-light flex flex-col justify-items-center mx-16">
-    <span class="title text-center my-10 font-S-CoreDream-medium font-bold"
+    <span class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
       >{{ category }} 레시피 등록</span
     >
     <base-card class="w-2/3" id="card-margin">
@@ -18,7 +18,7 @@
             :src="img_path.val"
             alt="cocktail image"
           />
-          <base-button class="mt-4 px-4 py-2" @click="showImgRegDialog"
+          <base-button class="mt-4 px-4 py-2 text-base" @click="showImgRegDialog"
             >사진 등록</base-button
           >
           <p v-if="!img_path.isValid">등록된 사진이 없습니다.</p>
@@ -65,7 +65,7 @@
         >
           <label for="content">칵테일 소개</label>
           <textarea
-            class="w-1/3"
+            class="w-2/3"
             id="content"
             rows="3"
             placeholder="어떤 칵테일인지 소개 해주세요"
@@ -77,7 +77,7 @@
         <div class="form-control" :class="{ invalid: !cupinfo.isValid }">
           <label for="cupinfo">컵 정보 추가하기</label>
           <select
-            class="w-1/12"
+            class="w-4/12"
             name="cupinfo"
             id="cupinfo"
             v-model="cupinfo.val"
@@ -92,15 +92,14 @@
         <div class="form-control" :class="{ invalid: !tags.isValid }">
           <label for="tag">태그</label>
           <input
-            class="w-1/12"
+            class="w-3/12"
             type="text"
             id="tag"
             v-model.trim="tag"
             @blur="clearValidity('tags')"
           />
           <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
-          <section>
-            <!-- 중복 항목 검사 테스트 필요 -->
+          <section class="mt-2">
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
               {{ tag }}
               <span
@@ -114,14 +113,14 @@
         </div>
         <div class="form-control" :class="{ invalid: !ingredients.isValid }">
           <label for="ingredients">재료 추가하기</label>
-          <select class="w-1/12" name="type" id="type" v-model="type">
+          <select class="w-28" name="type" id="type" v-model="type">
             <option value="">분류</option>
             <option value="주류">주류</option>
             <option value="재료">재료</option>
             <option value="가니쉬">가니쉬</option>
           </select>
           <input
-            class="w-1/12"
+            class="w-3/12"
             type="text"
             id="ingredient"
             placeholder="보드카"
@@ -345,11 +344,20 @@ export default {
         return;
       }
 
-       if (this.alcoholTemp.includes(this.ingredient)) {
-          alert(`이미 등록된 ${this.type}입니다.`);
+
+      const isAlcoholDuplicated = this.alcoholTemp.filter(alcohol => {
+        if (alcohol.includes(this.ingredient)) return true;
+        return false;
+        });
+      const isIngredientDuplicated = this.ingredientTemp.filter(ingredient => {
+        if (ingredient.includes(this.ingredient)) return true;
+        return false;
+        });
+
+       if (isAlcoholDuplicated || isIngredientDuplicated) {
+          alert("이미 등록된 재료입니다.");
           return;
         }
-
 
       const tempItem = `${this.ingredient} ${this.quantity}${this.unit}`;
 
