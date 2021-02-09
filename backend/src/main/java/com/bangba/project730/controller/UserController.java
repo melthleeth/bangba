@@ -168,9 +168,9 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "비밀번호찾기", response = String.class)
-	@PostMapping(value = "/help")
+	@PostMapping(value = "/help/{toAddress}")
 	@ResponseBody
-	public String findPassword(@ApiParam(value = "비밀번호를 찾을 해당 계정의 이메일", required = true) String toAddress,
+	public String findPassword(@PathVariable @ApiParam(value = "비밀번호를 찾을 해당 계정의 이메일", required = true) String toAddress,
 			Model model) {
 		int result = userService.isDuplicatedEmail(toAddress);
 		if (result == 0) { // 이메일이 존재하지 않을 때

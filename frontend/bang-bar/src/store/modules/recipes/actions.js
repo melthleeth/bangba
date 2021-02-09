@@ -61,7 +61,7 @@ export default {
     if (responseData === "error") {
       // ...
     }
-    // context.commit("registerRecipe", recipeData);
+    alert("등록이 완료되었습니다.");
   },
   async loadRecipes(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {

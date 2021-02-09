@@ -155,7 +155,7 @@ export default {
           content: this.content,
           created_at:this.created_at,
           updated_at:this.created_at,
-          user_no:localStorage.getItem("pk_user"),
+          user_no:this.user_id,
         }
         const headers = {
           'Content-type': 'application/json; charset=UTF-8',

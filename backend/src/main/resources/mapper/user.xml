@@ -41,7 +41,7 @@
 	<update id="updateMyPage" parameterType="UserDto">
 		update user
 		set password = #{password}
-		where pk_user = #{pk_user}
+		where email = #{email}
 	</update>
 	
 	
@@ -61,5 +61,17 @@
 		select *
 		from article
 		where user_no = #{pk_user}
+	</select>
+	
+	<select id="getUserName" parameterType="int" resultType="String">
+		select user_name
+		from user
+		where pk_user = #{user_no}
+	</select>
+	
+	<select id="getImgPath" parameterType="int" resultType="String">
+		select img_path
+		from user
+		where pk_user = #{user_no}
 	</select>
 </mapper>

@@ -167,7 +167,7 @@
             </li>
           </ul>
           <p v-if="!ingredients.isValid || !alcohols.isValid">
-            최소 한 가지의 재료를 추가해주세요.
+            최소 한 가지의 주류, 재료를 추가해주세요.
           </p>
         </div>
         <div class="form-control" :class="{ invalid: !recipes.isValid }">
@@ -178,7 +178,7 @@
             id="recipe"
             placeholder="레시피를 입력하세요"
             v-model.trim="recipe"
-          />
+          @blur="clearValidity('recipes')" />
           <base-button class="px-4 py-2" @click="addRecipe"
             >추가하기</base-button
           >
@@ -405,39 +405,50 @@ export default {
       if (this.title_kor.val === "") {
         this.title_kor.isValid = false;
         this.formIsValid = false;
+        console.log("1");
       }
       // if (this.title_eng.val === "") {
       //   this.title_eng.isValid = false;
       //   this.formIsValid = false;
       // }
-      if (!this.abv.val || this.abv.val < 0) {
+      else if (!this.abv.val || this.abv.val < 0) {
         this.abv.isValid = false;
         this.formIsValid = false;
+        console.log("2");
       }
-      if (this.content.val === "") {
+      else if (this.content.val === "") {
         this.content.isValid = false;
         this.formIsValid = false;
+        console.log("3");
       }
-      if (this.cupinfo.val === "") {
+      else if (this.cupinfo.val === "") {
         this.cupinfo.isValid = false;
         this.formIsValid = false;
-      }
-      if (this.tags.val.length === 0) {
+        console.log("4");
+      } 
+      else if (this.tags.val.length === 0) {
         this.tags.isValid = false;
         this.formIsValid = false;
+        console.log("5");
       }
-      if (this.alcohols.val.length === 0) {
+      else if (this.alcohols.val.length === 0) {
         this.alcohols.isValid = false;
         this.formIsValid = false;
+        console.log("6");
       }
-      if (this.ingredients.val.length === 0) {
+      else if (this.ingredients.val.length === 0) {
         this.ingredients.isValid = false;
         this.formIsValid = false;
+        console.log("7");
       }
-      if (this.recipes.val.length === 0) {
+      else if (this.recipes.val.length === 0) {
         this.recipes.isValid = false;
         this.formIsValid = false;
+        console.log("8");
+      } else {
+        this.formIsValid = true;
       }
+
     },
     async submitForm() {
       this.validateForm();
