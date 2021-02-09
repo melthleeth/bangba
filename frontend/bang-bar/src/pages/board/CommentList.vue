@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div :key="item.comment_id" v-for="item in comments">
-      <CommentListItem :commentObj="item"></CommentListItem>
+    <div :key="comment.pk_fcomment" v-for="comment in comments">
+      <comment-list-item :comments="comment"></comment-list-item>
     </div>
-    <CommentCreate :contentId="contentId" :reloadComment="reloadComment"/>
+    <comment-create :contentId="contentId" :reloadComment="reloadComment" />
+    <base-button class="w-max px-4 py-1" mode="nude" @click="test()"
+      >테스트용으로 만들어 놓은 것 같은 버튼
+    </base-button>
   </div>
-  <base-button class="w-max px-4 py-1" mode="nude" @click="test()">테스트용으로 만들어 놓은 것 같은 버튼
-  </base-button>
 </template>
 
 <script>
@@ -15,66 +16,72 @@ import CommentListItem from "./CommentListItem";
 import CommentCreate from "./CommentCreate";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
-
 export default {
   name: "CommentList",
-  props: {
-    contentId: Number,
-    pk_forum: Number,
-  },
-  data() {
-    return {
-      pk_num:this.pk_forum,
-      comments: data.Comment.filter(commentItem => {
-        return commentItem.content_id === this.contentId;
-      })
-    };
-  },
   components: {
     CommentListItem,
-    CommentCreate
+    CommentCreate,
+  },
+  props: ["contentId", "pk_forum"],
+  data() {
+    return {
+      pk_num: this.pk_forum,
+      // comments: data.Comment.filter((commentItem) => {
+      //   return commentItem.content_id === this.contentId;
+      // }),
+      comments: [],
+    };
+  },
+  created() {
+    this.loadComments();
+    for (const key in this.comments) {
+        console.log("comment");
+        console.log(this.comments[key]);
+        console.log(key);
+      }
+  },
+  computed: {
+    commentList() {
+      for (const comment in this.comments) {
+        console.log("comment");
+        console.log(comment);
+      }
+      return true;
+    }
   },
   methods: {
-    test(){
-      console.log(this.pk_forum)
+    test() {
+      console.log(this.pk_forum);
     },
-
-    getList_Comment(){
-      
-        let params = {
-          
-          pk_forum:74,
-        };
-        // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-        this.axios.get(`${SERVER_URL}/forum/comment/keyword`, {
-        headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        'Accept': '*/*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        }, params
-      })
-      .then((result)=>{
-        // this.items = result.data
-        console.log(result.data);
-
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
+    loadComments() {
+      const pk_forum = 74;
+      // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
+      this.axios
+        .post(`${SERVER_URL}/forum/comment/keyword`, pk_forum, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Accept: "*/*",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+          }
+        })
+        .then((result) => {
+          // this.items = result.dataF
+          this.comments = result.data;
+          console.log(this.comments);
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
     },
 
     reloadComment() {
-      this.comments = data.Comment.filter(commentItem => {
+      this.comments = data.Comment.filter((commentItem) => {
         return commentItem.content_id === this.contentId;
       });
-    }
-  },
-  created() {
-    this.getList_Comment()
+    },
   },
 };
 </script>
 
-<style>
-</style>
+<style scoped></style>

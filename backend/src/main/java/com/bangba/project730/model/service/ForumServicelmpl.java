@@ -82,20 +82,35 @@ public class ForumServicelmpl implements ForumService{
 
 	@Override
 	public Map<String, String> searchComment(int pk_forum) throws Exception {
-		// TODO Auto-generated method stub
+//		System.out.println("pk_forum: " + pk_forum);
 		List<FcommentDto> lfcdto =  dao.searchComment(pk_forum);
 		Map<String,String> map = new HashMap<String, String>();
 		for(FcommentDto fcdto : lfcdto)
 		{
-			String s="";
-			s+=udao.getUserName(fcdto.getUser_no());
-			s+=";";
-			s+=udao.getImgPath(fcdto.getUser_no());
-			s+=";";
-			s+=fcdto.getCreated_at();
-			s+=";";
-			s+=fcdto.getContent();
-			map.put(Integer.toString(fcdto.getPk_fcomment()), s);
+//			String s="";
+//			s+=udao.getUserName(fcdto.getUser_no());
+//			s+=";";
+//			s+=udao.getImgPath(fcdto.getUser_no());
+//			s+=";";
+//			s+=fcdto.getCreated_at();
+//			s+=";";
+//			s+=fcdto.getContent();
+//			map.put(Integer.toString(fcdto.getPk_fcomment()), s);
+			
+			String pk_fcomment = Integer.toString(fcdto.getPk_fcomment());
+//			String profileImg = udao.getImgPath(fcdto.getUser_no());
+			String profileImg = "profile2.png";
+			String user_name = udao.getUserName(fcdto.getUser_no());
+			String created_at = fcdto.getCreated_at();
+			String content = fcdto.getContent();
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append(profileImg).append("<br>")
+				.append(user_name).append("<br>")
+				.append(created_at).append("<br>")
+				.append(content);
+			
+			map.put(pk_fcomment, sb.toString());
 		}
 		return map;
 	}

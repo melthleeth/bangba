@@ -36,7 +36,7 @@ a {
   /* padding: 0.75rem 1.5rem; */
   /* font: inherit; */
   background-color: #00002f;
-  border: 1px solid #00002f;
+  border: 3px solid #00002f;
   color: white;
   cursor: pointer;
   border-radius: 30px;

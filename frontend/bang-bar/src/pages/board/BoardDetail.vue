@@ -26,6 +26,22 @@
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
           <span class="mr-2">조회 {{ forum.hits }}</span>
+          <section class="">
+            <span v-if="forum.user_name === owner_check">
+              <base-button
+                class="text-xs px-2 py-1 ml-2"
+                mode="nude"
+                @click="updateData"
+                >수정</base-button
+              >
+              <base-button
+                class="text-xs px-2 py-1"
+                mode="nude"
+                @click="deleteData"
+                >삭제</base-button
+              >
+            </span>
+          </section>
           <section class="flex justify-self-end items-center ml-auto mr-4">
             <article class="flex items-center">
               <img
@@ -52,8 +68,10 @@
       </section>
     </section>
 
-    <section class="card-flat flex flex-col w-1/2 mx-auto h-full">
-      <span class="mx-2 my-4 min-h">{{ forum.content }}</span>
+    <section class="card-flat flex flex-col w-1/2 mx-auto h-full ">
+      <div class="table mx-2 my-4 min-h leading-relaxed tracking-wide">
+        {{ forum.content }}
+      </div>
     </section>
     <section
       class="card-flat flex flex-col justify-items-center items-center mx-auto transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
@@ -67,15 +85,8 @@
         forum.like_cnt
       }}</span>
     </section>
-
-    <section class="">
-      <span v-if="forum.user_name === owner_check">
-        <base-button @click="updateData">수정</base-button>
-        <base-button @click="deleteData">삭제</base-button>
-      </span>
-    </section>
     <section class="flex flex-col w-1/2 mx-auto">
-      <CommentList :contentId="contentId"></CommentList>
+      <comment-list :contentId="forumId.val"></comment-list>
       <section class="flex justify-self-end ml-auto">
         <base-button mode="outline" class="px-6 py-2 text-sm" @click="golist"
           >목록</base-button
@@ -89,22 +100,26 @@
 </template>
 
 <script>
-import CommentList from "./CommentList";
+import CommentList from "./CommentList.vue";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "BoardDetail",
-
+  components: {
+    CommentList,
+  },
   data() {
     return {
       owner_check: localStorage.getItem("user_name"),
       forum: [],
-      forumId: this.$route.params.contentId,
+      forumId: {
+        type: Number,
+        val: this.$route.params.contentId,
+      },
     };
   },
 
   created() {
     // console.log(this.forum.forumId);
-
     this.forum_Detail();
   },
   methods: {
@@ -118,7 +133,7 @@ export default {
     //삭제
     forum_Detail() {
       this.axios
-        .get(`${SERVER_URL}/forum/${this.forumId}`, {
+        .get(`${SERVER_URL}/forum/${this.forumId.val}`, {
           headers: {
             "Access-Control-Allow-Origin": "*",
             "Content-Type": "application/json; charset = utf-8",
@@ -146,7 +161,7 @@ export default {
 
       this.axios
         .delete(
-          `${SERVER_URL}/forum/delete-forum/${this.forumId}`,
+          `${SERVER_URL}/forum/delete-forum/${this.forumId.val}`,
           // JSON.stringify(params),
           { headers }
         )
@@ -165,7 +180,7 @@ export default {
     updateData() {
       this.$router.push({
         // path: `/board/modify/${this.forumId}`
-        path: `/board/create/${this.forumId}`,
+        path: `/board/create/${this.forumId.val}`,
       });
     },
 
@@ -198,9 +213,6 @@ export default {
       answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
       this.forum.created_at = answer;
     },
-  },
-  components: {
-    CommentList,
   },
 };
 </script>
