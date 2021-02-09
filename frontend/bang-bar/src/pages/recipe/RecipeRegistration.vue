@@ -108,7 +108,12 @@
             @blur="clearValidity('tags')"
           />
           <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
+<<<<<<< HEAD
           <section class="mt-2">
+=======
+          <section>
+            <!-- 중복 항목 검사 테스트 필요 -->
+>>>>>>> board
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
               {{ tag }}
               <span
@@ -187,11 +192,16 @@
             id="recipe"
             placeholder="레시피를 입력하세요"
             v-model.trim="recipe"
+<<<<<<< HEAD
             @blur="clearValidity('recipes')"
           />
           <base-button class="px-4 py-2" @click="addRecipe"
             >추가하기</base-button
           >
+=======
+          @blur="clearValidity('recipes')" />
+          <base-button @click="addRecipe">추가하기</base-button>
+>>>>>>> board
           <ul>
             <li v-for="(recipeItem, index) in recipes.val" :key="recipeItem">
               <span>{{ index + 1 }}. {{ recipeItem }}</span>
@@ -475,6 +485,7 @@ export default {
         ingredients: this.ingredients.val.join("<br>"),
         recipes: this.recipes.val.join("<br>"),
       };
+
 
       console.log(formData);
 

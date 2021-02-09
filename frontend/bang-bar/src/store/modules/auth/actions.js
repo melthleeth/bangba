@@ -67,7 +67,6 @@ export default {
     // timer = setTimeout(function() {
     //   context.dispatch('autoLogout');
     // }, expiresIn);
-
     context.commit('setUser', {
       token: responseData.idToken,
       userId: responseData.localId,

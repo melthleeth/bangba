@@ -37,15 +37,11 @@
       >
         이전
       </base-button>
-
-      
-      <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
-
+      <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ pageCount }}</span>
       <base-button
         mode="outline"
-        :disabled="pageNum >= (Math.ceil(pageSize/10))-1"
+        :disabled="pageNum >= pageCount - 1"
         @click="nextPage"
-        
       >
         다음
       </base-button>
@@ -54,6 +50,8 @@
 </template>
 
 <script>
+
+
 export default {
   name: 'paginated-list',
   
@@ -73,25 +71,24 @@ export default {
     pageSize: {
       type: Number,
       required: false,
-      
+      default: 10
     }
   },
 
   methods: {
     nextPage () {
       this.pageNum += 1;
-      this.$emit("pageNum",this.pageNum);
     },
     prevPage () {
       this.pageNum -= 1;
-      this.$emit("pageNum",this.pageNum);
     },
     fnView(){
       // alert("이동!");
       <router-link to="/board/view"></router-link>
     },
     rowClick(item) {
-
+      // alert(item.content_id)
+      
       this.$router.push({
         path: `/board/detail/${item.pk_forum}`
       });
@@ -110,11 +107,17 @@ export default {
           listSize = this.pageSize,
           page = Math.floor(listLeng / listSize);
       if (listLeng % listSize > 0) page += 1;
+      
+      /*
+      아니면 page = Math.floor((listLeng - 1) / listSize) + 1;
+      이런식으로 if 문 없이 고칠 수도 있다!
+      */
       return page;
     },
     paginatedData () {
-
-      return this.listArray;
+      const start = this.pageNum * this.pageSize,
+            end = start + this.pageSize;
+      return this.listArray.slice(start, end);
     }
 
 

@@ -27,11 +27,10 @@ export default {
   },
   data() {
     return {
-      name: localStorage.getItem("user_name"),
+      name: "인성",
       context: ""
     };
   },
-
   methods: {
     createComment() {
       const comment_id = data.Comment[data.Comment.length - 1].comment_id + 1;

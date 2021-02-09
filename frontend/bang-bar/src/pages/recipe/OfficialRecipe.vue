@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     filteredRecipes() {
-      const recipes = this.$store.getters["recipes/recipes"];
+      const recipes = this.$store.getters["recipes/recipes"]; //모듈/getters
       console.log(recipes);
       return recipes.filter((recipeItem) => {
         if (recipeItem.category === true) return true;

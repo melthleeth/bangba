@@ -1,5 +1,4 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
-
 export default {
   
   async registerRecipe(context, payload) {
@@ -46,9 +45,6 @@ export default {
     context.commit("registerRecipe", recipeData);
   },
 
-
-
-
   //글을 불러오는 곳
   async loadBoard(context, payload) {
     
@@ -57,10 +53,15 @@ export default {
       return;
     }
 
-    const page_num = 0;
+    const pageData = {
+      page_num: payload.page_num,
+      page_range: payload.page_range,
+      search_type: payload.search_type,
+      keyword: payload.keyword,
+    }
     
-    const url = `${SERVER_URL}/forum/search-forum-list/page=` + page_num;
-    console.log(url);
+    const url = `${SERVER_URL}/forum/search-forum-list` ;
+    // console.log(pageData.page_num+" pageNum");
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -68,19 +69,17 @@ export default {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
       },
-      method: "GET",
+      method: "POST",
+      body: JSON.stringify(pageData),
     });
-    console.log(response);
     const responseData = await response.json();
-
     console.log(responseData);
-    // console.log(responseData);
     if (!response.ok) {
       console.log("error")
     }
 
     const boards = [];
-
+    // const paginated = [];
     for (const key in responseData) {
       const board = {
         pk_forum: responseData[key].pk_forum,
@@ -93,9 +92,21 @@ export default {
         updated_at: responseData[key].updated_at,
         content:responseData[key].content,
 
+        range_total_cnt: responseData[key].range_total_cnt,
+        page_start: responseData[key].page_start,
+        page_end: responseData[key].page_end,
+        forum_start: responseData[key].forum_start,
+        check_prev: responseData[key].check_prev,
+        check_next: responseData[key].check_next,
+
       };
+      
       boards.push(board);
     }
+    console.log(boards);
     context.commit("setBoards", boards);
   },
+
+
+
 };

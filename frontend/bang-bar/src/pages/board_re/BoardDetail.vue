@@ -2,28 +2,27 @@
   <div style="text-align: center;">
      
       <div class="whiteboard">
-        <div class="font-extrabold text-lg content-detail-content-info-left-number" >[{{forum.category}}]</div>
-        <div class="font-extrabold text-3xl content-detail-content-info-left-subject" >{{forum.title}}</div>
+        <div class="content-detail-content-info-left-number" >[{{forum.category}}]</div>
+        <div class="content-detail-content-info-left-subject" >{{forum.title}}</div>
       </div>
       <div class="whiteboard">
-        <img src="../../assets/icon/chunsik.png" class="float-left;" style="height:60px">
-              <div class="content-detail-content-info-right-user">{{forum.user_name}}
-                 <base-button>팔로우</base-button>
-              </div>
-                <div class="flex items-center mb-2">
-                  <div class="content-detail-content-info-right-created">
-                    {{forum.created_at}}
-                    조회 : {{forum.hits}}
-                  
-                  </div>
-                </div>
+        <div class="content-detail-content-info-right-user">{{forum.user_name}}
+          <base-button>팔로우</base-button>
 
-                <div>
-                 <img src="../../assets/icon/like.png" class="" style="width:20px; "> {{forum.like_cnt}}
-                 <img src="../../assets/icon/commentCount.png">  {{forum.like_cnt}}
-                </div>
         </div>
+        <div class="content-detail-content-info-right-created">
+          <!-- 날짜 가공할 것 2021.01.24. 23:23 순으로 -->
+          {{forum.created_at}}
+          -----
+          <span>조회수 : {{forum.hits}} </span>
+          
+          -----
+          <span>코멘트수</span>
+          ---------
+          <span>추천수  {{forum.like_cnt}} </span>
 
+          </div>
+      </div>
       <div class="whiteboard" style="min-height:500px" >{{forum.content}}</div>
      
       <div class ="flex flex-col">
@@ -38,43 +37,31 @@
         <base-button @click="golist">목록</base-button>
         
       </div>
-      <div class="content-detail-comment">
+      <!-- <div class="content-detail-comment">
         <CommentList :contentId="contentId"></CommentList>
-      </div>
+      </div> -->
     
   </div>
 </template>
 
 <script>
-// import BaseButton from '../../components/ui/BaseButton.vue';
-// import data from "@/data";
-import CommentList from "./CommentList";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "BoardDetail",
-
-  
   data() {
-    // const contentId = Number(this.$route.params.contentId);
-    // const contentData = data.Content.filter(
-      // contentItem => contentItem.content_id === contentId
-    // )[0];
     return {
-    
       owner_check:localStorage.getItem('user_name'),
       forum:[],
       forumId:this.$route.params.contentId,
     };
   },
-
   created(){
-    // console.log(this.forum.forumId);
-    
     this.forum_Detail();
   },
   methods: {
     //삭제
     forum_Detail(){
+
         this.axios.get(`${SERVER_URL}/forum/${this.forumId}`, {
         headers: {
         'Access-Control-Allow-Origin': '*',
@@ -86,15 +73,25 @@ export default {
         // this.items=result;
         // console.log(result)
         this.forum = result.data
-        this.convert_time()
       })
       .catch(e=>{
         console.log('error:',e)
       })
+
+
     },
 
 
     deleteData() {
+      // const content_index = data.Content.findIndex(
+        // contentItem => contentItem.content_id === this.contentId
+      // );
+      // data.Content.splice(content_index, 1); // 데이터 삭제
+        // var repl=this.date.replace("-","");
+        // let params={
+        //   forum: this.forumId,
+          
+        // }
         const headers = {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
@@ -128,39 +125,10 @@ export default {
     //목록으로가기
     golist(){
       this.$router.go(-1)
-    },
-
-
-    //시간 포멧 수정
-    convert_time(){
-          var Y=String(this.forum.created_at).substring(0,4)
-          var M=String(this.forum.created_at).substring(4,6)
-          var D=String(this.forum.created_at).substring(6,8)
-
-          var H=String(this.forum.created_at).substring(8,10)
-          var Min=String(this.forum.created_at).substring(10,12)
-          var S=String(this.forum.created_at).substring(12,14)
-
-
-          //현재 월
-          let month = new Date().getMonth() + 1;  // 월
-          let date = new Date().getDate();  // 날짜
-          
-          if(month<'10'){
-            month='0'+month;
-          }
-          if(date<'10'){
-            date='0'+date;
-          }
-          var answer=""
-          answer=Y+"."+M+"."+D+"  "+H+":"+Min+":"+S;
-          this.forum.created_at=answer;
-      
-    },
-    
+    }
   },
   components: {
-    CommentList,
+    // CommentList,
     
   }
 };

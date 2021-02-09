@@ -2,8 +2,10 @@ import { createStore } from 'vuex';
 
 import authModule from './modules/auth/index.js';
 import recipeModule from './modules/recipes/index.js';
-import createPersistedState from "vuex-persistedstate";
 import boardModule from './modules/board/index.js';
+
+// import acountModule from './modules/account/index.js';
+import createPersistedState from "vuex-persistedstate";
 
 const store = createStore ({
     modules: {

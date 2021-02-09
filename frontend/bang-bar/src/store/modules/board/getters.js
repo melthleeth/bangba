@@ -5,6 +5,10 @@ export default {
   hasBoards(state) {
     return state.boards && state.boards.length > 0;
   },
+  getPageNum(state) {
+    return state.page_num;
+  },
+
   shouldUpdate(state) {
     const lastFetch = state.lastFetch;
     if (!lastFetch) return true;
