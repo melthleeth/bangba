@@ -243,6 +243,15 @@ export default {
     handleError() {
       this.error = null;
     },
+
+    gogo(){
+      
+      this.$router.push({
+        // path: `/board/modify/${this.forumId}`
+        path: `/board/list`
+      });
+    
+    },
   },
 };
 </script>

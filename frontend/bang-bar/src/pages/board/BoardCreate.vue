@@ -87,6 +87,10 @@ export default {
     test(){
       console.log(this.user_id);
     },
+
+    
+
+
     time_cal(){
         let today = new Date();   
 
@@ -101,6 +105,7 @@ export default {
         if(date<'10'){
           date='0'+date;
         }
+
         if(month<'10'){
           month='0'+month;
         }

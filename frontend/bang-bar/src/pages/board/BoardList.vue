@@ -134,12 +134,10 @@
 
 
 <script>
-// import PaginatedList from './PaginatedList.vue';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   components: { 
-    // PaginatedList,
   },
   
   name: "BoardList",
@@ -153,31 +151,10 @@ export default {
       keyword:"",
       search_type: "제목",
       pageSize:'',
-      fields: [
-        {
-          key: "category",
-          label: "카테고리"
-        },
-        {
-          key: "title",
-          label: "제목"
-        },
-        {
-          key: "user_name",
-          label: "글쓴이"
-        },
-        {
-          key: "created_at",
-          label: "작성일"
-        },
-        {
-          key: "hits",
-          label : "조회수"
-
-        }
-      ],
       items: [],
-      pageArray:this.items
+      pageArray:this.items,
+      time_conver:''
+      
     };
   },
 
@@ -212,7 +189,6 @@ export default {
       });
     },
 
-
     getList() {
         let params = {
           // 이부분을 현재페이지로 고치면됨.
@@ -221,7 +197,6 @@ export default {
           search_type:this.search_type,
           keyword:this.keyword,
         };
-
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
         this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
         headers: {
@@ -232,9 +207,12 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        console.log("디스페이지넘"+this.pageNum)
-        console.log(result)
+        // console.log("디스페이지넘"+this.pageNum)
+        // console.log(result)
+
         this.items = result.data
+        
+        this.convert_time();
       })
       .catch(e=>{
         console.log('error:',e)
@@ -251,13 +229,47 @@ export default {
       })
       .then((result)=>{
         // this.items=result;
-        console.log(result)
+        // console.log(result)
         this.pageSize=result.data
       })
       .catch(e=>{
         console.log('error:',e)
       })
     },
+
+    convert_time(){
+      for(var i=0;i<this.items.length;i++){
+          var Y=String(this.items[i].created_at).substring(0,4)
+          var M=String(this.items[i].created_at).substring(4,6)
+          var D=String(this.items[i].created_at).substring(6,8)
+
+          var H=String(this.items[i].created_at).substring(8,10)
+          var Min=String(this.items[i].created_at).substring(10,12)
+          var S=String(this.items[i].created_at).substring(12,14)
+
+
+          //현재 월
+          let month = new Date().getMonth() + 1;  // 월
+          let date = new Date().getDate();  // 날짜
+          
+          if(month<'10'){
+            month='0'+month;
+          }
+          if(date<'10'){
+            date='0'+date;
+          }
+          var answer=""
+          if(month===M && D===date){
+            answer=H+":"+Min+":"+S;  
+          }else{
+            answer=Y+"."+M+"."+D;
+          }
+          this.items[i].created_at=answer;
+      }
+    },
+    
+
+
 
     search_board(){
       this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
@@ -276,6 +288,8 @@ export default {
     },
 
   },
+
+
   computed: {
     
     rows() {
@@ -292,6 +306,8 @@ export default {
   },
 
 };
+
+
 </script>
 <style scoped>
     .board{

@@ -73,10 +73,7 @@ export default {
   },
   methods: {
     //삭제
-
-
     forum_Detail(){
-
         this.axios.get(`${SERVER_URL}/forum/${this.forumId}`, {
         headers: {
         'Access-Control-Allow-Origin': '*',
@@ -88,25 +85,15 @@ export default {
         // this.items=result;
         // console.log(result)
         this.forum = result.data
+        this.convert_time()
       })
       .catch(e=>{
         console.log('error:',e)
       })
-
-
     },
 
 
     deleteData() {
-      // const content_index = data.Content.findIndex(
-        // contentItem => contentItem.content_id === this.contentId
-      // );
-      // data.Content.splice(content_index, 1); // 데이터 삭제
-        // var repl=this.date.replace("-","");
-        // let params={
-        //   forum: this.forumId,
-          
-        // }
         const headers = {
           'Content-type': 'application/json; charset=UTF-8',
           'Accept': '*/*',
@@ -140,7 +127,36 @@ export default {
     //목록으로가기
     golist(){
       this.$router.go(-1)
-    }
+    },
+
+
+    //시간 포멧 수정
+    convert_time(){
+          var Y=String(this.forum.created_at).substring(0,4)
+          var M=String(this.forum.created_at).substring(4,6)
+          var D=String(this.forum.created_at).substring(6,8)
+
+          var H=String(this.forum.created_at).substring(8,10)
+          var Min=String(this.forum.created_at).substring(10,12)
+          var S=String(this.forum.created_at).substring(12,14)
+
+
+          //현재 월
+          let month = new Date().getMonth() + 1;  // 월
+          let date = new Date().getDate();  // 날짜
+          
+          if(month<'10'){
+            month='0'+month;
+          }
+          if(date<'10'){
+            date='0'+date;
+          }
+          var answer=""
+          answer=Y+"."+M+"."+D+"  "+H+":"+Min+":"+S;
+          this.forum.created_at=answer;
+      
+    },
+    
   },
   components: {
     // CommentList,
