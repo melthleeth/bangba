@@ -76,6 +76,7 @@
               @click="rowClick(item)"
               v-for="item in items"
               :key="item.no"
+              v-bind:pk_forum="item.pk_forum"
             >
               <td class="py-4 text-sm">{{ item.category }}</td>
               <td class="text-left font-semibold truncate">{{ item.title }}</td>
@@ -111,25 +112,6 @@
             </div>
         </div>
       </section>
-      <!-- 세진스표 페이지네이션 버튼 -->
-      <!-- <section class="font-sm flex justify-center items-center mt-2 mb-6">
-        <base-button
-          mode="outline"
-          :disabled="pageNum === 0"
-          @click="prevPage"
-        >
-          이전
-        </base-button>
-        <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
-
-        <base-button
-          mode="outline"
-          :disabled="pageNum >= page_total_cnt-1"
-          @click="nextPage"
-        >
-          다음
-        </base-button>
-      </section> -->
     </section>
   </div>
 </template>
@@ -215,10 +197,6 @@ export default {
         }, params
       })
       .then((result)=>{
-        // this.items=result;
-        // console.log("디스페이지넘"+this.pageNum)
-        // console.log(result)
-
         this.items = result.data
 
         this.convert_time();
@@ -276,23 +254,6 @@ export default {
           this.items[i].created_at=answer;
       }
     },
-
-    // get_end_page(){
-    //   this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
-    //     headers: {
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Content-Type': 'application/json; charset = utf-8',
-    //     "Access-Control-Allow-Headers": "*",
-    //     }
-    //   })
-    //   .then((result)=>{
-    //     this.items = result.data
-    //   })
-    //   .catch(e=>{
-    //     console.log('error:',e)
-    //   })
-    // },
-
   },
 
 
