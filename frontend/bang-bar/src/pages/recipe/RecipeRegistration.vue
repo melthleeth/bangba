@@ -19,7 +19,7 @@
             alt="cocktail image"
           />
           <input
-            class="w-1/3"
+            class="w-1/3 text-sm mt-2"
             type="text"
             id="imgsrc"
             placeholder="이미지 주소 입력"

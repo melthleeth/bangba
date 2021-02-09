@@ -220,7 +220,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		s = map.get("ingredient");
-		ss = s.split(",");
+		ss = s.split("<br>");
 		for (String a : ss) {
 			String[] sss = a.split("/");
 			int ipk = idao.searchIngredientPK(sss[1]);
