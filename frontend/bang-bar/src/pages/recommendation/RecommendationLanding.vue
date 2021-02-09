@@ -4,7 +4,7 @@
       <span class="font-bold mb-10">당신의 칵테일을 찾아보세요</span>
     </section>
     <section>
-      <base-button class="px-6 py-2" mode="outline"
+      <base-button class="px-6 py-2" mode="outline" link to="/recommendation/form"
         >내 취향대로 칵테일 추천받으러 가기</base-button
       >
     </section>

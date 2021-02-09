@@ -13,24 +13,27 @@ import MyPosts from "./pages/users/MyPosts.vue";
 import ActivityLog from "./pages/users/ActivityLog.vue";
 import FollowingFollowers from "./pages/users/FollowingFollowers.vue";
 
-// header menus
-import SearchRecipe from "./pages/search/SearchRecipe.vue";
-import RecommendationLanding from "./pages/recommendation/RecommendationLanding.vue";
-import OfficialRecipe from "./pages/recipe/OfficialRecipe.vue";
-import CustomRecipe from "./pages/recipe/CustomRecipe.vue";
-import BoardList from "./pages/board/BoardList.vue";
-
-// footer menus
+// footer
 import BangbaGuide from "./pages/footers/BangbaGuide.vue";
 import BangbaPeople from "./pages/footers/BangbaPeople.vue";
 import BangbaAsk from "./pages/footers/BangbaAsk.vue";
 
-// board menus
+// board
+import BoardList from "./pages/board/BoardList.vue";
 import BoardCreate from "@/pages/board/BoardCreate";
 import BoardDetail from "@/pages/board/BoardDetail";
+
 // recipe
+import SearchRecipe from "./pages/search/SearchRecipe.vue";
+import OfficialRecipe from "./pages/recipe/OfficialRecipe.vue";
+import CustomRecipe from "./pages/recipe/CustomRecipe.vue";
 import RecipeRegistration from "./pages/recipe/RecipeRegistration.vue";
 import RecipeDetail from "./pages/recipe/RecipeDetail.vue";
+
+// recommendation
+import RecommendationLanding from "./pages/recommendation/RecommendationLanding.vue";
+import Recommendation from "./pages/recommendation/Recommendation.vue";
+import RecommendationResult from "./pages/recommendation/RecommendationResult.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -44,6 +47,9 @@ const router = createRouter({
     // header
     { path: "/search", component: SearchRecipe },
     { path: "/recommendation", component: RecommendationLanding },
+    { path: "/recommendation/form", component: Recommendation },
+    { path: "/recommendation/result", component: RecommendationResult },
+
     { path: "/recipe/official", component: OfficialRecipe },
     { path: "/recipe/custom", component: CustomRecipe },
     { path: "/board", component: BoardList },
@@ -78,8 +84,11 @@ const router = createRouter({
       component: RecipeRegistration,
     },
 
-    { path: "/recipe/detail/:pk_article", props: true, component: RecipeDetail },
-
+    {
+      path: "/recipe/detail/:pk_article",
+      props: true,
+      component: RecipeDetail,
+    },
   ],
 });
 

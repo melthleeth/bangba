@@ -345,6 +345,12 @@ export default {
         return;
       }
 
+       if (this.alcoholTemp.includes(this.ingredient)) {
+          alert(`이미 등록된 ${this.type}입니다.`);
+          return;
+        }
+
+
       const tempItem = `${this.ingredient} ${this.quantity}${this.unit}`;
 
       if (this.type === "주류") {
