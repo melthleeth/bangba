@@ -356,5 +356,67 @@ public class ArticleController {
 		}
 		return null;
 	}
-
+	
+	@ApiOperation(value = "레시피 좋아요", response = String.class)
+	@PutMapping("/like")
+	public String clickLike(@RequestBody Map<String, String> map) {
+		try {
+			System.out.println(map.toString());
+			if(map.get("isclick").equals("on")) {
+				articleService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+			} else {
+				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.downLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+			}
+			return "success";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	@ApiOperation(value = "레시피 북마크", response = String.class)
+	@PutMapping("/bookmark")
+	public String clickBookmark(@RequestBody Map<String, String> map) {
+		try {
+			if(map.get("isclick").equals("on")) {
+				articleService.insertBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.upBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+			} else {
+				articleService.deleteBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.downBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+			}
+			return "success";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	@ApiOperation(value = "좋아요 여부")
+	@PostMapping("/is-like")
+	public int isLike(@RequestBody Map<String, String> map) {
+		try {
+			return articleService.isLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	@ApiOperation(value = "북마크 여부")
+	@PostMapping("/is-bmark")
+	public int isBmark(@RequestBody Map<String, String> map) {
+		try {
+			return articleService.isBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

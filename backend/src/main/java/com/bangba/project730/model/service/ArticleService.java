@@ -44,5 +44,18 @@ public interface ArticleService {
 	public Map<String,String> searchComment(int pk_article)throws Exception;
 	public String updateComment(Map<String, String> map)throws Exception;
 	public String deleteComment(int pk_acomment)throws Exception;
-
+	
+	// 좋아요, 북마크 
+	public void insertLike(int user_no, int article_no) throws Exception;
+	public void deleteLike(int user_no, int article_no) throws Exception;
+	public void insertBmark(int user_no, int article_no) throws Exception;
+	public void deleteBmark(int user_no, int article_no) throws Exception;
+	
+	public void upLike(int user_no, int article_no) throws Exception;
+	public void downLike(int user_no, int article_no) throws Exception;
+	public void upBmark(int user_no, int article_no) throws Exception;
+	public void downBmark(int user_no, int article_no) throws Exception;
+	
+	public int isLike(int user_no, int article_no) throws Exception;
+	public int isBmark(int user_no, int article_no) throws Exception;
 }
