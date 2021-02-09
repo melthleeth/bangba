@@ -1,32 +1,32 @@
 <template>
-    <button v-if="!link" :class="mode">
-        <slot></slot>
-    </button>
-    <router-link v-else :to="to" :class="mode">
-        <slot></slot>
-    </router-link>
+  <button v-if="!link" :class="mode">
+    <slot></slot>
+  </button>
+  <router-link v-else :to="to" :class="mode">
+    <slot></slot>
+  </router-link>
 </template>
 
 <script>
 export default {
-    props: {
-        mode: {
-            type: String,
-            required: false,
-            default: null
-        },
-        link: {
-            type: Boolean,
-            required: false,
-            default: false,
-        },
-        to: {
-            type: String,
-            required: false,
-            default: '/'
-        }
-    }
-}
+  props: {
+    mode: {
+      type: String,
+      required: false,
+      default: null,
+    },
+    link: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    to: {
+      type: String,
+      required: false,
+      default: "/",
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -35,21 +35,21 @@ a {
   text-decoration: none;
   /* padding: 0.75rem 1.5rem; */
   /* font: inherit; */
-  background-color: #00002F;
-  border: 1px solid #00002F;
+  background-color: #00002f;
+  border: 1px solid #00002f;
   color: white;
   cursor: pointer;
   border-radius: 30px;
   margin-right: 0.5rem;
   display: inline-block;
-  transition: .3s ease-out;
+  transition: 0.3s ease-out;
 }
 
 a:hover,
 a:active,
 button:hover,
 button:active {
-    color: #FF5E46;
+  color: #ff5e46;
 }
 
 .flat {
@@ -60,8 +60,8 @@ button:active {
 
 .outline {
   background-color: transparent;
-  border: 3px solid #00002F;
-  color: #00002F;
+  border: 3px solid #00002f;
+  color: #00002f;
 }
 
 .redbutton:hover,
@@ -69,24 +69,34 @@ button:active {
 .flat:active,
 .outline:hover,
 .outline:active {
-    color: white;
-  background-color: #00002F;
+  color: white;
+  background-color: #00002f;
 }
 
- /* SJ의 추가 css */
-.redbutton{
-    background-color: #FF5E46;
-    border: 1px solid #FFFFFF;
+/* SJ의 추가 css */
+.redbutton {
+  background-color: #ff5e46;
+  border: 1px solid #ffffff;
 }
 
 .important {
-    background-color: #FF5E46;
-    border: 1px solid #FFFFFF;
+  background-color: #ff5e46;
+  border: 1px solid #ffffff;
 }
 
 .important:hover {
-    color: #00002F;
-    background-color: #FF5E46;
+  color: #00002f;
+  background-color: #ff5e46;
 }
 
+.nude {
+  color: #00002f;
+  background-color: transparent;
+  border: 1px solid transparent;
+}
+
+.nude:hover {
+  color: white;
+  background-color: #00002f;
+}
 </style>

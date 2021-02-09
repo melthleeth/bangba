@@ -18,8 +18,8 @@
   </div>
     <CommentCreate :contentId="contentId" :reloadComment="reloadComment"/>
   </div>
-  <button @click="test()">gggg
-  </button>
+  <base-button class="w-max px-4 py-1" mode="nude" @click="test()">테스트용으로 만들어 놓은 것 같은 버튼
+  </base-button>
 </template>
 
 <script>
