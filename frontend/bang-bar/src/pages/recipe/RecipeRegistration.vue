@@ -354,7 +354,7 @@ export default {
         return false;
         });
 
-       if (isAlcoholDuplicated || isIngredientDuplicated) {
+       if (!isAlcoholDuplicated || !isIngredientDuplicated) {
           alert("이미 등록된 재료입니다.");
           return;
         }
