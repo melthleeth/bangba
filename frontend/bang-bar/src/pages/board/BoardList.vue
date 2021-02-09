@@ -4,28 +4,25 @@
       class="text-center my-10 text-6xl font-S-CoreDream-medium font-bold font-color-black-400"
       >게시판</span
     >
+
     <section id="search-bar" class="flex flex-row mb-6 px-16 font-S-CoreDream-light">
       <article class="flex justify-center justify-self-start">
         <base-button mode="important" @click="writeContent" >글쓰기</base-button>
       </article>
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
-
-<!-- 제목검색으로 변경 -->
-
-         <div class="inline-block relative w-max">
-          <select
+        <!-- 말머리 선택 드롭다운 -->
+        <div class="inline-block relative w-max">
+          <select v-model="search_type"
             class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
-            <option>전체</option>
             <option>제목</option>
             <option>내용</option>
-            <option>작성자</option>
           </select>
           <div
             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
           >
-           <svg
+            <svg
               class="fill-current h-4 w-4"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -36,6 +33,7 @@
             </svg>
           </div>
         </div> 
+        <!-- 검색창 제목과 내용으로-->
         <div class="mx-4 flex-auto inline-block">
           <input
             class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
@@ -43,19 +41,21 @@
             type="text"
             placeholder="검색"
             v-model="keyword"
-            @keydown.enter="search_board()"
+            @keydown.enter="getList()"
           />
         </div>
-        <base-button @click="search_board()">검색</base-button>
+        <base-button @click="getList()">검색</base-button>
       </article>
     </section>
+
     <!-- <paginated-list :list-array="items" :pageSize="pageSize" @pageNum="pageNum"/> -->
-     <section>
-        <div class="font-S-CoreDream-light flex flex-col justify-items-center">
-          <section class="mt-4 mx-32">
-            <table
-              class="corner w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 font-color-black-400"
-            >
+    <!-- 본문 내용 -->
+    <section class="font-S-CoreDream-light flex flex-col justify-items-center">
+      <!-- 게시판 테이블 -->
+      <section class="mt-4 mx-32">
+        <table
+          class="corner w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 font-color-black-400 table-fixed"
+        >
         <thead role="rowgroup" class="border-none py-4">
           <tr role="row" class="font-S-CoreDream-light font-bold text-lg">
             <th class="py-4 px-3">말머리</th>
@@ -73,38 +73,62 @@
             :key="item.no"
           >
             <td class="py-4 text-sm">{{ item.category }}</td>
-            <td class="text-left font-semibold">{{ item.title }}</td>
-            <td class="">{{ item.user_name }}</td>
+            <td class="text-left font-semibold truncate">{{ item.title }}</td>
+            <td class="truncate">{{ item.user_name }}</td>
             <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
             <td class="text-sm">{{ item.hits }}</td>
           </tr>
-          </tbody>
-      </table>
-    </section>
-    <section class="font-sm flex justify-center items-center mt-2 mb-6">
-      <base-button
-        mode="outline"
-        :disabled="pageNum === 0"
-        @click="prevPage"
-      >
-        이전
-      </base-button>
+        </tbody>
+        </table>
+      </section>
+      <!-- 페이지네이션바 -->
+      <section>
+        <div class="flex flex-col items-center my-12">
+            <div class="flex text-gray-700">
+                <div class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-4 h-4">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </div>
+                <div class="flex h-8 font-medium ">
+                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">1</div>
+                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">2</div>
+                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">3</div>
+                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">4</div>
+                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">5</div>
+                </div>
+                <div class="h-8 w-8 ml-1 flex justify-center items-center  cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-4 h-4">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </div>
+            </div>
+        </div>
+      </section>
+      <!-- 세진스표 페이지네이션 버튼 -->
+      <section class="font-sm flex justify-center items-center mt-2 mb-6">
+        <base-button
+          mode="outline"
+          :disabled="pageNum === 0"
+          @click="prevPage"
+        >
+          이전
+        </base-button>
 
-      <!-- 버튼  -->
-      
-      
-      <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
+        <!-- 버튼  -->
+        
+        
+        <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
 
-      <base-button
-        mode="outline"
-        :disabled="pageNum >= (Math.ceil(pageSize/10))-1"
-        @click="nextPage"
-      >
-        다음
-      </base-button>
+        <base-button
+          mode="outline"
+          :disabled="pageNum >= (Math.ceil(pageSize/10))-1"
+          @click="nextPage"
+        >
+          다음
+        </base-button>
+      </section>
     </section>
-  </div>
-     </section>
   </div>
 </template>
 
@@ -127,6 +151,7 @@ export default {
       pk_forum:'',
       pageNum: 0,
       keyword:"",
+      search_type: "제목",
       pageSize:'',
       fields: [
         {
@@ -189,13 +214,12 @@ export default {
 
 
     getList() {
-
         let params = {
           // 이부분을 현재페이지로 고치면됨.
           page_num :this.pageNum+1,
           page_range:1,
-          search_type:'',
-          keyword:'',
+          search_type:this.search_type,
+          keyword:this.keyword,
         };
 
         // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
@@ -249,7 +273,8 @@ export default {
       .catch(e=>{
         console.log('error:',e)
       })
-    }
+    },
+
   },
   computed: {
     
@@ -260,7 +285,6 @@ export default {
   created() {
     this.pageArray=this.items;
     this.writemode=localStorage.getItem("pk_user");
-
   },
   mounted() {
       this.getList()
