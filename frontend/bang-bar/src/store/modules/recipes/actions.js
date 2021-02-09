@@ -58,12 +58,7 @@ export default {
     console.log("responseData");
     console.log(responseData);
 
-<<<<<<< HEAD
     if (responseData === "error") {
-=======
-    //실패했을 때
-    if (!response.ok) {
->>>>>>> board
       // ...
     }
     alert("등록이 완료되었습니다.");
