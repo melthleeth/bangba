@@ -78,7 +78,7 @@ public class ArticleServiceImpl implements ArticleService {
 		int pk = dao.searchArticlePK(dto);
 
 		String s = map.get("alcohol");
-		String[] ss = s.split(",");
+		String[] ss = s.split("<br>");
 		for (String a : ss) {
 			String[] sss = a.split("/");
 			int apk = adao.searchAlcoholPK(sss[0]);
@@ -91,7 +91,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		s = map.get("ingredient");
-		ss = s.split(",");
+		ss = s.split("<br>");
 		for (String a : ss) {
 			String[] sss = a.split("/");
 			int ipk = idao.searchIngredientPK(sss[1]);

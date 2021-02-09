@@ -26,6 +26,7 @@ import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.AtoA;
 import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.IngredientDto;
+import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.service.ArticleService;
 import com.bangba.project730.model.service.UserService;

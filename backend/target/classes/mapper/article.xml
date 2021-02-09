@@ -138,7 +138,7 @@
 		delete from recipe
 		where article_no = #{pk_article}
 	</delete>
-
+	
 	<select id="getAlcohol" parameterType="Integer" resultType="AtoA">
 		select c.name_kor, a.quantity, a.unit
 		from alcohol as c
@@ -163,7 +163,7 @@
 						 from article_tag
 		                 where article_no = #{pk_article});
 	</select>
-	
+
 	<insert id="createComment" parameterType="AcommentDto">
 		insert into acomment (article_no, user_no, content)
 		values (#{article_no}, #{user_no}, #{content})	
