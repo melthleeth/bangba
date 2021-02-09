@@ -110,6 +110,7 @@ public class ArticleServiceImpl implements ArticleService {
 		s = map.get("tag");
 		ss = s.split("<br>");
 		for (String a : ss) {
+			System.out.println("tag: " + a);
 			int tpk = tdao.searchTagPK(a);
 			dao.addArticleTag(pk, tpk);
 		}

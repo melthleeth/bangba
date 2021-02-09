@@ -304,7 +304,9 @@ public class ArticleController {
 					temp += "<br>";
 					sb.append(recipe.getContent()).append("<br>");
 				}
-				temp = temp.substring(0, temp.length() - 4);
+//				System.out.println("레시피: " + temp);
+				if (temp.length() > 0)
+					temp = temp.substring(0, temp.length() - 4);
 				tdto.setRecipe(temp);
 				List<TagDto> tags = articleService.getTag(a.getPk_article());
 				temp = "";
@@ -312,6 +314,8 @@ public class ArticleController {
 					temp += tag.getContent_kor();
 					temp += "<br>";
 				}
+//				System.out.println("태그: " + temp);
+				if (temp.length() > 0)
 				temp = temp.substring(0, temp.length() - 4);
 				tdto.setTag(temp);
 				// 어려운거 
@@ -325,6 +329,8 @@ public class ArticleController {
 					temp += alcohol.getUnit();
 					temp += "<br>";
 				}
+//				System.out.println("주류: " + temp);
+				if (temp.length() > 0)
 				temp = temp.substring(0, temp.length() - 4);
 				tdto.setAlcohol(temp);
 				temp = "";
@@ -337,6 +343,8 @@ public class ArticleController {
 					temp += ingredient.getUnit();
 					temp += "<br>";
 				}
+//				System.out.println("재료/가니쉬: " + temp);
+				if (temp.length() > 0)
 				temp = temp.substring(0, temp.length() - 4);
 				tdto.setIngredient(temp);
 				
