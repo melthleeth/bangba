@@ -9,6 +9,12 @@
       <article class="flex justify-center justify-self-start">
         <base-button mode="important" @click="writeContent" >글쓰기</base-button>
       </article>
+      <!-- 후기/질문 탭용 버튼 -->
+      <article>
+        <button class="mx-3">후기</button>
+        <button>질문</button>
+      </article>
+
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
         <!-- 말머리 선택 드롭다운 -->
@@ -48,7 +54,7 @@
       </article>
     </section>
 
-    <!-- <paginated-list :list-array="items" :pageSize="pageSize" @pageNum="pageNum"/> -->
+    <!-- <paginated-list :list-array="items" :page_total_cnt="page_total_cnt" @pageNum="pageNum"/> -->
     <!-- 본문 내용 -->
     <section class="font-S-CoreDream-light flex flex-col justify-items-center">
       <!-- 게시판 테이블 -->
@@ -56,52 +62,53 @@
         <table
           class="corner w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 font-color-black-400 table-fixed"
         >
-        <thead role="rowgroup" class="border-none py-4">
-          <tr role="row" class="font-S-CoreDream-light font-bold text-lg">
-            <th class="py-4 px-3">말머리</th>
-            <th class="w-3/7">제목</th>
-            <th class="w-1/7">작성자</th>
-            <th class="w-1/7">작성일</th>
-            <th class="w-1/7">조회수</th>
-          </tr>
-        </thead>
-        <tbody class="text-center">
-          <tr
-            class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 hover:bg-gray-100 hover:font-medium cursor-pointer text-base"
-            @click="rowClick(item)"
-            v-for="item in items"
-            :key="item.no"
-          >
-            <td class="py-4 text-sm">{{ item.category }}</td>
-            <td class="text-left font-semibold truncate">{{ item.title }}</td>
-            <td class="truncate">{{ item.user_name }}</td>
-            <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
-            <td class="text-sm">{{ item.hits }}</td>
-          </tr>
-        </tbody>
+          <thead role="rowgroup" class="border-none py-4">
+            <tr role="row" class="font-S-CoreDream-light font-bold text-lg">
+              <th class="py-4 px-3">말머리</th>
+              <th class="w-3/7">제목</th>
+              <th class="w-1/7">작성자</th>
+              <th class="w-1/7">작성일</th>
+              <th class="w-1/7">조회수</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr
+              class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 hover:bg-gray-100 hover:font-medium cursor-pointer text-base"
+              @click="rowClick(item)"
+              v-for="item in items"
+              :key="item.no"
+            >
+              <td class="py-4 text-sm">{{ item.category }}</td>
+              <td class="text-left font-semibold truncate">{{ item.title }}</td>
+              <td class="truncate">{{ item.user_name }}</td>
+              <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
+              <td class="text-sm">{{ item.hits }}</td>
+            </tr>
+          </tbody>
         </table>
       </section>
       <!-- 페이지네이션바 -->
       <section>
         <div class="flex flex-col items-center my-12">
             <div class="flex text-gray-700">
-                <div class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer">
+                <button class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-4 h-4">
                         <polyline points="15 18 9 12 15 6"></polyline>
                     </svg>
-                </div>
-                <div class="flex h-8 font-medium ">
-                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">1</div>
-                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">2</div>
-                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">3</div>
-                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">4</div>
-                    <div class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent">5</div>
-                </div>
-                <div class="h-8 w-8 ml-1 flex justify-center items-center  cursor-pointer">
+                </button>
+                <ul class="flex h-8 font-medium ">
+                  <li
+                    class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent" 
+                    v-for="pageNum in page_total_cnt" 
+                    :key="pageNum"
+                    @click="check()"
+                  >{{pageNum}}</li>
+                </ul>
+                <button class="h-8 w-8 ml-1 flex justify-center items-center  cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-4 h-4">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
-                </div>
+                </button>
             </div>
         </div>
       </section>
@@ -118,11 +125,11 @@
         <!-- 버튼  -->
         
         
-        <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
+        <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ page_total_cnt }}</span>
 
         <base-button
           mode="outline"
-          :disabled="pageNum >= (Math.ceil(pageSize/10))-1"
+          :disabled="pageNum >= page_total_cnt-1"
           @click="nextPage"
         >
           다음
@@ -144,16 +151,17 @@ export default {
   data() {
     
     return {
-      
       writemode:null,
       pk_forum:'',
       pageNum: 0,
       keyword:"",
       search_type: "제목",
-      pageSize:'',
+      page_total_cnt:'',
       items: [],
       pageArray:this.items,
-      time_conver:''
+      time_conver:'',
+      forum_cnt_per_page: 10, //한 페이지당 보여질 게시글 수
+      range_cnt: 5, //한 페이지에 보여지는 범위의 수
       
     };
   },
@@ -176,6 +184,10 @@ export default {
     prevPage () {
       this.pageNum -= 1;
       this.getList();
+    },
+
+    check () {
+      console.log("pageNum", this.pageNum)
     },
 
     fnView(){
@@ -230,7 +242,7 @@ export default {
       .then((result)=>{
         // this.items=result;
         // console.log(result)
-        this.pageSize=result.data
+        this.page_total_cnt= Math.ceil(result.data/this.forum_cnt_per_page)
       })
       .catch(e=>{
         console.log('error:',e)
@@ -268,24 +280,21 @@ export default {
       }
     },
     
-
-
-
-    search_board(){
-      this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8',
-        "Access-Control-Allow-Headers": "*",
-        }
-      })
-      .then((result)=>{
-        this.items = result.data
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
-    },
+    // get_end_page(){
+    //   this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
+    //     headers: {
+    //     'Access-Control-Allow-Origin': '*',
+    //     'Content-Type': 'application/json; charset = utf-8',
+    //     "Access-Control-Allow-Headers": "*",
+    //     }
+    //   })
+    //   .then((result)=>{
+    //     this.items = result.data
+    //   })
+    //   .catch(e=>{
+    //     console.log('error:',e)
+    //   })
+    // },
 
   },
 
