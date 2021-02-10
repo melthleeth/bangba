@@ -351,10 +351,15 @@ export default {
   created() {
     this.pageArray = this.items;
     this.writemode = localStorage.getItem('pk_user');
+    this.getList();
+    this.get_length();
   },
   mounted() {
     this.getList();
     this.get_length();
+  },
+  update(){
+    console.log("!")
   },
 };
 </script>

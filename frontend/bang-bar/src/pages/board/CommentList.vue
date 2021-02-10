@@ -1,7 +1,7 @@
 <template>
   <div>
     <div :key="item.comment_id" v-for="item in comments" class="flex" >
-      <section class="card-flat flex flex-col flex-initial h-full w-full">
+      <section class="card-flat flex flex-col flex-initial h-full w-full" v-if="item.pk_fcomment!==this.return_num || modify_flag">
         <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}
           <span class="flex items-center font-color-black-200 text-sm">{{convert_time(item.created_at)}}</span>
           </span>
@@ -10,16 +10,33 @@
 
             </div>
             <div class="comment-list-item-context">{{item.content}}</div>
-            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto" v-if="item.user_name===this.loginName">
-
-              
-            <button variant="info" @click="modifyComment(item.pk_fcomment)">수정</button>
+            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto" v-if="item.user_name===this.loginName" >
+  
+            <button variant="info" @click="check_modifyComment(item.pk_fcomment,item.content)">수정</button>
             <button variant="info" @click="deleteComment(item.pk_fcomment)">삭제</button>
             
           </div>
         </div>
-
+        
     </section>
+      <div class="card-flat flex flex-col flex-initial h-full w-full" v-else>
+        <section class="card-flat flex flex-col flex-initial h-full w-full">
+          <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}</span>
+          <textarea
+            class="w-full mb-2"
+            v-model="content"
+            @keypress.enter="modifyComment()"
+          >
+
+          </textarea>
+            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto"  >
+  
+            <button variant="info" @click="modifyComment(item.pk_fcomment,this.content)">수정</button>
+            <button variant="info" @click="this.return_num=-1, modify_flag=true">취소</button>
+            
+          </div>
+      </section>
+    </div>
   </div>
 
     <CommentCreate :forum_id="forum_id" v-on:addComment="addComment"/>
@@ -27,7 +44,6 @@
 </template>
 
 <script>
-
 import CommentCreate from "./CommentCreate";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
@@ -41,7 +57,10 @@ export default {
       pk_num:'',
       loginName:localStorage.getItem("user_name"),
       myComment:false,
-      modify_flag:''
+      modify_flag:true,
+      return_num:'',
+      content:'',
+      
     };
   },
 
@@ -149,10 +168,39 @@ export default {
           console.log("error:", e);
         });
     },
-    modifyComment(pk_fcomment){
-      console.log(pk_fcomment);
+    check_modifyComment(pk_fcomment,content){    
+      this.modify_flag=false;  
+      this.return_num=pk_fcomment;
+      this.pk_num=pk_fcomment
+      this.content=content;
+      // this.content=this.
+    },
+    modifyComment(pk_fcomment,content) {
+      // 수정
+      let params = {
+        pk_fcomment: pk_fcomment,
+        content: content,
+      };
+      const headers = {
+        "Content-type": "application/json; charset=UTF-8",
+        Accept: "*/*",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      };
 
-
+      this.axios
+        .put(`${SERVER_URL}/forum/comment/update-comment`, JSON.stringify(params), {
+          headers,
+        })
+        .then((result) => {
+          console.log(result);
+          this.return_num=this.pk_num
+          this.modify_flag=true;
+          this.getList_Comment()
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
     },
   },
 
