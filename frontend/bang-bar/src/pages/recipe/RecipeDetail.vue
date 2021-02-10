@@ -15,6 +15,7 @@
       <article class="flex text-center">
         <base-card
           class="flex-1 flex flex-col justify-items-center items-center transition duration-200 ease-in-out transform hover:scale-105"
+          @click="clickLikeBtn"
         >
           <img
             src="../../assets/icon/like@2x.png"
@@ -25,7 +26,7 @@
         </base-card>
         <base-card
           class="flex-1 flex flex-col justify-items-center items-center transition duration-200 ease-in-out transform hover:scale-105"
-          @click="clickLike"
+          @click="clickBmarkBtn"
         >
           <img
             src="../../assets/icon/bookmark@2x.png"
@@ -89,7 +90,25 @@ export default {
   data() {
     return {
       selectedRecipe: null,
+      likeBtn : false,
+      bmarkBtn : false,
+      like_cnt : 0,
+      bookmark_cnt : 0
     };
+  },
+  watch :{
+    setLikeBtn: function(newVal) {
+      this.likeBtn = newVal;
+    },
+    setBmarkBtn: function(newVal) {
+      this.bmarkBtn = newVal;
+    },
+    set_like_cnt: function(newVal) {
+      this.like_cnt = newVal;
+    }, 
+    set_bookmark_cnt: function(newVal) {
+      this.bookmark_cnt = newVal;
+    }
   },
   computed: {
     title_kor() {
@@ -98,11 +117,11 @@ export default {
     imgsrc() {
       return this.selectedRecipe.img_path;
     },
-    like_cnt() {
-      return this.selectedRecipe.like_cnt;
+    set_like_cnt() {
+      return this.$store.getters["likes/likeCnt"];
     },
-    bookmark_cnt() {
-      return this.selectedRecipe.bookmark_cnt;
+    set_bookmark_cnt() {
+      return this.$store.getters["likes/bmarkCnt"];
     },
     content() {
       return this.selectedRecipe.content;
@@ -133,12 +152,71 @@ export default {
     recipes() {
       return this.selectedRecipe.recipe.split("<br>");
     },
+    setLikeBtn() {
+      return this.$store.getters["likes/likeBtn"];
+    }, 
+    setBmarkBtn() {
+      return this.$store.getters["likes/bmarkBtn"];
+    }
   },
   created() {
     this.selectedRecipe = this.$store.getters["recipes/recipes"].find(
       (recipe) => recipe.pk_article.toString() === this.pk_article
     );
+    this.test();
   },
+  methods: {
+    test(){
+      this.isLike();
+      this.isBmark();
+      this.likeBtn = this.$store.getters["likes/likeBtn"];
+      this.bmarkBtn = this.$store.getters["likes/bmarkBtn"];
+      this.like_cnt = this.$store.getters["likes/likeCnt"];
+      this.bookmark_cnt = this.$store.getters["likes/bmarkCnt"];
+    },
+    async isLike() {
+      const btnInfo = {
+        isLike : true, 
+        article_no : this.pk_article,
+        like_cnt : this.selectedRecipe.like_cnt
+      };
+      await this.$store.dispatch("likes/isClick", btnInfo);
+    }, 
+    async isBmark() {
+      const btnInfo = {
+        isLike : false,
+        article_no : this.pk_article,
+        bookmark_cnt : this.selectedRecipe.bookmark_cnt
+      };
+      await this.$store.dispatch("likes/isClick", btnInfo);
+    }, 
+    async clickLikeBtn() {
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+        return;
+      }
+      const btnInfo = {
+        isLike : true,
+        article_no : this.pk_article,
+        isclick : this.likeBtn == false ? "off" : "on",
+        like_cnt : this.like_cnt
+      };
+      await this.$store.dispatch("likes/clickBtn", btnInfo);
+    }, 
+    async clickBmarkBtn() {
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+        return;
+      }
+       const btnInfo = {
+        isLike : false,
+        article_no : this.pk_article,
+        isclick : this.bmarkBtn == false ? "off" : "on",
+        bookmark_cnt : this.bookmark_cnt
+      };
+      await this.$store.dispatch("likes/clickBtn", btnInfo);
+    } 
+  }
 };
 </script>
 
