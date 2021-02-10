@@ -6,11 +6,7 @@
       </section>
 
       <section class="mx-10 mt-10 col-span-2">
-        <router-view v-slot="slotProps">
-          <transition name="route" mode="out-in">
-            <component :is="slotProps.Component"></component>
-          </transition>
-        </router-view>
+        <router-view></router-view>
       </section>
     </div>
   </div>

@@ -56,17 +56,7 @@ const router = createRouter({
     { path: "/recipe/official", component: OfficialRecipe },
     { path: "/recipe/custom", component: CustomRecipe },
     { path: "/board", component: BoardList },
-    // header-dropdown
-    { path: "/header/editprofile", component: EditProfile },
-    { path: "/header/bookmarkedrecipe", component: BookmarkedRecipe },
-    { path: "/header/myposts", component: MyPosts },
-    { path: "/header/activitylog", component: ActivityLog },
-    { path: "/header/followingfollowers", component: FollowingFollowers },
-    { path: "/header/withdraw", component: WithDraw },
-    
-    { path: "/header/mypageonlyme", component: MyPageOnlyMe },
-    { path: "/mypageother", component: MyPageOther },
-    
+
     // footer
     { path: "/footer/guide", component: BangbaGuide },
     { path: "/footer/people", component: BangbaPeople },
@@ -97,6 +87,44 @@ const router = createRouter({
       props: true,
       component: RecipeDetail,
     },
+    
+    // header-dropdown-mypage
+    {
+      path: "/header",
+      component: MyPageOnlyMe,
+      name: "MyPageOnlyMe",
+      children: [
+        {
+          path: "bookmarkedrecipe",
+          component: BookmarkedRecipe,
+          name: "BookmarkedRecipe"
+        },
+        {
+          path: "editprofile",
+          component: EditProfile,
+          name: "EditProfile"
+        },
+        {
+          path: "myposts",
+          component: MyPosts
+        },
+        {
+          path: "activitylog",
+          component: ActivityLog
+        },
+        {
+          path: "followingfollowers",
+          component: FollowingFollowers
+        },
+        {
+          path: "withdraw",
+          component: WithDraw
+        },
+      ]
+    },
+
+    // mypage-other
+    { path: "/mypageother", component: MyPageOther },
   ],
 });
 
