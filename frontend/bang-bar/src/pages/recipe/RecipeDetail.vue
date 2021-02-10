@@ -25,6 +25,7 @@
         </base-card>
         <base-card
           class="flex-1 flex flex-col justify-items-center items-center transition duration-200 ease-in-out transform hover:scale-105"
+          @click="clickLike"
         >
           <img
             src="../../assets/icon/bookmark@2x.png"
