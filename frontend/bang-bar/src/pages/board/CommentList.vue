@@ -21,13 +21,6 @@
   </div>
 
     <CommentCreate />
-    <div :key="comment.pk_fcomment" v-for="comment in comments">
-      <comment-list-item :comments="comment"></comment-list-item>
-    </div>
-    <comment-create :contentId="contentId" :reloadComment="reloadComment" />
-    <base-button class="w-max px-4 py-1" mode="nude" @click="test()"
-      >테스트용으로 만들어 놓은 것 같은 버튼
-    </base-button>
   </div>
 </template>
 
@@ -60,28 +53,28 @@ export default {
       var answer=link.split('/');
       console.log(answer[5]);
     },
-    loadComments() {
-      const pk_forum = 74;
-      let responseData = [];
-      // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-      this.axios
-        .post(`${SERVER_URL}/forum/comment/keyword`, pk_forum, {
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-            Accept: "*/*",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "*",
-          },
-        })
-        .then((result) => {
-          // this.items = result.dataF
-          responseData = result.data;
-          console.log(responseData);
-        })
-        .catch((e) => {
-          console.log("error:", e);
-        });
-
+    // loadComments() {
+    //   const pk_forum = 74;
+    //   let responseData = [];
+    //   // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
+    //   this.axios
+    //     .post(`${SERVER_URL}/forum/comment/keyword`, pk_forum, {
+    //       headers: {
+    //         "Content-Type": "application/json; charset=utf-8",
+    //         Accept: "*/*",
+    //         "Access-Control-Allow-Origin": "*",
+    //         "Access-Control-Allow-Headers": "*",
+    //       },
+    //     })
+    //     .then((result) => {
+    //       // this.items = result.dataF
+    //       responseData = result.data;
+    //       console.log(responseData);
+    //     })
+    //     .catch((e) => {
+    //       console.log("error:", e);
+    //     });
+    // },
     getList_Comment(){
 
         //주소입력을 위함
