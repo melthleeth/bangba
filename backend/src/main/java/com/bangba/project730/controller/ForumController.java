@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bangba.project730.model.dto.FFcommentDto;
 import com.bangba.project730.model.dto.ForumDto;
 import com.bangba.project730.model.dto.SearchForumDto;
 import com.bangba.project730.model.service.ForumService;
@@ -127,7 +128,7 @@ public class ForumController {
 
 	@ApiOperation(value = "댓글 검색", response = String.class)
 	@PostMapping("/comment/keyword")
-	public Map<String,String> searchComment(@RequestBody int pk_forum , Model model) throws Exception {
+	public List<FFcommentDto> searchComment(@RequestBody int pk_forum , Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "댓글 검색 완료");
 			return forumService.searchComment(pk_forum);
