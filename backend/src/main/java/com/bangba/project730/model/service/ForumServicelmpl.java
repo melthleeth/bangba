@@ -19,10 +19,10 @@ public class ForumServicelmpl implements ForumService{
 
 	@Autowired
     ForumDao dao;
-	
+
 	@Autowired
     UserDao udao;
-    
+
     @Override
     public void createForum(ForumDto forumDto) throws Exception {
         dao.createForum(forumDto);
@@ -32,17 +32,17 @@ public class ForumServicelmpl implements ForumService{
     public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
         return dao.getForumListCnt(searchForumDto);
     }
-    
+
     @Override
     public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception {
         return dao.searchForumList(searchForumDto);
     }
-    
+
     @Override
     public ForumDto detailForum(int pk_forum) throws Exception {
         return dao.detailForum(pk_forum);
     }
-    
+
     @Override
     public void updateHits(int hits) throws Exception {
         dao.updateHits(hits);
@@ -56,9 +56,9 @@ public class ForumServicelmpl implements ForumService{
     @Override
     public void deleteForum(int pk_forum) throws Exception {
         dao.deleteForum(pk_forum);
-        
+
     }
-    
+
     @Override
     public List<ForumDto> searchNotices() throws Exception {
         return dao.searchNotices();
@@ -71,21 +71,21 @@ public class ForumServicelmpl implements ForumService{
 		fcdto.setUser_no(Integer.parseInt(map.get("user_no")));
 		fcdto.setCreated_at(map.get("created_at"));
 		fcdto.setContent(map.get("content"));
-		
-		
+
+
 //		System.out.println(fcdto.getForum_no());
 //		System.out.println(fcdto.getUser_no());
 //		System.out.println(fcdto.getCreated_at());
 //		System.out.println(fcdto.getContent());
 //		System.out.println(fcdto.getUser_name());
-		
+
 		dao.createComment(fcdto);
 		return null;
 	}
 
 	@Override
 	public Map<String, String> searchComment(int pk_forum) throws Exception {
-		// TODO Auto-generated method stub
+//		System.out.println("pk_forum: " + pk_forum);
 		List<FcommentDto> lfcdto =  dao.searchComment(pk_forum);
 		Map<String,String> map = new HashMap<String, String>();
 		for(FcommentDto fcdto : lfcdto)
@@ -98,7 +98,7 @@ public class ForumServicelmpl implements ForumService{
 			s+=fcdto.getCreated_at();
 			s+=";";
 			s+=fcdto.getContent();
-		
+
 			map.put(Integer.toString(fcdto.getPk_fcomment()), s);
 		}
 		return map;

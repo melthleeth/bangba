@@ -1,14 +1,13 @@
 <template>
   <div>
-    
     <div :key="item.comment_id" v-for="item in comments" class="flex">
       <section class="card-flat flex flex-col flex-initial h-full w-full">
-        <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }} 
+        <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}
           <span class="flex items-center font-color-black-200 text-sm">{{item.created_at}}</span>
           </span>
           <div class="comment-list-item">
             <div class="comment-list-item-name">
-              
+
             </div>
             <div class="comment-list-item-context">{{item.content}}</div>
             <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto">
@@ -16,15 +15,20 @@
               <!-- 줄 띄어쓰기 해야댐  -->
             <button variant="info">삭제</button>
           </div>
-        </div>  
-      
+        </div>
+
     </section>
   </div>
-    
+
     <CommentCreate />
+    <div :key="comment.pk_fcomment" v-for="comment in comments">
+      <comment-list-item :comments="comment"></comment-list-item>
+    </div>
+    <comment-create :contentId="contentId" :reloadComment="reloadComment" />
+    <base-button class="w-max px-4 py-1" mode="nude" @click="test()"
+      >테스트용으로 만들어 놓은 것 같은 버튼
+    </base-button>
   </div>
-  <base-button class="w-max px-4 py-1" mode="nude" @click="test()">테스트용으로 만들어 놓은 것 같은 버튼
-  </base-button>
 </template>
 
 <script>
@@ -56,6 +60,27 @@ export default {
       var answer=link.split('/');
       console.log(answer[5]);
     },
+    loadComments() {
+      const pk_forum = 74;
+      let responseData = [];
+      // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
+      this.axios
+        .post(`${SERVER_URL}/forum/comment/keyword`, pk_forum, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Accept: "*/*",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+          },
+        })
+        .then((result) => {
+          // this.items = result.dataF
+          responseData = result.data;
+          console.log(responseData);
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
 
     getList_Comment(){
 
@@ -71,7 +96,7 @@ export default {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         },
-        
+
       })
       .then((result)=>{
         // this.items = result.data
@@ -93,7 +118,7 @@ export default {
             created_at:Stringinput_Arr[2],
             content:Stringinput_Arr[3],
           })
-          
+
           // this.comments[i].user_name.push(this.comments[i].user_name);
           // this.comments[i].user_name=Stringinput_Arr[0];
           // // console.log((this.comments[i].user_name));
@@ -102,9 +127,9 @@ export default {
           // // this.comments[i].created_at=Stringinput_Arr[2];
           // this.comments[i].created_at=this.convert_time(Stringinput_Arr[2]);
           // this.comments[i].content=Stringinput_Arr[3];
-          
+
         }
-        
+
       })
       .catch(e=>{
         console.log('error:',e)
@@ -118,7 +143,7 @@ export default {
     // },
 
 
-      //시간 포멧 변경  
+      //시간 포멧 변경
     convert_time(create_at) {
       var Y = String(create_at).substring(0, 4);
       var M = String(create_at).substring(4, 6);
@@ -147,52 +172,8 @@ export default {
   created() {
       this.getList_Comment()
   },
-  
+
 };
 </script>
 
-<style>
-
-/* .comment-list-item {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 1em;
-}
-
-.comment-list-item-name {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 0.5px solid black;
-  padding: 1em;
-}
-
-.comment-list-item-context {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 50em;
-  border: 0.5px solid black;
-}
-
-.comment-list-item-button {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border: 0.5px solid black;
-  padding: 1em;
-}
-
-.btn {
-  margin-bottom: 1em;
-}
-
-.comment-list-item-subcomment-list {
-  display: flex;
-  justify-content: space-between;
-  padding-bottom: 1em;
-  margin-left: 10em;
-} */
-</style>
+<style scoped></style>
