@@ -127,9 +127,8 @@ public class ForumController {
 	}
 
 	@ApiOperation(value = "댓글 검색", response = String.class)
-	@PostMapping("/comment/keyword")
-	public List<FFcommentDto> searchComment(@RequestParam int pk_forum, Model model) throws Exception {
-		System.out.println("111111111");
+	@PostMapping("/comment/{pk_forum}")
+	public List<FFcommentDto> searchComment(@RequestBody int pk_forum , Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "댓글 검색 완료");
 			return forumService.searchComment(pk_forum);
@@ -141,7 +140,7 @@ public class ForumController {
 	}
 	
 	@ApiOperation(value = "댓글 수정", response = String.class)
-	@PutMapping("/comment/{pk_article}")
+	@PutMapping("/comment/{pk_fcomment}")
 	public String updateComment(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			forumService.updateComment(map);
@@ -154,7 +153,7 @@ public class ForumController {
 		}
 	}
 	@ApiOperation(value = "댓글 삭제", response = String.class)
-	@DeleteMapping("/comment/{pk_article}")
+	@DeleteMapping("/comment/delete/")
 	public String deleteComment(@RequestParam Integer pk_fcomment, Model model) throws Exception {
 		try {
 			forumService.deleteComment(pk_fcomment);

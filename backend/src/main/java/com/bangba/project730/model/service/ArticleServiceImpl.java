@@ -1,5 +1,6 @@
 package com.bangba.project730.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import com.bangba.project730.model.dto.Article_ingredientDto;
 import com.bangba.project730.model.dto.Article_tagDto;
 import com.bangba.project730.model.dto.AtoA;
 import com.bangba.project730.model.dto.AtoI;
+import com.bangba.project730.model.dto.FAcommentDto;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
@@ -410,21 +412,21 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public Map<String, String> searchComment(int pk_article) throws Exception {
+	public List<FAcommentDto> searchComment(int pk_article) throws Exception {
 		// TODO Auto-generated method stub
 		List<AcommentDto> lacdto =  dao.searchComment(pk_article);
-		Map<String,String> map = new HashMap<String, String>();
+		List<FAcommentDto> lfacdto = new ArrayList<FAcommentDto>();
 		for(AcommentDto acdto : lacdto)
 		{
-			String s="";
-			s+=udao.getUserName(acdto.getUser_no());
-			s+=";";
-			s+=udao.getImgPath(acdto.getUser_no());
-			s+=";";
-			s+=acdto.getContent();
-			map.put(Integer.toString(acdto.getPk_acomment()), s);
+			FAcommentDto facdto = new FAcommentDto();
+			facdto.setPk_acomment(acdto.getPk_acomment());
+			facdto.setArticle_no(acdto.getArticle_no());
+			facdto.setUser_name(udao.getUserName(acdto.getUser_no()));
+			facdto.setImg_path(udao.getImgPath(acdto.getUser_no()));
+			facdto.setContent(acdto.getContent());
+			lfacdto.add(facdto);
 		}
-		return map;
+		return lfacdto;
 	}
 
 	@Override
