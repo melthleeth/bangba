@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :key="item.comment_id" v-for="item in comments" class="flex">
+    <div :key="item.comment_id" v-for="item in comments" class="flex" >
       <section class="card-flat flex flex-col flex-initial h-full w-full">
         <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}
           <span class="flex items-center font-color-black-200 text-sm">{{convert_time(item.created_at)}}</span>
@@ -10,10 +10,12 @@
 
             </div>
             <div class="comment-list-item-context">{{item.content}}</div>
-            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto">
-            <button variant="info">수정</button>
-              <!-- 줄 띄어쓰기 해야댐  -->
-            <button variant="info">삭제</button>
+            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto" v-if="item.user_name===this.loginName">
+
+              
+            <button variant="info" @click="modifyComment(item.pk_fcomment)">수정</button>
+            <button variant="info" @click="deleteComment(item.pk_fcomment)">삭제</button>
+            
           </div>
         </div>
 
@@ -35,54 +37,23 @@ export default {
     ,
   data() {
     return {
+      comments:[],
+      pk_num:'',
+      loginName:localStorage.getItem("user_name"),
+      myComment:false
 
-      // 버그 수정하려면 얘 사이즈를 자동조절 해야댐!
-      comments:[
-      ],
-      pk_num:''
     };
   },
+
   components: {
     CommentCreate
   },
   methods: {
-    test(){
-      var link=document.location.href;
-      // console.log(this.$props.pk_forum)
-
-      var answer=link.split('/');
-      console.log(answer[5]);
-    },
-    // loadComments() {
-    //   const pk_forum = 74;
-    //   let responseData = [];
-    //   // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-    //   this.axios
-    //     .post(`${SERVER_URL}/forum/comment/keyword`, pk_forum, {
-    //       headers: {
-    //         "Content-Type": "application/json; charset=utf-8",
-    //         Accept: "*/*",
-    //         "Access-Control-Allow-Origin": "*",
-    //         "Access-Control-Allow-Headers": "*",
-    //       },
-    //     })
-    //     .then((result) => {
-    //       // this.items = result.dataF
-    //       responseData = result.data;
-    //       console.log(responseData);
-    //     })
-    //     .catch((e) => {
-    //       console.log("error:", e);
-    //     });
-    // },
     getList_Comment(){
 
         //주소입력을 위함
         var link=(document.location.href).split('/');
         var answer=link[5]; // = 74
-        // console.log(answer)
-        
-
         this.axios.get(`${SERVER_URL}/forum/comment/keyword/`+answer, {
         headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -90,13 +61,10 @@ export default {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         },
-        
-        
-
       })
       .then((result)=>{
         this.comments = result.data
-        console.log(result.data);
+        // console.log(result.data);
 
         //시간순 정렬
         this.comments.sort(function(a,b){
@@ -108,12 +76,25 @@ export default {
       })
     },
 
-    // reloadComment() {
-    //   this.comments = data.Comment.filter(commentItem => {
-    //     return commentItem.content_id === this.contentId;
-    //   });
-    // },
 
+    addComment(){
+      // console.log('comments', comment);
+      // var temp=comment.split(",");
+      
+      // var forum_n=(temp[0].split(":"))[1]
+      // var c_at=(temp[3].split(":"))[1].substring(1,15)
+      // var ct=(temp[2].split(":"))[1]
+      // var ctleng=ct.length;
+
+      // this.comments.push({
+      //       forum_no:forum_n,
+      //       user_name:localStorage.getItem("user_name"),
+      //       img_path:'',
+      //       created_at:c_at,
+      //       content:ct.substring(1,ctleng-1),
+      // })
+      this.getList_Comment()
+    },
 
       //시간 포멧 변경
     convert_time(create_at) {
@@ -139,7 +120,41 @@ export default {
       answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
       return answer;
     },
+    deleteComment(pk_fcomment){
+      // alert(pk_fcomment)   
+      // var params={
+      //   pk_fcomment:pk_fcomment
+      // }
+      var pk=parseInt(pk_fcomment)
+
+       const headers = {
+        "Content-type": "application/json; charset=UTF-8",
+        Accept: "*/*",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      };
+
+      this.axios
+        .delete(
+          `${SERVER_URL}/forum/comment/${pk}`,
+          // JSON.stringify(params),
+          { headers },
+          // pk
+        )
+        .then((result) => {
+          console.log(result);
+          this.getList_Comment()
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
+    },
+    modifyComment(pk_fcomment){
+      console.log(pk_fcomment);
+
+    },
   },
+
 
   created() {
       this.getList_Comment()

@@ -6,12 +6,14 @@
         placeholder="코멘트를 달아주세요."
         class="w-full mb-2"
         v-model="content"
+        @keypress.enter="createComment()"
       ></textarea>
       <base-button
       class="w-max px-3 py-1 text-sm justify-self-end ml-auto"
         variant="info"
         mode="nude"
         @click="createComment()"
+        
       >등록</base-button>
     </section>
   </div>
@@ -39,26 +41,14 @@ export default {
   },
 
   methods: {
-    //     createComment() {
-    //   const comment_id = data.Comment[data.Comment.length - 1].comment_id + 1;
-    //   data.Comment.push({
-    //     comment_id: comment_id,
-    //     user_id: 1,
-    //     content_id: this.contentId,
-    //     context: this.context,
-    //     created_at: "2019-04-19",
-    //     updated_at: null,
-    //   });
-    //   this.reloadComment();
-    //   // this.subCommentToggle();
-    //   this.context = "";
-    // },
     createComment() {
         this.time_cal();
+        var link=(document.location.href).split('/');
+        var answer=link[5]; 
 
         let params={
-          forum_no: 74,
-          user_no: 9,
+          forum_no: answer,
+          user_no: localStorage.getItem("pk_user"),
           content: this.content,
           created_at:this.created_at,
         }
@@ -74,9 +64,10 @@ export default {
         { headers }
       )
       .then((result)=>{
-          console.log(result)
+          // console.log(result.config.data)
 
-          this.$emit("addComment",result);
+          this.$emit("addComment",result.config.data);
+          this.content=""
       })
       .catch(e=>{
           console.log('error:',e)
