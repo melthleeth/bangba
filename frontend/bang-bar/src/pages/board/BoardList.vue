@@ -97,6 +97,7 @@
               class="h-5 w-5 mr-1 flex justify-center text-gray-500"
               @click="goStarat()"
               :disabled="!checkPrev"
+              v-if="checkPrev"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -140,7 +141,6 @@
             <button
               type="button"
               class="h-5 w-5 mr-1 flex justify-center items-center text-gray-500"
-              v-if="checkNext"
               @click="nextPage()"
               :disabled="!checkNext"
             >
@@ -156,8 +156,8 @@
             <button
               type="button"
               class="h-5 w-5 mr-1 flex justify-center text-gray-500"
-              v-if="checkNext"
               :disabled="!checkNext"
+              v-if="checkNext"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -273,7 +273,7 @@ export default {
         })
         .then((result) => {
           this.pageTotalCnt = Math.ceil(result.data / this.forumCntPerPage);
-          console.log(this.pageTotalCnt);
+          console.log('pageTotalCnt : ' + this.pageTotalCnt);
         })
         .catch((e) => {
           console.log('error:', e);
@@ -338,6 +338,7 @@ export default {
       for (let i = (this.pageRange - 1) * this.rangeCnt; i < this.endNumPerPage; i++)
         this.pageRangePart.push(i + 1);
 
+      console.log('pageRangePage' + this.pageRangePart);
       this.checkPrev = this.pageRange === 1 ? false : true;
       this.checkNext = this.pageTotalCnt < this.rangeCnt * this.pageRange ? false : true;
     },
@@ -353,6 +354,7 @@ export default {
     this.writemode = localStorage.getItem('pk_user');
     this.getList();
     this.get_length();
+    this.get_end_page_num();
   },
   mounted() {
     this.getList();
