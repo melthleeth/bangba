@@ -9,7 +9,6 @@
       <div class="comment-list-item-button">
         <button variant="info">수정</button>
         <button variant="info">삭제</button>
-        <button variant="info" @click="subCommentToggle">덧글 달기</button>
       </div>
     </div>
   </div>

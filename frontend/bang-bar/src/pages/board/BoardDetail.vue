@@ -1,49 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div style="text-align: center;">
-     
-      <div class="whiteboard">
-        <div class="font-extrabold text-lg content-detail-content-info-left-number" >[{{forum.category}}]</div>
-        <div class="font-extrabold text-3xl content-detail-content-info-left-subject" >{{forum.title}}</div>
-      </div>
-      <div class="whiteboard">
-        <img src="../../assets/icon/chunsik.png" class="float-left;" style="height:60px">
-              <div class="content-detail-content-info-right-user">{{forum.user_name}}
-                 <base-button>팔로우</base-button>
-              </div>
-                <div class="flex items-center mb-2">
-                  <div class="content-detail-content-info-right-created">
-                    {{forum.created_at}}
-                    조회 : {{forum.hits}}
-                  
-                  </div>
-                </div>
-
-                <div>
-                 <img src="../../assets/icon/like.png" class="" style="width:20px; "> {{forum.like_cnt}}
-                 <img src="../../assets/icon/commentCount.png">  {{forum.like_cnt}}
-                </div>
-        </div>
-
-      <div class="whiteboard" style="min-height:500px" >{{forum.content}}</div>
-     
-      <div class ="flex flex-col">
-        <base-button>추천수 {{forum.like_cnt}}</base-button>
-      </div>
-      <div class="content-detail-button">
-        
-        <span v-if="forum.user_name===owner_check">
-          <base-button @click="updateData">수정</base-button>
-          <base-button @click="deleteData">삭제</base-button>
-        </span>
-        <base-button @click="golist">목록</base-button>
-        
-      </div>
-      <div class="content-detail-comment">
-        <CommentList :pk_forum="forum.pk_forum" ></CommentList>
-      </div>
-    
-=======
   <div
     class="font-color-black-400 flex flex-col justify-items-center font-S-CoreDream-light"
   >
@@ -130,7 +85,6 @@
         >
       </section>
     </section>
->>>>>>> board
   </div>
 </template>
 

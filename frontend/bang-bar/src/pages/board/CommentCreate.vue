@@ -5,20 +5,20 @@
       <textarea
         placeholder="코멘트를 달아주세요."
         class="w-full mb-2"
+        v-model="content"
       ></textarea>
       <base-button
       class="w-max px-3 py-1 text-sm justify-self-end ml-auto"
         variant="info"
         mode="nude"
-        @click="isSubComment ? createSubComment() : createComment()"
+        @click="createComment()"
       >등록</base-button>
     </section>
   </div>
 </template>
 
 <script>
-import data from "@/data";
-
+const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "CommentCreate",
   props: {
@@ -26,45 +26,94 @@ export default {
     reloadComment: Function,
     reloadSubComments: Function,
     subCommentToggle: Function,
-    isSubComment: Boolean,
     commentId: Number,
   },
   data() {
     return {
       name: localStorage.getItem("user_name"),
-      context: "",
+      content: "",
+      created_at:'',
+      forum_no:'',
+      user_no:'',
     };
   },
 
   methods: {
+    //     createComment() {
+    //   const comment_id = data.Comment[data.Comment.length - 1].comment_id + 1;
+    //   data.Comment.push({
+    //     comment_id: comment_id,
+    //     user_id: 1,
+    //     content_id: this.contentId,
+    //     context: this.context,
+    //     created_at: "2019-04-19",
+    //     updated_at: null,
+    //   });
+    //   this.reloadComment();
+    //   // this.subCommentToggle();
+    //   this.context = "";
+    // },
     createComment() {
-      const comment_id = data.Comment[data.Comment.length - 1].comment_id + 1;
-      data.Comment.push({
-        comment_id: comment_id,
-        user_id: 1,
-        content_id: this.contentId,
-        context: this.context,
-        created_at: "2019-04-19",
-        updated_at: null,
-      });
-      this.reloadComment();
-      // this.subCommentToggle();
-      this.context = "";
+        this.time_cal();
+
+        let params={
+          forum_no: this.title,
+          user_no: this.category,
+          content: this.content,
+          created_at:this.created_at,
+        }
+        const headers = {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Accept': '*/*',
+          'Access-Control-Allow-Origin': '*',
+        "Access-Control-Allow-Headers": "*",
+      }
+
+        this.axios.post(`${SERVER_URL}/comment/create`,
+        JSON.stringify(params),
+        { headers }
+      )
+      .then((result)=>{
+          console.log(result)
+          this.$router.push({
+            path:'/board/list'
+          });
+      })
+      .catch(e=>{
+          console.log('error:',e)
+      })
     },
-    createSubComment() {
-      const subcomment_id =
-        data.SubComment[data.SubComment.length - 1].subcomment_id + 1;
-      data.SubComment.push({
-        subcomment_id: subcomment_id,
-        comment_id: this.commentId,
-        user_id: 1,
-        context: this.context,
-        created_at: "2019-04-20",
-        updated_at: null,
-      });
-      this.reloadSubComments();
-      this.subCommentToggle();
-      this.context = "";
+    time_cal(){
+        let today = new Date();   
+
+        let year = today.getFullYear(); // 년도
+        let month = today.getMonth() + 1;  // 월
+        let date = today.getDate();  // 날짜
+
+        let hour=today.getHours();
+        let min=today.getMinutes();
+        let sec=today.getSeconds();
+
+        if(date<'10'){
+          date='0'+date;
+        }
+
+        if(month<'10'){
+          month='0'+month;
+        }
+
+        if(hour<'10'){
+          hour='0'+hour;
+        }
+
+        if(min<'10'){
+          min='0'+min;
+        }
+        if(sec<'10'){
+          sec='0'+sec;
+        }
+
+        this.created_at=year+""+month+""+date+""+hour+""+min+""+sec
     },
   },
 };
