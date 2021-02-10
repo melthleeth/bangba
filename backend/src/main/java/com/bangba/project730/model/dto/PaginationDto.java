@@ -4,7 +4,7 @@ public class PaginationDto {
 	
 	private int page_num; // 현재 페이지
 	
-	private int forum_cnt_per_page = 10; // 한 페이지당 보여질 게시글 수
+	private int forum_cnt_per_page = 15; // 한 페이지당 보여질 게시글 수
 	private int range_cnt = 5; // 한 페이지에 보여지는 범위의 수 
 	
 	private int page_range; // 현재 페이지 범위 정보

@@ -3,7 +3,7 @@
     <div :key="item.comment_id" v-for="item in comments" class="flex">
       <section class="card-flat flex flex-col flex-initial h-full w-full">
         <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}
-          <span class="flex items-center font-color-black-200 text-sm">{{item.created_at}}</span>
+          <span class="flex items-center font-color-black-200 text-sm">{{convert_time(item.created_at)}}</span>
           </span>
           <div class="comment-list-item">
             <div class="comment-list-item-name">
@@ -20,7 +20,7 @@
     </section>
   </div>
 
-    <CommentCreate />
+    <CommentCreate :forum_id="forum_id" v-on:addComment="addComment"/>
   </div>
 </template>
 
@@ -79,50 +79,29 @@ export default {
 
         //주소입력을 위함
         var link=(document.location.href).split('/');
-        var answer=link[5];
+        var answer=link[5]; // = 74
+        // console.log(answer)
+        
 
-
-        this.axios.get(`${SERVER_URL}/forum/comment/`+answer, {
+        this.axios.get(`${SERVER_URL}/forum/comment/keyword/`+answer, {
         headers: {
         "Content-Type": "application/json; charset=utf-8",
         'Accept': '*/*',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Headers': '*',
         },
+        
+        
 
       })
       .then((result)=>{
-        // this.items = result.data
-        // console.log(result.data);
+        this.comments = result.data
+        console.log(result.data);
 
-        // string 배열로 3: "코테싫엉;;20210209134133;ㅎㅎ" 이렇게 들어옴  유저네임;이미지패스;작성시간;작성내용
-        //우선 나눈다.
-        var count=Object.keys(result.data).length;
-        // console.log(count)
-        for(var i=0;i<count;i++){
-          var Stringinput=result.data[i];
-          var Stringinput_Arr=Stringinput.split(';');
-          // console.log((Stringinput_Arr));
-          // console.log((Stringinput_Arr[0]));
-
-          this.comments.push({
-            user_name:Stringinput_Arr[0],
-            img_path:Stringinput_Arr[1],
-            created_at:Stringinput_Arr[2],
-            content:Stringinput_Arr[3],
-          })
-
-          // this.comments[i].user_name.push(this.comments[i].user_name);
-          // this.comments[i].user_name=Stringinput_Arr[0];
-          // // console.log((this.comments[i].user_name));
-
-          // this.comments[i].img_path=Stringinput_Arr[1];
-          // // this.comments[i].created_at=Stringinput_Arr[2];
-          // this.comments[i].created_at=this.convert_time(Stringinput_Arr[2]);
-          // this.comments[i].content=Stringinput_Arr[3];
-
-        }
-
+        //시간순 정렬
+        this.comments.sort(function(a,b){
+          return a.created_at-b.created_at
+        });
       })
       .catch(e=>{
         console.log('error:',e)

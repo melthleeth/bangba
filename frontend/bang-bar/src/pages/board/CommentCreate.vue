@@ -57,8 +57,8 @@ export default {
         this.time_cal();
 
         let params={
-          forum_no: this.title,
-          user_no: this.category,
+          forum_no: 74,
+          user_no: 9,
           content: this.content,
           created_at:this.created_at,
         }
@@ -69,20 +69,20 @@ export default {
         "Access-Control-Allow-Headers": "*",
       }
 
-        this.axios.post(`${SERVER_URL}/comment/create`,
+        this.axios.post(`${SERVER_URL}/forum/comment/create`,
         JSON.stringify(params),
         { headers }
       )
       .then((result)=>{
           console.log(result)
-          // this.$router.push({
-          //   path:'/board/list'
-          // });
+
+          this.$emit("addComment",result);
       })
       .catch(e=>{
           console.log('error:',e)
       })
     },
+
     time_cal(){
         let today = new Date();   
 

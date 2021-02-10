@@ -127,18 +127,20 @@ public class ForumController {
 	}
 
 	@ApiOperation(value = "댓글 검색", response = String.class)
-	@PostMapping("/comment/keyword")
-	public List<FFcommentDto> searchComment(@RequestParam int pk_forum, Model model) throws Exception {
-		System.out.println("111111111");
-		try {
-			model.addAttribute("msg", "댓글 검색 완료");
-			return forumService.searchComment(pk_forum);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("msg", "댓글 검색중 문제가 발생했습니다.");
-		}
-		return null;
-	}
+    @GetMapping("/comment/keyword/{pk_forum}")
+    public List<FFcommentDto> searchComment(@PathVariable int pk_forum, Model model) throws Exception {
+        System.out.println("111111111");
+        try {
+            model.addAttribute("msg", "댓글 검색 완료");
+            return forumService.searchComment(pk_forum);
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("msg", "댓글 검색중 문제가 발생했습니다.");
+        }
+        return null;
+    }
+	
+	
 	
 	@ApiOperation(value = "댓글 수정", response = String.class)
 	@PutMapping("/comment/{pk_article}")

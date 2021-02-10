@@ -168,7 +168,7 @@ export default {
       items: [],
       pageArray: this.items,
       time_conver: "",
-      forum_cnt_per_page: 10, //한 페이지당 보여질 게시글 수
+      forum_cnt_per_page: 15, //한 페이지당 보여질 게시글 수
       range_cnt: 5, //한 페이지에 보여지는 범위의 수
     };
   },
