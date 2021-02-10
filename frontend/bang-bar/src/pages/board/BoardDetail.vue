@@ -39,7 +39,7 @@
             </article>
             <article class="flex items-center">
               <img
-                src="../../assets/icon/bookmark@0.75x.png"
+                src="../../assets/icon/comment@0.75x.png"
                 class="object-contain ml-1 mr-0"
                 alt="bookmark icon"
               />
