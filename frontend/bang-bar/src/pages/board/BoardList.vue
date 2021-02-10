@@ -1,17 +1,10 @@
 <template>
   <div class="flex flex-col justify-items-center px-16 font-color-black-400">
-    <span class="text-center my-10 text-4xl font-S-CoreDream-medium font-bold "
-      >게시판</span
-    >
+    <span class="text-center my-10 text-4xl font-S-CoreDream-medium font-bold ">게시판</span>
 
-    <section
-      id="search-bar"
-      class="flex flex-row mb-6 mx-28 font-S-CoreDream-light"
-    >
+    <section id="search-bar" class="flex flex-row mb-6 mx-28 font-S-CoreDream-light">
       <article class="flex justify-center justify-self-start">
-        <base-button mode="important" class="px-8 py-2" @click="writeContent"
-          >글쓰기</base-button
-        >
+        <base-button mode="important" class="px-8 py-2" @click="writeContent">글쓰기</base-button>
       </article>
       <!-- 후기/질문 탭용 버튼 -->
       <article>
@@ -24,7 +17,7 @@
         <!-- 말머리 선택 드롭다운 -->
         <div class="inline-block relative w-max">
           <select
-            v-model="search_type"
+            v-model="searchType"
             class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>제목</option>
@@ -83,8 +76,10 @@
               :key="item.no"
             >
               <td class="py-3 text-sm">{{ item.category }}</td>
-              <td class="text-sm text-left truncate">{{ item.title }}</td>
-              <td class="text-sm runcate">{{ item.user_name }}</td>
+              <td class="text-sm text-left truncate">
+                {{ item.title }} <span class="text-xs">[ {{ item.comment_cnt }} ]</span>
+              </td>
+              <td class="text-sm truncate">{{ item.user_name }}</td>
               <td class="font-color-black-200 text-sm">
                 {{ item.created_at }}
               </td>
@@ -97,9 +92,17 @@
       <section>
         <div class="flex flex-col items-center my-12">
           <div class="flex text-gray-700">
-            <button
-              class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer"
-            >
+            <button class="h-8 w-5 mr-1 flex justify-center items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+
+            <button class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="100%"
@@ -110,23 +113,28 @@
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="feather feather-chevron-left w-4 h-4"
+                class="feather feather-chevrons-left w-4 h-4"
+                @click="prevPage()"
               >
                 <polyline points="15 18 9 12 15 6"></polyline>
               </svg>
             </button>
+
             <ul class="flex h-8 font-medium ">
               <li
-                class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent"
-                v-for="(page, idx) in page_total_cnt"
+                class="w-8 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in border-t-2 border-transparent"
+                v-for="(page, idx) in endNumPerPage"
                 :key="idx"
-                @click="check(idx)"
+                @click="goPageNum(idx)"
               >
                 {{ page }}
               </li>
             </ul>
+
             <button
-              class="h-8 w-8 ml-1 flex justify-center items-center  cursor-pointer"
+              type="button"
+              class="h-8 w-8 ml-1 flex justify-center items-center cursor-pointer"
+              v-if="checkNext"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -139,6 +147,7 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 class="feather feather-chevron-right w-4 h-4"
+                @click="nextPage()"
               >
                 <polyline points="9 18 15 12 9 6"></polyline>
               </svg>
@@ -156,46 +165,50 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   components: {},
 
-  name: "BoardList",
+  name: 'BoardList',
   data() {
     return {
       writemode: null,
-      pk_forum: "",
+      pk_forum: '',
       pageNum: 0,
-      keyword: "",
-      search_type: "제목",
-      page_total_cnt: "",
+      keyword: '',
+      searchType: '제목',
+      pageTotalCnt: '', // 전체 페이지 수
       items: [],
       pageArray: this.items,
-      time_conver: "",
-      forum_cnt_per_page: 15, //한 페이지당 보여질 게시글 수
-      range_cnt: 5, //한 페이지에 보여지는 범위의 수
+      time_conver: '',
+      forumCntPerPage: 3, // 한 페이지 당 보여질 게시글 수
+      rangeCnt: 5, // 한 페이지에 보여지는 범위의 수
+      pageRange: 1,
+      endNumPerPage: '', // 해당 페이지에서 보여지는 마지막 페이지 수
+      checkNext: '', // 다음페이지 버튼 활성화
+      checkPrev: '', // 이번페이지 버튼 활성화
     };
   },
 
   methods: {
     writeContent() {
-      if (localStorage.getItem("pk_user") != null) {
+      if (localStorage.getItem('pk_user') != null) {
         this.$router.push({
           path: `/board/create`,
         });
       } else {
-        alert("로그인을 해주세요.");
+        alert('로그인을 해주세요.');
       }
     },
 
     nextPage() {
-      this.pageNum += 1;
+      this.pageNum = this.pageNum + 1;
       this.getList();
     },
     prevPage() {
-      this.pageNum -= 1;
+      this.pageNum = this.pageNum - 1;
       this.getList();
     },
 
-    check(idx) {
+    goPageNum(idx) {
       this.pageNum = idx;
-      console.log("pageNum", this.pageNum);
+      console.log('pageNum', this.pageNum);
       this.getList();
     },
 
@@ -211,29 +224,29 @@ export default {
 
     getList() {
       let params = {
-        // 이부분을 현재페이지로 고치면됨.
         page_num: this.pageNum + 1,
-        page_range: 1,
-        search_type: this.search_type,
+        page_range: this.pageRange,
+        search_type: this.searchType,
         keyword: this.keyword,
+        forum_cnt_per_page: this.forumCntPerPage,
       };
-      // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
+
       this.axios
         .get(`${SERVER_URL}/forum/search-forum-list`, {
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json; charset = utf-8",
-            "Access-Control-Allow-Headers": "*",
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json; charset = utf-8',
+            'Access-Control-Allow-Headers': '*',
           },
           params,
         })
         .then((result) => {
           this.items = result.data;
-
           this.convert_time();
+          this.get_end_page_num();
         })
         .catch((e) => {
-          console.log("error:", e);
+          console.log('error:', e);
         });
     },
 
@@ -241,20 +254,17 @@ export default {
       this.axios
         .get(`${SERVER_URL}/forum/forum_cnt`, {
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json; charset = utf-8",
-            "Access-Control-Allow-Headers": "*",
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json; charset = utf-8',
+            'Access-Control-Allow-Headers': '*',
           },
         })
         .then((result) => {
-          // this.items=result;
-          // console.log(result)
-          this.page_total_cnt = Math.ceil(
-            result.data / this.forum_cnt_per_page
-          );
+          this.pageTotalCnt = Math.ceil(result.data / this.forumCntPerPage);
+          this.get_end_page_num();
         })
         .catch((e) => {
-          console.log("error:", e);
+          console.log('error:', e);
         });
     },
 
@@ -272,20 +282,32 @@ export default {
         let month = new Date().getMonth() + 1; // 월
         let date = new Date().getDate(); // 날짜
 
-        if (month < "10") {
-          month = "0" + month;
+        if (month < '10') {
+          month = '0' + month;
         }
-        if (date < "10") {
-          date = "0" + date;
+        if (date < '10') {
+          date = '0' + date;
         }
-        var answer = "";
+        var answer = '';
         if (month === M && D === date) {
-          answer = H + ":" + Min + ":" + S;
+          answer = H + ':' + Min + ':' + S;
         } else {
-          answer = Y + "." + M + "." + D;
+          answer = Y + '.' + M + '.' + D;
         }
         this.items[i].created_at = answer;
       }
+    },
+
+    get_end_page_num() {
+      if (this.pageTotalCnt > this.rangeCnt * this.pageRange) {
+        this.endNumPerPage = this.rangeCnt * this.pageRange;
+      } else {
+        this.endNumPerPage = this.pageTotalCnt;
+      }
+
+      this.checkPrev = this.pageRange === 1 ? false : true;
+
+      this.checkNext = this.pageTotalCnt < this.rangeCnt * this.pageRange ? false : true;
     },
   },
 
@@ -296,11 +318,12 @@ export default {
   },
   created() {
     this.pageArray = this.items;
-    this.writemode = localStorage.getItem("pk_user");
+    this.writemode = localStorage.getItem('pk_user');
   },
   mounted() {
     this.getList();
     this.get_length();
+    this.get_end_page_num();
   },
 };
 </script>
