@@ -91,8 +91,13 @@
       <!-- 페이지네이션바 -->
       <section>
         <div class="flex flex-col items-center my-12">
-          <div class="flex text-gray-700">
-            <button class="h-8 w-5 mr-1 flex justify-center items-center">
+          <div class="flex text-gray-700 items-center">
+            <!-- << -->
+            <button
+              class="h-5 w-5 mr-1 flex justify-center text-gray-500"
+              @click="goStarat()"
+              :disabled="!checkPrev"
+            >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path
                   fill-rule="evenodd"
@@ -101,55 +106,70 @@
                 />
               </svg>
             </button>
-
-            <button class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer">
+            <!-- < -->
+            <button
+              class="h-5 w-5 mr-1 flex justify-center items-center text-gray-500 "
+              @click="prevPage()"
+              :disabled="!checkPrev"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevrons-left w-4 h-4"
-                @click="prevPage()"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class=""
               >
-                <polyline points="15 18 9 12 15 6"></polyline>
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
               </svg>
             </button>
-
+            <!-- 숫자 -->
             <ul class="flex h-8 font-medium ">
               <li
-                class="w-8 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in border-t-2 border-transparent"
-                v-for="(page, idx) in endNumPerPage"
-                :key="idx"
-                @click="goPageNum(idx)"
+                class="w-9 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in border-t-2 border-transparent"
+                v-for="page in pageRangePart"
+                :key="page"
+                @click="goPageNum(page - 1)"
               >
                 {{ page }}
               </li>
             </ul>
-
+            <!-- > -->
             <button
               type="button"
-              class="h-8 w-8 ml-1 flex justify-center items-center cursor-pointer"
+              class="h-5 w-5 mr-1 flex justify-center items-center text-gray-500"
               v-if="checkNext"
+              @click="nextPage()"
+              :disabled="!checkNext"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="100%"
-                height="100%"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="feather feather-chevron-right w-4 h-4"
-                @click="nextPage()"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- >> -->
+            <button
+              type="button"
+              class="h-5 w-5 mr-1 flex justify-center text-gray-500"
+              v-if="checkNext"
+              :disabled="!checkNext"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
               </svg>
             </button>
           </div>
@@ -177,12 +197,13 @@ export default {
       items: [],
       pageArray: this.items,
       time_conver: '',
-      forumCntPerPage: 3, // 한 페이지 당 보여질 게시글 수
+      forumCntPerPage: 5, // 한 페이지 당 보여질 게시글 수
       rangeCnt: 5, // 한 페이지에 보여지는 범위의 수
       pageRange: 1,
       endNumPerPage: '', // 해당 페이지에서 보여지는 마지막 페이지 수
       checkNext: '', // 다음페이지 버튼 활성화
       checkPrev: '', // 이번페이지 버튼 활성화
+      pageRangePart: [],
     };
   },
 
@@ -195,21 +216,6 @@ export default {
       } else {
         alert('로그인을 해주세요.');
       }
-    },
-
-    nextPage() {
-      this.pageNum = this.pageNum + 1;
-      this.getList();
-    },
-    prevPage() {
-      this.pageNum = this.pageNum - 1;
-      this.getList();
-    },
-
-    goPageNum(idx) {
-      this.pageNum = idx;
-      console.log('pageNum', this.pageNum);
-      this.getList();
     },
 
     fnView() {
@@ -243,6 +249,7 @@ export default {
         .then((result) => {
           this.items = result.data;
           this.convert_time();
+          this.get_length();
           this.get_end_page_num();
         })
         .catch((e) => {
@@ -251,6 +258,10 @@ export default {
     },
 
     get_length() {
+      let params = {
+        search_type: this.searchType,
+        keyword: this.keyword,
+      };
       this.axios
         .get(`${SERVER_URL}/forum/forum_cnt`, {
           headers: {
@@ -258,10 +269,11 @@ export default {
             'Content-Type': 'application/json; charset = utf-8',
             'Access-Control-Allow-Headers': '*',
           },
+          params,
         })
         .then((result) => {
           this.pageTotalCnt = Math.ceil(result.data / this.forumCntPerPage);
-          this.get_end_page_num();
+          console.log(this.pageTotalCnt);
         })
         .catch((e) => {
           console.log('error:', e);
@@ -298,6 +310,23 @@ export default {
       }
     },
 
+    //페이지네이션 함수
+    nextPage() {
+      this.pageNum = this.pageRange * this.rangeCnt;
+      this.pageRange = this.pageRange + 1;
+      this.getList();
+    },
+    prevPage() {
+      this.pageRange = this.pageRange - 1;
+      this.pageNum = this.rangeCnt * this.pageRange - 1;
+      this.getList();
+    },
+
+    goPageNum(idx) {
+      this.pageNum = idx;
+      this.getList();
+    },
+
     get_end_page_num() {
       if (this.pageTotalCnt > this.rangeCnt * this.pageRange) {
         this.endNumPerPage = this.rangeCnt * this.pageRange;
@@ -305,8 +334,11 @@ export default {
         this.endNumPerPage = this.pageTotalCnt;
       }
 
-      this.checkPrev = this.pageRange === 1 ? false : true;
+      this.pageRangePart = [];
+      for (let i = (this.pageRange - 1) * this.rangeCnt; i < this.endNumPerPage; i++)
+        this.pageRangePart.push(i + 1);
 
+      this.checkPrev = this.pageRange === 1 ? false : true;
       this.checkNext = this.pageTotalCnt < this.rangeCnt * this.pageRange ? false : true;
     },
   },
@@ -323,7 +355,6 @@ export default {
   mounted() {
     this.getList();
     this.get_length();
-    this.get_end_page_num();
   },
 };
 </script>
