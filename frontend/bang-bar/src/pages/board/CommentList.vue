@@ -34,11 +34,6 @@ export default {
   },
   created() {
     this.loadComments();
-    for (const key in this.comments) {
-        console.log("comment");
-        console.log(this.comments[key]);
-        console.log(key);
-      }
   },
   computed: {
     commentList() {
@@ -47,7 +42,7 @@ export default {
         console.log(comment);
       }
       return true;
-    }
+    },
   },
   methods: {
     test() {
@@ -55,6 +50,7 @@ export default {
     },
     loadComments() {
       const pk_forum = 74;
+      let responseData = [];
       // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
       this.axios
         .post(`${SERVER_URL}/forum/comment/keyword`, pk_forum, {
@@ -63,16 +59,20 @@ export default {
             Accept: "*/*",
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*",
-          }
+          },
         })
         .then((result) => {
           // this.items = result.dataF
-          this.comments = result.data;
-          console.log(this.comments);
+          responseData = result.data;
+          console.log(responseData);
         })
         .catch((e) => {
           console.log("error:", e);
         });
+
+      for (const key in responseData) {
+        console.log(key);
+      }
     },
 
     reloadComment() {

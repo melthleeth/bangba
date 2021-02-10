@@ -104,6 +104,13 @@ public class ForumServicelmpl implements ForumService{
 			String created_at = fcdto.getCreated_at();
 			String content = fcdto.getContent();
 			
+//			map.put("pk_fcomment", pk_fcomment);
+//			map.put("profileImg", profileImg);
+//			map.put("user_name", user_name);
+//			map.put("created_at", created_at);
+//			map.put("content", content);
+//			
+			
 			StringBuilder sb = new StringBuilder();
 			sb.append(profileImg).append("<br>")
 				.append(user_name).append("<br>")
