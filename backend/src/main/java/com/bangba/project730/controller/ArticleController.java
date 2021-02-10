@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -362,12 +363,12 @@ public class ArticleController {
 	public String clickLike(@RequestBody Map<String, String> map) {
 		try {
 			System.out.println(map.toString());
-			if(map.get("isclick").equals("on")) {
+			if(map.get("isclick").equals("off")) {
 				articleService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			} else {
-				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.downLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			}
 			return "success";
 		} catch(Exception e) {
@@ -380,12 +381,12 @@ public class ArticleController {
 	@PutMapping("/bookmark")
 	public String clickBookmark(@RequestBody Map<String, String> map) {
 		try {
-			if(map.get("isclick").equals("on")) {
+			if(map.get("isclick").equals("off")) {
 				articleService.insertBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.upBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			} else {
-				articleService.deleteBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.downBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.deleteBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			}
 			return "success";
 		} catch(Exception e) {
@@ -397,6 +398,7 @@ public class ArticleController {
 	@ApiOperation(value = "좋아요 여부")
 	@PostMapping("/is-like")
 	public int isLike(@RequestBody Map<String, String> map) {
+		System.out.println(map.toString());
 		try {
 			return articleService.isLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 		} catch (NumberFormatException e) {
