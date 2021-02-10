@@ -156,15 +156,16 @@ public class ForumController {
 		}
 	}
 	@ApiOperation(value = "댓글 삭제", response = String.class)
-	@DeleteMapping("/comment/{pk_article}")
-	public String deleteComment(@RequestParam Integer pk_fcomment, Model model) throws Exception {
+	@DeleteMapping("/comment/{pk_fcomment}")
+	public String deleteComment(@PathVariable @ApiParam(value = "댓글 하나 삭제", required = true) int pk_fcomment, Model model) throws Exception {
+		System.out.println(pk_fcomment);
 		try {
 			forumService.deleteComment(pk_fcomment);
-			model.addAttribute("msg", "레시피 삭제 완료");
+			model.addAttribute("msg", "댓글 삭제 완료");
 			return "main";
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "레시피 삭제중 문제가 발생했습니다.");
+			model.addAttribute("msg", "댓글 삭제중 문제가 발생했습니다.");
 			return "error";
 		}
 	}

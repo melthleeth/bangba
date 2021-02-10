@@ -130,7 +130,7 @@ export default {
         behavior: "smooth",
       });
     },
-    //삭제
+    //상세페이지 이동
     forum_Detail() {
       this.axios
         .get(`${SERVER_URL}/forum/${this.forumId.val}`, {
@@ -151,6 +151,7 @@ export default {
         });
     },
 
+    //삭제 
     deleteData() {
       const headers = {
         "Content-type": "application/json; charset=UTF-8",
