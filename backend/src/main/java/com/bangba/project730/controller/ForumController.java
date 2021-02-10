@@ -130,7 +130,6 @@ public class ForumController {
 	@ApiOperation(value = "댓글 검색", response = String.class)
     @GetMapping("/comment/keyword/{pk_forum}")
     public List<FFcommentDto> searchComment(@PathVariable int pk_forum, Model model) throws Exception {
-        System.out.println("111111111");
         try {
             model.addAttribute("msg", "댓글 검색 완료");
             return forumService.searchComment(pk_forum);
@@ -144,7 +143,7 @@ public class ForumController {
 	
 	
 	@ApiOperation(value = "댓글 수정", response = String.class)
-	@PutMapping("/comment/{pk_article}")
+	@PutMapping("/comment/update-comment")
 	public String updateComment(@RequestBody Map<String, String> map, Model model) throws Exception {
 		try {
 			forumService.updateComment(map);

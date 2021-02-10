@@ -40,8 +40,8 @@ export default {
       comments:[],
       pk_num:'',
       loginName:localStorage.getItem("user_name"),
-      myComment:false
-
+      myComment:false,
+      modify_flag:''
     };
   },
 
@@ -151,6 +151,7 @@ export default {
     },
     modifyComment(pk_fcomment){
       console.log(pk_fcomment);
+
 
     },
   },
