@@ -127,14 +127,8 @@ public class ForumController {
 	}
 
 	@ApiOperation(value = "댓글 검색", response = String.class)
-<<<<<<< HEAD
 	@PostMapping("/comment/{pk_forum}")
 	public List<FFcommentDto> searchComment(@RequestBody int pk_forum , Model model) throws Exception {
-=======
-	@PostMapping("/comment/keyword")
-	public List<FFcommentDto> searchComment(@RequestParam int pk_forum, Model model) throws Exception {
-		System.out.println("111111111");
->>>>>>> branch 'backend' of https://lab.ssafy.com/s04-webmobile1-sub3/s04p13a401.git
 		try {
 			model.addAttribute("msg", "댓글 검색 완료");
 			return forumService.searchComment(pk_forum);
