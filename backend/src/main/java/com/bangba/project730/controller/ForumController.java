@@ -172,7 +172,12 @@ public class ForumController {
 	
     @ApiOperation(value = "자유게시판 전체 게시글 수")
     @GetMapping("/forum_cnt")
-    public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
+    public int getForumListCnt(
+    		@RequestParam(required = false, defaultValue = "제목") String search_type
+            , @RequestParam(required = false) String keyword,
+            SearchForumDto searchForumDto) throws Exception {
+    	searchForumDto.setSearch_type(search_type);
+        searchForumDto.setKeyword(keyword);
         return forumService.getForumListCnt(searchForumDto);
     }
 	
