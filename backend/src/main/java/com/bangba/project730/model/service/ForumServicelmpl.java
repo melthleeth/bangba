@@ -1,5 +1,6 @@
 package com.bangba.project730.model.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -23,10 +24,10 @@ public class ForumServicelmpl implements ForumService{
 
 	@Autowired
     ForumDao dao;
-
+	
 	@Autowired
     UserDao udao;
-
+    
     @Override
     public void createForum(ForumDto forumDto) throws Exception {
         dao.createForum(forumDto);
@@ -36,17 +37,17 @@ public class ForumServicelmpl implements ForumService{
     public int getForumListCnt(SearchForumDto searchForumDto) throws Exception {
         return dao.getForumListCnt(searchForumDto);
     }
-
+    
     @Override
     public List<ForumDto> searchForumList(SearchForumDto searchForumDto) throws Exception {
         return dao.searchForumList(searchForumDto);
     }
-
+    
     @Override
     public ForumDto detailForum(int pk_forum) throws Exception {
         return dao.detailForum(pk_forum);
     }
-
+    
     @Override
     public void updateHits(int hits) throws Exception {
         dao.updateHits(hits);
@@ -60,9 +61,9 @@ public class ForumServicelmpl implements ForumService{
     @Override
     public void deleteForum(int pk_forum) throws Exception {
         dao.deleteForum(pk_forum);
-
+        
     }
-
+    
     @Override
     public List<ForumDto> searchNotices() throws Exception {
         return dao.searchNotices();
@@ -75,14 +76,11 @@ public class ForumServicelmpl implements ForumService{
 		fcdto.setUser_no(Integer.parseInt(map.get("user_no")));
 		fcdto.setCreated_at(map.get("created_at"));
 		fcdto.setContent(map.get("content"));
-
-
-//		System.out.println(fcdto.getForum_no());
-//		System.out.println(fcdto.getUser_no());
-//		System.out.println(fcdto.getCreated_at());
-//		System.out.println(fcdto.getContent());
-//		System.out.println(fcdto.getUser_name());
-
+		System.out.println(fcdto.getForum_no());
+		System.out.println(fcdto.getUser_no());
+		System.out.println(fcdto.getCreated_at());
+		System.out.println(fcdto.getContent());
+		
 		dao.createComment(fcdto);
 		return null;
 	}
@@ -91,146 +89,7 @@ public class ForumServicelmpl implements ForumService{
 	public List<FFcommentDto> searchComment(int pk_forum) throws Exception {
 		// TODO Auto-generated method stub
 		List<FcommentDto> lfcdto =  dao.searchComment(pk_forum);
-		List<FFcommentDto> lffcdto = new List<FFcommentDto>() {
-
-			@Override
-			public <T> T[] toArray(T[] a) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public Object[] toArray() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public List<FFcommentDto> subList(int fromIndex, int toIndex) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public int size() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public FFcommentDto set(int index, FFcommentDto element) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public boolean retainAll(Collection<?> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean removeAll(Collection<?> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public FFcommentDto remove(int index) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public boolean remove(Object o) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public ListIterator<FFcommentDto> listIterator(int index) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public ListIterator<FFcommentDto> listIterator() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public int lastIndexOf(Object o) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public Iterator<FFcommentDto> iterator() {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public boolean isEmpty() {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public int indexOf(Object o) {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			@Override
-			public FFcommentDto get(int index) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-
-			@Override
-			public boolean containsAll(Collection<?> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean contains(Object o) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public void clear() {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public boolean addAll(int index, Collection<? extends FFcommentDto> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public boolean addAll(Collection<? extends FFcommentDto> c) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-
-			@Override
-			public void add(int index, FFcommentDto element) {
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public boolean add(FFcommentDto e) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-		};
+		List<FFcommentDto> lffcdto = new ArrayList<FFcommentDto>();
 		for(FcommentDto fcdto : lfcdto)
 		{
 			FFcommentDto ffcdto = new FFcommentDto();
