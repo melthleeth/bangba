@@ -4,7 +4,7 @@ public class PaginationDto {
 	
 	private int page_num; // 현재 페이지
 	
-	private int forum_cnt_per_page = 15; // 한 페이지당 보여질 게시글 수
+	private int forum_cnt_per_page;// 한 페이지당 보여질 게시글 수
 	private int range_cnt = 5; // 한 페이지에 보여지는 범위의 수 
 	
 	private int page_range; // 현재 페이지 범위 정보
@@ -107,10 +107,11 @@ public class PaginationDto {
 		this.check_next = check_next;
 	}
 
-	public void page_info(int page_num, int page_range, int forum_total_cnt) {
+	public void page_info(int page_num, int page_range, int forum_total_cnt, int forum_cnt_per_page) {
 		this.page_num = page_num;
 		this.page_range = page_range;
 		this.forum_total_cnt = forum_total_cnt;
+		this.forum_cnt_per_page = forum_cnt_per_page;
 		
 		//전체 페이지 숫자 범위 = 전체 게시글 수 / 한 페이지당 보여줄 게시글 수  
 		this.range_total_cnt = (int) Math.ceil(forum_total_cnt/forum_cnt_per_page);

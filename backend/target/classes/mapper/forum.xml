@@ -63,6 +63,7 @@
             , A.updated_at
             , A.content
             , B.user_name
+            , (select count(*) from fcomment as C where C.forum_no = A.pk_forum) as comment_cnt 
         from forum as A
         inner join user as B on A.user_no = B.pk_user
         where pk_forum = #{pk_forum};

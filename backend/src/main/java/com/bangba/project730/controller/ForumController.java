@@ -53,6 +53,7 @@ public class ForumController {
             , @RequestParam(required = false, defaultValue = "1") int page_range
             , @RequestParam(required = false, defaultValue = "제목") String search_type
             , @RequestParam(required = false) String keyword
+            , @RequestParam(required = false, defaultValue = "15") int forum_cnt_per_page
             ) throws Exception {
         
         SearchForumDto searchForumDto = new SearchForumDto();
@@ -61,7 +62,7 @@ public class ForumController {
         
         int forum_total_cnt = forumService.getForumListCnt(searchForumDto);
         
-        searchForumDto.page_info(page_num, page_range, forum_total_cnt);
+        searchForumDto.page_info(page_num, page_range, forum_total_cnt, forum_cnt_per_page);
         model.addAttribute("pagination", searchForumDto);
         model.addAttribute("searchForumList", forumService.searchForumList(searchForumDto));
         return forumService.searchForumList(searchForumDto);
