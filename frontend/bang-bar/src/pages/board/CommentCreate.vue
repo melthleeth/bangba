@@ -75,9 +75,9 @@ export default {
       )
       .then((result)=>{
           console.log(result)
-          this.$router.push({
-            path:'/board/list'
-          });
+          // this.$router.push({
+          //   path:'/board/list'
+          // });
       })
       .catch(e=>{
           console.log('error:',e)

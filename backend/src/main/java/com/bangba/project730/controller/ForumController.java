@@ -110,9 +110,10 @@ public class ForumController {
         return forumService.searchNotices();
     }
     
+    
+    
 	@ApiOperation(value = "댓글 작성", response = String.class)
-	@PostMapping(value = ""
-			+ "",  headers = { "Content-type=application/json" })
+	@PostMapping(value = "/comment/create",  headers = { "Content-type=application/json" })
 	public String createComment(@RequestBody Map<String, String> map, Model model) throws Exception {
 //		System.out.println(map.toString());
 		try {
