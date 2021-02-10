@@ -5,7 +5,7 @@
         <router-link to="/header/editprofile">프로필 / 개인정보 수정</router-link>
       </li>
       <li class="li-margin">
-        <router-link to="/header/goBookmark">북마크한 레시피</router-link>
+        <router-link to="/header/bookmarkedrecipe">북마크한 레시피</router-link>
       </li>
       <li class="li-margin">
         <router-link to="/header/myposts">내가 쓴 글</router-link>
@@ -27,38 +27,7 @@
 
 <script>
 export default {
-  methods: {
-    goProfile() {
-      this.$router.push({
-        path: `/header/editprofile`,
-      });
-    },
-    goBookmark() {
-      this.$router.push({
-        path: `/header/goBookmark`,
-      });
-    },
-    goMyposts() {
-      this.$router.push({
-        path: `/header/myposts`,
-      });
-    },
-    goLog() {
-      this.$router.push({
-        path: `/header/activitylog`,
-      });
-    },
-    goFollow() {
-      this.$router.push({
-        path: `/header/followingfollowers`,
-      });
-    },
-    withDraw() {
-      this.$router.push({
-        path: `/header/withdraw`,
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 

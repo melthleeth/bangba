@@ -4,6 +4,7 @@
       <section class="col-span-1">
         <side-menu></side-menu>
       </section>
+
       <section class="mx-10 mt-10 col-span-2">
         <router-view v-slot="slotProps">
           <transition name="route" mode="out-in">
@@ -19,7 +20,9 @@
 import SideMenu from '../../components/ui/SideMenu.vue';
 
 export default {
-  components: { SideMenu },
+  components: {
+    SideMenu,
+  },
 };
 </script>
 

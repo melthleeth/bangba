@@ -13,6 +13,7 @@ import MyPosts from "./pages/users/MyPosts.vue";
 import ActivityLog from "./pages/users/ActivityLog.vue";
 import FollowingFollowers from "./pages/users/FollowingFollowers.vue";
 import MyPageOther from "./pages/users/MyPageOther.vue";
+import MyPageOnlyMe from "./pages/users/MyPageOnlyMe.vue";
 import WithDraw from "./pages/users/WithDraw.vue";
 
 // footer
@@ -63,6 +64,7 @@ const router = createRouter({
     { path: "/header/followingfollowers", component: FollowingFollowers },
     { path: "/header/withdraw", component: WithDraw },
     
+    { path: "/header/mypageonlyme", component: MyPageOnlyMe },
     { path: "/mypageother", component: MyPageOther },
     
     // footer
