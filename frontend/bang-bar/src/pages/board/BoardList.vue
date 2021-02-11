@@ -1,13 +1,10 @@
 <template>
-  <div class="flex flex-col justify-items-center px-16">
-    <span
-      class="text-center my-10 text-6xl font-S-CoreDream-medium font-bold font-color-black-400"
-      >게시판</span
-    >
+  <div class="flex flex-col justify-items-center px-16 font-color-black-400">
+    <span class="text-center my-10 text-4xl font-S-CoreDream-medium font-bold ">게시판</span>
 
-    <section id="search-bar" class="flex flex-row mb-6 px-16 font-S-CoreDream-light">
+    <section id="search-bar" class="flex flex-row mb-6 mx-28 font-S-CoreDream-light">
       <article class="flex justify-center justify-self-start">
-        <base-button mode="important" @click="writeContent" >글쓰기</base-button>
+        <base-button mode="important" class="px-8 py-2" @click="writeContent">글쓰기</base-button>
       </article>
       <!-- 후기/질문 탭용 버튼 -->
       <article>
@@ -19,8 +16,9 @@
       <article class="flex justify-center justify-self-end">
         <!-- 말머리 선택 드롭다운 -->
         <div class="inline-block relative w-max">
-          <select v-model="search_type"
-            class="block appearance-none w-full text-lg bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
+          <select
+            v-model="searchType"
+            class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-10 py-2 rounded-full shadow-lg leading-tight border-4 border-transparent focus:outline-none focus:shadow-outline"
           >
             <option>제목</option>
             <option>내용</option>
@@ -42,15 +40,15 @@
         <!-- 검색창 제목과 내용으로-->
         <div class="mx-4 flex-auto inline-block">
           <input
-            class="text-lg text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
+            class="text-base text-left shadow-lg appearance-none rounded-full w-full px-10 py-2 leading-tight border-4 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
             id="search"
             type="text"
-            placeholder="검색"
+            placeholder="키워드 입력"
             v-model="keyword"
             @keydown.enter="getList()"
           />
         </div>
-        <base-button @click="getList()">검색</base-button>
+        <base-button class="px-6 py-2 text-base" @click="getList()">검색</base-button>
       </article>
     </section>
 
@@ -62,12 +60,12 @@
           class="corner w-full flex flex-row flex-no-wrap sm:bg-white overflow-hidden sm:shadow-lg my-5 font-color-black-400 table-fixed"
         >
           <thead role="rowgroup" class="border-none py-4">
-            <tr role="row" class="font-S-CoreDream-light font-bold text-lg">
-              <th class="py-4 px-3">말머리</th>
-              <th class="w-3/7">제목</th>
-              <th class="w-1/7">작성자</th>
-              <th class="w-1/7">작성일</th>
-              <th class="w-1/7">조회수</th>
+            <tr role="row" class="font-S-CoreDream-light font-bold text-base">
+              <th class="pt-4 pb-2 w-1/12">말머리</th>
+              <th class="pt-4 pb-2 w-6/12">제목</th>
+              <th class="pt-4 pb-2 w-2/12">작성자</th>
+              <th class="pt-4 pb-2 w-1/12">작성일</th>
+              <th class="pt-4 pb-2 w-1/12">조회수</th>
             </tr>
           </thead>
           <tbody class="text-center">
@@ -77,10 +75,14 @@
               v-for="item in items"
               :key="item.no"
             >
-              <td class="py-4 text-sm">{{ item.category }}</td>
-              <td class="text-left font-semibold truncate">{{ item.title }}</td>
-              <td class="truncate">{{ item.user_name }}</td>
-              <td class="font-color-black-200 text-sm">{{ item.created_at }}</td>
+              <td class="py-3 text-sm">{{ item.category }}</td>
+              <td class="text-sm text-left truncate">
+                {{ item.title }} <span class="text-xs">[ {{ item.comment_cnt }} ]</span>
+              </td>
+              <td class="text-sm truncate">{{ item.user_name }}</td>
+              <td class="font-color-black-200 text-sm">
+                {{ item.created_at }}
+              </td>
               <td class="text-sm">{{ item.hits }}</td>
             </tr>
           </tbody>
@@ -89,249 +91,297 @@
       <!-- 페이지네이션바 -->
       <section>
         <div class="flex flex-col items-center my-12">
-            <div class="flex text-gray-700">
-                <button class="h-8 w-8 mr-1 flex justify-center items-center  cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-4 h-4">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <ul class="flex h-8 font-medium ">
-                  <li
-                    class="w-8 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  border-t-2 border-transparent"
-                    v-for="(page, idx) in page_total_cnt"
-                    :key="idx"
-                    @click="check(idx)"
-                  >{{page}}</li>
-                </ul>
-                <button class="h-8 w-8 ml-1 flex justify-center items-center  cursor-pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-4 h-4">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
-            </div>
+          <div class="flex text-gray-700 items-center">
+            <!-- << -->
+            <button
+              class="h-5 w-5 mr-1 flex justify-center text-gray-500"
+              @click="goStarat()"
+              :disabled="!checkPrev"
+              v-if="checkPrev"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M15.707 15.707a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 010 1.414zm-6 0a1 1 0 01-1.414 0l-5-5a1 1 0 010-1.414l5-5a1 1 0 011.414 1.414L5.414 10l4.293 4.293a1 1 0 010 1.414z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- < -->
+            <button
+              class="h-5 w-5 mr-1 flex justify-center items-center text-gray-500 "
+              @click="prevPage()"
+              :disabled="!checkPrev"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class=""
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- 숫자 -->
+            <ul class="flex h-8 font-medium ">
+              <li
+                class="w-9 md:flex justify-center items-center hidden cursor-pointer leading-5 transition duration-150 ease-in border-t-2 border-transparent"
+                v-for="page in pageRangePart"
+                :key="page"
+                @click="goPageNum(page - 1)"
+              >
+                {{ page }}
+              </li>
+            </ul>
+            <!-- > -->
+            <button
+              type="button"
+              class="h-5 w-5 mr-1 flex justify-center items-center text-gray-500"
+              @click="nextPage()"
+              :disabled="!checkNext"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- >> -->
+            <button
+              type="button"
+              class="h-5 w-5 mr-1 flex justify-center text-gray-500"
+              :disabled="!checkNext"
+              v-if="checkNext"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path
+                  fill-rule="evenodd"
+                  d="M10.293 15.707a1 1 0 010-1.414L14.586 10l-4.293-4.293a1 1 0 111.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M4.293 15.707a1 1 0 010-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
-      <!-- 세진스표 페이지네이션 버튼 -->
-      <!-- <section class="font-sm flex justify-center items-center mt-2 mb-6">
-        <base-button
-          mode="outline"
-          :disabled="pageNum === 0"
-          @click="prevPage"
-        >
-          이전
-        </base-button>
-        <span class="mx-4 font-semibold">{{ pageNum + 1 }} / {{ (Math.ceil(pageSize/10)) }}</span>
-
-        <base-button
-          mode="outline"
-          :disabled="pageNum >= page_total_cnt-1"
-          @click="nextPage"
-        >
-          다음
-        </base-button>
-      </section> -->
     </section>
   </div>
 </template>
-
 
 <script>
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
-  components: {
-  },
+  components: {},
 
-  name: "BoardList",
+  name: 'BoardList',
   data() {
-
     return {
-      writemode:null,
-      pk_forum:'',
+      writemode: null,
+      pk_forum: '',
       pageNum: 0,
-      keyword:"",
-      search_type: "제목",
-      page_total_cnt:'',
+      keyword: '',
+      searchType: '제목',
+      pageTotalCnt: '', // 전체 페이지 수
       items: [],
-      pageArray:this.items,
-      time_conver:'',
-      forum_cnt_per_page: 10, //한 페이지당 보여질 게시글 수
-      range_cnt: 5, //한 페이지에 보여지는 범위의 수
-
+      pageArray: this.items,
+      time_conver: '',
+      forumCntPerPage: 5, // 한 페이지 당 보여질 게시글 수
+      rangeCnt: 5, // 한 페이지에 보여지는 범위의 수
+      pageRange: 1,
+      endNumPerPage: '', // 해당 페이지에서 보여지는 마지막 페이지 수
+      checkNext: '', // 다음페이지 버튼 활성화
+      checkPrev: '', // 이번페이지 버튼 활성화
+      pageRangePart: [],
     };
   },
 
   methods: {
     writeContent() {
-      if(localStorage.getItem('pk_user')!=null){
+      if (localStorage.getItem('pk_user') != null) {
         this.$router.push({
-          path: `/board/create`
+          path: `/board/create`,
         });
-      }else{
-        alert("로그인을 해주세요.")
+      } else {
+        alert('로그인을 해주세요.');
       }
     },
 
-    nextPage () {
-      this.pageNum += 1;
-      this.getList();
-    },
-    prevPage () {
-      this.pageNum -= 1;
-      this.getList();
-    },
-
-    check (idx) {
-      this.pageNum = idx;
-      console.log("pageNum", this.pageNum);
-      this.getList();
-    },
-
-    fnView(){
+    fnView() {
       // alert("이동!");
-      <router-link to="/board/view"></router-link>
+      <router-link to="/board/view"></router-link>;
     },
     rowClick(item) {
-
       this.$router.push({
-        path: `/board/detail/${item.pk_forum}`
+        path: `/board/detail/${item.pk_forum}`,
       });
     },
 
     getList() {
-        let params = {
-          // 이부분을 현재페이지로 고치면됨.
-          page_num :this.pageNum+1,
-          page_range:1,
-          search_type:this.search_type,
-          keyword:this.keyword,
-        };
-        // this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-        this.axios.get(`${SERVER_URL}/forum/search-forum-list`, {
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8',
-        "Access-Control-Allow-Headers": "*",
-        }, params
-      })
-      .then((result)=>{
-        // this.items=result;
-        // console.log("디스페이지넘"+this.pageNum)
-        // console.log(result)
+      let params = {
+        page_num: this.pageNum + 1,
+        page_range: this.pageRange,
+        search_type: this.searchType,
+        keyword: this.keyword,
+        forum_cnt_per_page: this.forumCntPerPage,
+      };
 
-        this.items = result.data
-
-        this.convert_time();
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
+      this.axios
+        .get(`${SERVER_URL}/forum/search-forum-list`, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json; charset = utf-8',
+            'Access-Control-Allow-Headers': '*',
+          },
+          params,
+        })
+        .then((result) => {
+          this.items = result.data;
+          this.convert_time();
+          this.get_length();
+          this.get_end_page_num();
+        })
+        .catch((e) => {
+          console.log('error:', e);
+        });
     },
 
-    get_length(){
-      this.axios.get(`${SERVER_URL}/forum/forum_cnt`, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json; charset = utf-8',
-          "Access-Control-Allow-Headers": "*",
+    get_length() {
+      let params = {
+        search_type: this.searchType,
+        keyword: this.keyword,
+      };
+      this.axios
+        .get(`${SERVER_URL}/forum/forum_cnt`, {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json; charset = utf-8',
+            'Access-Control-Allow-Headers': '*',
+          },
+          params,
+        })
+        .then((result) => {
+          this.pageTotalCnt = Math.ceil(result.data / this.forumCntPerPage);
+          console.log('pageTotalCnt : ' + this.pageTotalCnt);
+        })
+        .catch((e) => {
+          console.log('error:', e);
+        });
+    },
+
+    convert_time() {
+      for (var i = 0; i < this.items.length; i++) {
+        var Y = String(this.items[i].created_at).substring(0, 4);
+        var M = String(this.items[i].created_at).substring(4, 6);
+        var D = String(this.items[i].created_at).substring(6, 8);
+
+        var H = String(this.items[i].created_at).substring(8, 10);
+        var Min = String(this.items[i].created_at).substring(10, 12);
+        var S = String(this.items[i].created_at).substring(12, 14);
+
+        //현재 월
+        let month = new Date().getMonth() + 1; // 월
+        let date = new Date().getDate(); // 날짜
+
+        if (month < '10') {
+          month = '0' + month;
         }
-      })
-      .then((result)=>{
-        // this.items=result;
-        // console.log(result)
-        this.page_total_cnt= Math.ceil(result.data/this.forum_cnt_per_page)
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
-    },
-
-    convert_time(){
-      for(var i=0;i<this.items.length;i++){
-          var Y=String(this.items[i].created_at).substring(0,4)
-          var M=String(this.items[i].created_at).substring(4,6)
-          var D=String(this.items[i].created_at).substring(6,8)
-
-          var H=String(this.items[i].created_at).substring(8,10)
-          var Min=String(this.items[i].created_at).substring(10,12)
-          var S=String(this.items[i].created_at).substring(12,14)
-
-
-          //현재 월
-          let month = new Date().getMonth() + 1;  // 월
-          let date = new Date().getDate();  // 날짜
-
-          if(month<'10'){
-            month='0'+month;
-          }
-          if(date<'10'){
-            date='0'+date;
-          }
-          var answer=""
-          if(month===M && D===date){
-            answer=H+":"+Min+":"+S;
-          }else{
-            answer=Y+"."+M+"."+D;
-          }
-          this.items[i].created_at=answer;
+        if (date < '10') {
+          date = '0' + date;
+        }
+        var answer = '';
+        if (month === M && D === date) {
+          answer = H + ':' + Min + ':' + S;
+        } else {
+          answer = Y + '.' + M + '.' + D;
+        }
+        this.items[i].created_at = answer;
       }
     },
 
-    // get_end_page(){
-    //   this.axios.get(`${SERVER_URL}/forum/search-forum-list/`+this.keyword, {
-    //     headers: {
-    //     'Access-Control-Allow-Origin': '*',
-    //     'Content-Type': 'application/json; charset = utf-8',
-    //     "Access-Control-Allow-Headers": "*",
-    //     }
-    //   })
-    //   .then((result)=>{
-    //     this.items = result.data
-    //   })
-    //   .catch(e=>{
-    //     console.log('error:',e)
-    //   })
-    // },
+    //페이지네이션 함수
+    nextPage() {
+      this.pageNum = this.pageRange * this.rangeCnt;
+      this.pageRange = this.pageRange + 1;
+      this.getList();
+    },
+    prevPage() {
+      this.pageRange = this.pageRange - 1;
+      this.pageNum = this.rangeCnt * this.pageRange - 1;
+      this.getList();
+    },
 
+    goPageNum(idx) {
+      this.pageNum = idx;
+      this.getList();
+    },
+
+    get_end_page_num() {
+      if (this.pageTotalCnt > this.rangeCnt * this.pageRange) {
+        this.endNumPerPage = this.rangeCnt * this.pageRange;
+      } else {
+        this.endNumPerPage = this.pageTotalCnt;
+      }
+
+      this.pageRangePart = [];
+      for (let i = (this.pageRange - 1) * this.rangeCnt; i < this.endNumPerPage; i++)
+        this.pageRangePart.push(i + 1);
+
+      console.log('pageRangePage' + this.pageRangePart);
+      this.checkPrev = this.pageRange === 1 ? false : true;
+      this.checkNext = this.pageTotalCnt < this.rangeCnt * this.pageRange ? false : true;
+    },
   },
-
 
   computed: {
-
     rows() {
       return this.items.length;
-    }
+    },
   },
   created() {
-    this.pageArray=this.items;
-    this.writemode=localStorage.getItem("pk_user");
+    this.pageArray = this.items;
+    this.writemode = localStorage.getItem('pk_user');
+    this.getList();
+    this.get_length();
+    this.get_end_page_num();
   },
   mounted() {
-      this.getList()
-      this.get_length()
+    this.getList();
+    this.get_length();
   },
-
+  update(){
+    console.log("!")
+  },
 };
-
-
 </script>
 <style scoped>
-    .board{
-        /* width:50%; */
+.board {
+  /* width:50%; */
 
-        background-color: #FFFFFF;
-        text-decoration: none;
-        padding: 0.75rem 1.5rem;
-        font: inherit;
-        /* border: 0.1px solid #FFFFFF; */
+  background-color: #ffffff;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  font: inherit;
+  /* border: 0.1px solid #FFFFFF; */
 
-        border-radius: 30px;
-        margin-right: 0.5rem;
-        /* display: inline-block; */
-        transition: .3s ease-out;
-        margin-bottom: 15px;
-    }
-    @media (min-width: 640px) {
+  border-radius: 30px;
+  margin-right: 0.5rem;
+  /* display: inline-block; */
+  transition: 0.3s ease-out;
+  margin-bottom: 15px;
+}
+@media (min-width: 640px) {
   table {
     display: inline-table !important;
   }

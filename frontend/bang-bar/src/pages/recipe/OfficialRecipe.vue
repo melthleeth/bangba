@@ -66,7 +66,7 @@
       </div>
       <div
         v-else-if="hasRecipes"
-        class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto"
+        class="grid grid-cols-4 grid-flow-row gap-4 mx-auto"
       >
         <recipe-card
           v-for="cocktail in filteredRecipes"

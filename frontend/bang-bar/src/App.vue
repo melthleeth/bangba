@@ -140,6 +140,13 @@ export default {
   color: #FF0000;
 }
 
+.card-flat {
+  border-radius: 25px;
+  padding: 0.75rem 1rem;
+  margin: 0.6rem 1rem;
+  background-color: white;
+}
+
 * {
   box-sizing: border-box;
 }

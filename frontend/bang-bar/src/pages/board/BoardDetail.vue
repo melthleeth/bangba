@@ -1,225 +1,224 @@
 <template>
-  <div style="text-align: center;">
-     
-      <div class="whiteboard">
-        <div class="font-extrabold text-lg content-detail-content-info-left-number" >[{{forum.category}}]</div>
-        <div class="font-extrabold text-3xl content-detail-content-info-left-subject" >{{forum.title}}</div>
-      </div>
-      <div class="whiteboard">
-        <img src="../../assets/icon/chunsik.png" class="float-left;" style="height:60px">
-              <div class="content-detail-content-info-right-user">{{forum.user_name}}
-                 <base-button>팔로우</base-button>
-              </div>
-                <div class="flex items-center mb-2">
-                  <div class="content-detail-content-info-right-created">
-                    {{forum.created_at}}
-                    조회 : {{forum.hits}}
-                  
-                  </div>
-                </div>
+  <div
+    class="font-color-black-400 flex flex-col justify-items-center font-S-CoreDream-light"
+  >
+    <section
+      class="card-flat mt-12 w-1/2 flex flex-col justify-items-center mx-auto text-center"
+    >
+      <span class="font-extrabold text-base">[{{ forum.category }}]</span>
+      <span class="font-extrabold text-xl tracking-wider mt-1">{{
+        forum.title
+      }}</span>
+    </section>
+    <section class="card-flat w-1/2 mx-auto flex">
+      <img
+        class="w-12 h-12 mr-2"
+        src="../../assets/img/profile6.png"
+        alt="profile image"
+      />
+      <section class="flex flex-col w-full">
+        <article
+          class="font-S-CoreDream-medium tracking-wider flex items-center"
+        >
+          <span>{{ forum.user_name }}</span>
+          <base-button class="text-xs px-2 py-1 ml-2">팔로우</base-button>
+        </article>
+        <article class="flex items-center font-color-black-200 text-sm">
+          <span class="mr-2">{{ forum.created_at }}</span>
+          <span class="mr-2">조회 {{ forum.hits }}</span>
+          <section class="">
+            <span v-if="forum.user_name === owner_check">
+              <base-button
+                class="text-xs px-2 py-1 ml-2"
+                mode="nude"
+                @click="updateData"
+                >수정</base-button
+              >
+              <base-button
+                class="text-xs px-2 py-1"
+                mode="nude"
+                @click="deleteData"
+                >삭제</base-button
+              >
+            </span>
+          </section>
+          <section class="flex justify-self-end items-center ml-auto mr-4">
+            <article class="flex items-center">
+              <img
+                src="../../assets/icon/like@0.75x.png"
+                class="object-contain ml-2 mr-0"
+                alt="like icon"
+              />
+              <span class="font-2xs font-semibold font-color-black-300">
+                {{ forum.like_cnt }}
+              </span>
+            </article>
+            <article class="flex items-center">
+              <img
+                src="../../assets/icon/comment@0.75x.png"
+                class="object-contain ml-1 mr-0"
+                alt="bookmark icon"
+              />
+              <span class="mr-2 font-2xs font-semibold font-color-black-300">
+                {{ forum.comment_cnt }}
+              </span>
+            </article>
+          </section>
+        </article>
+      </section>
+    </section>
 
-                <div>
-                 <img src="../../assets/icon/like.png" class="" style="width:20px; "> {{forum.like_cnt}}
-                 <img src="../../assets/icon/commentCount.png">  {{forum.like_cnt}}
-                </div>
-        </div>
-
-      <div class="whiteboard" style="min-height:500px" >{{forum.content}}</div>
-     
-      <div class ="flex flex-col">
-        <base-button>추천수 {{forum.like_cnt}}</base-button>
+    <section class="card-flat flex flex-col w-1/2 mx-auto h-full ">
+      <div class="table mx-2 my-4 min-h leading-relaxed tracking-wide">
+        {{ forum.content }}
       </div>
-      <div class="content-detail-button">
-        
-        <span v-if="forum.user_name===owner_check">
-          <base-button @click="updateData">수정</base-button>
-          <base-button @click="deleteData">삭제</base-button>
-        </span>
-        <base-button @click="golist">목록</base-button>
-        
-      </div>
-      <div class="content-detail-comment">
-        <CommentList :contentId="contentId"></CommentList>
-      </div>
-    
+    </section>
+    <section
+      class="card-flat flex flex-col justify-items-center items-center mx-auto transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+    >
+      <img
+        src="../../assets/icon/like@1.5x.png"
+        class="object-contain mx-2"
+        alt="like icon"
+      />
+      <span class="w-max font-S-CoreDream-medium font-color-black-300">{{
+        forum.like_cnt
+      }}</span>
+    </section>
+    <section class="flex flex-col w-1/2 mx-auto">
+      <comment-list :contentId="forumId.val"></comment-list>
+      <section class="flex justify-self-end ml-auto">
+        <base-button mode="outline" class="px-6 py-2 text-sm" @click="golist"
+          >목록</base-button
+        >
+        <base-button mode="outline" class="px-6 py-2 text-sm" @click="backToTop"
+          >TOP</base-button
+        >
+      </section>
+    </section>
   </div>
 </template>
 
 <script>
-// import BaseButton from '../../components/ui/BaseButton.vue';
-// import data from "@/data";
-import CommentList from "./CommentList";
+import CommentList from "./CommentList.vue";
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   name: "BoardDetail",
-
-  
+  components: {
+    CommentList,
+  },
   data() {
-    // const contentId = Number(this.$route.params.contentId);
-    // const contentData = data.Content.filter(
-      // contentItem => contentItem.content_id === contentId
-    // )[0];
     return {
-    
-      owner_check:localStorage.getItem('user_name'),
-      forum:[],
-      forumId:this.$route.params.contentId,
+      owner_check: localStorage.getItem("user_name"),
+      forum: [],
+      forumId: {
+        type: Number,
+        val: this.$route.params.contentId,
+      },
     };
   },
 
-  created(){
+  created() {
     // console.log(this.forum.forumId);
-    
     this.forum_Detail();
   },
   methods: {
-    //삭제
-    forum_Detail(){
-        this.axios.get(`${SERVER_URL}/forum/${this.forumId}`, {
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json; charset = utf-8',
-        "Access-Control-Allow-Headers": "*",
-        }
-      })
-      .then((result)=>{
-        // this.items=result;
-        // console.log(result)
-        this.forum = result.data
-        this.convert_time()
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
+    backToTop() {
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: "smooth",
+      });
+    },
+    //상세페이지 이동
+    forum_Detail() {
+      this.axios
+        .get(`${SERVER_URL}/forum/${this.forumId.val}`, {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json; charset = utf-8",
+            "Access-Control-Allow-Headers": "*",
+          },
+        })
+        .then((result) => {
+          // this.items=result;
+          // console.log(result)
+          this.forum = result.data;
+          this.convert_time();
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
     },
 
-
+    //삭제 
     deleteData() {
-        const headers = {
-          'Content-type': 'application/json; charset=UTF-8',
-          'Accept': '*/*',
-          'Access-Control-Allow-Origin': '*',
+      const headers = {
+        "Content-type": "application/json; charset=UTF-8",
+        Accept: "*/*",
+        "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "*",
-      }
+      };
 
-        this.axios.delete(`${SERVER_URL}/forum/delete-forum/${this.forumId}`,
-        // JSON.stringify(params),
-        { headers }
-      )
-      .then((result)=>{
-          console.log(result)
-      this.$router.push({
-        path: "/board/list"
-      });
-      })
-      .catch(e=>{
-          console.log('error:',e)
-      })
+      this.axios
+        .delete(
+          `${SERVER_URL}/forum/delete-forum/${this.forumId.val}`,
+          // JSON.stringify(params),
+          { headers }
+        )
+        .then((result) => {
+          console.log(result);
+          this.$router.push({
+            path: "/board/list",
+          });
+        })
+        .catch((e) => {
+          console.log("error:", e);
+        });
     },
 
     //수정
     updateData() {
       this.$router.push({
         // path: `/board/modify/${this.forumId}`
-        path: `/board/create/${this.forumId}`
+        path: `/board/create/${this.forumId.val}`,
       });
     },
 
     //목록으로가기
-    golist(){
-      this.$router.go(-1)
+    golist() {
+      this.$router.go(-1);
     },
-
 
     //시간 포멧 수정
-    convert_time(){
-          var Y=String(this.forum.created_at).substring(0,4)
-          var M=String(this.forum.created_at).substring(4,6)
-          var D=String(this.forum.created_at).substring(6,8)
+    convert_time() {
+      var Y = String(this.forum.created_at).substring(0, 4);
+      var M = String(this.forum.created_at).substring(4, 6);
+      var D = String(this.forum.created_at).substring(6, 8);
 
-          var H=String(this.forum.created_at).substring(8,10)
-          var Min=String(this.forum.created_at).substring(10,12)
-          var S=String(this.forum.created_at).substring(12,14)
+      var H = String(this.forum.created_at).substring(8, 10);
+      var Min = String(this.forum.created_at).substring(10, 12);
+      var S = String(this.forum.created_at).substring(12, 14);
 
+      //현재 월
+      let month = new Date().getMonth() + 1; // 월
+      let date = new Date().getDate(); // 날짜
 
-          //현재 월
-          let month = new Date().getMonth() + 1;  // 월
-          let date = new Date().getDate();  // 날짜
-          
-          if(month<'10'){
-            month='0'+month;
-          }
-          if(date<'10'){
-            date='0'+date;
-          }
-          var answer=""
-          answer=Y+"."+M+"."+D+"  "+H+":"+Min+":"+S;
-          this.forum.created_at=answer;
-      
+      if (month < "10") {
+        month = "0" + month;
+      }
+      if (date < "10") {
+        date = "0" + date;
+      }
+      var answer = "";
+      answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
+      this.forum.created_at = answer;
     },
-    
   },
-  components: {
-    CommentList,
-    
-  }
 };
 </script>
 <style scoped>
-.content-detail-content-info {
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
+.min-h {
+  min-height: 40vh;
 }
-
-.content-detail-content-info-left {
-  width: 720px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-}
-
-.content-detail-content-info-right {
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-}
-
-.content-detail-content {
-  border: 1px solid black;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  min-height: 720px;
-}
-
-.content-detail-button {
-  border: 1px solid black;
-  margin-top: 1rem;
-  padding: 2rem;
-}
-
-.content-detail-comment {
-  border: 1px solid black;
-  margin-top: 1rem;
-  padding: 2rem;
-}
-
-    .whiteboard{
-        width:50%;
-        background-color: #FFFFFF;
-        text-decoration: none;
-        padding: 0.75rem 1.5rem;
-        font: inherit;
-        border: 0.1px solid #FFFFFF;
-        border-radius: 30px;
-        margin-right: 0.5rem;
-        display: inline-block;
-        transition: .3s ease-out;
-        margin-bottom: 15px;
-    }
 </style>
