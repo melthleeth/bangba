@@ -35,8 +35,8 @@ a {
   text-decoration: none;
   /* padding: 0.75rem 1.5rem; */
   /* font: inherit; */
-  background-color: #00002f;
-  border: 3px solid #00002f;
+  background-color: #00002F;
+  border: 3px solid #00002F;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -50,6 +50,11 @@ a:active,
 button:hover,
 button:active {
   color: #ff5e46;
+}
+
+a:focus,
+button:focus {
+    outline: none;
 }
 
 .flat {
