@@ -360,6 +360,9 @@ export default {
     this.getList();
     this.get_length();
   },
+  update(){
+    console.log("!")
+  },
 };
 </script>
 <style scoped>

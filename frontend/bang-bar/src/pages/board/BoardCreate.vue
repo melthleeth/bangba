@@ -77,14 +77,6 @@ export default {
   created() {
     if (this.$route.params.contentId > 0) {
       this.take_data();
-
-      // console.log("create의",forum2);
-
-      // const contentId = Number(this.$route.params.contentId)
-      // this.updateObject = data.Content.filter(contentItem => contentItem.content_id === contentId)[0]
-      // this.subject = this.updateObject.title;
-      // this.context = this.updateObject.context;
-
       this.category = this.forum.category;
       this.title = this.forum.title;
       this.content = this.forum.content;

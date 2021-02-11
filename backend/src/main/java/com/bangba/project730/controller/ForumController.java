@@ -115,9 +115,10 @@ public class ForumController {
 	@ApiOperation(value = "댓글 작성", response = String.class)
 	@PostMapping(value = "/comment/create",  headers = { "Content-type=application/json" })
 	public String createComment(@RequestBody Map<String, String> map, Model model) throws Exception {
-		System.out.println(map.toString());
+
 		try {
 			forumService.createComment(map);
+			System.out.println(map.toString());
 			model.addAttribute("msg", "댓글 작성 완료");
 			return "main";
 		} catch (Exception e) {
@@ -145,13 +146,14 @@ public class ForumController {
 	@ApiOperation(value = "댓글 수정", response = String.class)
 	@PutMapping("/comment/update-comment")
 	public String updateComment(@RequestBody Map<String, String> map, Model model) throws Exception {
+		System.out.println(map.toString());
 		try {
 			forumService.updateComment(map);
-			model.addAttribute("msg", "레시피 수정 완료");
+			model.addAttribute("msg", "댓글 수정 완료");
 			return "main";
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "레시피 수정중 문제가 발생했습니다.");
+			model.addAttribute("msg", "댓글 수정중 문제가 발생했습니다.");
 			return "error";
 		}
 	}
