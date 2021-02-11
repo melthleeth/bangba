@@ -85,4 +85,14 @@
 		from user
 		where pk_user = #{user_no}
 	</select>
+	
+	<select id="getTagMyPage" parameterType="int" resultType="String">
+		select 
+			pk_article_tag
+		    , article_no
+		    , tag_no 
+		from article_tag
+		where article_no = #{pk_article};
+	</select>
+	
 </mapper>

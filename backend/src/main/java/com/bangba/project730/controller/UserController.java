@@ -2,6 +2,7 @@ package com.bangba.project730.controller;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -147,9 +148,9 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
-	@GetMapping(value = "/mypage/options/bookmark")
+	@PostMapping(value = "/mypage/options/bookmark")
 	@ResponseBody
-	public List<ArticleTotalDto> bookmarkMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) int pk_user) {
+	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false, defaultValue = "1") int pk_user) {
 		return userService.bookmarkMyPage(pk_user);
 	}
 	

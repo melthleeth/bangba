@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.bangba.project730.model.dao.UserDao;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
 
 @Service
@@ -94,5 +95,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int isDuplicatedPhoneNumber(String phone_number) {
 		return dao.isDuplicatedPhoneNumber(phone_number);
+	}
+	
+	@Override
+	public List<TagDto> getTagMyPage(int pk_article) throws Exception {
+		return dao.getTagMyPage(pk_article);
 	}
 }

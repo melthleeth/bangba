@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
 
 @Mapper
@@ -27,4 +28,6 @@ public interface UserDao {
 
 	public String getUserName(int user_no) throws Exception;
 	public String getImgPath(int user_no) throws Exception;
+	
+	public List<TagDto> getTagMyPage(int pk_article) throws Exception;
 }
