@@ -16,6 +16,7 @@ export default {
             body: JSON.stringify(userInfo)
         });
         const responseData = await response.text();
+        console.log(userInfo);
         if(parseInt(responseData) == 1) {
             context.commit("setIsFollow", true);
         } else if(parseInt(responseData) == 0) {
@@ -40,8 +41,8 @@ export default {
             body: JSON.stringify(userInfo)
         });
         const responseData = await response.text();
-
-        if(responseData == "success") {
+        
+        if(responseData == "SUCCESS") {
             context.commit("setIsFollow", true);
         } else {
             alert("팔로우 실패");

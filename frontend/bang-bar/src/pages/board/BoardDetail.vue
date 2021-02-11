@@ -111,17 +111,33 @@ export default {
   data() {
     return {
       owner_check: localStorage.getItem("user_name"),
-      forum: [],
+      forum: [{
+        category: "",
+        comment_cnt: 0,
+        content: "",
+        created_at: "",
+        hits: 0,
+        like_cnt: 0,
+        pk_forum: 0,
+        title: "",
+        updated_at: "",
+        user_name: "",
+        user_no: 0 }
+      ],
       forumId: {
         type: Number,
         val: this.$route.params.contentId,
       },
+      isFollow : false,
     };
   },
 
   created() {
-    // console.log(this.forum.forumId);
     this.forum_Detail();
+  },
+  mounted() {
+    this.is_Follow();
+    this.isFollow = this.$store.getters["follows/isFollow"];
   },
   methods: {
     backToTop() {
@@ -143,8 +159,8 @@ export default {
         })
         .then((result) => {
           // this.items=result;
-          // console.log(result)
           this.forum = result.data;
+          console.log(this.forum.user_no);
           this.convert_time();
         })
         .catch((e) => {
@@ -216,19 +232,14 @@ export default {
       this.forum.created_at = answer;
     },
     // 팔로우 여부 확인하기
-    async isFollow() {
+    async is_Follow() {
       const userInfo = {
-        target_no : this.forum.user_no
+        target_no : this.$route.params.user_no
       };
       await this.$store.dispatch("follows/isFollow", userInfo);
     },
     //follow 하기
     async follow() {
-      console.log(this.isFollow);
-      console.log(this.isFollow);
-      console.log(this.isFollow);
-      console.log(this.isFollow);
-      console.log(this.isFollow);
       if(localStorage.getItem("user_name") === null) {
         alert("로그인이 필요한 기능입니다.")
         return;
@@ -246,11 +257,17 @@ export default {
   watch : {
     set_isFollow(newVal) {
       this.isFollow = newVal;
+    },
+    set_forum_no(newVal) {
+      this.forum.user_no = newVal;
     }
   },
   computed : {
     set_isFollow() {
       return this.$store.getters["follows/isFollow"];
+    },
+    set_forum_no() {
+      return this.forum.user_no ;
     }
   },
   
