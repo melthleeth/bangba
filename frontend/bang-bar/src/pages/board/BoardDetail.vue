@@ -21,7 +21,8 @@
           class="font-S-CoreDream-medium tracking-wider flex items-center"
         >
           <span>{{ forum.user_name }}</span>
-          <base-button class="text-xs px-2 py-1 ml-2">팔로우</base-button>
+          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-if="isFollow">팔로우</base-button>
+          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -214,7 +215,45 @@ export default {
       answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
       this.forum.created_at = answer;
     },
+    // 팔로우 여부 확인하기
+    async isFollow() {
+      const userInfo = {
+        target_no : this.forum.user_no
+      };
+      await this.$store.dispatch("follows/isFollow", userInfo);
+    },
+    //follow 하기
+    async follow() {
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+        return;
+      }
+      const userInfo = {
+        target_no : this.forum.user_no
+      };
+      if(this.isFollow) {
+        await this.$store.dispatch("follows/unfollow", userInfo);
+      } else {
+        await this.$store.dispatch("follows/follow", userInfo);
+      }
+    }
   },
+  watch : {
+    set_isFollow(newVal) {
+      this.isFollow = newVal;
+    }
+  },
+  computed : {
+    set_isFollow() {
+      return this.$store.getters["follows/isFollow"];
+    }
+  },
+  
 };
 </script>
 <style scoped>

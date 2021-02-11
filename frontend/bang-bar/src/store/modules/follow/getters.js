@@ -2,10 +2,10 @@ export default {
     isFollow(state) {
         return state.isFollow;
     },
-    followCnt(state) {
+    followList(state) {
         return state.followCnt;
     },
-    followingCnt(state) {
+    followingList(state) {
         return state.followingCnt;
     }
 };

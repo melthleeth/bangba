@@ -3,7 +3,7 @@ package com.bangba.project730.model.dto;
 public class FollowDetailDto {
 	private int pk_user;
 	private String user_name;
-	private int is_follow;
+	private int follow_cnt;
 	
 	public int getPk_user() {
 		return pk_user;
@@ -17,10 +17,10 @@ public class FollowDetailDto {
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
 	}
-	public int isIs_follow() {
-		return is_follow;
+	public int getFollow_cnt() {
+		return follow_cnt;
 	}
-	public void setIs_follow(int is_follow) {
-		this.is_follow = is_follow;
+	public void setFollow_cnt(int follow_cnt) {
+		this.follow_cnt = follow_cnt;
 	}
 }

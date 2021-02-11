@@ -3,11 +3,12 @@ import actions from "./actions.js";
 import getters from "./getters.js";
 
 export default {
+    namespaced: true,
     state() {
         return {
             isFollow : false,
-            followCnt : 0,
-            followingCnt : 0
+            followList : [],
+            followingList : []
         };
     },
     mutations,

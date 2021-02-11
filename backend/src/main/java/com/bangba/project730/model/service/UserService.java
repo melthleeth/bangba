@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
 
 public interface UserService {
@@ -21,6 +23,9 @@ public interface UserService {
 	public UserDto getMyPage(int pk_user);
 	public void updateMyPage(UserDto userDto);
 	public void deleteMyPage(int pk_user);
-	public List<ArticleDto> bookmarkMyPage(int pk_user);
+	public List<ArticleTotalDto> bookmarkMyPage(int pk_user);
 	public List<ArticleDto> articleMyPage(int pk_user);
+	
+	//마이페이지
+	public List<TagDto> getTagMyPage(int pk_article) throws Exception;
 }

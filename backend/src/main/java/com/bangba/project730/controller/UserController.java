@@ -2,6 +2,7 @@ package com.bangba.project730.controller;
 
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.FollowDetailDto;
 import com.bangba.project730.model.dto.FollowDto;
 import com.bangba.project730.model.dto.UserDto;
@@ -146,14 +148,14 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
-	@PutMapping(value = "/mypage/options/bookmark")
+	@PostMapping(value = "/mypage/options/bookmark")
 	@ResponseBody
-	public List<ArticleDto> bookmarkMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
-		return userService.bookmarkMyPage(userDto.getPk_user());
+	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false, defaultValue = "1") int pk_user) {
+		return userService.bookmarkMyPage(pk_user);
 	}
 	
 	@ApiOperation(value = "마이페이지 내가 쓴 레시피", response = String.class)
-	@PutMapping(value = "/mypage/options/article")
+	@GetMapping(value = "/mypage/options/article")
 	@ResponseBody
 	public List<ArticleDto> articleMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
 		return userService.articleMyPage(userDto.getPk_user());
