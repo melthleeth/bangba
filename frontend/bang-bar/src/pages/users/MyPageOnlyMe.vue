@@ -1,11 +1,11 @@
 <template>
-  <div style="flex flex-row">
-    <div class="flex grid grid-cols-3 grid-flow-row gap-12">
-      <section class="col-span-1">
-        <side-menu></side-menu>
+  <div style="flex flex-row font-color-black-400 font-S-CoreDream-light">
+    <div class="flex grid grid-cols-4 grid-flow-row gap-4 justify-items-center">
+      <section class="mt-10 mx-auto">
+        <user-menu></user-menu>
       </section>
 
-      <section class="mx-10 mt-10 col-span-2">
+      <section class="mt-10 mb-24 mx-auto col-span-3 w-full">
         <router-view></router-view>
       </section>
     </div>
@@ -13,11 +13,11 @@
 </template>
 
 <script>
-import SideMenu from '../../components/ui/SideMenu.vue';
+import UserMenu from '../../components/users/UserMenu.vue';
 
 export default {
   components: {
-    SideMenu,
+    UserMenu,
   },
 };
 </script>

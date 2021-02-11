@@ -14,7 +14,7 @@ import ActivityLog from "./pages/users/ActivityLog.vue";
 import FollowingFollowers from "./pages/users/FollowingFollowers.vue";
 import MyPageOther from "./pages/users/MyPageOther.vue";
 import MyPageOnlyMe from "./pages/users/MyPageOnlyMe.vue";
-import WithDraw from "./pages/users/WithDraw.vue";
+import LeaveUser from "./pages/users/LeaveUser.vue";
 
 // footer
 import BangbaGuide from "./pages/footers/BangbaGuide.vue";
@@ -87,7 +87,7 @@ const router = createRouter({
       props: true,
       component: RecipeDetail,
     },
-    
+
     // header-dropdown-mypage
     {
       path: "/header",
@@ -97,30 +97,30 @@ const router = createRouter({
         {
           path: "bookmarkedrecipe",
           component: BookmarkedRecipe,
-          name: "BookmarkedRecipe"
+          name: "BookmarkedRecipe",
         },
         {
           path: "editprofile",
           component: EditProfile,
-          name: "EditProfile"
+          name: "EditProfile",
         },
         {
           path: "myposts",
-          component: MyPosts
+          component: MyPosts,
         },
         {
           path: "activitylog",
-          component: ActivityLog
+          component: ActivityLog,
         },
         {
           path: "followingfollowers",
-          component: FollowingFollowers
+          component: FollowingFollowers,
         },
         {
-          path: "withdraw",
-          component: WithDraw
+          path: "leave",
+          component: LeaveUser,
         },
-      ]
+      ],
     },
 
     // mypage-other
