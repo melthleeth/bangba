@@ -70,19 +70,19 @@
         <span class="font-S-CoreDream-medium mb-10">{{ user_id }}</span>
         <input
           class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
-          id="search"
+          id="currentPassword"
           type="text"
           placeholder="현재 비밀번호"
         />
         <input
           class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
-          id="search"
+          id="newPassword"
           type="text"
           placeholder="새 비밀번호"
         />
         <input
           class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
-          id="search"
+          id="confirmNewPassword"
           type="text"
           placeholder="새 비밀번호 확인"
         />
