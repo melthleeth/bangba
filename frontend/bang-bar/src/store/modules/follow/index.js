@@ -6,8 +6,8 @@ export default {
     state() {
         return {
             isFollow : false,
-            followCnt : 0,
-            followingCnt : 0
+            followList : [],
+            followingList : []
         };
     },
     mutations,
