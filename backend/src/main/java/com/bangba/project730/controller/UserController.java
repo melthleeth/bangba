@@ -279,7 +279,7 @@ public class UserController {
 	
 	@ApiOperation(value = "팔로우 여부 확인하기", response = String.class)
 	@PostMapping(value = "/isfollow")
-	public int isFollow(@ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+	public int isFollow(@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
 			Model model) {
 		return followService.isFollow(followDto);
 	}
