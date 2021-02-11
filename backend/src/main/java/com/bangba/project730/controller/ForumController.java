@@ -182,5 +182,24 @@ public class ForumController {
         searchForumDto.setKeyword(keyword);
         return forumService.getForumListCnt(searchForumDto);
     }
+    
+//	@ApiOperation(value = "게시판 좋아요", response = String.class)
+//	@PutMapping("/like")
+//	public String clickLike(@RequestBody Map<String, String> map) {
+//		try {
+//			System.out.println(map.toString());
+//			if(map.get("isclick").equals("off")) {
+//				articleService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+//				articleService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+//			} else {
+//				articleService.downLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+//				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+//			}
+//			return "success";
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//			return "error";
+//		}
+//	}
 
 }

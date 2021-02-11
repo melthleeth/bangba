@@ -81,9 +81,9 @@
         class="object-contain mx-2"
         alt="like icon"
       />
-      <span class="w-max font-S-CoreDream-medium font-color-black-300">{{
+      <button class="w-max font-S-CoreDream-medium font-color-black-300" @click="clickLikeBtn">{{
         forum.like_cnt
-      }}</span>
+      }}</button>
     </section>
     <section class="flex flex-col w-1/2 mx-auto">
       <comment-list :contentId="forumId.val"></comment-list>
@@ -121,6 +121,7 @@ export default {
   created() {
     // console.log(this.forum.forumId);
     this.forum_Detail();
+    console.log(this.userNo);
   },
   methods: {
     backToTop() {
@@ -141,9 +142,8 @@ export default {
           },
         })
         .then((result) => {
-          // this.items=result;
-          // console.log(result)
           this.forum = result.data;
+          console.log(result)
           this.convert_time();
         })
         .catch((e) => {

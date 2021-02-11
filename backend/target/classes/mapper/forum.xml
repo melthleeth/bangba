@@ -63,6 +63,7 @@
             , A.updated_at
             , A.content
             , B.user_name
+            , A.user_no
             , (select count(*) from fcomment as C where C.forum_no = A.pk_forum) as comment_cnt 
         from forum as A
         inner join user as B on A.user_no = B.pk_user
@@ -103,11 +104,16 @@
     </select>
     
     
+    
+    <!-- 댓글 관련 -->
+    
+    <!-- 댓글 생성 -->
 	<insert id="createComment" parameterType="FcommentDto">
 		insert into fcomment (forum_no, user_no, content, created_at)
 		values (#{forum_no}, #{user_no}, #{content}, #{created_at})	
 	</insert>
 	
+	<!-- 댓글 목록 조회 -->
 	<select id="searchComment" resultType="FcommentDto" parameterType="int">
  		select * from fcomment
 		where forum_no = #{pk_forum} order by pk_fcomment desc 
@@ -124,14 +130,57 @@
 			order by pk_fcomment desc -->
 	</select>
 	
+	<!-- 댓글 수정 -->
 	<update id="updateComment" parameterType="FcommentDto">
 		update fcomment set 
 		content = #{content} 
 		where pk_fcomment = #{pk_fcomment}
 	</update>
 	
+	
+	<!-- 댓글 삭제 -->
 	<delete id="deleteComment" parameterType="int">
 		delete from fcomment
 		where pk_fcomment = #{pk_fcomment}
 	</delete>
+	
+	
+	<!-- 좋아요 관련 -->
+	
+	
+	
+	<insert id="insertLike" parameterType="int">
+		insert into flike(article_no, user_no, bookmark)
+		values(#{article_no}, #{user_no}, false)
+	</insert>
+	
+	<delete id="deleteLike" parameterType="int">
+		delete 
+		from flike
+		where  article_no = #{article_no} and user_no = #{user_no} and bookmark = false;
+	</delete>
+	
+	
+	<update id="upLike" parameterType="int">
+		update article
+		set like_cnt = like_cnt + 1
+		where pk_article = #{article_no} and pk_article in (select article_no
+															from alike
+															where user_no = #{user_no});
+	</update>
+	
+	<update id="downLike" parameterType="int">
+		update article
+		set like_cnt = like_cnt - 1
+		where pk_article = #{article_no} and pk_article in (select article_no
+															from alike
+															where user_no = #{user_no});
+	</update>
+	
+	<select id="isLike" parameterType="int" resultType="int">
+		select count(*)
+		from alike
+		where article_no = #{article_no} and user_no = #{user_no} and bookmark = false
+	</select>
+	
 </mapper>
