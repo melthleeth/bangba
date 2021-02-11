@@ -21,7 +21,7 @@
           class="font-S-CoreDream-medium tracking-wider flex items-center"
         >
           <span>{{ forum.user_name }}</span>
-          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-if="isFollow">팔로우</base-button>
+          <base-button class="text-xs px-2 py-1 ml-2" style="color: black; background-color: white" @click="follow" v-if="isFollow">팔로잉</base-button>
           <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
@@ -135,7 +135,7 @@ export default {
   created() {
     this.forum_Detail();
   },
-  mounted() {
+  updated() {
     this.is_Follow();
     this.isFollow = this.$store.getters["follows/isFollow"];
   },
@@ -160,7 +160,6 @@ export default {
         .then((result) => {
           // this.items=result;
           this.forum = result.data;
-          console.log(this.forum.user_no);
           this.convert_time();
         })
         .catch((e) => {
@@ -234,7 +233,7 @@ export default {
     // 팔로우 여부 확인하기
     async is_Follow() {
       const userInfo = {
-        target_no : this.$route.params.user_no
+        target_no : this.forum.user_no
       };
       await this.$store.dispatch("follows/isFollow", userInfo);
     },
@@ -258,8 +257,8 @@ export default {
     set_isFollow(newVal) {
       this.isFollow = newVal;
     },
-    set_forum_no(newVal) {
-      this.forum.user_no = newVal;
+    set_forum(newVal) {
+      this.forum = newVal;
     }
   },
   computed : {
@@ -267,7 +266,7 @@ export default {
       return this.$store.getters["follows/isFollow"];
     },
     set_forum_no() {
-      return this.forum.user_no ;
+      return this.forum;
     }
   },
   
