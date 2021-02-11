@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.FollowDetailDto;
 import com.bangba.project730.model.dto.FollowDto;
 import com.bangba.project730.model.dto.UserDto;
 import com.bangba.project730.model.service.FollowService;
@@ -283,14 +284,14 @@ public class UserController {
 	
 	@ApiOperation(value = "팔로워 확인하기", response = String.class)
 	@GetMapping(value = "/follow/{user_no}/ec")
-	public List<UserDto> selectFollowerList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
+	public List<FollowDetailDto> selectFollowerList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
 			Model model) {
 		return followService.selectFollowerList(user_no);
 	}
 	
 	@ApiOperation(value = "팔로잉 확인하기", response = String.class)
 	@GetMapping(value = "/follow/{user_no}/ic")
-	public List<UserDto> selectFollowingList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
+	public List<FollowDetailDto> selectFollowingList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
 			Model model) {
 		return followService.selectFollowingList(user_no);
 	}

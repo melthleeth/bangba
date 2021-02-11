@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,9 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
-import com.bangba.project730.model.dto.Article_alcoholDto;
 import com.bangba.project730.model.dto.AtoA;
 import com.bangba.project730.model.dto.AtoI;
+import com.bangba.project730.model.dto.FAcommentDto;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
@@ -193,7 +194,7 @@ public class ArticleController {
 
 	@ApiOperation(value = "댓글 검색", response = String.class)
 	@PostMapping("/comment/keyword")
-	public Map<String,String> searchComment(@RequestBody int pk_article , Model model) throws Exception {
+	public List<FAcommentDto> searchComment(@RequestBody int pk_article , Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "댓글 검색 완료");
 			return articleService.searchComment(pk_article);
@@ -362,12 +363,12 @@ public class ArticleController {
 	public String clickLike(@RequestBody Map<String, String> map) {
 		try {
 			System.out.println(map.toString());
-			if(map.get("isclick").equals("on")) {
+			if(map.get("isclick").equals("off")) {
 				articleService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			} else {
-				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.downLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			}
 			return "success";
 		} catch(Exception e) {
@@ -380,12 +381,12 @@ public class ArticleController {
 	@PutMapping("/bookmark")
 	public String clickBookmark(@RequestBody Map<String, String> map) {
 		try {
-			if(map.get("isclick").equals("on")) {
+			if(map.get("isclick").equals("off")) {
 				articleService.insertBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.upBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			} else {
-				articleService.deleteBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.downBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
+				articleService.deleteBmark(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 			}
 			return "success";
 		} catch(Exception e) {
@@ -397,6 +398,7 @@ public class ArticleController {
 	@ApiOperation(value = "좋아요 여부")
 	@PostMapping("/is-like")
 	public int isLike(@RequestBody Map<String, String> map) {
+		System.out.println(map.toString());
 		try {
 			return articleService.isLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 		} catch (NumberFormatException e) {

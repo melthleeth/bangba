@@ -15,6 +15,7 @@ import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.AtoA;
 import com.bangba.project730.model.dto.AtoI;
+import com.bangba.project730.model.dto.FAcommentDto;
 import com.bangba.project730.model.dto.IngredientDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
@@ -41,7 +42,7 @@ public interface ArticleService {
 	public List<TagDto> getTag(int pk_article) throws Exception;
 	
 	public String createComment(Map<String, String> map)throws Exception;
-	public Map<String,String> searchComment(int pk_article)throws Exception;
+	public List<FAcommentDto> searchComment(int pk_article)throws Exception;
 	public String updateComment(Map<String, String> map)throws Exception;
 	public String deleteComment(int pk_acomment)throws Exception;
 	

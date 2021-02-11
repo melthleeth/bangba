@@ -28,10 +28,10 @@ import io.swagger.annotations.ApiParam;
 @CrossOrigin(origins = { "*" })
 @RequestMapping("/forum")
 public class ForumController {
-    
+
     @Autowired
     private ForumService forumService;
-    
+
     @ApiOperation(value = "자유게시판 생성")
     @PostMapping("/create-forum")
     public String createForum(@RequestBody @ApiParam(value = "자유게시판 하나에 대한 정보", required = true) ForumDto forumDto, Model model) throws Exception {
@@ -55,19 +55,19 @@ public class ForumController {
             , @RequestParam(required = false) String keyword
             , @RequestParam(required = false, defaultValue = "15") int forum_cnt_per_page
             ) throws Exception {
-        
+
         SearchForumDto searchForumDto = new SearchForumDto();
         searchForumDto.setSearch_type(search_type);
         searchForumDto.setKeyword(keyword);
-        
+
         int forum_total_cnt = forumService.getForumListCnt(searchForumDto);
-        
+
         searchForumDto.page_info(page_num, page_range, forum_total_cnt, forum_cnt_per_page);
         model.addAttribute("pagination", searchForumDto);
         model.addAttribute("searchForumList", forumService.searchForumList(searchForumDto));
         return forumService.searchForumList(searchForumDto);
     }
-    
+
 
     @ApiOperation(value = "자유게시판 상세페이지")
     @GetMapping("/{pk_forum}")
@@ -75,7 +75,7 @@ public class ForumController {
         forumService.updateHits(pk_forum);
         return forumService.detailForum(pk_forum);
     }
-    
+
 
     @ApiOperation(value = "자유게시판 수정")
     @PutMapping("/update-forum")
@@ -90,8 +90,8 @@ public class ForumController {
             return "error";
         }
     }
-    
-    
+
+
     @ApiOperation(value = "자유게시판 삭제")
     @DeleteMapping("/delete-forum/{pk_forum}")
     public String deleteForum(@PathVariable @ApiParam(value = "자유게시판 하나 삭제", required = true) int pk_forum) throws Exception {
@@ -103,15 +103,15 @@ public class ForumController {
             return "error";
         }
     }
-    
-    
-    
+
+
+
     @ApiOperation(value = "공지사항 불러오기")
     @GetMapping("/notices")
     public List<ForumDto> searchNotices() throws Exception {
         return forumService.searchNotices();
     }
-    
+
 	@ApiOperation(value = "댓글 작성", response = String.class)
 	@PostMapping(value = "/comment/create",  headers = { "Content-type=application/json" })
 	public String createComment(@RequestBody Map<String, String> map, Model model) throws Exception {
@@ -140,9 +140,9 @@ public class ForumController {
         }
         return null;
     }
-	
-	
-	
+
+
+
 	@ApiOperation(value = "댓글 수정", response = String.class)
 	@PutMapping("/comment/update-comment")
 	public String updateComment(@RequestBody Map<String, String> map, Model model) throws Exception {
@@ -171,7 +171,7 @@ public class ForumController {
 			return "error";
 		}
 	}
-	
+
     @ApiOperation(value = "자유게시판 전체 게시글 수")
     @GetMapping("/forum_cnt")
     public int getForumListCnt(
@@ -182,5 +182,5 @@ public class ForumController {
         searchForumDto.setKeyword(keyword);
         return forumService.getForumListCnt(searchForumDto);
     }
-	
+
 }

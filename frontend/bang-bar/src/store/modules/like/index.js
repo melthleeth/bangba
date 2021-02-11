@@ -3,12 +3,16 @@ import actions from "./actions.js";
 import getters from "./getters.js";
 
 export default {
+    namespaced: true,
     state() {
         return {
-            isLike: false,
-            isclick: "off", 
-            user_no:"",
+            isLikeClick: "off",
+            isBmarkClick: "off", 
             article_no:"",
+            likeBtn: false,
+            bmarkBtn: false,
+            like_cnt: 0,
+            bookmark_cnt: 0
         }
     },
     mutations,

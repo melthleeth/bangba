@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bangba.project730.model.dao.FollowDao;
+import com.bangba.project730.model.dto.FollowDetailDto;
 import com.bangba.project730.model.dto.FollowDto;
 import com.bangba.project730.model.dto.UserDto;
 
@@ -31,12 +32,12 @@ public class FollowServiceImpl implements FollowService{
 	}
 
 	@Override
-	public List<UserDto> selectFollowerList(int pk_user) {
+	public List<FollowDetailDto> selectFollowerList(int pk_user) {
 		return dao.selectFollowerList(pk_user);
 	}
 
 	@Override
-	public List<UserDto> selectFollowingList(int pk_user) {
+	public List<FollowDetailDto> selectFollowingList(int pk_user) {
 		return dao.selectFollowingList(pk_user);
 	}
 
