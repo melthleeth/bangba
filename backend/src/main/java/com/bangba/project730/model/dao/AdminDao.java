@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bangba.project730.model.dto.UserDto;
+import com.bangba.project730.model.dto.UserRankDto;
 
 @Mapper
 public interface AdminDao {
@@ -14,4 +15,5 @@ public interface AdminDao {
 	public void changeToAdmin(UserDto userDto);
 	public void banUser(UserDto userDto);
 	public void createAdmin(int user_no);
+	public List<UserRankDto> userRankWeekly();
 }

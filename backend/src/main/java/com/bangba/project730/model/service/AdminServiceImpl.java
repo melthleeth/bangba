@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.bangba.project730.model.dao.AdminDao;
 import com.bangba.project730.model.dto.AdminDto;
 import com.bangba.project730.model.dto.UserDto;
+import com.bangba.project730.model.dto.UserRankDto;
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -44,5 +45,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void createAdmin(int user_no) {
 		dao.createAdmin(user_no);
+	}
+
+	@Override
+	public List<UserRankDto> userRankWeekly() {
+		// TODO Auto-generated method stub
+		return dao.userRankWeekly();
 	}
 }

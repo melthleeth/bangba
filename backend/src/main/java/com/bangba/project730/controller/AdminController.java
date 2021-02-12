@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bangba.project730.model.dto.UserDto;
+import com.bangba.project730.model.dto.UserRankDto;
 import com.bangba.project730.model.service.AdminService;
 
 import io.swagger.annotations.ApiOperation;
@@ -63,5 +64,10 @@ public class AdminController {
 	@ResponseBody public List<UserDto> banUser(@RequestBody @ApiParam(value="회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
 		adminService.banUser(userDto);
 		return adminService.searchAll();
+	}
+	@ApiOperation(value = "관리자 기능 - 주간 회원 랭킹", response = String.class)
+	@PutMapping(value="/member/userrank")
+	@ResponseBody public List<UserRankDto> userRankWeekly() {
+		return adminService.userRankWeekly();
 	}
 }
