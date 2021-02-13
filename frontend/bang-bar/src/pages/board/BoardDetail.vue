@@ -21,8 +21,8 @@
           class="font-S-CoreDream-medium tracking-wider flex items-center"
         >
           <span>{{ forum.user_name }}</span>
-          <base-button class="text-xs px-2 py-1 ml-2" style="color: black; background-color: white" @click="follow" v-if="isFollow">팔로잉</base-button>
-          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
+          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow">팔로잉</base-button>
+          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow">팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -243,8 +243,10 @@ export default {
         alert("로그인이 필요한 기능입니다.")
         return;
       }
+      const mode = this.isFollow ? "following" : "x";
       const userInfo = {
-        target_no : this.forum.user_no
+        target_no : this.forum.user_no,
+        mode: mode
       };
       if(this.isFollow) {
         await this.$store.dispatch("follows/unfollow", userInfo);
