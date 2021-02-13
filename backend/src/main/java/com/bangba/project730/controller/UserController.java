@@ -26,9 +26,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
+import com.bangba.project730.model.dto.AtoA;
+import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.FollowDetailDto;
 import com.bangba.project730.model.dto.FollowDto;
+import com.bangba.project730.model.dto.RecipeDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
+import com.bangba.project730.model.service.ArticleService;
 import com.bangba.project730.model.service.FollowService;
 import com.bangba.project730.model.service.UserService;
 
@@ -44,6 +49,9 @@ public class UserController {
 	
 	@Autowired
 	private FollowService followService;
+	
+	@Autowired
+	private ArticleService articleService;
 
 	@ApiOperation(value = "회원가입 실행", response = String.class)
 	@PostMapping("/join")
@@ -87,7 +95,6 @@ public class UserController {
 
 	@ApiOperation(value = "로그아웃", response = String.class)
 	@GetMapping(value = "/logout")
-	@ResponseBody
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "SUCCESS";
@@ -95,7 +102,6 @@ public class UserController {
 
 	@ApiOperation(value = "이메일 중복 확인 및 인증", response = String.class)
 	@PostMapping(value = "/join/mail/{toAddress}")
-	@ResponseBody
 	public String messageSend(@PathVariable @ApiParam(value = "회원가입에 필요한 이메일", required = true) String toAddress,
 			Model model) {
 		int result = userService.isDuplicatedEmail(toAddress);
@@ -118,20 +124,19 @@ public class UserController {
 	
 	@ApiOperation(value = "전화번호 중복 확인", response = String.class)
 	@PostMapping(value = "/join/phone/{phone_number}")
-	@ResponseBody
 	public int phoneSend(@PathVariable @ApiParam(value = "회원가입에 필요한 전화번호", required = true) String phone_number) {
 		return userService.isDuplicatedPhoneNumber(phone_number);
 	}
 
 	@ApiOperation(value = "닉네임 중복 확인", response = String.class)
     @PostMapping(value = "/join/{user_name}")
-    @ResponseBody
     public String confirmName(@PathVariable @ApiParam(value = "회원가입에 필요한 닉네임", required = true) String user_name,
             Model model) {
         int result = userService.isDuplicatedName(user_name);
         
         if (result != 0) { // 이미 사용중인 닉네임일 경우
             model.addAttribute("msg", "이미 사용중인 닉네임입니다.");
+            System.out.println("??");
             return "FAIL";
         } else {
             model.addAttribute("msg", "사용가능한 닉네임입니다.");
@@ -141,7 +146,6 @@ public class UserController {
 
 	@ApiOperation(value = "마이페이지 수정 - 먼저 패스워드만 가능", response = String.class)
 	@PutMapping(value = "/mypage/options/pw")
-	@ResponseBody
 	public UserDto updateMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
 		userService.updateMyPage(userDto);
 		return userService.getMyPage(userDto.getPk_user());
@@ -149,21 +153,96 @@ public class UserController {
 
 	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
 	@PostMapping(value = "/mypage/options/bookmark")
-	@ResponseBody
 	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false, defaultValue = "1") int pk_user) {
+		userService.bookmarkMyPage(pk_user);
 		return userService.bookmarkMyPage(pk_user);
 	}
 	
 	@ApiOperation(value = "마이페이지 내가 쓴 레시피", response = String.class)
-	@GetMapping(value = "/mypage/options/article")
-	@ResponseBody
-	public List<ArticleDto> articleMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
-		return userService.articleMyPage(userDto.getPk_user());
+	@GetMapping(value = "/mypage/article/{pk_user}")
+	public List<ArticleTotalDto> articleMyPage(@PathVariable @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) int pk_user) {	
+		List<ArticleTotalDto> tdtos = new ArrayList<ArticleTotalDto>();
+		try {
+			List<ArticleDto> adto = userService.articleMyPage(pk_user);
+			
+			for(ArticleDto a:adto) {
+				ArticleTotalDto tdto = new ArticleTotalDto();
+				// 기존 정보
+				tdto.setPk_article(a.getPk_article());
+				tdto.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
+				tdto.setTitle_kor(a.getTitle_kor());
+				tdto.setTitle_eng(a.getTitle_eng());
+				tdto.setLike_cnt(a.getLike_cnt());
+				tdto.setBookmark_cnt(a.getBookmark_cnt());
+				tdto.setHits(a.getHits());
+				tdto.setCreated_at(a.getCreated_at());
+				tdto.setUpdated_at(a.getUpdated_at());
+				tdto.setLike_weekly(a.getLike_weekly());
+				tdto.setContent(a.getContent());
+				tdto.setImg_path(a.getImg_path());
+				tdto.setCategory(a.isCategory());
+				tdto.setAbv(a.getAbv());
+				tdto.setCup_no(a.getCup_no());
+				
+				// 추가 정보
+				String temp = "";
+				StringBuilder sb = new StringBuilder();
+				List<RecipeDto> recipes = articleService.getRecipe(a.getPk_article());
+				for(RecipeDto recipe : recipes) {
+					temp += recipe.getContent();
+					temp += "<br>";
+					sb.append(recipe.getContent()).append("<br>");
+				}
+				if (temp.length() > 0)
+					temp = temp.substring(0, temp.length() - 4);
+				tdto.setRecipe(temp);
+				List<TagDto> tags = articleService.getTag(a.getPk_article());
+				temp = "";
+				for(TagDto tag : tags) {
+					temp += tag.getContent_kor();
+					temp += "<br>";
+				}
+				if (temp.length() > 0)
+				temp = temp.substring(0, temp.length() - 4);
+				tdto.setTag(temp);
+				// 어려운거 
+				temp = "";
+				List<AtoA> alcohols = articleService.getAlcohol(a.getPk_article());
+				for(AtoA alcohol : alcohols) {
+					temp += alcohol.getName_kor();
+					temp += "/";
+					temp += alcohol.getQuantity();
+					temp += "/";
+					temp += alcohol.getUnit();
+					temp += "<br>";
+				}
+				if (temp.length() > 0)
+				temp = temp.substring(0, temp.length() - 4);
+				tdto.setAlcohol(temp);
+				temp = "";
+				List<AtoI> ingredients = articleService.getIngredient(a.getPk_article());
+				for(AtoI ingredient: ingredients) {
+					temp += ingredient.getName_kor();
+					temp += "/";
+					temp += ingredient.getQuantity();
+					temp += "/";
+					temp += ingredient.getUnit();
+					temp += "<br>";
+				}
+				if (temp.length() > 0)
+				temp = temp.substring(0, temp.length() - 4);
+				tdto.setIngredient(temp);
+				
+				tdtos.add(tdto);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return tdtos;
 	}
 	
 	@ApiOperation(value = "회원 탈퇴", response = String.class)
 	@DeleteMapping(value = "/mypage/{pk_user}")
-	@ResponseBody
 	public String deleteMyPage(@ApiParam(value = "유저의 pk", required = true) int pk_user, Model model) {
 		userService.deleteMyPage(pk_user);
 		return "SUCCESS";
@@ -171,7 +250,6 @@ public class UserController {
 
 	@ApiOperation(value = "비밀번호찾기", response = String.class)
 	@PostMapping(value = "/help/{toAddress}")
-	@ResponseBody
 	public String findPassword(@PathVariable @ApiParam(value = "비밀번호를 찾을 해당 계정의 이메일", required = true) String toAddress,
 			Model model) {
 		int result = userService.isDuplicatedEmail(toAddress);
@@ -195,7 +273,7 @@ public class UserController {
 
 	@ApiOperation(value = "유저 프로필 저장 - 해당 파일이 저장된 위치를 반환", response = String.class)
 	@PostMapping("/mypage/photo")
-    @ResponseBody public String upload(@RequestParam("file") MultipartFile file) {
+    public String upload(@RequestParam("file") MultipartFile file) {
  
         System.out.println("파일 이름 : " + file.getOriginalFilename());
         System.out.println("파일 크기 : " + file.getSize());
