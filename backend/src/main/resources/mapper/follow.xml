@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="selectFollowerList" parameterType="Integer" resultType="FollowDetailDto">
-		select pk_user, user_name, (select count(*) from follow where user_no = pk_user and target_no = #{user_no}) as follow_cnt
+		select pk_user, user_name, img_path, (select count(*) from follow where user_no = pk_user and target_no = #{user_no}) as follow_cnt
 		from user 
 		where pk_user in 
 		(select user_no
@@ -30,7 +30,7 @@
 	</select>
 	
 	<select id="selectFollowingList" parameterType="Integer" resultType="FollowDetailDto">
-		select pk_user, user_name, (select count(*) from follow where target_no = pk_user and user_no = #{user_no}) as follow_cnt
+		select pk_user, user_name, img_path, (select count(*) from follow where target_no = pk_user and user_no = #{user_no}) as follow_cnt
 		from user 
 		where pk_user in 
 		(select target_no
