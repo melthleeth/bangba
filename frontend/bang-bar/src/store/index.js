@@ -5,6 +5,7 @@ import recipeModule from './modules/recipes/index.js';
 import boardModule from './modules/board/index.js';
 import likeModule from './modules/like/index.js';
 import followModule from './modules/follow/index.js';
+import boardLikes from './modules/board_like/index.js';
 
 // import acountModule from './modules/account/index.js';
 import createPersistedState from "vuex-persistedstate";
@@ -15,7 +16,8 @@ const store = createStore ({
         recipes: recipeModule,
         boards: boardModule,
         likes : likeModule,
-        follows : followModule
+        follows: followModule,
+        boardlikes: boardLikes,
     },
     plugins: [createPersistedState()],
 });

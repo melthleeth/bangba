@@ -17,8 +17,18 @@ public interface ForumService {
     public List<ForumDto> searchNotices() throws Exception;
     public int getForumListCnt(SearchForumDto searchForumDto) throws Exception;
     
+    
+    //댓글관련
     public String createComment(Map<String, String> map)throws Exception;
 	public List<FFcommentDto> searchComment(int pk_forum)throws Exception;
 	public String updateComment(Map<String, String> map)throws Exception;
 	public String deleteComment(int pk_fcomment)throws Exception;
+	
+	
+	//좋아요
+	public void insertLike(int user_no, int forum_no) throws Exception;
+	public void deleteLike(int user_no, int forum_no) throws Exception;
+	public void upLike(int user_no, int forum_no) throws Exception;
+	public void downLike(int user_no, int forum_no) throws Exception;
+	public int isLike(int user_no, int forum_no) throws Exception;
 }

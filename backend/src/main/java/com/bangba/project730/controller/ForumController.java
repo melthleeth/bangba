@@ -183,23 +183,38 @@ public class ForumController {
         return forumService.getForumListCnt(searchForumDto);
     }
     
-//	@ApiOperation(value = "게시판 좋아요", response = String.class)
-//	@PutMapping("/like")
-//	public String clickLike(@RequestBody Map<String, String> map) {
-//		try {
-//			System.out.println(map.toString());
-//			if(map.get("isclick").equals("off")) {
-//				articleService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
-//				articleService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
-//			} else {
-//				articleService.downLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
-//				articleService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
-//			}
-//			return "success";
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//			return "error";
-//		}
-//	}
+	@ApiOperation(value = "게시판 좋아요", response = String.class)
+	@PutMapping("/like")
+	public String clickLike(@RequestBody Map<String, String> map) {
+		try {
+			System.out.println(map.toString());
+			if(map.get("isclick").equals("off")) {
+				forumService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
+				forumService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
+			} else {
+				forumService.downLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
+				forumService.deleteLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
+				
+			}
+			return "success";
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "error";
+		}
+	}
+	
+	@ApiOperation(value = "좋아요 여부")
+	@PostMapping("/is-like")
+	public int isLike(@RequestBody Map<String, String> map) {
+		System.out.println(map.toString());
+		try {
+			return forumService.isLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 }

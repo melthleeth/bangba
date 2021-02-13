@@ -16,7 +16,7 @@ export default {
             body: JSON.stringify(userInfo)
         });
         const responseData = await response.text();
-        console.log(userInfo);
+        // console.log(userInfo);
         if(parseInt(responseData) == 1) {
             context.commit("setIsFollow", true);
         } else if(parseInt(responseData) == 0) {

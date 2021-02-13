@@ -151,37 +151,37 @@
 	
 	
 	<insert id="insertLike" parameterType="int">
-		insert into flike(article_no, user_no, bookmark)
-		values(#{article_no}, #{user_no}, false)
+		insert into flike(forum_no, user_no)
+		values(#{forum_no}, #{user_no})
 	</insert>
 	
 	<delete id="deleteLike" parameterType="int">
 		delete 
 		from flike
-		where  article_no = #{article_no} and user_no = #{user_no} and bookmark = false;
+		where  forum_no = #{forum_no} and user_no = #{user_no};
 	</delete>
 	
 	
 	<update id="upLike" parameterType="int">
-		update article
+		update forum
 		set like_cnt = like_cnt + 1
-		where pk_article = #{article_no} and pk_article in (select article_no
-															from alike
+		where pk_forum = #{forum_no} and pk_forum in (select forum_no
+															from flike
 															where user_no = #{user_no});
 	</update>
 	
 	<update id="downLike" parameterType="int">
-		update article
+		update forum
 		set like_cnt = like_cnt - 1
-		where pk_article = #{article_no} and pk_article in (select article_no
-															from alike
+		where pk_forum = #{forum_no} and pk_forum in (select forum_no
+															from flike
 															where user_no = #{user_no});
 	</update>
 	
 	<select id="isLike" parameterType="int" resultType="int">
 		select count(*)
-		from alike
-		where article_no = #{article_no} and user_no = #{user_no} and bookmark = false
+		from flike
+		where forum_no = #{forum_no} and user_no = #{user_no}
 	</select>
 	
 </mapper>

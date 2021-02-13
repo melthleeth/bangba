@@ -19,13 +19,15 @@
         </div>
         
     </section>
-      <div class="card-flat flex flex-col flex-initial h-full w-full" v-else>
-        <section class="card-flat flex flex-col flex-initial h-full w-full">
+    
+        <section class="card-flat flex flex-col flex-initial h-full w-full" v-else>
           <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}</span>
           <textarea
+            ref="commentTA"
             class="w-full mb-2"
             v-model="content"
             @keypress.enter="modifyComment()"
+            
           >
 
           </textarea>
@@ -36,7 +38,7 @@
             
           </div>
       </section>
-    </div>
+    
   </div>
 
     <CommentCreate :forum_id="forum_id" v-on:addComment="addComment"/>
@@ -151,6 +153,9 @@ export default {
       this.pk_num=pk_fcomment
       this.content=content;
       // this.content=this.
+     this.$nextTick(() => {
+        this.$refs.commentTA.focus()
+      })
     },
     modifyComment(pk_fcomment,content) {
       // 수정
