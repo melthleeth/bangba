@@ -21,7 +21,8 @@
           class="font-S-CoreDream-medium tracking-wider flex items-center"
         >
           <span>{{ forum.user_name }}</span>
-          <base-button class="text-xs px-2 py-1 ml-2">팔로우</base-button>
+          <base-button class="text-xs px-2 py-1 ml-2" style="color: black; background-color: white" @click="follow" v-if="isFollow">팔로잉</base-button>
+          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -110,17 +111,33 @@ export default {
   data() {
     return {
       owner_check: localStorage.getItem("user_name"),
-      forum: [],
+      forum: [{
+        category: "",
+        comment_cnt: 0,
+        content: "",
+        created_at: "",
+        hits: 0,
+        like_cnt: 0,
+        pk_forum: 0,
+        title: "",
+        updated_at: "",
+        user_name: "",
+        user_no: 0 }
+      ],
       forumId: {
         type: Number,
         val: this.$route.params.contentId,
       },
+      isFollow : false,
     };
   },
 
   created() {
-    // console.log(this.forum.forumId);
     this.forum_Detail();
+  },
+  updated() {
+    this.is_Follow();
+    this.isFollow = this.$store.getters["follows/isFollow"];
   },
   methods: {
     backToTop() {
@@ -142,7 +159,6 @@ export default {
         })
         .then((result) => {
           // this.items=result;
-          // console.log(result)
           this.forum = result.data;
           this.convert_time();
         })
@@ -214,7 +230,46 @@ export default {
       answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
       this.forum.created_at = answer;
     },
+    // 팔로우 여부 확인하기
+    async is_Follow() {
+      const userInfo = {
+        target_no : this.forum.user_no
+      };
+      await this.$store.dispatch("follows/isFollow", userInfo);
+    },
+    //follow 하기
+    async follow() {
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+        return;
+      }
+      const userInfo = {
+        target_no : this.forum.user_no
+      };
+      if(this.isFollow) {
+        await this.$store.dispatch("follows/unfollow", userInfo);
+      } else {
+        await this.$store.dispatch("follows/follow", userInfo);
+      }
+    }
   },
+  watch : {
+    set_isFollow(newVal) {
+      this.isFollow = newVal;
+    },
+    set_forum(newVal) {
+      this.forum = newVal;
+    }
+  },
+  computed : {
+    set_isFollow() {
+      return this.$store.getters["follows/isFollow"];
+    },
+    set_forum_no() {
+      return this.forum;
+    }
+  },
+  
 };
 </script>
 <style scoped>

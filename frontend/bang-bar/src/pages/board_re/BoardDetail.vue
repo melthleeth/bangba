@@ -7,8 +7,8 @@
       </div>
       <div class="whiteboard">
         <div class="content-detail-content-info-right-user">{{forum.user_name}}
-          <base-button>팔로우</base-button>
-
+          <base-button @click="follow" v-if="isFollow">팔로잉</base-button>
+          <base-button @click="follow" v-else>팔로우</base-button>
         </div>
         <div class="content-detail-content-info-right-created">
           <!-- 날짜 가공할 것 2021.01.24. 23:23 순으로 -->
@@ -53,15 +53,17 @@ export default {
       owner_check:localStorage.getItem('user_name'),
       forum:[],
       forumId:this.$route.params.contentId,
+      isFollow : false,
     };
   },
   created(){
     this.forum_Detail();
+    this.isFollow();
+    this.isFollow = this.$store.getters["follows/isFollow"];
   },
   methods: {
     //삭제
     forum_Detail(){
-
         this.axios.get(`${SERVER_URL}/forum/${this.forumId}`, {
         headers: {
         'Access-Control-Allow-Origin': '*',
@@ -125,6 +127,43 @@ export default {
     //목록으로가기
     golist(){
       this.$router.go(-1)
+    },
+    // 팔로우 여부 확인하기
+    async isFollow() {
+      const userInfo = {
+        target_no : this.forum.user_no
+      };
+      await this.$store.dispatch("follows/isFollow", userInfo);
+    },
+    //follow 하기
+    async follow() {
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      console.log(this.isFollow);
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+        return;
+      }
+      const userInfo = {
+        target_no : this.forum.user_no
+      };
+      if(this.isFollow) {
+        await this.$store.dispatch("follows/unfollow", userInfo);
+      } else {
+        await this.$store.dispatch("follows/follow", userInfo);
+      }
+    }
+  },
+  watch : {
+    set_isFollow(newVal) {
+      this.isFollow = newVal;
+    }
+  },
+  computed : {
+    set_isFollow() {
+      return this.$store.getters["follows/isFollow"];
     }
   },
   components: {

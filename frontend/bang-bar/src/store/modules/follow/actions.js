@@ -1,7 +1,7 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
     async isFollow(context, payload) {
-        const user_info = {
+        const userInfo = {
             user_no : context.rootGetters.pkUser,
             target_no : payload.target_no
         };
@@ -40,8 +40,8 @@ export default {
             body: JSON.stringify(userInfo)
         });
         const responseData = await response.text();
-
-        if(responseData == "success") {
+        
+        if(responseData === "SUCCESS") {
             context.commit("setIsFollow", true);
         } else {
             alert("팔로우 실패");
@@ -52,6 +52,7 @@ export default {
             user_no : context.rootGetters.pkUser,
             target_no : payload.target_no
         };
+        console.log(userInfo);
         const response =await fetch(`${SERVER_URL}/user/unfollow`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -64,13 +65,13 @@ export default {
         });
         const responseData = await response.text();
 
-        if(responseData == "success") {
+        if(responseData === "SUCCESS") {
             context.commit("setIsFollow", false);
         } else {
             alert("팔로우 실패");
         }
     },
-    async setFollowCnt(context, payload) {
+    async followList(context) {
         const response = await fetch(`${SERVER_URL}/user/follow`+ context.rootGetters.pkUser + `/ec`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -81,10 +82,20 @@ export default {
             method: "GET"
         });
 
-        const responseData = await Response.text();
-        context.commit("setFollowCnt", parseInt(responseData));
+        const responseData = await response.json();
+        const followList = [];
+
+        for(const key in responseData) {
+            const follow = {
+                pk_user: responseData[key].pk_user,
+                user_name: responseData[key].user_name,
+                follow_cnt: responseData[key].follow_cnt
+            };
+            followList.push(follow);
+        }
+        context.commit("setFollowList", followList);
     },
-    async setFollowingCnt(context, payload) {
+    async followingList(context) {
         const response = await fetch(`${SERVER_URL}/user/follow`+ context.rootGetters.pkUser + `/ic`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -94,7 +105,17 @@ export default {
             },
             method: "GET"
         });
-        const responseData = await Response.text();
-        context.commit("setFollowingCnt", parseInt(responseData));
-    }
+        const responseData = await response.json();
+        const followingList = [];
+
+        for(const key in responseData) {
+            const following = {
+                pk_user: responseData[key].pk_user,
+                user_name: responseData[key].user_name,
+                follow_cnt: responseData[key].follow_cnt
+            };
+            followingList.push(following);
+        }
+        context.commit("setFollowingList", followingList);
+    },
 };

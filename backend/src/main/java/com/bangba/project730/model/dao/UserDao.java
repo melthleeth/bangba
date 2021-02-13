@@ -6,6 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
+import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
 
 @Mapper
@@ -21,9 +23,11 @@ public interface UserDao {
 	public UserDto getMyPage(int pk_user);
 	public void updateMyPage(UserDto userDto);
 	public void deleteMyPage(int pk_user);
-	public List<ArticleDto> bookmarkMyPage(int pk_user);
+	public List<ArticleTotalDto> bookmarkMyPage(int pk_user);
 	public List<ArticleDto> articleMyPage(int pk_user);
 
 	public String getUserName(int user_no) throws Exception;
 	public String getImgPath(int user_no) throws Exception;
+	
+	public List<TagDto> getTagMyPage(int pk_article) throws Exception;
 }

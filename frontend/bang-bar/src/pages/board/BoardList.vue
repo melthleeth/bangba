@@ -225,6 +225,7 @@ export default {
     rowClick(item) {
       this.$router.push({
         path: `/board/detail/${item.pk_forum}`,
+        params:{user_no : item.user_no}
       });
     },
 
