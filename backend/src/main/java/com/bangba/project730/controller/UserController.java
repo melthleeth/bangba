@@ -30,6 +30,7 @@ import com.bangba.project730.model.dto.AtoA;
 import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.FollowDetailDto;
 import com.bangba.project730.model.dto.FollowDto;
+import com.bangba.project730.model.dto.ForumDto;
 import com.bangba.project730.model.dto.RecipeDto;
 import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
@@ -46,10 +47,10 @@ import io.swagger.annotations.ApiParam;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private FollowService followService;
-	
+
 	@Autowired
 	private ArticleService articleService;
 
@@ -68,15 +69,14 @@ public class UserController {
 			} catch (Exception e) {
 				e.printStackTrace();
 				model.addAttribute("msg", "회원가입중 문제가 발생했습니다.");
-				
+
 			}
 		}
 		return userService.getMyPage(-1);
 	}
-	
-	
+
 	@ApiOperation(value = "로그인", response = String.class)
-	@PostMapping(value = "/login",  headers = { "Content-type=application/json" })
+	@PostMapping(value = "/login", headers = { "Content-type=application/json" })
 	public UserDto login(@RequestBody @ApiParam(value = "로그인 정보를 담는 객체", required = true) Map<String, String> map,
 			Model model) {
 		try {
@@ -121,7 +121,7 @@ public class UserController {
 		}
 		return "FAIL";
 	}
-	
+
 	@ApiOperation(value = "전화번호 중복 확인", response = String.class)
 	@PostMapping(value = "/join/phone/{phone_number}")
 	public int phoneSend(@PathVariable @ApiParam(value = "회원가입에 필요한 전화번호", required = true) String phone_number) {
@@ -129,20 +129,20 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "닉네임 중복 확인", response = String.class)
-    @PostMapping(value = "/join/{user_name}")
-    public String confirmName(@PathVariable @ApiParam(value = "회원가입에 필요한 닉네임", required = true) String user_name,
-            Model model) {
-        int result = userService.isDuplicatedName(user_name);
-        
-        if (result != 0) { // 이미 사용중인 닉네임일 경우
-            model.addAttribute("msg", "이미 사용중인 닉네임입니다.");
-            System.out.println("??");
-            return "FAIL";
-        } else {
-            model.addAttribute("msg", "사용가능한 닉네임입니다.");
-            return "SUCCESS";
-        }
-    }
+	@PostMapping(value = "/join/{user_name}")
+	public String confirmName(@PathVariable @ApiParam(value = "회원가입에 필요한 닉네임", required = true) String user_name,
+			Model model) {
+		int result = userService.isDuplicatedName(user_name);
+
+		if (result != 0) { // 이미 사용중인 닉네임일 경우
+			model.addAttribute("msg", "이미 사용중인 닉네임입니다.");
+			System.out.println("??");
+			return "FAIL";
+		} else {
+			model.addAttribute("msg", "사용가능한 닉네임입니다.");
+			return "SUCCESS";
+		}
+	}
 
 	@ApiOperation(value = "마이페이지 수정 - 먼저 패스워드만 가능", response = String.class)
 	@PutMapping(value = "/mypage/options/pw")
@@ -157,15 +157,16 @@ public class UserController {
 		userService.bookmarkMyPage(pk_user);
 		return userService.bookmarkMyPage(pk_user);
 	}
-	
+
 	@ApiOperation(value = "마이페이지 내가 쓴 레시피", response = String.class)
 	@GetMapping(value = "/mypage/article/{pk_user}")
-	public List<ArticleTotalDto> articleMyPage(@PathVariable @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) int pk_user) {	
+	public List<ArticleTotalDto> articleMyPage(
+			@PathVariable @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) int pk_user) {
 		List<ArticleTotalDto> tdtos = new ArrayList<ArticleTotalDto>();
 		try {
 			List<ArticleDto> adto = userService.articleMyPage(pk_user);
-			
-			for(ArticleDto a:adto) {
+
+			for (ArticleDto a : adto) {
 				ArticleTotalDto tdto = new ArticleTotalDto();
 				// 기존 정보
 				tdto.setPk_article(a.getPk_article());
@@ -183,12 +184,12 @@ public class UserController {
 				tdto.setCategory(a.isCategory());
 				tdto.setAbv(a.getAbv());
 				tdto.setCup_no(a.getCup_no());
-				
+
 				// 추가 정보
 				String temp = "";
 				StringBuilder sb = new StringBuilder();
 				List<RecipeDto> recipes = articleService.getRecipe(a.getPk_article());
-				for(RecipeDto recipe : recipes) {
+				for (RecipeDto recipe : recipes) {
 					temp += recipe.getContent();
 					temp += "<br>";
 					sb.append(recipe.getContent()).append("<br>");
@@ -198,17 +199,17 @@ public class UserController {
 				tdto.setRecipe(temp);
 				List<TagDto> tags = articleService.getTag(a.getPk_article());
 				temp = "";
-				for(TagDto tag : tags) {
+				for (TagDto tag : tags) {
 					temp += tag.getContent_kor();
 					temp += "<br>";
 				}
 				if (temp.length() > 0)
-				temp = temp.substring(0, temp.length() - 4);
+					temp = temp.substring(0, temp.length() - 4);
 				tdto.setTag(temp);
-				// 어려운거 
+				// 어려운거
 				temp = "";
 				List<AtoA> alcohols = articleService.getAlcohol(a.getPk_article());
-				for(AtoA alcohol : alcohols) {
+				for (AtoA alcohol : alcohols) {
 					temp += alcohol.getName_kor();
 					temp += "/";
 					temp += alcohol.getQuantity();
@@ -217,11 +218,11 @@ public class UserController {
 					temp += "<br>";
 				}
 				if (temp.length() > 0)
-				temp = temp.substring(0, temp.length() - 4);
+					temp = temp.substring(0, temp.length() - 4);
 				tdto.setAlcohol(temp);
 				temp = "";
 				List<AtoI> ingredients = articleService.getIngredient(a.getPk_article());
-				for(AtoI ingredient: ingredients) {
+				for (AtoI ingredient : ingredients) {
 					temp += ingredient.getName_kor();
 					temp += "/";
 					temp += ingredient.getQuantity();
@@ -230,17 +231,31 @@ public class UserController {
 					temp += "<br>";
 				}
 				if (temp.length() > 0)
-				temp = temp.substring(0, temp.length() - 4);
+					temp = temp.substring(0, temp.length() - 4);
 				tdto.setIngredient(temp);
-				
+
 				tdtos.add(tdto);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return tdtos;
 	}
-	
+
+	@ApiOperation(value = "마이페이지 내가 쓴 게시글", response = String.class)
+	@GetMapping(value = "/mypage/forum/{pk_user}")
+	public List<ForumDto> forumMyPage(
+			@PathVariable @ApiParam(value = "회원의 pk", required = true) int pk_user) {
+
+		try {
+			return userService.forumMyPage(pk_user);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	@ApiOperation(value = "회원 탈퇴", response = String.class)
 	@DeleteMapping(value = "/mypage/{pk_user}")
 	public String deleteMyPage(@ApiParam(value = "유저의 pk", required = true) int pk_user, Model model) {
@@ -273,37 +288,37 @@ public class UserController {
 
 	@ApiOperation(value = "유저 프로필 저장 - 해당 파일이 저장된 위치를 반환", response = String.class)
 	@PostMapping("/mypage/photo")
-    public String upload(@RequestParam("file") MultipartFile file) {
- 
-        System.out.println("파일 이름 : " + file.getOriginalFilename());
-        System.out.println("파일 크기 : " + file.getSize());
- 
-        String fileRoot = "/home/ubuntu/imgs/user/" + file.getOriginalFilename();
-    	
-        try (	
-            // 윈도우일 경우
-            FileOutputStream fos = new FileOutputStream(fileRoot);
-            // 파일 저장할 경로 + 파일명을 파라미터로 넣고 fileOutputStream 객체 생성하고
-            InputStream is = file.getInputStream();) {
-            // file로 부터 inputStream을 가져온다.
-    	
-	        System.out.println("/home/ubuntu/imgs/user/" + file.getOriginalFilename());
-            int readCount = 0;
-            byte[] buffer = new byte[1024];
-            // 파일을 읽을 크기 만큼의 buffer를 생성하고
-            // ( 보통 1024, 2048, 4096, 8192 와 같이 배수 형식으로 버퍼의 크기를 잡는 것이 일반적이다.)
-            
-            while ((readCount = is.read(buffer)) != -1) {
-                //  파일에서 가져온 fileInputStream을 설정한 크기 (1024byte) 만큼 읽고
-                
-                fos.write(buffer, 0, readCount);
-                // 위에서 생성한 fileOutputStream 객체에 출력하기를 반복한다
-            }
-            return fileRoot;
-        } catch (Exception e) {
-            throw new RuntimeException("file Save Error");
-        }
-    }
+	public String upload(@RequestParam("file") MultipartFile file) {
+
+		System.out.println("파일 이름 : " + file.getOriginalFilename());
+		System.out.println("파일 크기 : " + file.getSize());
+
+		String fileRoot = "/home/ubuntu/imgs/user/" + file.getOriginalFilename();
+
+		try (
+				// 윈도우일 경우
+				FileOutputStream fos = new FileOutputStream(fileRoot);
+				// 파일 저장할 경로 + 파일명을 파라미터로 넣고 fileOutputStream 객체 생성하고
+				InputStream is = file.getInputStream();) {
+			// file로 부터 inputStream을 가져온다.
+
+			System.out.println("/home/ubuntu/imgs/user/" + file.getOriginalFilename());
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			// 파일을 읽을 크기 만큼의 buffer를 생성하고
+			// ( 보통 1024, 2048, 4096, 8192 와 같이 배수 형식으로 버퍼의 크기를 잡는 것이 일반적이다.)
+
+			while ((readCount = is.read(buffer)) != -1) {
+				// 파일에서 가져온 fileInputStream을 설정한 크기 (1024byte) 만큼 읽고
+
+				fos.write(buffer, 0, readCount);
+				// 위에서 생성한 fileOutputStream 객체에 출력하기를 반복한다
+			}
+			return fileRoot;
+		} catch (Exception e) {
+			throw new RuntimeException("file Save Error");
+		}
+	}
 
 //  인증 코드 생성 
 	public String makeCode() {
@@ -325,11 +340,11 @@ public class UserController {
 		}
 		return temp;
 	}
-	
-	
+
 	@ApiOperation(value = "팔로우 하기", response = String.class)
 	@PostMapping(value = "/follow")
-	public String follow(@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+	public String follow(
+			@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
 			Model model) {
 		try {
 			followService.follow(followDto);
@@ -340,10 +355,11 @@ public class UserController {
 		}
 		return "FAIL";
 	}
-	
+
 	@ApiOperation(value = "언팔로우 하기", response = String.class)
 	@PostMapping(value = "/unfollow")
-	public String unfollow(@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+	public String unfollow(
+			@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
 			Model model) {
 		try {
 			followService.unfollow(followDto);
@@ -354,25 +370,26 @@ public class UserController {
 		}
 		return "FAIL";
 	}
-	
+
 	@ApiOperation(value = "팔로우 여부 확인하기", response = String.class)
 	@PostMapping(value = "/isfollow")
-	public int isFollow(@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
+	public int isFollow(
+			@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
 			Model model) {
 		return followService.isFollow(followDto);
 	}
-	
+
 	@ApiOperation(value = "팔로워 확인하기", response = String.class)
 	@GetMapping(value = "/follow/{user_no}/ec")
-	public List<FollowDetailDto> selectFollowerList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
-			Model model) {
+	public List<FollowDetailDto> selectFollowerList(
+			@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no, Model model) {
 		return followService.selectFollowerList(user_no);
 	}
-	
+
 	@ApiOperation(value = "팔로잉 확인하기", response = String.class)
 	@GetMapping(value = "/follow/{user_no}/ic")
-	public List<FollowDetailDto> selectFollowingList(@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no,
-			Model model) {
+	public List<FollowDetailDto> selectFollowingList(
+			@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no, Model model) {
 		return followService.selectFollowingList(user_no);
 	}
 }

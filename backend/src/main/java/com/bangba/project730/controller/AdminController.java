@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.UserDto;
 import com.bangba.project730.model.dto.UserRankDto;
 import com.bangba.project730.model.service.AdminService;
@@ -69,5 +70,10 @@ public class AdminController {
 	@PutMapping(value="/member/userrank")
 	@ResponseBody public List<UserRankDto> userRankWeekly() {
 		return adminService.userRankWeekly();
+	}
+	@ApiOperation(value = "관리자 기능 - 주간 레시피 랭킹", response = String.class)
+	@PutMapping(value="/member/articlerank")
+	@ResponseBody public List<ArticleTotalDto> articleRankWeekly() throws Exception {
+		return adminService.articleRankWeekly();
 	}
 }
