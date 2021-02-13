@@ -117,13 +117,13 @@
                       >내가 쓴 글</router-link
                     >
                   </li>
-                  <li class="hover:bg-gray-100">
+                  <!-- <li class="hover:bg-gray-100">
                     <router-link
                       class="font-normal block px-4 py-3"
                       to="/header/activitylog"
                       >활동기록</router-link
                     >
-                  </li>
+                  </li> -->
                   <li class="hover:bg-gray-100">
                     <router-link
                       class="font-normal block px-4 py-3"
