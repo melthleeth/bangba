@@ -72,7 +72,7 @@ export default {
         }
     },
     async followList(context) {
-        const response = await fetch(`${SERVER_URL}/user/follow`+ context.rootGetters.pkUser + `/ec`,{
+        const response = await fetch(`${SERVER_URL}/user/follow/`+ context.rootGetters.pkUser + `/ec`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -84,11 +84,12 @@ export default {
 
         const responseData = await response.json();
         const followList = [];
-
+        console.log(responseData);
         for(const key in responseData) {
             const follow = {
                 pk_user: responseData[key].pk_user,
                 user_name: responseData[key].user_name,
+                img_path: responseData[key].img_path,
                 follow_cnt: responseData[key].follow_cnt
             };
             followList.push(follow);
@@ -96,7 +97,7 @@ export default {
         context.commit("setFollowList", followList);
     },
     async followingList(context) {
-        const response = await fetch(`${SERVER_URL}/user/follow`+ context.rootGetters.pkUser + `/ic`,{
+        const response = await fetch(`${SERVER_URL}/user/follow/`+ context.rootGetters.pkUser + `/ic`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -107,11 +108,12 @@ export default {
         });
         const responseData = await response.json();
         const followingList = [];
-
+        console.log(responseData);
         for(const key in responseData) {
             const following = {
                 pk_user: responseData[key].pk_user,
                 user_name: responseData[key].user_name,
+                img_path: responseData[key].img_path,
                 follow_cnt: responseData[key].follow_cnt
             };
             followingList.push(following);

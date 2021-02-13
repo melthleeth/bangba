@@ -5,6 +5,10 @@
       >팔로잉/팔로워</span
     >
     <div class="flex grid grid-cols-3 grid-flow-row gap-4"></div>
+    <div>팔로잉 - {{followingCnt}}</div>
+    {{followingList}}
+    <div>팔로워 - {{followCnt}}</div>
+    {{followList}}
   </div>
 </template>
 
@@ -14,12 +18,50 @@
 export default {
     data() {
         return {
-            target_no:"",
-            user_no:localStorage.getItem("pk_user")
+            followList:[],
+            followingList:[],
+            followCnt : 0,
+            followingCnt : 0,
         }
     }, 
-    methods: {
+    created() {
+      this.LoadFollowingList();
+      this.LoadFollowList();
+      this.followList = this.$store.getters["follows/followList"];
+      this.followingList = this.$store.getters["follows/followingList"];
+      console.log(this.$store.getters["follows/followList"]);
+      console.log(this.$store.getters["follows/followingList"]);
+      for (let i = 0; i < this.followList.length; i++) {
+        this.followCnt += this.followList[i].follow_cnt;
+      }
+      for (let i = 0; i < this.followingList.length; i++) {
+        this.followingCnt += this.followingList[i].follow_cnt;
+      }
 
+    },
+    watch : {
+      set_followList(newVal) {
+        this.followList = newVal;
+      },
+      set_followingList(newVal) {
+        this.followingList = newVal;
+      }
+    },
+    computed : {
+      set_followList() {
+        return this.$store.getters["follows/followList"];
+      },
+      set_followingList() {
+        return this.$store.getters["follows/followingList"];
+      }
+    },
+    methods: {
+      async LoadFollowList() {
+        await this.$store.dispatch("follows/followList");
+      },
+      async LoadFollowingList() {
+        await this.$store.dispatch("follows/followingList");
+      }
     }
 }
 </script>
