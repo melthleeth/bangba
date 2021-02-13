@@ -100,8 +100,7 @@ export default {
     return {
       user_id: localStorage.getItem("email"),
       user_name: localStorage.getItem("user_name"),
-      imgsrc:
-        "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif",
+      imgsrc: localStorage.getItem("profileImage"),
     };
   },
   methods: {

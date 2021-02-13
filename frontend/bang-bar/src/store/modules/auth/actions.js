@@ -36,6 +36,7 @@ export default {
     localStorage.setItem('user_name', responseData.user_name);
     localStorage.setItem('pk_user', responseData.pk_user);
     localStorage.setItem('email', responseData.email);
+    localStorage.setItem('profileImage', "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif");
 
     context.commit('setUser', {
       user_name: responseData.user_name,

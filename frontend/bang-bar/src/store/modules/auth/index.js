@@ -7,7 +7,8 @@ export default {
     return {
       user_name: null,
       pk_user: null,
-      email: null
+      email: null,
+      profileImage: null,
     };
   },
   mutations,
