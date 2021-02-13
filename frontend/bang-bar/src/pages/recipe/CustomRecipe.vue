@@ -207,7 +207,4 @@ p {
   color: #23232f;
 }
 
-.card-corner {
-  border-radius: 30px;
-}
 </style>

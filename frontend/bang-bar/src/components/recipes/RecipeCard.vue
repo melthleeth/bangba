@@ -84,3 +84,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.card-corner {
+  border-radius: 30px;
+}
+</style>

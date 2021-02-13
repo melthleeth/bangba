@@ -39,7 +39,7 @@
     </div>
   </div>
 
-    <CommentCreate :forum_id="forum_id" v-on:addComment="addComment"/>
+    <comment-create :forum_id="forum_id" v-on:addComment="addComment"/>
   </div>
 </template>
 
