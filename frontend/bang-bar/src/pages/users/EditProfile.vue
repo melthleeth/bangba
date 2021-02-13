@@ -111,8 +111,8 @@ export default {
       const objectURL = URL.createObjectURL(input.target.files[0]);
       this.imgsrc = objectURL;
     },
-    checkDuplication() {
-      alert("닉네임 중복 확인");
+    async checkDuplication() {
+      await this.$store.dispatch("users/checkName", this.user_name);
     },
   },
 };
