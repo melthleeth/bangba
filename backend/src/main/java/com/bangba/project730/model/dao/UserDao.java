@@ -24,6 +24,7 @@ public interface UserDao {
 	public void updateMyPage(UserDto userDto);
 	public void deleteMyPage(int pk_user);
 	public List<ArticleTotalDto> bookmarkMyPage(int pk_user);
+	public List<ArticleTotalDto> likeMyPage(int pk_user);
 	public List<ArticleDto> articleMyPage(int pk_user);
 
 	public String getUserName(int user_no) throws Exception;

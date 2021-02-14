@@ -144,16 +144,35 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "마이페이지 수정 - 먼저 패스워드만 가능", response = String.class)
-	@PutMapping(value = "/mypage/options/pw")
+	@PutMapping(value = "/mypage/pw")
 	public UserDto updateMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
 		userService.updateMyPage(userDto);
 		return userService.getMyPage(userDto.getPk_user());
 	}
 
 	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
-	@GetMapping(value = "/mypage/options/bookmark")
+	@GetMapping(value = "/mypage/bookmark")
 	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false) int pk_user) throws Exception {
 		List<ArticleTotalDto> articleTotalDto = userService.bookmarkMyPage(pk_user);
+		for (ArticleTotalDto a: articleTotalDto) {
+			String tag_tmp = "";
+			List<TagDto> tags = articleService.getTag(a.getPk_article());
+			for(TagDto t:tags) {
+				tag_tmp += t.getContent_kor();
+				tag_tmp +="<br>";
+			}
+			if (tag_tmp.length() > 0)
+				tag_tmp = tag_tmp.substring(0, tag_tmp.length() - 4);
+			a.setTag(tag_tmp);
+			
+		}
+		return articleTotalDto;
+	}
+	
+	@ApiOperation(value = "마이페이지 좋아요 한 글", response = String.class)
+	@GetMapping(value = "/mypage/like")
+	public List<ArticleTotalDto> likeMyPage(@RequestParam(required = false) int pk_user) throws Exception {
+		List<ArticleTotalDto> articleTotalDto = userService.likeMyPage(pk_user);
 		for (ArticleTotalDto a: articleTotalDto) {
 			String tag_tmp = "";
 			List<TagDto> tags = articleService.getTag(a.getPk_article());

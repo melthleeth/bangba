@@ -24,6 +24,7 @@ public interface UserService {
 	public void updateMyPage(UserDto userDto);
 	public void deleteMyPage(int pk_user);
 	public List<ArticleTotalDto> bookmarkMyPage(int pk_user);
+	public List<ArticleTotalDto> likeMyPage(int pk_user);
 	public List<ArticleDto> articleMyPage(int pk_user);
 	
 	//마이페이지

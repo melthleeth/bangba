@@ -85,6 +85,11 @@ public class UserServiceImpl implements UserService{
 	public List<ArticleTotalDto> bookmarkMyPage(int pk_user) {
 		return dao.bookmarkMyPage(pk_user);
 	}
+	
+	@Override
+	public List<ArticleTotalDto> likeMyPage(int pk_user) {
+		return dao.likeMyPage(pk_user);
+	}
 
 	@Override
 	public List<ArticleDto> articleMyPage(int pk_user) {

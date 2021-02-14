@@ -68,6 +68,23 @@
 		    where user_no = #{pk_user} and B.bookmark = true);
 	</select>
 	
+	<select id="likeMyPage" parameterType="int" resultType="ArticleTotalDto">
+		select 
+			A.pk_article
+    		, A.user_no
+		    , A.title_kor
+		    , A.img_path
+		    , A.content
+		    , A.created_at
+		    , A.updated_at
+		from article as A
+		where pk_article in 
+			(select 
+				article_no 
+		    from alike as B
+		    where user_no = #{pk_user} and B.bookmark = false);
+	</select>
+	
 	<select id="articleMyPage" parameterType="int" resultType="ArticleDto">
 		select *
 		from article
