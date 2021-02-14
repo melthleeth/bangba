@@ -10,6 +10,7 @@
         <article class="font-S-CoreDream-medium tracking-wider flex items-center">
           <span>{{ forum.user_name }}</span>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-if="isFollow"
             >팔로우</base-button
           >
@@ -17,6 +18,10 @@
           <base-button class="text-xs px-2 py-1 ml-2" style="color: black; background-color: white" @click="follow" v-if="isFollow">팔로잉</base-button>
 >>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
           <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
+=======
+          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow">팔로잉</base-button>
+          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow">팔로우</base-button>
+>>>>>>> 901dfc93ca4a299ca47ec098c0e45655e53ebbf5
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -236,8 +241,14 @@ export default {
 >>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
         return;
       }
+      const mode = this.isFollow ? "following" : "x";
       const userInfo = {
+<<<<<<< HEAD
         target_no: this.forum.user_no,
+=======
+        target_no : this.forum.user_no,
+        mode: mode
+>>>>>>> 901dfc93ca4a299ca47ec098c0e45655e53ebbf5
       };
       if (this.isFollow) {
         await this.$store.dispatch('follows/unfollow', userInfo);

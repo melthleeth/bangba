@@ -65,7 +65,7 @@
         <base-spinner></base-spinner>
       </div>
       <div
-        v-else-if="hasRecipes"
+        v-else-if="filteredRecipes.length > 0"
         class="grid grid-cols-4 grid-flow-row gap-4 mx-auto"
       >
         <recipe-card
@@ -141,9 +141,5 @@ export default {
 .title {
   font-size: 42px;
   line-height: 93px;
-}
-
-.card-corner {
-  border-radius: 30px;
 }
 </style>

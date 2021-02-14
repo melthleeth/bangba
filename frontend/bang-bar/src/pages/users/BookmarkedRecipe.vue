@@ -10,7 +10,7 @@
         <base-spinner></base-spinner>
       </div>
       <div
-        v-else-if="hasRecipes"
+        v-else-if="filteredRecipes.length > 0"
         class=" grid grid-cols-3 grid-flow-row gap-4 mx-auto"
       >
         <recipe-card
@@ -55,9 +55,6 @@ export default {
         if (recipeItem.category === true) return true;
       });
     },
-    hasRecipes() {
-      return !this.isLoading && this.$store.getters["recipes/hasRecipes"];
-    },
   },
   created() {
     this.loadRecipes();
@@ -86,9 +83,5 @@ export default {
 .title {
   font-size: 42px;
   line-height: 93px;
-}
-
-.card-corner {
-  border-radius: 30px;
 }
 </style>

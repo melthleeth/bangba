@@ -7,5 +7,8 @@ export default {
     },
     userEmail(state) {
       return state.email;
+    },
+    profileImage(state) {
+      return state.profileImage;
     }
   };
