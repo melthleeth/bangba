@@ -9,9 +9,13 @@
       <section class="flex flex-col w-full">
         <article class="font-S-CoreDream-medium tracking-wider flex items-center">
           <span>{{ forum.user_name }}</span>
+<<<<<<< HEAD
           <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-if="isFollow"
             >팔로우</base-button
           >
+=======
+          <base-button class="text-xs px-2 py-1 ml-2" style="color: black; background-color: white" @click="follow" v-if="isFollow">팔로잉</base-button>
+>>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
           <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
@@ -84,18 +88,39 @@ export default {
   },
   data() {
     return {
+<<<<<<< HEAD
       owner_check: localStorage.getItem('user_name'),
       forum: [],
+=======
+      owner_check: localStorage.getItem("user_name"),
+      forum: [{
+        category: "",
+        comment_cnt: 0,
+        content: "",
+        created_at: "",
+        hits: 0,
+        like_cnt: 0,
+        pk_forum: 0,
+        title: "",
+        updated_at: "",
+        user_name: "",
+        user_no: 0 }
+      ],
+>>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
       forumId: {
         type: Number,
         val: this.$route.params.contentId,
       },
+      isFollow : false,
     };
   },
 
   created() {
-    // console.log(this.forum.forumId);
     this.forum_Detail();
+  },
+  updated() {
+    this.is_Follow();
+    this.isFollow = this.$store.getters["follows/isFollow"];
   },
   methods: {
     backToTop() {
@@ -117,7 +142,6 @@ export default {
         })
         .then((result) => {
           // this.items=result;
-          // console.log(result)
           this.forum = result.data;
           this.convert_time();
         })
@@ -190,7 +214,7 @@ export default {
       this.forum.created_at = answer;
     },
     // 팔로우 여부 확인하기
-    async isFollow() {
+    async is_Follow() {
       const userInfo = {
         target_no: this.forum.user_no,
       };
@@ -198,6 +222,7 @@ export default {
     },
     //follow 하기
     async follow() {
+<<<<<<< HEAD
       console.log(this.isFollow);
       console.log(this.isFollow);
       console.log(this.isFollow);
@@ -205,6 +230,10 @@ export default {
       console.log(this.isFollow);
       if (localStorage.getItem('user_name') === null) {
         alert('로그인이 필요한 기능입니다.');
+=======
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+>>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
         return;
       }
       const userInfo = {
@@ -221,11 +250,25 @@ export default {
     set_isFollow(newVal) {
       this.isFollow = newVal;
     },
+<<<<<<< HEAD
+=======
+    set_forum(newVal) {
+      this.forum = newVal;
+    }
+>>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
   },
   computed: {
     set_isFollow() {
+<<<<<<< HEAD
       return this.$store.getters['follows/isFollow'];
     },
+=======
+      return this.$store.getters["follows/isFollow"];
+    },
+    set_forum_no() {
+      return this.forum;
+    }
+>>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
   },
 };
 </script>

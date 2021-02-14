@@ -36,6 +36,7 @@
             , a.hits
             , a.created_at
             , b.user_name
+            , a.user_no
             , (select count(*) from fcomment as c where c.forum_no = a.pk_forum) as comment_cnt 
         from forum as a
         inner join user as b on a.user_no = b.pk_user

@@ -95,4 +95,8 @@
 		where article_no = #{pk_article};
 	</select>
 	
+	<select id="forumMyPage" parameterType="int" resultType="ForumDto">
+		select * from forum
+		where user_no = #{pk_user};
+	</select>
 </mapper>

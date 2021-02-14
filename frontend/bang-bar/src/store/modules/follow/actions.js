@@ -40,8 +40,8 @@ export default {
             body: JSON.stringify(userInfo)
         });
         const responseData = await response.text();
-
-        if(responseData == "success") {
+        
+        if(responseData === "SUCCESS") {
             context.commit("setIsFollow", true);
         } else {
             alert("팔로우 실패");
@@ -52,6 +52,7 @@ export default {
             user_no : context.rootGetters.pkUser,
             target_no : payload.target_no
         };
+        console.log(userInfo);
         const response =await fetch(`${SERVER_URL}/user/unfollow`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -64,14 +65,14 @@ export default {
         });
         const responseData = await response.text();
 
-        if(responseData == "success") {
+        if(responseData === "SUCCESS") {
             context.commit("setIsFollow", false);
         } else {
             alert("팔로우 실패");
         }
     },
     async followList(context) {
-        const response = await fetch(`${SERVER_URL}/user/follow`+ context.rootGetters.pkUser + `/ec`,{
+        const response = await fetch(`${SERVER_URL}/user/follow/`+ context.rootGetters.pkUser + `/ec`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -83,11 +84,12 @@ export default {
 
         const responseData = await response.json();
         const followList = [];
-
+        console.log(responseData);
         for(const key in responseData) {
             const follow = {
                 pk_user: responseData[key].pk_user,
                 user_name: responseData[key].user_name,
+                img_path: responseData[key].img_path,
                 follow_cnt: responseData[key].follow_cnt
             };
             followList.push(follow);
@@ -95,7 +97,7 @@ export default {
         context.commit("setFollowList", followList);
     },
     async followingList(context) {
-        const response = await fetch(`${SERVER_URL}/user/follow`+ context.rootGetters.pkUser + `/ic`,{
+        const response = await fetch(`${SERVER_URL}/user/follow/`+ context.rootGetters.pkUser + `/ic`,{
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -106,11 +108,12 @@ export default {
         });
         const responseData = await response.json();
         const followingList = [];
-
+        console.log(responseData);
         for(const key in responseData) {
             const following = {
                 pk_user: responseData[key].pk_user,
                 user_name: responseData[key].user_name,
+                img_path: responseData[key].img_path,
                 follow_cnt: responseData[key].follow_cnt
             };
             followingList.push(following);

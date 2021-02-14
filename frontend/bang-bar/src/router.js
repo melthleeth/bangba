@@ -12,6 +12,9 @@ import BookmarkedRecipe from "./pages/users/BookmarkedRecipe.vue";
 import MyPosts from "./pages/users/MyPosts.vue";
 import ActivityLog from "./pages/users/ActivityLog.vue";
 import FollowingFollowers from "./pages/users/FollowingFollowers.vue";
+import MyPageOther from "./pages/users/MyPageOther.vue";
+import MyPageOnlyMe from "./pages/users/MyPageOnlyMe.vue";
+import LeaveUser from "./pages/users/LeaveUser.vue";
 
 // footer
 import BangbaGuide from "./pages/footers/BangbaGuide.vue";
@@ -53,18 +56,13 @@ const router = createRouter({
     { path: "/recipe/official", component: OfficialRecipe },
     { path: "/recipe/custom", component: CustomRecipe },
     { path: "/board", component: BoardList },
-    // header-dropdown
-    { path: "/header/editprofile", component: EditProfile },
-    { path: "/header/bookmarkedrecipe", component: BookmarkedRecipe },
-    { path: "/header/myposts", component: MyPosts },
-    { path: "/header/activitylog", component: ActivityLog },
-    { path: "/header/followingfollowers", component: FollowingFollowers },
-    { path: "/board/list", component: BoardList },
+
     // footer
     { path: "/footer/guide", component: BangbaGuide },
     { path: "/footer/people", component: BangbaPeople },
     { path: "/footer/ask", component: BangbaAsk },
     //board
+    { path: "/board/list", component: BoardList },
     {
       path: "/board/create/:contentId?",
       name: "BoardCreate",
@@ -89,6 +87,44 @@ const router = createRouter({
       props: true,
       component: RecipeDetail,
     },
+
+    // header-dropdown-mypage
+    {
+      path: "/header",
+      component: MyPageOnlyMe,
+      name: "MyPageOnlyMe",
+      children: [
+        {
+          path: "bookmarkedrecipe",
+          component: BookmarkedRecipe,
+          name: "BookmarkedRecipe",
+        },
+        {
+          path: "editprofile",
+          component: EditProfile,
+          name: "EditProfile",
+        },
+        {
+          path: "myposts",
+          component: MyPosts,
+        },
+        {
+          path: "activitylog",
+          component: ActivityLog,
+        },
+        {
+          path: "followingfollowers",
+          component: FollowingFollowers,
+        },
+        {
+          path: "leave",
+          component: LeaveUser,
+        },
+      ],
+    },
+
+    // mypage-other
+    { path: "/mypageother", component: MyPageOther },
   ],
 });
 

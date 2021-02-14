@@ -70,8 +70,8 @@
           <template v-slot="context">
             <img
               @click="context.toggleOpen"
-              class="h-12 w-12 cursor-pointer rounded-full border-2 border-gray-400 object-cover"
-              src="../../assets/img/mr.fox.jpg"
+              class="h-12 w-12 cursor-pointer rounded-full object-cover"
+              :src=imgsrc
               alt="profile image"
             />
             <transition
@@ -161,6 +161,7 @@ export default {
       formIsValid: true,
       isLoading: false,
       error: null,
+      imgsrc: "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif"
     };
   },
   created() {

@@ -3,9 +3,9 @@ export default {
         return state.isFollow;
     },
     followList(state) {
-        return state.followCnt;
+        return state.followList;
     },
     followingList(state) {
-        return state.followingCnt;
+        return state.followingList;
     }
 };
