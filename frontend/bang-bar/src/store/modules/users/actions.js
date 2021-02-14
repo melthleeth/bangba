@@ -165,7 +165,6 @@ export default {
         });
         const responseData = await response.json();
         const recipes = [];
-    
         for (const key in responseData) {
             const recipe = {
                 pk_article: responseData[key].pk_article,
