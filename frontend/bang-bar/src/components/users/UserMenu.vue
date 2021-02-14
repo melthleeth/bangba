@@ -29,7 +29,7 @@
           />내가 쓴 글</router-link
         >
       </li>
-      <li class="mx-12 my-6 flex items-center">
+      <!-- <li class="mx-12 my-6 flex items-center">
         <router-link to="/header/activitylog"
           ><img
             src="../../assets/icon/activity@2x.png"
@@ -37,7 +37,7 @@
             class="mr-1"
           />활동 기록</router-link
         >
-      </li>
+      </li> -->
       <li class="mx-12 my-6 flex items-center">
         <router-link to="/header/followingfollowers"
           ><img

@@ -35,8 +35,8 @@ a {
   text-decoration: none;
   /* padding: 0.75rem 1.5rem; */
   /* font: inherit; */
-  background-color: #00002F;
-  border: 3px solid #00002F;
+  background-color: #00002f;
+  border: 3px solid #00002f;
   color: white;
   cursor: pointer;
   border-radius: 30px;
@@ -54,7 +54,7 @@ button:active {
 
 a:focus,
 button:focus {
-    outline: none;
+  outline: none;
 }
 
 .flat {
@@ -100,7 +100,24 @@ button:focus {
   border: 1px solid transparent;
 }
 
-.nude:hover {
+.nude:hover,
+.nude:active {
+  color: white;
+  background-color: #00002f;
+}
+
+.outline-colored:hover,
+.outline-colored:active {
+  color: #00002f;
+  background-color: #56e6a5;
+}
+.colored {
+  color: #00002f;
+  background-color: #56e6a5;
+}
+
+.colored:hover,
+.colored:active {
   color: white;
   background-color: #00002f;
 }
