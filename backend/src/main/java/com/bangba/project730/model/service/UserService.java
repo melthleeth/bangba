@@ -6,7 +6,6 @@ import java.util.Map;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.ForumDto;
-import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
 
 public interface UserService {
@@ -28,6 +27,5 @@ public interface UserService {
 	public List<ArticleDto> articleMyPage(int pk_user);
 	
 	//마이페이지
-	public List<TagDto> getTagMyPage(int pk_article) throws Exception;
 	public List<ForumDto> forumMyPage(int pk_user)throws Exception;
 }

@@ -14,7 +14,6 @@ import com.bangba.project730.model.dao.UserDao;
 import com.bangba.project730.model.dto.ArticleDto;
 import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.ForumDto;
-import com.bangba.project730.model.dto.TagDto;
 import com.bangba.project730.model.dto.UserDto;
 
 @Service
@@ -98,10 +97,6 @@ public class UserServiceImpl implements UserService{
 		return dao.isDuplicatedPhoneNumber(phone_number);
 	}
 	
-	@Override
-	public List<TagDto> getTagMyPage(int pk_article) throws Exception {
-		return dao.getTagMyPage(pk_article);
-	}
 
 	@Override
 	public List<ForumDto> forumMyPage(int pk_user) throws Exception {

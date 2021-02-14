@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -152,17 +151,22 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
-<<<<<<< HEAD
 	@GetMapping(value = "/mypage/options/bookmark")
-	@ResponseBody
-	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false, defaultValue = "1") int pk_user) {
-		
-=======
-	@PostMapping(value = "/mypage/options/bookmark")
-	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false, defaultValue = "1") int pk_user) {
-		userService.bookmarkMyPage(pk_user);
->>>>>>> 9f0456a904ddce4642871f4f76d01eaa44847130
-		return userService.bookmarkMyPage(pk_user);
+	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false) int pk_user) throws Exception {
+		List<ArticleTotalDto> articleTotalDto = userService.bookmarkMyPage(pk_user);
+		for (ArticleTotalDto a: articleTotalDto) {
+			String tag_tmp = "";
+			List<TagDto> tags = articleService.getTag(a.getPk_article());
+			for(TagDto t:tags) {
+				tag_tmp += t.getContent_kor();
+				tag_tmp +="<br>";
+			}
+			if (tag_tmp.length() > 0)
+				tag_tmp = tag_tmp.substring(0, tag_tmp.length() - 4);
+			a.setTag(tag_tmp);
+			
+		}
+		return articleTotalDto;
 	}
 
 	@ApiOperation(value = "마이페이지 내가 쓴 레시피", response = String.class)
