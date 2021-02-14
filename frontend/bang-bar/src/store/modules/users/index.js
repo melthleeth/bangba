@@ -7,8 +7,13 @@ export default {
     namespaced: true,
     state() {
         return {
+<<<<<<< HEAD
             myRecipe:[],
             myForum:[],
+=======
+            myRecipe: [],
+            myBookmark: [],
+>>>>>>> bookmark
         };
     },
     mutations,
