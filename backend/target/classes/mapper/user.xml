@@ -66,6 +66,8 @@
 		    , A.content
 		    , A.created_at
 		    , A.updated_at
+		    , A.bookmark_cnt
+		    , A.like_cnt
 		from article as A
 		where pk_article in 
 			(select 
