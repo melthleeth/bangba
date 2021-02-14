@@ -1,27 +1,17 @@
 <template>
-  <div
-    class="font-color-black-400 flex flex-col justify-items-center font-S-CoreDream-light"
-  >
-    <section
-      class="card-flat mt-12 w-1/2 flex flex-col justify-items-center mx-auto text-center"
-    >
+  <div class="font-color-black-400 flex flex-col justify-items-center font-S-CoreDream-light">
+    <section class="card-flat mt-12 w-1/2 flex flex-col justify-items-center mx-auto text-center">
       <span class="font-extrabold text-base">[{{ forum.category }}]</span>
-      <span class="font-extrabold text-xl tracking-wider mt-1">{{
-        forum.title
-      }}</span>
+      <span class="font-extrabold text-xl tracking-wider mt-1">{{ forum.title }}</span>
     </section>
     <section class="card-flat w-1/2 mx-auto flex">
-      <img
-        class="w-12 h-12 mr-2"
-        src="../../assets/img/profile6.png"
-        alt="profile image"
-      />
+      <img class="w-12 h-12 mr-2" src="../../assets/img/profile6.png" alt="profile image" />
       <section class="flex flex-col w-full">
-        <article
-          class="font-S-CoreDream-medium tracking-wider flex items-center"
-        >
+        <article class="font-S-CoreDream-medium tracking-wider flex items-center">
           <span>{{ forum.user_name }}</span>
-          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-if="isFollow">팔로우</base-button>
+          <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-if="isFollow"
+            >팔로우</base-button
+          >
           <base-button class="text-xs px-2 py-1 ml-2" @click="follow" v-else>팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
@@ -29,16 +19,10 @@
           <span class="mr-2">조회 {{ forum.hits }}</span>
           <section class="">
             <span v-if="forum.user_name === owner_check">
-              <base-button
-                class="text-xs px-2 py-1 ml-2"
-                mode="nude"
-                @click="updateData"
+              <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateData"
                 >수정</base-button
               >
-              <base-button
-                class="text-xs px-2 py-1"
-                mode="nude"
-                @click="deleteData"
+              <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteData"
                 >삭제</base-button
               >
             </span>
@@ -77,40 +61,30 @@
     <section
       class="card-flat flex flex-col justify-items-center items-center mx-auto transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
     >
-      <img
-        src="../../assets/icon/like@1.5x.png"
-        class="object-contain mx-2"
-        alt="like icon"
-      />
-      <span class="w-max font-S-CoreDream-medium font-color-black-300">{{
-        forum.like_cnt
-      }}</span>
+      <img src="../../assets/icon/like@1.5x.png" class="object-contain mx-2" alt="like icon" />
+      <span class="w-max font-S-CoreDream-medium font-color-black-300">{{ forum.like_cnt }}</span>
     </section>
     <section class="flex flex-col w-1/2 mx-auto">
       <comment-list :contentId="forumId.val"></comment-list>
       <section class="flex justify-self-end ml-auto">
-        <base-button mode="outline" class="px-6 py-2 text-sm" @click="golist"
-          >목록</base-button
-        >
-        <base-button mode="outline" class="px-6 py-2 text-sm" @click="backToTop"
-          >TOP</base-button
-        >
+        <base-button mode="outline" class="px-6 py-2 text-sm" @click="golist">목록</base-button>
+        <base-button mode="outline" class="px-6 py-2 text-sm" @click="backToTop">TOP</base-button>
       </section>
     </section>
   </div>
 </template>
 
 <script>
-import CommentList from "./CommentList.vue";
+import CommentList from './CommentList.vue';
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
-  name: "BoardDetail",
+  name: 'BoardDetail',
   components: {
     CommentList,
   },
   data() {
     return {
-      owner_check: localStorage.getItem("user_name"),
+      owner_check: localStorage.getItem('user_name'),
       forum: [],
       forumId: {
         type: Number,
@@ -128,7 +102,7 @@ export default {
       window.scroll({
         top: 0,
         left: 0,
-        behavior: "smooth",
+        behavior: 'smooth',
       });
     },
     //상세페이지 이동
@@ -136,9 +110,9 @@ export default {
       this.axios
         .get(`${SERVER_URL}/forum/${this.forumId.val}`, {
           headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json; charset = utf-8",
-            "Access-Control-Allow-Headers": "*",
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json; charset = utf-8',
+            'Access-Control-Allow-Headers': '*',
           },
         })
         .then((result) => {
@@ -148,17 +122,17 @@ export default {
           this.convert_time();
         })
         .catch((e) => {
-          console.log("error:", e);
+          console.log('error:', e);
         });
     },
 
-    //삭제 
+    //삭제
     deleteData() {
       const headers = {
-        "Content-type": "application/json; charset=UTF-8",
-        Accept: "*/*",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "*",
+        'Content-type': 'application/json; charset=UTF-8',
+        Accept: '*/*',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*',
       };
 
       this.axios
@@ -170,11 +144,11 @@ export default {
         .then((result) => {
           console.log(result);
           this.$router.push({
-            path: "/board/list",
+            path: '/board/list',
           });
         })
         .catch((e) => {
-          console.log("error:", e);
+          console.log('error:', e);
         });
     },
 
@@ -205,22 +179,22 @@ export default {
       let month = new Date().getMonth() + 1; // 월
       let date = new Date().getDate(); // 날짜
 
-      if (month < "10") {
-        month = "0" + month;
+      if (month < '10') {
+        month = '0' + month;
       }
-      if (date < "10") {
-        date = "0" + date;
+      if (date < '10') {
+        date = '0' + date;
       }
-      var answer = "";
-      answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
+      var answer = '';
+      answer = Y + '.' + M + '.' + D + '  ' + H + ':' + Min + ':' + S;
       this.forum.created_at = answer;
     },
     // 팔로우 여부 확인하기
     async isFollow() {
       const userInfo = {
-        target_no : this.forum.user_no
+        target_no: this.forum.user_no,
       };
-      await this.$store.dispatch("follows/isFollow", userInfo);
+      await this.$store.dispatch('follows/isFollow', userInfo);
     },
     //follow 하기
     async follow() {
@@ -229,31 +203,30 @@ export default {
       console.log(this.isFollow);
       console.log(this.isFollow);
       console.log(this.isFollow);
-      if(localStorage.getItem("user_name") === null) {
-        alert("로그인이 필요한 기능입니다.")
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
         return;
       }
       const userInfo = {
-        target_no : this.forum.user_no
+        target_no: this.forum.user_no,
       };
-      if(this.isFollow) {
-        await this.$store.dispatch("follows/unfollow", userInfo);
+      if (this.isFollow) {
+        await this.$store.dispatch('follows/unfollow', userInfo);
       } else {
-        await this.$store.dispatch("follows/follow", userInfo);
+        await this.$store.dispatch('follows/follow', userInfo);
       }
-    }
+    },
   },
-  watch : {
+  watch: {
     set_isFollow(newVal) {
       this.isFollow = newVal;
-    }
+    },
   },
-  computed : {
+  computed: {
     set_isFollow() {
-      return this.$store.getters["follows/isFollow"];
-    }
+      return this.$store.getters['follows/isFollow'];
+    },
   },
-  
 };
 </script>
 <style scoped>

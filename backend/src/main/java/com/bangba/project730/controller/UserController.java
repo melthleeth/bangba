@@ -148,9 +148,10 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "마이페이지 북마크 한 글", response = String.class)
-	@PostMapping(value = "/mypage/options/bookmark")
+	@GetMapping(value = "/mypage/options/bookmark")
 	@ResponseBody
 	public List<ArticleTotalDto> bookmarkMyPage(@RequestParam(required = false, defaultValue = "1") int pk_user) {
+		
 		return userService.bookmarkMyPage(pk_user);
 	}
 	
