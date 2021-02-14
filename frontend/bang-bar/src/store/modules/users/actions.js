@@ -61,19 +61,9 @@ export default {
             alert("사용가능한 닉네임입니다.");
         }
     },
-<<<<<<< HEAD
     // 내가 쓴 게시글 불러오기
     async LoadMyForum(context) {
         const response = await fetch(`${SERVER_URL}/user/mypage/forum/` + context.rootGetters.pkUser, {
-=======
-
-    // 북마크한 게시글 불러오기
-    async LoadMyBookmark(context) {
-        const paramsPkUser = context.rootGetters.pkUser
-        const url = `${SERVER_URL}/user/mypage/bookmark/?pk_user=${paramsPkUser}`;
-
-        const response = await fetch(url, {
->>>>>>> bookmark
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -83,7 +73,7 @@ export default {
             method: "GET",
         });
         const responseData = await response.json();
-<<<<<<< HEAD
+
         const forums = [];
 
         for (const key in responseData) {
@@ -157,10 +147,23 @@ export default {
         const responseData = await response.json();
 
         console.log(responseData);
-    }
-=======
-        console.log(responseData);
-        
+    },
+    
+    // 북마크한 게시글 불러오기
+    async LoadMyBookmark(context) {
+        const paramsPkUser = context.rootGetters.pkUser
+        const url = `${SERVER_URL}/user/mypage/bookmark/?pk_user=${paramsPkUser}`;
+
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            },
+            method: "GET",
+        });
+        const responseData = await response.json();
         const recipes = [];
     
         for (const key in responseData) {
@@ -189,5 +192,5 @@ export default {
         }
         context.commit("getMyBookmark", recipes);
     },
->>>>>>> bookmark
+
 };
