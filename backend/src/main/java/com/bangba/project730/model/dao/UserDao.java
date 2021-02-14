@@ -22,6 +22,7 @@ public interface UserDao {
 	
 	public UserDto getMyPage(int pk_user);
 	public void updateMyPage(UserDto userDto);
+	public void updateNameImg(UserDto userDto);
 	public void deleteMyPage(int pk_user);
 	public List<ArticleTotalDto> bookmarkMyPage(int pk_user);
 	public List<ArticleTotalDto> likeMyPage(int pk_user);
@@ -29,6 +30,7 @@ public interface UserDao {
 
 	public String getUserName(int user_no) throws Exception;
 	public String getImgPath(int user_no) throws Exception;
+	public String getPW(UserDto userDto) throws Exception;
 	
 	public List<ForumDto> forumMyPage(int pk_user);
 }

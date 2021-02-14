@@ -22,6 +22,7 @@ public interface UserService {
 	// 로그인 한 후
 	public UserDto getMyPage(int pk_user);
 	public void updateMyPage(UserDto userDto);
+	public void updateNameImg(UserDto userDto);
 	public void deleteMyPage(int pk_user);
 	public List<ArticleTotalDto> bookmarkMyPage(int pk_user);
 	public List<ArticleTotalDto> likeMyPage(int pk_user);
@@ -29,4 +30,5 @@ public interface UserService {
 	
 	//마이페이지
 	public List<ForumDto> forumMyPage(int pk_user)throws Exception;
+	public String getPW(UserDto userDto) throws Exception;
 }

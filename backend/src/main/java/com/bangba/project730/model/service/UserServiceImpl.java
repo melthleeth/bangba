@@ -108,4 +108,14 @@ public class UserServiceImpl implements UserService{
 		// TODO Auto-generated method stub
 		return dao.forumMyPage(pk_user);
 	}
+
+	@Override
+	public void updateNameImg(UserDto userDto) {
+		dao.updateNameImg(userDto);
+	}
+
+	@Override
+	public String getPW(UserDto userDto) throws Exception {
+		return dao.getPW(userDto);
+	}
 }

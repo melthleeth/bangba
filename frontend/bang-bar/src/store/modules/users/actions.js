@@ -60,5 +60,91 @@ export default {
         } else {
             alert("사용가능한 닉네임입니다.");
         }
+    },
+    // 내가 쓴 게시글 불러오기
+    async LoadMyForum(context) {
+        const response = await fetch(`${SERVER_URL}/user/mypage/forum/` + context.rootGetters.pkUser, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            },
+            method: "GET",
+        });
+        const responseData = await response.json();
+        const forums = [];
+
+        for (const key in responseData) {
+            const forum = {
+                pk_forum: responseData[key].pk_forum,
+                created_at:responseData[key].created_at,
+                updated_at:responseData[key].updated_at,
+                category:responseData[key].category,
+                title:responseData[key].title,
+                content:responseData[key].content
+            };
+            forums.push(forum);
+        }
+        context.commit("setMyForum", forums);
+    },
+    // 이름, 이미지 저장 
+    async changeNameImg(context, payload) {
+        const userInfo = {
+            pk_user : context.rootGetters.pkUser,
+            user_name : payload.user_name,
+            img_path : payload.img_path
+        }
+
+        const response = await fetch(`${SERVER_URL}/user/mypage/name-img`, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+              },
+              method: "PUT",
+              body:JSON.stringify(userInfo)
+        });
+        const responseData = await response.json();
+
+        // 이미지 저장
+        localStorage.setItem('user_name', responseData.user_name);
+        localStorage.setItem('profileImage', responseData.img_path);
+
+    },
+    async confirmPW(context, payload) {
+        const userInfo = {
+            pk_user : context.rootGetters.pkUser,
+            password : payload
+        };
+
+        const response = await fetch(`${SERVER_URL}/user/mypage/confirm-pw`, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+              },
+              method: "POST",
+              body:JSON.stringify(userInfo)
+        });
+        const responseData = response.text();
+        return responseData;
+    },
+    async changePassword(_, payload) {
+        const response = await fetch(`${SERVER_URL}/user/mypage/pw`, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+              },
+              method: "PUT",
+              body:JSON.stringify(payload)
+        });
+        const responseData = await response.json();
+
+        console.log(responseData);
     }
 };
