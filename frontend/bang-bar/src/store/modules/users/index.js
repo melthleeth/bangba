@@ -7,7 +7,8 @@ export default {
     namespaced: true,
     state() {
         return {
-            myRecipe:[],
+            myRecipe: [],
+            myBookmark: [],
         };
     },
     mutations,

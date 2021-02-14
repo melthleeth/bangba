@@ -9,12 +9,9 @@
       <div v-if="isLoading" class="my-32">
         <base-spinner></base-spinner>
       </div>
-      <div
-        v-else-if="filteredRecipes.length > 0"
-        class=" grid grid-cols-3 grid-flow-row gap-4 mx-auto"
-      >
+      <div v-else-if="bookmarks.length > 0" class=" grid grid-cols-3 grid-flow-row gap-4 mx-auto">
         <recipe-card
-          v-for="cocktail in filteredRecipes"
+          v-for="cocktail in bookmarks"
           :key="cocktail.pk_article"
           :pk_article="cocktail.pk_article"
           :img_path="cocktail.img_path"
@@ -29,14 +26,14 @@
       <span
         v-else
         class="text-2xl text-center my-32 font-S-CoreDream-medium font-bold font-color-black-200"
-        >등록된 레시피가 없습니다.</span
+        >북마크한 레시피가 없습니다.</span
       >
     </section>
   </div>
 </template>
 
 <script>
-import RecipeCard from "../../components/recipes/RecipeCard.vue";
+import RecipeCard from '../../components/recipes/RecipeCard.vue';
 export default {
   components: {
     RecipeCard,
@@ -48,12 +45,8 @@ export default {
     };
   },
   computed: {
-    filteredRecipes() {
-      const recipes = this.$store.getters["recipes/recipes"]; //모듈/getters
-      console.log(recipes);
-      return recipes.filter((recipeItem) => {
-        if (recipeItem.category === true) return true;
-      });
+    bookmarks() {
+      return this.$store.getters['users/myBookmark']; //모듈/getters
     },
   },
   created() {
@@ -63,12 +56,11 @@ export default {
     async loadRecipes(refresh = true) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("recipes/loadRecipes", {
+        await this.$store.dispatch('users/LoadMyBookmark', {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error =
-          error.message || "레시피를 불러오는데 문제가 발생했습니다.";
+        this.error = error.message || '북마크를 불러오는데 문제가 발생했습니다.';
       }
       this.isLoading = false;
     },
