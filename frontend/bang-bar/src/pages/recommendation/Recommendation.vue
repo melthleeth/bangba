@@ -9,7 +9,7 @@
       <span>Build Your Cocktail Taste</span>
     </section>
     <section class="flex flex-col justify-items-center tracking-wider mx-auto mb-12">
-      <span class="font-S-CoreDream-medium font-semibold text-xl mx-auto mb-8">베이스</span>
+      <span class="font-S-CoreDream-medium font-semibold text-xl mx-auto mb-8">레시피</span>
       <article class="flex mx-auto">
       <label class="flex flex-col justify-items-center">
         <input type="radio" name="radio" value="보드카" checked>
