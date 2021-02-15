@@ -6,26 +6,33 @@
     >
     <section class="flex justify-center px-32 mb-6 font-S-CoreDream-light">
       <base-card size="box-290" class="flex flex-col justify-items-center">
-        <span
-          class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
-          >금주의 랭킹</span
-        >
-        <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-          v-for="(user, index) in ranking"
-          :key="user.pk_user"
-        >
-          <div class="flex items-center mt-4">
-            <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
-            <img
-              :src="user.imgsrc"
-              class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
-              alt="profile image"
-            />
-            <span class="text-base font-medium ml-2">{{ user.username }}</span>
-          </div>
-        </section>
-      </base-card>
+          <span
+            class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+            >금주의 랭킹</span
+          >
+          <section
+            class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+            v-for="(ranking, index) in filteredRanking"
+            :key="ranking.user_name" 
+          >
+            <div class="flex items-center mt-4">
+              <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
+              <img
+                :src="ranking.img_path === '' ? 
+                'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif' 
+                : ranking.img_path" 
+                class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
+                alt="profile image"
+              />
+              <span class="text-base font-medium ml-2">{{
+                ranking.user_name
+              }}</span>
+              <span class="text-base font-medium ml-2">{{
+                ranking.like_weekly
+              }}</span>
+            </div>
+          </section>
+        </base-card>
       <base-card
         class="flex-auto inline-block flex flex-col justify-items-center"
       >
@@ -33,7 +40,32 @@
           class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
           >주간 베스트</span
         >
-        <section class="font-S-CoreDream-light"></section>
+        <section class="font-S-CoreDream-light">
+          <div v-if="isLoading" class="my-32">
+        <base-spinner></base-spinner>
+      </div>
+      <div
+        v-else-if="filteredArticleRanking.length > 0"
+        class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto"
+      >
+        <recipe-card
+          v-for="articleranking in filteredArticleRanking"
+          :key="articleranking.pk_article"
+          :img_path="articleranking.img_path"
+          :user_name="articleranking.user_name"
+          :cocktailname="articleranking.title_kor"
+          :tag="articleranking.tag"
+          :like_cnt="articleranking.like_cnt"
+          :bookmark_cnt="articleranking.bookmark_cnt"
+        >
+        </recipe-card>
+      </div>
+      <span
+        v-else
+        class="text-2xl text-center my-32 font-S-CoreDream-medium font-bold font-color-black-200"
+        >등록된 레시피가 없습니다.</span
+      >
+        </section>
       </base-card>
     </section>
     <section class="flex justify-end mx-12">
@@ -132,33 +164,33 @@ export default {
     return {
       isLoading: false,
       error: null,
-      ranking: [
-        {
-          pk_user: 22,
-          imgsrc: require("../../assets/img/mr.fox.jpg"),
-          username: "미스터 여우씨",
-        },
-        {
-          pk_user: 3,
-          imgsrc: require("../../assets/img/profile2.png"),
-          username: "의문의 루피",
-        },
-        {
-          pk_user: 5,
-          imgsrc: require("../../assets/img/profile3.jpg"),
-          username: "베르나르 무민무민",
-        },
-        {
-          pk_user: 46,
-          imgsrc: require("../../assets/img/profile4.jpeg"),
-          username: "이시국 칵테일",
-        },
-        {
-          pk_user: 1,
-          imgsrc: require("../../assets/img/profile5.jpg"),
-          username: "개발 안맞아",
-        },
-      ],
+      // ranking: [
+      //   {
+      //     pk_user: 22,
+      //     imgsrc: require("../../assets/img/mr.fox.jpg"),
+      //     username: "미스터 여우씨",
+      //   },
+      //   {
+      //     pk_user: 3,
+      //     imgsrc: require("../../assets/img/profile2.png"),
+      //     username: "의문의 루피",
+      //   },
+      //   {
+      //     pk_user: 5,
+      //     imgsrc: require("../../assets/img/profile3.jpg"),
+      //     username: "베르나르 무민무민",
+      //   },
+      //   {
+      //     pk_user: 46,
+      //     imgsrc: require("../../assets/img/profile4.jpeg"),
+      //     username: "이시국 칵테일",
+      //   },
+      //   {
+      //     pk_user: 1,
+      //     imgsrc: require("../../assets/img/profile5.jpg"),
+      //     username: "개발 안맞아",
+      //   },
+      // ],
     };
   },
   computed: {
@@ -172,9 +204,27 @@ export default {
     hasRecipes() {
       return !this.isLoading && this.$store.getters["recipes/hasRecipes"];
     },
+     filteredRanking() {
+      const ranking = this.$store.getters["recipes/Ranking"]; //모듈/getters
+      console.log(ranking);
+      return ranking;
+    },
+    hasRanking() {
+      return !this.isLoading && this.$store.getters["recipes/Ranking"];
+    },
+    filteredArticleRanking() {
+      const articleranking = this.$store.getters["recipes/ArticleRanking"]; //모듈/getters
+      console.log(articleranking);
+      return articleranking;
+    },
+    hasArticleRanking() {
+      return !this.isLoading && this.$store.getters["recipes/ArticleRanking"];
+    },
   },
   created() {
     this.loadRecipes();
+    this.LoadRanking();
+    this.LoadArticleRanking();
   },
   methods: {
     async loadRecipes(refresh = true) {
@@ -189,10 +239,34 @@ export default {
       }
       this.isLoading = false;
     },
+    async LoadRanking(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("recipes/LoadRanking", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "랭킹을 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    }, async LoadArticleRanking(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("recipes/LoadArticleRanking", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "레시피 랭킹을 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
     handleError() {
       this.error = null;
     },
   },
+  
 };
 </script>
 

@@ -9,5 +9,9 @@ export default {
     }, 
     setFetchTimestamp(state) {
         state.lastFetch = new Date().getTime();
+    },setRanking(state, payload){
+        state.Ranking = payload;
+    },setArticleRanking(state, payload){
+        state.ArticleRanking = payload;
     }
 };

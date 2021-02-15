@@ -7,7 +7,9 @@ export default {
   state() {
     return {
       lastFetch: null,
-      // dummy data
+      // dummy data 
+      Ranking:[],
+      ArticleRanking:[],
       recipes: [
         {
           pk_article: 1,
