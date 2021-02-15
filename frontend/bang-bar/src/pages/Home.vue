@@ -91,18 +91,23 @@
           >
           <section
             class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-            v-for="(user, index) in ranking"
-            :key="user.pk_user"
+            v-for="(ranking, index) in filteredRanking"
+            :key="ranking.user_name" 
           >
             <div class="flex items-center mt-4">
               <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
               <img
-                :src="user.imgsrc"
+                :src="ranking.img_path === '' ? 
+                'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif' 
+                : ranking.img_path" 
                 class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
                 alt="profile image"
               />
               <span class="text-base font-medium ml-2">{{
-                user.username
+                ranking.user_name
+              }}</span>
+              <span class="text-base font-medium ml-2">{{
+                ranking.like_weekly
               }}</span>
             </div>
           </section>
@@ -149,33 +154,35 @@ export default {
   components: { BaseCard },
   data() {
     return {
-      ranking: [
-        {
-          pk_user: 22,
-          imgsrc: require("../assets/img/mr.fox.jpg"),
-          username: "미스터 여우씨",
-        },
-        {
-          pk_user: 3,
-          imgsrc: require("../assets/img/profile2.png"),
-          username: "의문의 루피",
-        },
-        {
-          pk_user: 5,
-          imgsrc: require("../assets/img/profile3.jpg"),
-          username: "베르나르 무민무민",
-        },
-        {
-          pk_user: 46,
-          imgsrc: require("../assets/img/profile4.jpeg"),
-          username: "이시국 칵테일",
-        },
-        {
-          pk_user: 1,
-          imgsrc: require("../assets/img/profile5.jpg"),
-          username: "개발 안맞아",
-        },
-      ],
+      isLoading: false,
+      error: null,
+      // ranking: [
+      //   {
+      //     pk_user: 22,
+      //     imgsrc: require("../assets/img/mr.fox.jpg"),
+      //     username: "미스터 여우씨",
+      //   },
+      //   {
+      //     pk_user: 3,
+      //     imgsrc: require("../assets/img/profile2.png"),
+      //     username: "의문의 루피",
+      //   },
+      //   {
+      //     pk_user: 5,
+      //     imgsrc: require("../assets/img/profile3.jpg"),
+      //     username: "베르나르 무민무민",
+      //   },
+      //   {
+      //     pk_user: 46,
+      //     imgsrc: require("../assets/img/profile4.jpeg"),
+      //     username: "이시국 칵테일",
+      //   },
+      //   {
+      //     pk_user: 1,
+      //     imgsrc: require("../assets/img/profile5.jpg"),
+      //     username: "개발 안맞아",
+      //   },
+      // ],
       weeklyBest: [
         {
           pk_board: 1,
@@ -208,6 +215,36 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    filteredRanking() {
+      const ranking = this.$store.getters["ranking/Ranking"]; //모듈/getters
+      console.log(ranking);
+      return ranking;
+    },
+    hasRanking() {
+      return !this.isLoading && this.$store.getters["ranking/Ranking"];
+    },
+  },
+   created() {
+    this.LoadRanking();
+  },
+  methods: {
+    async LoadRanking(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("ranking/LoadRanking", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "랭킹을 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
+    },
   },
 };
 </script>

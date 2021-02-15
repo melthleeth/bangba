@@ -67,12 +67,12 @@ public class AdminController {
 		return adminService.searchAll();
 	}
 	@ApiOperation(value = "관리자 기능 - 주간 회원 랭킹", response = String.class)
-	@PutMapping(value="/member/userrank")
+	@GetMapping(value="/member/userrank")
 	@ResponseBody public List<UserRankDto> userRankWeekly() {
 		return adminService.userRankWeekly();
 	}
 	@ApiOperation(value = "관리자 기능 - 주간 레시피 랭킹", response = String.class)
-	@PutMapping(value="/member/articlerank")
+	@GetMapping(value="/member/articlerank")
 	@ResponseBody public List<ArticleTotalDto> articleRankWeekly() throws Exception {
 		return adminService.articleRankWeekly();
 	}
