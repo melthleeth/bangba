@@ -333,11 +333,15 @@ export default {
         alert("이미 등록된 태그입니다.");
       else {
         this.tags.val.push(this.tag);
+        //실제로 tag 테이블네 넣는 조건
+        
+
         this.tag = "";
       }
     },
     removeTag(index) {
       this.tags.val.splice(index, 1);
+      //실제로 삭제되는 로직 구현
     },
     addIngredient() {
       if (this.type === "") {

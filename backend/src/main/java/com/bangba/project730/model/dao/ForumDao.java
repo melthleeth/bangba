@@ -24,4 +24,12 @@ public interface ForumDao {
 	public List<FcommentDto> searchComment(int pk_forum) throws Exception;
 	public void updateComment(FcommentDto fcommentDto) throws Exception;
 	public void deleteComment(int pk_acomment) throws Exception;
+	
+	
+	//좋아요
+	public void insertLike(int user_no, int forum_no) throws Exception;
+	public void deleteLike(int user_no, int forum_no) throws Exception;
+	public void upLike(int user_no, int forum_no) throws Exception;
+	public void downLike(int user_no, int forum_no) throws Exception;
+	public int isLike(int user_no, int forum_no) throws Exception;
 }

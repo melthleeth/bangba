@@ -124,4 +124,34 @@ public class ForumServicelmpl implements ForumService{
 		dao.deleteComment(pk_fcomment);
 		return null;
 	}
+	
+	
+	//좋아용
+	@Override
+	public void insertLike(int user_no, int forum_no) throws Exception {
+		// TODO Auto-generated method stub
+		dao.insertLike(user_no, forum_no);
+	}
+
+	@Override
+	public void deleteLike(int user_no, int forum_no) throws Exception {
+		// TODO Auto-generated method stub
+		dao.deleteLike(user_no, forum_no);
+	}
+	
+	@Override
+	public void upLike(int user_no, int forum_no) throws Exception {
+		dao.upLike(user_no, forum_no);
+	}
+
+	@Override
+	public void downLike(int user_no, int forum_no) throws Exception {
+		dao.downLike(user_no, forum_no);
+	}
+	
+	@Override
+	public int isLike(int user_no, int forum_no) throws Exception {
+		
+		return dao.isLike(user_no, forum_no);
+	}
 }

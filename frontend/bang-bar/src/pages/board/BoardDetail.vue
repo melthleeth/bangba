@@ -58,6 +58,7 @@
     </section>
     <section
       class="card-flat flex flex-col justify-items-center items-center mx-auto transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
+      @click="clickLikeBtn"
     >
       <img src="../../assets/icon/like@1.5x.png" class="object-contain mx-2" alt="like icon" />
       <span class="w-max font-S-CoreDream-medium font-color-black-300">{{ forum.like_cnt }}</span>
@@ -100,17 +101,29 @@ export default {
         type: Number,
         val: this.$route.params.contentId,
       },
-      isFollow: false,
+      isFollow : false,
+      likeBtn : false,
     };
   },
-
   created() {
     this.forum_Detail();
+
+    //좋아요
+
+    this.likeBtn = this.$store.getters["boardlikes/likeBtn"];
+    this.like_cnt = this.$store.getters["boardlikes/likeCnt"];
   },
-  updated() {
+  mounted() {
+    console.log("mounted", this.forum[0].user_no);
+  },
+  updated(){
+    console.log("update", this.forum.user_no)
     this.is_Follow();
-    this.isFollow = this.$store.getters['follows/isFollow'];
+    this.isLike();
+    this.isFollow = this.$store.getters["follows/isFollow"];
+
   },
+
   methods: {
     backToTop() {
       window.scroll({
@@ -132,6 +145,9 @@ export default {
         .then((result) => {
           // this.items=result;
           this.forum = result.data;
+
+          // console.log(result.data);
+          // console.log(this.forum.user_no);
           this.convert_time();
         })
         .catch((e) => {
@@ -154,8 +170,8 @@ export default {
           // JSON.stringify(params),
           { headers }
         )
-        .then((result) => {
-          console.log(result);
+        .then(() => {
+          // console.log(result);
           this.$router.push({
             path: '/board/list',
           });
@@ -226,23 +242,69 @@ export default {
         await this.$store.dispatch('follows/follow', userInfo);
       }
     },
+
+    //좋아용
+    async isLike() {
+      console.log("isLike",this.forum.pk_forum)
+
+
+      const btnInfo = {
+        forum_no : this.forum.pk_forum,
+        like_cnt : this.forum.like_cnt
+      };
+      await this.$store.dispatch("boardlikes/isClick", btnInfo);
+    },
+    async clickLikeBtn() {
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
+        return;
+      }
+
+      // console.log("isLike",this.forum.pk_forum) // 포럼pk 잘뜸
+      const btnInfo = {
+        forum_no : this.forum.pk_forum,
+        isclick : this.likeBtn == false ? "off" : "on",
+        like_cnt : this.like_cnt
+      };
+      await this.$store.dispatch("boardlikes/clickBtn", btnInfo);
+    },
   },
   watch: {
     set_isFollow(newVal) {
       this.isFollow = newVal;
     },
-    set_forum(newVal) {
-      this.forum = newVal;
-    }
+    set_forum_no(newVal) {
+      this.forum.user_no = newVal;
+    },
+    //좋아용
+    setLikeBtn: function(newVal) {
+      this.likeBtn = newVal;
+    },
+    set_like_cnt: function(newVal) {
+      this.forum.like_cnt = newVal;
+    },
   },
   computed: {
     set_isFollow() {
       return this.$store.getters["follows/isFollow"];
     },
     set_forum_no() {
-      return this.forum;
-    }
+      return this.forum.user_no ;
+    },
+
+    //좋아용
+    set_like_cnt() {
+      return this.$store.getters["boardlikes/likeCnt"];
+    },
+    setLikeBtn() {
+      return this.$store.getters["boardlikes/likeBtn"];
+    },
+    like_cnt() {
+      return this.forum.like_cnt;
+    },
+
   },
+
 };
 </script>
 <style scoped>
