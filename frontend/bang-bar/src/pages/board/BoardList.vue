@@ -158,6 +158,7 @@
               class="h-5 w-5 mr-1 flex justify-center text-gray-500"
               :disabled="!checkNext"
               v-if="checkNext"
+              @click="goLast()"
             >
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -197,7 +198,7 @@ export default {
       items: [],
       pageArray: this.items,
       time_conver: '',
-      forumCntPerPage: 5, // 한 페이지 당 보여질 게시글 수
+      forumCntPerPage: 15, // 한 페이지 당 보여질 게시글 수
       rangeCnt: 5, // 한 페이지에 보여지는 범위의 수
       pageRange: 1,
       endNumPerPage: '', // 해당 페이지에서 보여지는 마지막 페이지 수
@@ -225,7 +226,7 @@ export default {
     rowClick(item) {
       this.$router.push({
         path: `/board/detail/${item.pk_forum}`,
-        params:{user_no : item.user_no}
+        params: { user_no: item.user_no },
       });
     },
 
@@ -361,8 +362,8 @@ export default {
     this.getList();
     this.get_length();
   },
-  update(){
-    console.log("!")
+  update() {
+    console.log('!');
   },
 };
 </script>

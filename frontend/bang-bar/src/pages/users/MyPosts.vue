@@ -95,57 +95,64 @@ export default {
       isLoading: false,
       error: null,
       activetab: 1,
-      posts: [
-        {
-          pk_forum: 77,
-          created_at: "2021.02.10",
-          category: "후기",
-          title: "헌법",
-          content: "국가는 지역간의 균형있는 발전을 위하여 지역경제를 육성할 의무를 진다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 법률이 헌법에 위반되는 여부가 재판의 전제가 된 경우에는 법원은 헌법재판소에 제청하여 그 심판에 의하여 재판한다. 위원은 정당에 가입하거나 정치에 관여할 수 없다.",
-        },
-        {
-          pk_forum: 39,
-          created_at: "2021.02.05",
-          category: "후기",
-          title: "여러분 행복하세요",
-          content: "ㅎㅎ",
-        },
-        {
-          pk_forum: 34,
-          created_at: "2021.02.05",
-          category: "후기",
-          title: "되나?",
-          content: "ㅂㅈㄷ",
-        },
-        {
-          pk_forum: 31,
-          created_at: "2021.02.05",
-          category: "후기",
-          title: "서버불안정",
-          content: "ㅎㅎ",
-        },
-        {
-          pk_forum: 29,
-          created_at: "2021.02.05",
-          category: "후기",
-          title: "왜됨",
-          content: "qwe",
-        },
-      ],
+      // posts: [
+      //   {
+      //     pk_forum: 77,
+      //     created_at: "2021.02.10",
+      //     category: "후기",
+      //     title: "헌법",
+      //     content: "국가는 지역간의 균형있는 발전을 위하여 지역경제를 육성할 의무를 진다. 대한민국의 경제질서는 개인과 기업의 경제상의 자유와 창의를 존중함을 기본으로 한다. 법률이 헌법에 위반되는 여부가 재판의 전제가 된 경우에는 법원은 헌법재판소에 제청하여 그 심판에 의하여 재판한다. 위원은 정당에 가입하거나 정치에 관여할 수 없다.",
+      //   },
+      //   {
+      //     pk_forum: 39,
+      //     created_at: "2021.02.05",
+      //     category: "후기",
+      //     title: "여러분 행복하세요",
+      //     content: "ㅎㅎ",
+      //   },
+      //   {
+      //     pk_forum: 34,
+      //     created_at: "2021.02.05",
+      //     category: "후기",
+      //     title: "되나?",
+      //     content: "ㅂㅈㄷ",
+      //   },
+      //   {
+      //     pk_forum: 31,
+      //     created_at: "2021.02.05",
+      //     category: "후기",
+      //     title: "서버불안정",
+      //     content: "ㅎㅎ",
+      //   },
+      //   {
+      //     pk_forum: 29,
+      //     created_at: "2021.02.05",
+      //     category: "후기",
+      //     title: "왜됨",
+      //     content: "qwe",
+      //   },
+      // ],
     };
   },
   created() {
     this.loadMyRecipes();
+    this.loadMyForums();
   },
   computed: {
     recipes() {
       return this.$store.getters["users/myRecipe"];
     },
+    posts(){
+      return this.$store.getters["users/myForum"];
+    }
   },
   methods: {
     async loadMyRecipes() {
       await this.$store.dispatch("users/LoadMyRecipe");
     },
+    async loadMyForums() {
+      await this.$store.dispatch("users/LoadMyForum");
+    }
   },
 };
 </script>

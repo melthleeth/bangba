@@ -44,6 +44,12 @@
 		where email = #{email}
 	</update>
 	
+	<update id="updateNameImg" parameterType="UserDto">
+		update user
+		set user_name = #{user_name}, img_path = #{img_path}
+		where pk_user = #{pk_user}
+	</update>
+	
 	
 	<delete id="deleteMyPage" parameterType="Integer">
 		delete 
@@ -60,12 +66,31 @@
 		    , A.content
 		    , A.created_at
 		    , A.updated_at
+		    , A.bookmark_cnt
+		    , A.like_cnt
 		from article as A
 		where pk_article in 
 			(select 
 				article_no 
 		    from alike as B
 		    where user_no = #{pk_user} and B.bookmark = true);
+	</select>
+	
+	<select id="likeMyPage" parameterType="int" resultType="ArticleTotalDto">
+		select 
+			A.pk_article
+    		, A.user_no
+		    , A.title_kor
+		    , A.img_path
+		    , A.content
+		    , A.created_at
+		    , A.updated_at
+		from article as A
+		where pk_article in 
+			(select 
+				article_no 
+		    from alike as B
+		    where user_no = #{pk_user} and B.bookmark = false);
 	</select>
 	
 	<select id="articleMyPage" parameterType="int" resultType="ArticleDto">
@@ -86,13 +111,14 @@
 		where pk_user = #{user_no}
 	</select>
 	
-	<select id="getTagMyPage" parameterType="int" resultType="String">
-		select 
-			pk_article_tag
-		    , article_no
-		    , tag_no 
-		from article_tag
-		where article_no = #{pk_article};
+	<select id="forumMyPage" parameterType="int" resultType="ForumDto">
+		select * from forum
+		where user_no = #{pk_user}
 	</select>
 	
+	<select id="getPW" parameterType="String" resultType="String">
+		select password
+		from user
+		where pk_user = #{pk_user}
+	</select>
 </mapper>
