@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -115,7 +117,7 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "재료 추가", response = String.class)
 	@PostMapping("/ingredient")
-	public String createIngredient(@RequestParam String ingredient, Model model) throws Exception {
+	public String createIngredient(@RequestBody String ingredient, Model model) throws Exception {
 		try {
 			articleService.createIngredient(ingredient);
 			articleService.createTag(ingredient,2);
@@ -129,8 +131,8 @@ public class ArticleController {
 		}
 	}
 	@ApiOperation(value = "재료 검색", response = String.class)
-	@PostMapping("/ingredient/{searchtxt}")
-	public List<IngredientDto>  searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
+	@GetMapping("/ingredient/{searchtxt}")
+	public List<IngredientDto>  searchIngredient(@PathVariable String searchtxt, Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "재료 검색 완료");
 			return articleService.searchIngredient(searchtxt);
@@ -141,12 +143,12 @@ public class ArticleController {
 		}
 	}
 	@ApiOperation(value = "태그 추가", response = String.class)
-	@PostMapping("/tag")
-	public String createTag(@RequestParam String tag, Model model) throws Exception {
+	@PostMapping("/submit_tag")
+	public String createTag(@RequestBody String tag, Model model) throws Exception {
 		try {
 			articleService.createTag(tag,3);
 			model.addAttribute("msg", "태그 추가 완료");
-			return "main";
+			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "태그 추가중 문제가 발생했습니다.");
@@ -154,8 +156,8 @@ public class ArticleController {
 		}
 	}	
 	@ApiOperation(value = "태그 검색", response = String.class)
-	@PostMapping("/tag/{searchtxt}")
-	public List<TagDto> searchTag(@RequestParam String searchtxt, Model model) throws Exception {
+	@GetMapping("/tag/{searchtxt}")
+	public List<TagDto> searchTag(@PathVariable String searchtxt, Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "태그 검색 완료");
 			return articleService.searchTag(searchtxt);
