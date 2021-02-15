@@ -6,13 +6,13 @@ export default {
         let url = "";
         // 만약 누른 버튼이 like라면
         if(payload.isLike == true) {
-            url = `${SERVER_URL}/forum/is-like`;
+            url = `${SERVER_URL}/article/is-like`;
         } else {
             url = `${SERVER_URL}/article/is-bmark`;
         }
         const userInfo = {
             user_no : context.rootGetters.pkUser,
-            forum_no : payload.forum_no,
+            article_no : payload.article_no,
         }
         const response = await fetch(url, {
             headers: {
@@ -56,7 +56,7 @@ export default {
         let url = "";
         // 만약 누른 버튼이 like라면
         if(payload.isLike == true) {
-            url = `${SERVER_URL}/forum/like`;
+            url = `${SERVER_URL}/article/like`;
         } else {
             url = `${SERVER_URL}/article/bookmark`;
         }

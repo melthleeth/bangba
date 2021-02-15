@@ -107,7 +107,7 @@
             v-model.trim="tag"
             @blur="clearValidity('tags')"
           />
-          <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
+          <base-button class="px-4 py-2" @click="addTag" >추가하기</base-button>
           <section class="mt-2">
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
               {{ tag }}
@@ -327,23 +327,36 @@ export default {
       this.imgsrc = "";
       // alert("사진 등록 기능 준비중");
     },
-    addTag() {
+    async addTag() {
       if (this.tag === "") alert("태그 내용을 입력해주세요.");
       else if (this.tags.val.includes(this.tag))
         alert("이미 등록된 태그입니다.");
       else {
         this.tags.val.push(this.tag);
         //실제로 tag 테이블네 넣는 조건
-        
 
+        //태그 이름을 넣어줌
+        const tagData = {
+          content_kor: this.tag,
+        };
+
+        //중복된 값이 있는지 체크 있으면 continue
+        const flag=await this.$store.dispatch("tags/checkTag", tagData);
+        console.log(flag)
+        //없으면 태그 데이터에 넣어줌
+        if(!flag){
+          await this.$store.dispatch("tags/submitTag", tagData);  
+        }
+        
         this.tag = "";
       }
     },
     removeTag(index) {
-      this.tags.val.splice(index, 1);
+      var tagN=this.tags.val.splice(index, 1);
+      console.log(tagN);
       //실제로 삭제되는 로직 구현
     },
-    addIngredient() {
+    async addIngredient() {
       if (this.type === "") {
         alert("분류를 선택해주세요.");
         return;
@@ -384,11 +397,45 @@ export default {
         this.alcoholTemp.push(tempItem);
         this.alcohols.val.push(alcoholItem);
         this.alcohols.isValid = true;
+
+
+        //태그 로직 아래 추가
+        const tagData = {
+          content_kor: this.ingredient,
+        };
+        //중복된 값이 있는지 체크 있으면 continue
+        const flag=await this.$store.dispatch("tags/checkTag", tagData);
+        // console.log(flag)
+        //없으면 태그 데이터에 넣어줌
+        if(!flag){
+          await this.$store.dispatch("tags/submitTag", tagData);  
+        }
+        
       } else {
         const ingredientItem = `${this.type}/${this.ingredient}/${this.quantity}/${this.unit}`;
         this.ingredientTemp.push(tempItem);
         this.ingredients.val.push(ingredientItem);
         this.ingredients.isValid = true;
+
+        //재료, 태그 로직 아래 추가
+        //태그 로직
+        const tagData = {
+          content_kor: this.ingredient,
+        };
+        //중복된 값이 있는지 체크 있으면 continue
+        const flag=await this.$store.dispatch("tags/checkTag", tagData);
+        // console.log(flag)
+        //없으면 태그 데이터에 넣어줌
+        if(!flag){
+          await this.$store.dispatch("tags/checkTag", tagData);  
+        }
+        //재료 로직
+        const iflag=await this.$store.dispatch("tags/checkIngredient", tagData);
+        console.log(iflag);
+        if(!iflag){
+          await this.$store.dispatch("tags/submitIngredient", tagData);  
+        }
+
       }
       alert(this.type + " (" + this.ingredient + ")가 추가되었습니다.");
 
@@ -488,38 +535,6 @@ export default {
     },
   },
 };
-/*
-{
-    "user_no": "user_no", 
-    "title_kor": "title_kor",
-    "title_eng": "title_eng",
-    "created_at": "202102020122", 
-    "content": "content",
-    "img_path": "img_path",
-    "category": "admin",
-    "abv": "abv", 
-    "cup_no": "cup_no",
-    "alcohol": "보드카/15/ml,주류/진/15/ml,화이트 럼/15/ml,테킬라/15/ml,트리플 섹/15/ml",
-    "ingredient": "재료/레몬 주스/25/ml,재료/설탕 시럽/30/ml,재료/콜라/1/캔,가니쉬/레몬 슬라이스/1/개",
-    "tag": "tag1,tag2,tag3,tag4",
-    "recipe": "recipe1,recipe2,recipe3"
-},
-{
-    "user_no": "1", 
-    "title_kor": "title_kor",
-    "title_eng": "title_eng",
-    "created_at": "202102021447", 
-    "content": "content",
-    "img_path": "img_path2",
-    "category": "admin",
-    "abv": "16", 
-    "cup_no": "1",
-    "alcohol": "그레이 구스/15/ml,진/15/ml,스미노프 No.21/15/ml,데킬라/15/ml,Kahlúa/15/ml",
-    "ingredient": "재료/레몬 주스/25/ml,재료/토닉 워터/30/ml,재료/콜라/1/캔,가니쉬/레몬/1/개",
-    "tag": "데킬라,보드카,레몬,맛있는",
-    "recipe": "recipe1,recipe2,recipe3"
-}
-*/
 </script>
 
 <style scoped>
