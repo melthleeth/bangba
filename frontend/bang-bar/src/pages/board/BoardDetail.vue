@@ -25,7 +25,7 @@
               >
             </span>
           </section>
-          <section class="flex justify-self-end items-center ml-auto mr-4">
+          <section class="flex justify-self-end items-center ml-auto mr-4" @click="isLike">
             <article class="flex items-center">
               <img
                 src="../../assets/icon/like@0.75x.png"
