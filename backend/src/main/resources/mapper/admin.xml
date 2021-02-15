@@ -46,7 +46,7 @@
 	<select id="articleRankWeekly" resultType="ArticleDto">
 		select * 
 		from article 
-		order by like_weekly desc
-		limit 5
+		order by like_cnt desc
+		limit 3
 	</select>
 </mapper>

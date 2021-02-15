@@ -63,7 +63,7 @@
     </section>
 
     <section class="card-flat flex flex-col w-1/2 mx-auto h-full ">
-      <div class="table mx-2 my-4 min-h leading-relaxed tracking-wide">
+      <div class="mx-4 my-6 mb-10 min-h leading-7 tracking-wide whitespace-pre-line">
         {{ forum.content }}
       </div>
     </section>

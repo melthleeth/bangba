@@ -102,4 +102,99 @@ export default {
     context.commit("setRecipes", recipes);
     context.commit("setFetchTimestamp");
   },
+  // 주간 유저 랭킹
+  async LoadRanking(context) {
+      const response = await fetch(`${SERVER_URL}/admin/member/userrank`, {
+          headers: {
+              "Content-Type": "application/json; charset=utf-8",
+              'Accept': '*/*',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': '*',
+          },
+          method: "GET",
+      });
+      const responseData = await response.json();
+      const rankings = [];
+
+      for (const key in responseData) {
+          const ranking = {
+              user_name: responseData[key].user_name,
+              like_weekly: responseData[key].like_weekly,
+              img_path: responseData[key].img_path,
+          };
+          rankings.push(ranking);
+      }
+      context.commit("setRanking", rankings);
+  },
+  // 주간 레시피 랭킹
+  async LoadArticleRanking(context) {
+    const response = await fetch(`${SERVER_URL}/admin/member/articlerank`, {
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            'Accept': '*/*',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Headers': '*',
+        },
+        method: "GET",
+    });
+    const responseData = await response.json();
+    const articlerankings = [];
+
+    for (const key in responseData) {
+        const articleranking = {
+            user_name: responseData[key].user_name,
+            like_weekly: responseData[key].like_weekly,
+            img_path: responseData[key].img_path,
+            title_kor: responseData[key].title_kor,
+            like_cnt: responseData[key].like_cnt,
+            bookmark_cnt: responseData[key].bookmark_cnt,
+            tag: responseData[key].tag,
+        };
+        articlerankings.push(articleranking);
+    }
+    context.commit("setArticleRanking", articlerankings);
+},
+
+  async updateRecipe(context, payload) {
+    const recipeData = {
+      pk_article : payload.pk_article,
+      updated_at: new Date().toLocaleTimeString(), // 변경 가능
+      img_path: payload.img_path,
+      title_kor: payload.title_kor,
+      title_eng: payload.title_eng,
+      content: payload.content,
+    };
+    const url = `${SERVER_URL}/article/recipe` + payload.pk_article;
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "PUT",
+      body: JSON.stringify(recipeData)
+    });
+    const responseData = response.text();
+    if(responseData === "success") {
+      alert("글 수정이 완료되었습니다.");
+      return true;
+    }
+  },
+  async deleteRecipe(_, payload) {
+    const response = await fetch(`${SERVER_URL}/article/recipe` + payload.pk_article, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "DELETE"
+    });
+    const responseData = response.text();
+    if(responseData === "success") {
+      alert("글 삭제가 완료되었습니다.");
+      return true;
+    }
+  }
 };

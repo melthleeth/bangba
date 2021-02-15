@@ -57,8 +57,10 @@ export default {
         
         if(responseData === "FAIL") {
             alert("중복된 닉네임입니다.");
+            return "FAIL";
         } else {
             alert("사용가능한 닉네임입니다.");
+            return "SUCCESS";
         }
     },
     // 내가 쓴 게시글 불러오기
@@ -112,7 +114,10 @@ export default {
         // 이미지 저장
         localStorage.setItem('user_name', responseData.user_name);
         localStorage.setItem('profileImage', responseData.img_path);
-
+        if(responseData.user_name === payload.user_name && responseData.img_path === payload.img_path) {
+            alert("변경되었습니다.");
+            location.reload();
+        }
     },
     async confirmPW(context, payload) {
         const userInfo = {
@@ -133,7 +138,12 @@ export default {
         const responseData = response.text();
         return responseData;
     },
-    async changePassword(_, payload) {
+    async changePassword(context, payload) {
+        const userInfo = {
+            pk_user : context.rootGetters.pkUser,
+            email : payload.email,
+            password : payload.password
+        };
         const response = await fetch(`${SERVER_URL}/user/mypage/pw`, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
@@ -142,12 +152,18 @@ export default {
                 'Access-Control-Allow-Headers': '*',
               },
               method: "PUT",
-              body:JSON.stringify(payload)
+              body:JSON.stringify(userInfo)
         });
         const responseData = await response.json();
 
         console.log(responseData);
-    },    
+        alert("비밀번호가 변경되었습니다.");
+        localStorage.removeItem("user_name");
+        localStorage.removeItem("pk_user");
+        localStorage.removeItem("email");
+        return "success";
+    },
+    
     // 북마크한 게시글 불러오기
     async LoadMyBookmark(context) {
         const paramsPkUser = context.rootGetters.pkUser
@@ -190,6 +206,27 @@ export default {
         }
         context.commit("getMyBookmark", recipes);
     },
+    async leave(context) {
+        console.log(context.rootGetters.pkUser);
+        const response = await fetch(`${SERVER_URL}/user/mypage/`+context.rootGetters.pkUser, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+              },
+              method: "DELETE"
+        });
+        const responseData = await response.text();
+        if(responseData === "SUCCESS") {
+            alert("회원탈퇴가 완료되었습니다.");
+            localStorage.removeItem("user_name");
+            localStorage.removeItem("pk_user");
+            localStorage.removeItem("email");
+            return "success";
+        }
+    },
+
     // 타인의 정보 불러오기
     async LoadOtherMyPage(context) {
         const paramsPkUser = context.rootGetters.pkUser
@@ -217,6 +254,4 @@ export default {
         console.log(userInfos)
         context.commit("getOtherMyPage", userInfos);
     },
-
-
 };

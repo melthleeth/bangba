@@ -219,6 +219,17 @@ export default {
       };
       await this.$store.dispatch('likes/clickBtn', btnInfo);
     },
+    //삭제 버튼에 들어갈 함수 
+    async deleteRecipe() {
+      const articleInfo = {
+        pk_article : this.pk_artcile,
+      };
+
+      const result = await this.$store.dispatch('recipes/deleteRecipe', articleInfo);
+      if(result) {
+        this.$router.replace("/");
+      }
+    }
   },
 };
 </script>

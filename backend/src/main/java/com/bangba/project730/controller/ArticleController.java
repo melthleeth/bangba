@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -82,7 +83,7 @@ public class ArticleController {
 		try {
 			articleService.updateArticle(map);
 			model.addAttribute("msg", "레시피 수정 완료");
-			return "main";
+			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "레시피 수정중 문제가 발생했습니다.");
@@ -91,11 +92,11 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "레시피 삭제", response = String.class)
 	@DeleteMapping("/recipe/{pk_article}")
-	public String deleteArticle(@RequestParam Integer pk_article, Model model) throws Exception {
+	public String deleteArticle(@PathVariable Integer pk_article, Model model) throws Exception {
 		try {
 			articleService.deleteArticle(pk_article);
 			model.addAttribute("msg", "레시피 삭제 완료");
-			return "main";
+			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "레시피 삭제중 문제가 발생했습니다.");
@@ -116,7 +117,7 @@ public class ArticleController {
 	}
 	@ApiOperation(value = "재료 추가", response = String.class)
 	@PostMapping("/ingredient")
-	public String createIngredient(@RequestParam String ingredient, Model model) throws Exception {
+	public String createIngredient(@RequestBody String ingredient, Model model) throws Exception {
 		try {
 			articleService.createIngredient(ingredient);
 			articleService.createTag(ingredient,2);
@@ -130,8 +131,8 @@ public class ArticleController {
 		}
 	}
 	@ApiOperation(value = "재료 검색", response = String.class)
-	@PostMapping("/ingredient/{searchtxt}")
-	public List<IngredientDto>  searchIngredient(@RequestParam String searchtxt, Model model) throws Exception {
+	@GetMapping("/ingredient/{searchtxt}")
+	public List<IngredientDto>  searchIngredient(@PathVariable String searchtxt, Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "재료 검색 완료");
 			return articleService.searchIngredient(searchtxt);
@@ -142,12 +143,12 @@ public class ArticleController {
 		}
 	}
 	@ApiOperation(value = "태그 추가", response = String.class)
-	@PostMapping("/tag")
-	public String createTag(@RequestParam String tag, Model model) throws Exception {
+	@PostMapping("/submit_tag")
+	public String createTag(@RequestBody String tag, Model model) throws Exception {
 		try {
 			articleService.createTag(tag,3);
 			model.addAttribute("msg", "태그 추가 완료");
-			return "main";
+			return "success";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("msg", "태그 추가중 문제가 발생했습니다.");
@@ -155,8 +156,8 @@ public class ArticleController {
 		}
 	}	
 	@ApiOperation(value = "태그 검색", response = String.class)
-	@PostMapping("/tag/{searchtxt}")
-	public List<TagDto> searchTag(@RequestParam String searchtxt, Model model) throws Exception {
+	@GetMapping("/tag/{searchtxt}")
+	public List<TagDto> searchTag(@PathVariable String searchtxt, Model model) throws Exception {
 		try {
 			model.addAttribute("msg", "태그 검색 완료");
 			return articleService.searchTag(searchtxt);
@@ -278,7 +279,6 @@ public class ArticleController {
 			List<ArticleTotalDto> tdtos = new ArrayList<ArticleTotalDto>();
 			List<ArticleDto> adto = articleService.searchArticle(map);
 			for(ArticleDto a:adto) {
-//				System.out.println(a.getPk_article());
 				ArticleTotalDto tdto = new ArticleTotalDto();
 				// 기존 정보
 				tdto.setPk_article(a.getPk_article());
@@ -306,7 +306,6 @@ public class ArticleController {
 					temp += "<br>";
 					sb.append(recipe.getContent()).append("<br>");
 				}
-//				System.out.println("레시피: " + temp);
 				if (temp.length() > 0)
 					temp = temp.substring(0, temp.length() - 4);
 				tdto.setRecipe(temp);
@@ -316,7 +315,6 @@ public class ArticleController {
 					temp += tag.getContent_kor();
 					temp += "<br>";
 				}
-//				System.out.println("태그: " + temp);
 				if (temp.length() > 0)
 				temp = temp.substring(0, temp.length() - 4);
 				tdto.setTag(temp);
@@ -331,7 +329,6 @@ public class ArticleController {
 					temp += alcohol.getUnit();
 					temp += "<br>";
 				}
-//				System.out.println("주류: " + temp);
 				if (temp.length() > 0)
 				temp = temp.substring(0, temp.length() - 4);
 				tdto.setAlcohol(temp);
@@ -345,7 +342,6 @@ public class ArticleController {
 					temp += ingredient.getUnit();
 					temp += "<br>";
 				}
-//				System.out.println("재료/가니쉬: " + temp);
 				if (temp.length() > 0)
 				temp = temp.substring(0, temp.length() - 4);
 				tdto.setIngredient(temp);
@@ -363,7 +359,6 @@ public class ArticleController {
 	@PutMapping("/like")
 	public String clickLike(@RequestBody Map<String, String> map) {
 		try {
-			System.out.println(map.toString());
 			if(map.get("isclick").equals("off")) {
 				articleService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 				articleService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
@@ -399,7 +394,6 @@ public class ArticleController {
 	@ApiOperation(value = "좋아요 여부")
 	@PostMapping("/is-like")
 	public int isLike(@RequestBody Map<String, String> map) {
-		System.out.println(map.toString());
 		try {
 			return articleService.isLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("article_no")));
 		} catch (NumberFormatException e) {

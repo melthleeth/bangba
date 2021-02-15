@@ -11,5 +11,9 @@ export default {
 
     const currentTimeStamp = new Date().getTime();
     return (currentTimeStamp - lastFetch) / 1000 > 60;
-  },
+  },Ranking(state) {
+    return state.Ranking;
+  }, ArticleRanking(state) {
+    return state.ArticleRanking;
+  }
 };

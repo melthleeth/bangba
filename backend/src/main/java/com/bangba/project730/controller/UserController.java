@@ -135,7 +135,6 @@ public class UserController {
 
 		if (result != 0) { // 이미 사용중인 닉네임일 경우
 			model.addAttribute("msg", "이미 사용중인 닉네임입니다.");
-			System.out.println("??");
 			return "FAIL";
 		} else {
 			model.addAttribute("msg", "사용가능한 닉네임입니다.");
@@ -147,7 +146,7 @@ public class UserController {
 	@PostMapping(value = "/mypage/confirm-pw")
 	public String confirmPW(@RequestBody @ApiParam(value="확인할 비밀번호") UserDto userDto) {
 		try {
-			if(userDto.getPassword() == userService.getPW(userDto)) {
+			if(userDto.getPassword().equals(userService.getPW(userDto))) {
 				return "SUCCESS";
 			} else {
 				return "FAIL";
@@ -311,7 +310,7 @@ public class UserController {
 
 	@ApiOperation(value = "회원 탈퇴", response = String.class)
 	@DeleteMapping(value = "/mypage/{pk_user}")
-	public String deleteMyPage(@ApiParam(value = "유저의 pk", required = true) int pk_user, Model model) {
+	public String deleteMyPage(@PathVariable @ApiParam(value = "유저의 pk", required = true) int pk_user, Model model) {
 		userService.deleteMyPage(pk_user);
 		return "SUCCESS";
 	}

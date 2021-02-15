@@ -84,6 +84,7 @@ export default {
     if (payload.mode === "following") context.commit('deleteFollowing', payload.target_no);
     else if (payload.mode === "follower") context.commit('deleteFollower', payload.target_no);
   },
+
   async followList(context) {
     const response = await fetch(
       `${SERVER_URL}/user/follow/` + context.rootGetters.pkUser + `/ec`,

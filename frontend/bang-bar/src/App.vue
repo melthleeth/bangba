@@ -164,6 +164,10 @@ body {
   margin: 0;
 }
 
+input {
+  outline: none;
+}
+
 .route-enter-from {
   opacity: 0;
   transform: translateY(-30px);

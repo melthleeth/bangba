@@ -71,21 +71,37 @@
         <input
           class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
           id="currentPassword"
-          type="text"
+          v-model="currentPassword"
+          type="password"
           placeholder="현재 비밀번호"
+          minlength="8"
+          maxlength="20"
         />
         <input
           class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
           id="newPassword"
-          type="text"
+          v-model="newPassword"
+          type="password"
           placeholder="새 비밀번호"
+          minlength="8"
+          maxlength="20"
         />
+        <!-- <div class="alertText">
+              * 비밀번호는 영문과 숫자를 반드시 포함해 최소 8자, 최대 20자까지
+              입력이 가능해요.
+        </div> -->
         <input
           class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
           id="confirmNewPassword"
-          type="text"
+          v-model="confirmNewPassword"
+          type="password"
           placeholder="새 비밀번호 확인"
+          minlength="8"
+          maxlength="20"
+      
+          @keyup="passDupl_Check()"
         />
+        <span>{{ passmessage }}</span>
       </article>
     </section>
     <article class="flex justify-self-center mx-auto mt-10">
@@ -101,28 +117,35 @@ export default {
       user_id: localStorage.getItem("email"),
       user_name: localStorage.getItem("user_name"),
       imgsrc: localStorage.getItem("profileImage") === null ? "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif" : localStorage.getItem("profileImage"),
+      passmessage:"",
+      checkFlag : false,
     };
   },
-  // computed : {
-  //   user_nam() {
-  //     return localStorage.getItem("user_name");
-  //   },
-  //   imgsrc() {
-  //     return localStorage.getItem("profileImage") === null ? "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif" : localStorage.getItem("profileImage");
-  //   }
-  // },
+  watch: { 
+    $route(to) {
+      if (to.path === `/` || to.path === `/home`) { 
+        location.reload();
+      } 
+    } 
+  },
   methods: {
     changeProfileImage(input) {
-      // alert("프로필 사진 변경");
       console.log(input.target.files[0].name);
       const objectURL = URL.createObjectURL(input.target.files[0]);
       this.imgsrc = objectURL;
     },
     async checkDuplication() {
-      await this.$store.dispatch("users/checkName", this.user_name);
+      const result = await this.$store.dispatch("users/checkName", this.user_name);
+      if(result === "SUCCESS") {
+        this.checkFlag = true;
+      } 
     },
     
     async saveNameImg() {
+      if(!this.checkFlag) {
+        alert("닉네임 중복확인을 해주세요.");
+        return;
+      }
       if(this.user_name === localStorage.getItem("user_name") && this.imgsrc === localStorage.getItem("profileImage")) {
         alert("변경된 사항이 없습니다.");
         return;
@@ -142,8 +165,32 @@ export default {
         this.savePW();
       }
     },
+     passDupl_Check(){
+      if(this.newPassword===this.confirmNewPassword && this.newPassword.length >= 8){
+        this.passmessage="비밀번호가 동일합니다."
+      }else{
+        this.passmessage="비밀번호가 다릅니다."
+      }
+    },
+    ispassCheck(password){  
+
+      var check= new RegExp("^(?=.*[0-9])(?=.*[a-zA-Z]).{8,20}$");
+        if(check.test(password)){
+          return false;
+        }
+      return true;
+    },
     async savePW() {
-      if(this.newPassword === this.confirmNewPassword) {
+      if(this.ispassCheck(this.newPassword) || this.newPassword.length < 8) {
+        alert("새로 입력한 비밀번호가 입력형식에 맞지 않습니다.");
+        alert("* 비밀번호는 영문과 숫자를 반드시 포함해 최소 8자, 최대 20자까지 입력이 가능해요.");
+        return;
+      }
+      if(this.password === this.newPassword) {
+        alert("현재 비밀번호와 동일한 비밀번호입니다.");
+        return;
+      }
+      if(this.newPassword !== this.confirmNewPassword) {
         alert("새로 입력한 비밀번호가 일치하지 않습니다.");
         return;
       }
@@ -152,7 +199,10 @@ export default {
         email : localStorage.getItem("email"),
         password : this.newPassword
       }
-      await this.$store.dispatch("users/changePassword", userInfo);
+      const result = await this.$store.dispatch("users/changePassword", userInfo);
+      if(result === "success") {
+        this.$router.replace("/");
+      }
     }
   },
 };
