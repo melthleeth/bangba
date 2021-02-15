@@ -499,6 +499,10 @@ public class ArticleServiceImpl implements ArticleService {
 	public int isBmark(int user_no, int article_no) throws Exception {
 		return dao.isBmark(user_no, article_no);
 	}
-
-
+	
+	@Override
+    public List<AlcoholDto> searchBaseAlcohol() throws Exception {
+        return adao.searchBaseAlcohol();
+    }
+	
 }

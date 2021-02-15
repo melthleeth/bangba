@@ -12,6 +12,7 @@
         type="password"
         class="text-sm text-left rounded-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
         id="password"
+        v-model="currentPassword"
       />
     </section>
     <section class="page__toggle">
@@ -26,7 +27,7 @@
       </label>
     </section>
     <section class="mt-4">
-      <base-button mode="outline" class="btn px-4 py-2">탈퇴하기</base-button>
+      <base-button mode="outline" class="btn px-4 py-2" @click="checkPW">탈퇴하기</base-button>
       <base-button class="px-4 py-2">취소</base-button>
     </section>
   </div>
@@ -42,6 +43,33 @@ export default {
   watch: {
     leaveChecked: function(value) {
       console.log(value);
+    },
+    $route(to) {
+      if (to.path === `/` || to.path === `/home`) { 
+        location.reload();
+      } 
+    } 
+  },
+  methods: {
+    async checkPW() {
+      const result = await this.$store.dispatch("users/confirmPW", this.currentPassword);
+      if(result === "FAIL") {
+        alert("현재 비밀번호가 아닙니다.");
+        return;
+      } else {
+        //탈퇴 로직처리 
+        this.leaveUser();
+      }
+    },
+    async leaveUser() {
+      if(!this.leaveChecked) {
+        alert("체크박스를 확인해주세요.");
+        return;
+      }
+      const result = await this.$store.dispatch("users/leave");
+      if(result === "success") {
+        this.$router.replace("/");
+      }
     }
   }
 }

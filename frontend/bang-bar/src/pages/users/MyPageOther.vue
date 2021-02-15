@@ -1,11 +1,24 @@
 <template>
-    <div class="h-screen text-center bg-white mx-24 my-12">
-    <span class="text-4xl font-bold">다른 사용자가 보는 내 프로필</span>
-    </div>
+  <div style="flex flex-row font-color-black-400 font-S-CoreDream-light">
+    <section class="mt-20 mx-auto">
+      <user-board></user-board>
+    </section>
+    <section class="mt-10 mx-10 p-10">
+      <my-posts></my-posts>
+    </section>
+  </div>
 </template>
 
-<style scoped>
-div {
-    border-radius: 45px;
-}
-</style>
+<script>
+import UserBoard from '../../components/users/UserBoard.vue';
+import MyPosts from '../users/MyPosts.vue';
+
+export default {
+  components: {
+    UserBoard,
+    MyPosts,
+  },
+};
+</script>
+
+<style scoped></style>

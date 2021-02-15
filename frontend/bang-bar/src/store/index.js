@@ -9,6 +9,7 @@ import userModule from './modules/users/index.js';
 import adminModule from './modules/admin/index.js';
 import boardLikesModule from './modules/board_like/index.js';
 import tagModule from './modules/tag/index.js';
+import recommendationModule from './modules/recommendationes/index.js';
 
 // import acountModule from './modules/account/index.js';
 import createPersistedState from "vuex-persistedstate";
@@ -24,6 +25,7 @@ const store = createStore ({
         ranking: adminModule,
         boardlikes: boardLikesModule,
         tags : tagModule,
+        recommendationes: recommendationModule
     },
     plugins: [createPersistedState()],
 });

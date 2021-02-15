@@ -9,8 +9,12 @@
       <section class="flex flex-col w-full">
         <article class="font-S-CoreDream-medium tracking-wider flex items-center">
           <span>{{ forum.user_name }}</span>
-          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow">팔로잉</base-button>
-          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow">팔로우</base-button>
+          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
+            >팔로잉</base-button
+          >
+          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
+            >팔로우</base-button
+          >
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -31,6 +35,13 @@
                 src="../../assets/icon/like@0.75x.png"
                 class="object-contain ml-2 mr-0"
                 alt="like icon"
+                v-if="!likeBtn"
+              />
+              <img
+                src="../../assets/icon/liked@0.75x.png"
+                class="object-contain ml-2 mr-0"
+                alt="like icon"
+                v-else
               />
               <span class="font-2xs font-semibold font-color-black-300">
                 {{ forum.like_cnt }}
@@ -60,7 +71,18 @@
       class="card-flat flex flex-col justify-items-center items-center mx-auto transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
       @click="clickLikeBtn"
     >
-      <img src="../../assets/icon/like@1.5x.png" class="object-contain mx-2" alt="like icon" />
+      <img
+        src="../../assets/icon/like@1.5x.png"
+        class="object-contain mx-2"
+        alt="like icon"
+        v-if="!likeBtn"
+      />
+      <img
+        src="../../assets/icon/liked@1.5x.png"
+        class="object-contain mx-2"
+        alt="like icon"
+        v-else
+      />
       <span class="w-max font-S-CoreDream-medium font-color-black-300">{{ forum.like_cnt }}</span>
     </section>
     <section class="flex flex-col w-1/2 mx-auto">
@@ -83,26 +105,28 @@ export default {
   },
   data() {
     return {
-      owner_check: localStorage.getItem("user_name"),
-      forum: [{
-        category: "",
-        comment_cnt: 0,
-        content: "",
-        created_at: "",
-        hits: 0,
-        like_cnt: 0,
-        pk_forum: 0,
-        title: "",
-        updated_at: "",
-        user_name: "",
-        user_no: 0 }
+      owner_check: localStorage.getItem('user_name'),
+      forum: [
+        {
+          category: '',
+          comment_cnt: 0,
+          content: '',
+          created_at: '',
+          hits: 0,
+          like_cnt: 0,
+          pk_forum: 0,
+          title: '',
+          updated_at: '',
+          user_name: '',
+          user_no: 0,
+        },
       ],
       forumId: {
         type: Number,
         val: this.$route.params.contentId,
       },
-      isFollow : false,
-      likeBtn : false,
+      isFollow: false,
+      likeBtn: false,
     };
   },
   created() {
@@ -110,18 +134,17 @@ export default {
 
     //좋아요
 
-    this.likeBtn = this.$store.getters["boardlikes/likeBtn"];
-    this.like_cnt = this.$store.getters["boardlikes/likeCnt"];
+    this.likeBtn = this.$store.getters['boardlikes/likeBtn'];
+    this.like_cnt = this.$store.getters['boardlikes/likeCnt'];
   },
   mounted() {
-    console.log("mounted", this.forum[0].user_no);
+    console.log('mounted', this.forum[0].user_no);
   },
-  updated(){
-    console.log("update", this.forum.user_no)
+  updated() {
+    console.log('update', this.forum.user_no);
     this.is_Follow();
     this.isLike();
-    this.isFollow = this.$store.getters["follows/isFollow"];
-
+    this.isFollow = this.$store.getters['follows/isFollow'];
   },
 
   methods: {
@@ -227,14 +250,14 @@ export default {
     },
     //follow 하기
     async follow() {
-      if(localStorage.getItem("user_name") === null) {
-        alert("로그인이 필요한 기능입니다.")
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
         return;
       }
       const mode = this.isFollow ? 'following' : 'x';
       const userInfo = {
-        target_no : this.forum.user_no,
-        mode: mode
+        target_no: this.forum.user_no,
+        mode: mode,
       };
       if (this.isFollow) {
         await this.$store.dispatch('follows/unfollow', userInfo);
@@ -245,28 +268,27 @@ export default {
 
     //좋아용
     async isLike() {
-      console.log("isLike",this.forum.pk_forum)
-
+      console.log('isLike', this.forum.pk_forum);
 
       const btnInfo = {
-        forum_no : this.forum.pk_forum,
-        like_cnt : this.forum.like_cnt
+        forum_no: this.forum.pk_forum,
+        like_cnt: this.forum.like_cnt,
       };
-      await this.$store.dispatch("boardlikes/isClick", btnInfo);
+      await this.$store.dispatch('boardlikes/isClick', btnInfo);
     },
     async clickLikeBtn() {
-      if(localStorage.getItem("user_name") === null) {
-        alert("로그인이 필요한 기능입니다.")
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
         return;
       }
 
       // console.log("isLike",this.forum.pk_forum) // 포럼pk 잘뜸
       const btnInfo = {
-        forum_no : this.forum.pk_forum,
-        isclick : this.likeBtn == false ? "off" : "on",
-        like_cnt : this.like_cnt
+        forum_no: this.forum.pk_forum,
+        isclick: this.likeBtn == false ? 'off' : 'on',
+        like_cnt: this.like_cnt,
       };
-      await this.$store.dispatch("boardlikes/clickBtn", btnInfo);
+      await this.$store.dispatch('boardlikes/clickBtn', btnInfo);
     },
   },
   watch: {
@@ -286,25 +308,23 @@ export default {
   },
   computed: {
     set_isFollow() {
-      return this.$store.getters["follows/isFollow"];
+      return this.$store.getters['follows/isFollow'];
     },
     set_forum_no() {
-      return this.forum.user_no ;
+      return this.forum.user_no;
     },
 
     //좋아용
     set_like_cnt() {
-      return this.$store.getters["boardlikes/likeCnt"];
+      return this.$store.getters['boardlikes/likeCnt'];
     },
     setLikeBtn() {
-      return this.$store.getters["boardlikes/likeBtn"];
+      return this.$store.getters['boardlikes/likeBtn'];
     },
     like_cnt() {
       return this.forum.like_cnt;
     },
-
   },
-
 };
 </script>
 <style scoped>
