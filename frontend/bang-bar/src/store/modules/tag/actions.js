@@ -71,7 +71,7 @@ export default {
   //재료 등록
   async submitIngredient(context, payload) {
     // console.log(context);
-    // console.log(payload);
+    console.log(payload);
 
     // const tagData = {
       // tag:payload.content_kor,
@@ -79,6 +79,7 @@ export default {
 
     var ingredient = payload.content_kor;
     // console.log(tagData);
+    console.log(ingredient)
     const url = `${SERVER_URL}/article/ingredient`;
     const response = await fetch(url, {
       headers: {
