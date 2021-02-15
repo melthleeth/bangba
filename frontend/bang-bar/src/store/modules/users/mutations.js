@@ -7,5 +7,8 @@ export default {
    },
    getMyBookmark(state, payload){
        state.myBookmark = payload;
+   },
+   getOtherMyPage(state, payload){
+       state.myBookmark = payload;
    } 
 };

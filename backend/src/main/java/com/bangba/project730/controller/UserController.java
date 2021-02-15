@@ -445,4 +445,11 @@ public class UserController {
 			@PathVariable @ApiParam(value = "본인의 pk", required = true) int user_no, Model model) {
 		return followService.selectFollowingList(user_no);
 	}
+	
+	@ApiOperation(value = "타인의 유저 정보 가져오기", response = String.class)
+	@GetMapping(value = "/mypage")
+	public List<UserDto> getUserInfo(@RequestParam(required = false) int pk_user) throws Exception {
+		return userService.getUserInfo(pk_user);
+	}
+	
 }

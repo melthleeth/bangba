@@ -55,10 +55,7 @@
             <div v-if="isLoading" class="my-32">
               <base-spinner></base-spinner>
             </div>
-            <div
-              v-else-if="recipes.length > 0"
-              class=" grid grid-cols-3 grid-flow-row gap-4 mx-4"
-            >
+            <div v-else-if="recipes.length > 0" class=" grid grid-cols-3 grid-flow-row gap-4 mx-4">
               <board-card
                 v-for="post in posts"
                 :key="post.pk_forum"
@@ -83,8 +80,8 @@
 </template>
 
 <script>
-import RecipeCard from "../../components/recipes/RecipeCard.vue";
-import BoardCard from "../../components/boards/BoardCard.vue";
+import RecipeCard from '../../components/recipes/RecipeCard.vue';
+import BoardCard from '../../components/boards/BoardCard.vue';
 export default {
   components: {
     RecipeCard,
@@ -140,19 +137,19 @@ export default {
   },
   computed: {
     recipes() {
-      return this.$store.getters["users/myRecipe"];
+      return this.$store.getters['users/myRecipe'];
     },
-    posts(){
-      return this.$store.getters["users/myForum"];
-    }
+    posts() {
+      return this.$store.getters['users/myForum'];
+    },
   },
   methods: {
     async loadMyRecipes() {
-      await this.$store.dispatch("users/LoadMyRecipe");
+      await this.$store.dispatch('users/LoadMyRecipe');
     },
     async loadMyForums() {
-      await this.$store.dispatch("users/LoadMyForum");
-    }
+      await this.$store.dispatch('users/LoadMyForum');
+    },
   },
 };
 </script>

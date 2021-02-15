@@ -147,8 +147,7 @@ export default {
         const responseData = await response.json();
 
         console.log(responseData);
-    },
-    
+    },    
     // 북마크한 게시글 불러오기
     async LoadMyBookmark(context) {
         const paramsPkUser = context.rootGetters.pkUser
@@ -191,5 +190,33 @@ export default {
         }
         context.commit("getMyBookmark", recipes);
     },
+    // 타인의 정보 불러오기
+    async LoadOtherMyPage(context) {
+        const paramsPkUser = context.rootGetters.pkUser
+        const url = `${SERVER_URL}/user/mypage/?pk_user=${paramsPkUser}`;
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            },
+            method: "GET",
+        });
+        const responseData = await response.json();
+        console.log(responseData)
+        const userInfos = [];
+        for (const key in responseData) {
+            const userInfo = {
+                pk_user: responseData[key].pk_user,
+                user_name: responseData[key].user_name,
+                img_path: responseData[key].img_path,
+            };
+            userInfos.push(userInfo);
+        }
+        console.log(userInfos)
+        context.commit("getOtherMyPage", userInfos);
+    },
+
 
 };

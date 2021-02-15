@@ -118,4 +118,9 @@ public class UserServiceImpl implements UserService{
 	public String getPW(UserDto userDto) throws Exception {
 		return dao.getPW(userDto);
 	}
+	
+	@Override
+	public List<UserDto> getUserInfo(int pk_user) throws Exception {
+		return dao.getUserInfo(pk_user);
+	}
 }
