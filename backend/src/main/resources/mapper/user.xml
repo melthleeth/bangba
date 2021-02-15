@@ -44,6 +44,12 @@
 		where email = #{email}
 	</update>
 	
+	<update id="updateNameImg" parameterType="UserDto">
+		update user
+		set user_name = #{user_name}, img_path = #{img_path}
+		where pk_user = #{pk_user}
+	</update>
+	
 	
 	<delete id="deleteMyPage" parameterType="Integer">
 		delete 
@@ -60,6 +66,8 @@
 		    , A.content
 		    , A.created_at
 		    , A.updated_at
+		    , A.bookmark_cnt
+		    , A.like_cnt
 		from article as A
 		where pk_article in 
 			(select 
@@ -105,6 +113,12 @@
 	
 	<select id="forumMyPage" parameterType="int" resultType="ForumDto">
 		select * from forum
-		where user_no = #{pk_user};
+		where user_no = #{pk_user}
+	</select>
+	
+	<select id="getPW" parameterType="String" resultType="String">
+		select password
+		from user
+		where pk_user = #{pk_user}
 	</select>
 </mapper>

@@ -9,13 +9,8 @@
       <section class="flex flex-col w-full">
         <article class="font-S-CoreDream-medium tracking-wider flex items-center">
           <span>{{ forum.user_name }}</span>
-
-          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
-            >팔로잉</base-button
-          >
-          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
-            >팔로우</base-button
-          >
+          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow">팔로잉</base-button>
+          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow">팔로우</base-button>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -87,21 +82,19 @@ export default {
   },
   data() {
     return {
-      owner_check: localStorage.getItem('user_name'),
-      forum: [
-        {
-          category: '',
-          comment_cnt: 0,
-          content: '',
-          created_at: '',
-          hits: 0,
-          like_cnt: 0,
-          pk_forum: 0,
-          title: '',
-          updated_at: '',
-          user_name: '',
-          user_no: 0,
-        },
+      owner_check: localStorage.getItem("user_name"),
+      forum: [{
+        category: "",
+        comment_cnt: 0,
+        content: "",
+        created_at: "",
+        hits: 0,
+        like_cnt: 0,
+        pk_forum: 0,
+        title: "",
+        updated_at: "",
+        user_name: "",
+        user_no: 0 }
       ],
       forumId: {
         type: Number,
@@ -218,14 +211,14 @@ export default {
     },
     //follow 하기
     async follow() {
-      if (localStorage.getItem('user_name') === null) {
-        alert('로그인이 필요한 기능입니다.');
+      if(localStorage.getItem("user_name") === null) {
+        alert("로그인이 필요한 기능입니다.")
         return;
       }
       const mode = this.isFollow ? 'following' : 'x';
       const userInfo = {
-        target_no: this.forum.user_no,
-        mode: mode,
+        target_no : this.forum.user_no,
+        mode: mode
       };
       if (this.isFollow) {
         await this.$store.dispatch('follows/unfollow', userInfo);
@@ -240,15 +233,15 @@ export default {
     },
     set_forum(newVal) {
       this.forum = newVal;
-    },
+    }
   },
   computed: {
     set_isFollow() {
-      return this.$store.getters['follows/isFollow'];
+      return this.$store.getters["follows/isFollow"];
     },
     set_forum_no() {
       return this.forum;
-    },
+    }
   },
 };
 </script>

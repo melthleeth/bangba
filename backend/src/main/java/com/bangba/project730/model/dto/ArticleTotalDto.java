@@ -3,6 +3,7 @@ package com.bangba.project730.model.dto;
 public class ArticleTotalDto {
 	private int pk_article;
 	private String user_name;
+	private int user_no;
 	
 	private String title_kor;
 	private String title_eng;
@@ -29,6 +30,12 @@ public class ArticleTotalDto {
 	private String recipe;
 	private String tag;
 	
+	public int getUser_no() {
+		return user_no;
+	}
+	public void setUser_no(int user_no) {
+		this.user_no = user_no;
+	}
 	public int getPk_article() {
 		return pk_article;
 	}

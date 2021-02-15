@@ -142,11 +142,33 @@ public class UserController {
 			return "SUCCESS";
 		}
 	}
-
-	@ApiOperation(value = "마이페이지 수정 - 먼저 패스워드만 가능", response = String.class)
+	
+	@ApiOperation(value = "마이페이지 수정 - 패스워드 일치 확인", response = String.class)
+	@PostMapping(value = "/mypage/confirm-pw")
+	public String confirmPW(@RequestBody @ApiParam(value="확인할 비밀번호") UserDto userDto) {
+		try {
+			if(userDto.getPassword() == userService.getPW(userDto)) {
+				return "SUCCESS";
+			} else {
+				return "FAIL";
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "FAIL";
+	}
+	
+	@ApiOperation(value = "마이페이지 수정 - 패스워드만 가능", response = String.class)
 	@PutMapping(value = "/mypage/pw")
 	public UserDto updateMyPage(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
 		userService.updateMyPage(userDto);
+		return userService.getMyPage(userDto.getPk_user());
+	}
+	
+	@ApiOperation(value = "마이페이지 수정 - 이미지, 네임 가능", response = String.class)
+	@PutMapping(value = "/mypage/name-img")
+	public UserDto updateNameImg(@RequestBody @ApiParam(value = "회원 한 명의 정보를 담는 객체", required = true) UserDto userDto) {
+		userService.updateNameImg(userDto);
 		return userService.getMyPage(userDto.getPk_user());
 	}
 
@@ -163,6 +185,7 @@ public class UserController {
 			}
 			if (tag_tmp.length() > 0)
 				tag_tmp = tag_tmp.substring(0, tag_tmp.length() - 4);
+			a.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
 			a.setTag(tag_tmp);
 			
 		}

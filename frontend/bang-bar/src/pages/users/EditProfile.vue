@@ -53,7 +53,7 @@
       </article>
     </section>
       <article class="flex justify-self-center mx-auto mt-10">
-      <base-button class="px-4 py-2 text-sm">변경사항 저장하기</base-button>
+      <base-button class="px-4 py-2 text-sm" @click="saveNameImg">변경사항 저장하기</base-button>
     </article>
     <span
       class="tracking-wider font-semibold text-2xl border-gray-800 border-b-4 font-S-CoreDream-medium w-max px-1 mt-12"
@@ -89,7 +89,7 @@
       </article>
     </section>
     <article class="flex justify-self-center mx-auto mt-10">
-      <base-button class="px-4 py-2 text-sm">변경사항 저장하기</base-button>
+      <base-button class="px-4 py-2 text-sm" @click="checkPW">변경사항 저장하기</base-button>
     </article>
   </div>
 </template>
@@ -100,9 +100,17 @@ export default {
     return {
       user_id: localStorage.getItem("email"),
       user_name: localStorage.getItem("user_name"),
-      imgsrc: localStorage.getItem("profileImage"),
+      imgsrc: localStorage.getItem("profileImage") === null ? "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif" : localStorage.getItem("profileImage"),
     };
   },
+  // computed : {
+  //   user_nam() {
+  //     return localStorage.getItem("user_name");
+  //   },
+  //   imgsrc() {
+  //     return localStorage.getItem("profileImage") === null ? "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif" : localStorage.getItem("profileImage");
+  //   }
+  // },
   methods: {
     changeProfileImage(input) {
       // alert("프로필 사진 변경");
@@ -113,6 +121,39 @@ export default {
     async checkDuplication() {
       await this.$store.dispatch("users/checkName", this.user_name);
     },
+    
+    async saveNameImg() {
+      if(this.user_name === localStorage.getItem("user_name") && this.imgsrc === localStorage.getItem("profileImage")) {
+        alert("변경된 사항이 없습니다.");
+        return;
+      }
+      const userInfo = {
+        user_name : this.user_name,
+        img_path : this.imgsrc
+      }
+      await this.$store.dispatch("users/changeNameImg", userInfo);
+    },
+    async checkPW() {
+      const result = await this.$store.dispatch("users/confirmPW", this.currentPassword);
+      if(result === "FAIL") {
+        alert("현재 비밀번호가 아닙니다.");
+        return;
+      } else {
+        this.savePW();
+      }
+    },
+    async savePW() {
+      if(this.newPassword === this.confirmNewPassword) {
+        alert("새로 입력한 비밀번호가 일치하지 않습니다.");
+        return;
+      }
+
+      const userInfo = {
+        email : localStorage.getItem("email"),
+        password : this.newPassword
+      }
+      await this.$store.dispatch("users/changePassword", userInfo);
+    }
   },
 };
 </script>

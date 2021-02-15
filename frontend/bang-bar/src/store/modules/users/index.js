@@ -8,6 +8,8 @@ export default {
     state() {
         return {
             myRecipe:[],
+            myForum:[],
+            myBookmark: [],
         };
     },
     mutations,
