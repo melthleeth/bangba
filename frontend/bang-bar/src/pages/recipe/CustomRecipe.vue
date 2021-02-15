@@ -46,7 +46,7 @@
       </div>
       <div
         v-else-if="filteredArticleRanking.length > 0"
-        class=" grid grid-cols-4 grid-flow-row gap-4 mx-auto"
+        class=" grid grid-cols-3 grid-flow-row gap-4 mx-auto"
       >
         <recipe-card
           v-for="articleranking in filteredArticleRanking"
