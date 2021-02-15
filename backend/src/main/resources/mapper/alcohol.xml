@@ -20,4 +20,19 @@
 		select pk_alcohol from alcohol
 		where name_kor like #{name} or name_eng like #{name}
 	</select>
+	<select id="searchBaseAlcohol" resultType="AlcoholDto">
+		select 
+			a.pk_alcohol
+			, a.type_kor
+			, a.type_eng
+			, a.name_kor
+			, a.name_eng
+			, a.abv
+			, a.img_path
+			, a.content
+		from alcohol as a
+		where a.type_kor = a.name_kor
+		limit 6
+	</select>
+	
 </mapper>
