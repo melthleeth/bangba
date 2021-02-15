@@ -116,7 +116,7 @@
 		where user_no = #{pk_user}
 	</select>
 	
-	<select id="getPW" parameterType="String" resultType="String">
+	<select id="getPW" parameterType="UserDto" resultType="String">
 		select password
 		from user
 		where pk_user = #{pk_user}

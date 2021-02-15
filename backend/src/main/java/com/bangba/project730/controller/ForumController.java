@@ -118,7 +118,6 @@ public class ForumController {
 
 		try {
 			forumService.createComment(map);
-			System.out.println(map.toString());
 			model.addAttribute("msg", "댓글 작성 완료");
 			return "main";
 		} catch (Exception e) {
@@ -146,7 +145,6 @@ public class ForumController {
 	@ApiOperation(value = "댓글 수정", response = String.class)
 	@PutMapping("/comment/update-comment")
 	public String updateComment(@RequestBody Map<String, String> map, Model model) throws Exception {
-		System.out.println(map.toString());
 		try {
 			forumService.updateComment(map);
 			model.addAttribute("msg", "댓글 수정 완료");
@@ -160,7 +158,6 @@ public class ForumController {
 	@ApiOperation(value = "댓글 삭제", response = String.class)
 	@DeleteMapping("/comment/{pk_fcomment}")
 	public String deleteComment(@PathVariable @ApiParam(value = "댓글 하나 삭제", required = true) int pk_fcomment, Model model) throws Exception {
-		System.out.println(pk_fcomment);
 		try {
 			forumService.deleteComment(pk_fcomment);
 			model.addAttribute("msg", "댓글 삭제 완료");
@@ -187,7 +184,6 @@ public class ForumController {
 	@PutMapping("/like")
 	public String clickLike(@RequestBody Map<String, String> map) {
 		try {
-			System.out.println(map.toString());
 			if(map.get("isclick").equals("off")) {
 				forumService.insertLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
 				forumService.upLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
@@ -206,7 +202,6 @@ public class ForumController {
 	@ApiOperation(value = "좋아요 여부")
 	@PostMapping("/is-like")
 	public int isLike(@RequestBody Map<String, String> map) {
-		System.out.println(map.toString());
 		try {
 			return forumService.isLike(Integer.parseInt(map.get("user_no")), Integer.parseInt(map.get("forum_no")));
 		} catch (NumberFormatException e) {

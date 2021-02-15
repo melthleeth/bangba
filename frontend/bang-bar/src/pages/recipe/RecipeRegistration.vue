@@ -334,7 +334,7 @@ export default {
       else {
         this.tags.val.push(this.tag);
         //실제로 tag 테이블네 넣는 조건
-        
+        console.log(this.tag);
 
         this.tag = "";
       }
