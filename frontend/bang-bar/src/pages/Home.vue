@@ -69,6 +69,7 @@
         <base-spinner></base-spinner>
       </div>
       <div
+        v-else-if="filteredNewArticle.length > 0"
         class=" grid grid-cols-3 grid-flow-row gap-4 mx-auto"
       >
         <recipe-card
@@ -83,7 +84,11 @@
         >
         </recipe-card>
       </div>
-      
+      <span
+        v-else
+        class="text-2xl text-center my-32 font-S-CoreDream-medium font-bold font-color-black-200"
+        >등록된 레시피가 없습니다.</span
+      >
         </section>
       </base-card>
     </section>
@@ -184,8 +189,10 @@
 
 <script>
 import BaseCard from "../components/ui/BaseCard.vue";
+import RecipeCard from "../components/recipes/RecipeCard.vue";
 export default {
-  components: { BaseCard },
+  components: { 
+    RecipeCard,BaseCard },
   data() {
     return {
       isLoading: false,
