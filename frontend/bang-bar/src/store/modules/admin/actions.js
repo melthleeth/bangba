@@ -51,6 +51,7 @@ export default {
                 tag: responseData[key].tag,
             };
             articlerankings.push(articleranking);
+            console.log(articleranking.pk_article);
         }
         context.commit("setArticleRanking", articlerankings);
     },

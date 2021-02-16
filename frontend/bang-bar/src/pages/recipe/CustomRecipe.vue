@@ -51,6 +51,7 @@
         <recipe-card
           v-for="articleranking in filteredArticleRanking"
           :key="articleranking.pk_article"
+          :pk_article="articleranking.pk_article"
           :img_path="articleranking.img_path"
           :user_name="articleranking.user_name"
           :cocktailname="articleranking.title_kor"
@@ -83,8 +84,6 @@
           class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-8 py-3 rounded-full shadow-lg leading-tight border-3 border-transparent focus:outline-none focus:shadow-outline"
         >
           <option>통합</option>
-          <option>오피셜</option>
-          <option>커스텀</option>
         </select>
         <div
           class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -187,7 +186,7 @@ export default {
     },
     filteredArticleRanking() {
       const articleranking = this.$store.getters["recipes/ArticleRanking"]; //모듈/getters
-      console.log(articleranking);
+      console.log("article: ", articleranking);
       return articleranking;
     },
     hasArticleRanking() {
