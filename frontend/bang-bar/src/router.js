@@ -123,7 +123,7 @@ const router = createRouter({
     },
 
     // mypage-other
-    { path: "/mypageother", component: MyPageOther },
+    { path: "/mypageother/:nickname", component: MyPageOther },
   ],
 });
 

@@ -60,8 +60,7 @@
     <section class="flex-1">
       <article class="flex">
         <base-card size="box-290" class="flex flex-col justify-items-center">
-          <span
-            class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+          <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
             >오늘의 칵테일</span
           >
           <section
@@ -77,38 +76,34 @@
             </div>
           </section>
 
-          <span
-            class="text-gray-700 text-left px-4 mb-4 text-sm leading-relaxed"
-          >
-            일출과 같이 무언가로부터 희망을 찾고 싶을 때, 활력을 얻고 싶을 때
-            한잔 만들어보는 것은 어떨까?
+          <span class="text-gray-700 text-left px-4 mb-4 text-sm leading-relaxed">
+            일출과 같이 무언가로부터 희망을 찾고 싶을 때, 활력을 얻고 싶을 때 한잔 만들어보는 것은
+            어떨까?
           </span>
         </base-card>
         <base-card size="box-290" class="flex flex-col justify-items-center">
-          <span
-            class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+          <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
             >금주의 랭킹</span
           >
           <section
             class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
             v-for="(ranking, index) in filteredRanking"
-            :key="ranking.user_name" 
+            :key="ranking.user_name"
+            @click="saveUser(ranking.pk_user, ranking.user_name)"
           >
             <div class="flex items-center mt-4">
               <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
               <img
-                :src="ranking.img_path === '' ? 
-                'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif' 
-                : ranking.img_path" 
+                :src="
+                  ranking.img_path === ''
+                    ? 'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif'
+                    : ranking.img_path
+                "
                 class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
                 alt="profile image"
               />
-              <span class="text-base font-medium ml-2">{{
-                ranking.user_name
-              }}</span>
-              <span class="text-base font-medium ml-2">{{
-                ranking.like_weekly
-              }}</span>
+              <span class="text-base font-medium ml-2">{{ ranking.user_name }}</span>
+              <span class="text-base font-medium ml-2">{{ ranking.like_weekly }}</span>
             </div>
           </section>
         </base-card>
@@ -122,8 +117,7 @@
         >
           <section class="flex flex-col px-4 py-2">
             <div class="flex items-center mb-2">
-              <span
-                class="text-base font-S-CoreDream-medium font-medium text-center"
+              <span class="text-base font-S-CoreDream-medium font-medium text-center"
                 >[{{ article.category }}] {{ article.title }}</span
               >
               <article class="flex justify-self-end ml-auto items-center">
@@ -132,15 +126,11 @@
                   class="board-post ml-4 mr-2 object-cover rounded-full"
                   alt="profile image"
                 />
-                <span class="text-sm font-semibold mr-2">{{
-                  article.username
-                }}</span>
+                <span class="text-sm font-semibold mr-2">{{ article.username }}</span>
                 <span class="text-xs text-gray-400">{{ article.time }}</span>
               </article>
             </div>
-            <span class="text-sm block leading-relaxed">{{
-              article.contents
-            }}</span>
+            <span class="text-sm block leading-relaxed">{{ article.contents }}</span>
           </section>
         </base-card>
       </article>
@@ -149,7 +139,7 @@
 </template>
 
 <script>
-import BaseCard from "../components/ui/BaseCard.vue";
+import BaseCard from '../components/ui/BaseCard.vue';
 export default {
   components: { BaseCard },
   data() {
@@ -186,64 +176,69 @@ export default {
       weeklyBest: [
         {
           pk_board: 1,
-          category: "자유게시판",
-          title: "소맥 황금비율 딱 알려드림",
-          imgsrc: require("../assets/img/profile2.png"),
-          username: "의문의 루피",
-          time: "14:41",
-          contents: "소맥 황금비율 알려드립니다.",
+          category: '자유게시판',
+          title: '소맥 황금비율 딱 알려드림',
+          imgsrc: require('../assets/img/profile2.png'),
+          username: '의문의 루피',
+          time: '14:41',
+          contents: '소맥 황금비율 알려드립니다.',
         },
         {
           pk_board: 7,
-          category: "커스텀 레시피",
-          title: "소주 모히또",
-          imgsrc: require("../assets/img/mr.fox.jpg"),
-          username: "미스터 여우씨",
-          time: "14:30",
+          category: '커스텀 레시피',
+          title: '소주 모히또',
+          imgsrc: require('../assets/img/mr.fox.jpg'),
+          username: '미스터 여우씨',
+          time: '14:30',
           contents:
-            "죽기 전에 극락 가는 방법 알려드립니다. 이 비율로 타시면 무조건 대박입니다... 널리 퍼트려주세요",
+            '죽기 전에 극락 가는 방법 알려드립니다. 이 비율로 타시면 무조건 대박입니다... 널리 퍼트려주세요',
         },
         {
           pk_board: 12,
-          category: "자유게시판",
-          title: "요새 핫한 칵테일바 추천",
-          imgsrc: require("../assets/img/profile4.jpeg"),
-          username: "이시국 칵테일",
-          time: "14:29",
+          category: '자유게시판',
+          title: '요새 핫한 칵테일바 추천',
+          imgsrc: require('../assets/img/profile4.jpeg'),
+          username: '이시국 칵테일',
+          time: '14:29',
           contents:
-            "안녕하세요 이시국 칵테일입니다. 오늘은 이시국에 갈만한 칵테일 바 몇 개 추천드림니다. 우선 홍대쪽부터 알려드림.",
+            '안녕하세요 이시국 칵테일입니다. 오늘은 이시국에 갈만한 칵테일 바 몇 개 추천드림니다. 우선 홍대쪽부터 알려드림.',
         },
       ],
     };
   },
   computed: {
     filteredRanking() {
-      const ranking = this.$store.getters["ranking/Ranking"]; //모듈/getters
+      const ranking = this.$store.getters['ranking/Ranking']; //모듈/getters
       console.log(ranking);
       return ranking;
     },
     hasRanking() {
-      return !this.isLoading && this.$store.getters["ranking/Ranking"];
+      return !this.isLoading && this.$store.getters['ranking/Ranking'];
     },
   },
-   created() {
+  created() {
     this.LoadRanking();
   },
   methods: {
     async LoadRanking(refresh = true) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("ranking/LoadRanking", {
+        await this.$store.dispatch('ranking/LoadRanking', {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error =
-          error.message || "랭킹을 불러오는데 문제가 발생했습니다.";
+        this.error = error.message || '랭킹을 불러오는데 문제가 발생했습니다.';
       }
       this.isLoading = false;
     },
     handleError() {
       this.error = null;
+    },
+    saveUser(pkOther, nickname) {
+      localStorage.setItem('pkOther', pkOther);
+      this.$router.push({
+        path: `/mypageother/${nickname}`,
+      });
     },
   },
 };
@@ -256,7 +251,7 @@ section {
   height: 100%;
   /* font-family: 'NIXGONM-Vb'; */
   /* font-family: "S-CoreDream-4Regular"; */
-  font-family: "S-CoreDream-3Light";
+  font-family: 'S-CoreDream-3Light';
 }
 
 .box-290 {

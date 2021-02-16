@@ -7,5 +7,8 @@ export default {
     },
     myBookmark(state) {
         return state.myBookmark;
-    }
+    },
+    otherMyPage(state) {
+        return state.otherMyPage;
+    },
 };
