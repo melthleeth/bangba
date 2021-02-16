@@ -1,8 +1,16 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
     // 내가 쓴 글 불러오기
-    async LoadMyRecipe(context) {
-        const response = await fetch(`${SERVER_URL}/user/mypage/article/` + context.rootGetters.pkUser, {
+    async LoadMyRecipe(context, payload) {
+        let url = '';
+
+        if (payload.mode === "otherUser") {
+            url = `${SERVER_URL}/user/mypage/article/` + payload.target_no
+          } else {
+            url = `${SERVER_URL}/user/mypage/article/` + context.rootGetters.pkUser
+        }
+
+        const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -64,8 +72,16 @@ export default {
         }
     },
     // 내가 쓴 게시글 불러오기
-    async LoadMyForum(context) {
-        const response = await fetch(`${SERVER_URL}/user/mypage/forum/` + context.rootGetters.pkUser, {
+    async LoadMyForum(context, payload) {
+        let url = '';
+
+        if (payload.mode === "otherUser") {
+            url = `${SERVER_URL}/user/mypage/forum/` + payload.target_no
+          } else {
+            url = `${SERVER_URL}/user/mypage/forum/` + context.rootGetters.pkUser
+        }
+        
+        const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -229,7 +245,7 @@ export default {
 
     // 타인의 정보 불러오기
     async LoadOtherMyPage(context) {
-        const paramsPkUser = context.rootGetters.pkUser
+        const paramsPkUser = localStorage.getItem("pkOther")
         const url = `${SERVER_URL}/user/mypage/?pk_user=${paramsPkUser}`;
         const response = await fetch(url, {
             headers: {
@@ -241,7 +257,6 @@ export default {
             method: "GET",
         });
         const responseData = await response.json();
-        console.log(responseData)
         const userInfos = [];
         for (const key in responseData) {
             const userInfo = {
@@ -251,7 +266,6 @@ export default {
             };
             userInfos.push(userInfo);
         }
-        console.log(userInfos)
         context.commit("getOtherMyPage", userInfos);
     },
 };

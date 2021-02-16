@@ -9,6 +9,6 @@ export default {
        state.myBookmark = payload;
    },
    getOtherMyPage(state, payload){
-       state.myBookmark = payload;
+       state.otherMyPage = payload;
    } 
 };
