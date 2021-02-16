@@ -281,6 +281,7 @@ public class ArticleController {
 				ArticleTotalDto tdto = new ArticleTotalDto();
 				// 기존 정보
 				tdto.setPk_article(a.getPk_article());
+				tdto.setUser_no(a.getUser_no());
 				tdto.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
 				tdto.setTitle_kor(a.getTitle_kor());
 				tdto.setTitle_eng(a.getTitle_eng());

@@ -56,8 +56,7 @@
           </div>
         </section>
         <section class="flex justify-center px-32 mb-6 font-S-CoreDream-light">
-      
-      <!-- <base-card
+          <!-- <base-card
         class="flex-auto inline-block flex flex-col justify-items-center"
       >
         <span
@@ -91,7 +90,7 @@
       >
         </section>
       </base-card> -->
-    </section>
+        </section>
       </article>
     </section>
     <section class="flex-1">
@@ -154,30 +153,27 @@
         >
           <section class="flex flex-col px-4 py-2">
             <div class="flex items-center mb-2">
-              <span
-                class="text-base font-S-CoreDream-medium font-medium text-center"
+              <span class="text-base font-S-CoreDream-medium font-medium text-center"
                 >[{{ newforum.category }}] {{ newforum.title }}</span
               >
               <article class="flex justify-self-end ml-auto items-center">
                 <img
-                :src="newforum.img_path === '' ? 
-                'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif' 
-                : newforum.img_path" 
-                class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
-                alt="profile image"
-              />
-                <span class="text-sm font-semibold mr-2">{{
-                  newforum.user_name
-                }}</span>
+                  :src="
+                    newforum.img_path === ''
+                      ? 'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif'
+                      : newforum.img_path
+                  "
+                  class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
+                  alt="profile image"
+                />
+                <span class="text-sm font-semibold mr-2">{{ newforum.user_name }}</span>
                 <span class="text-xs text-gray-400">
                   <!-- {{  newforum.created_at }} -->
-                  {{convert_time(newforum.created_at)}}
-                  </span>
+                  {{ convert_time(newforum.created_at) }}
+                </span>
               </article>
             </div>
-            <span class="text-sm block leading-relaxed truncate">{{
-              newforum.content
-            }}</span>
+            <span class="text-sm block leading-relaxed truncate">{{ newforum.content }}</span>
           </section>
         </base-card>
       </article>
@@ -188,7 +184,7 @@
 <script>
 // import RecipeCard from "../components/recipes/RecipeCard.vue";
 export default {
-  // components: { 
+  // components: {
   //   RecipeCard },
   data() {
     return {
@@ -198,28 +194,28 @@ export default {
   },
   computed: {
     filteredRanking() {
-      const ranking = this.$store.getters["main/Ranking"]; //모듈/getters
+      const ranking = this.$store.getters['main/Ranking']; //모듈/getters
       console.log(ranking);
       return ranking;
     },
     hasRanking() {
-      return !this.isLoading && this.$store.getters["main/Ranking"];
+      return !this.isLoading && this.$store.getters['main/Ranking'];
     },
     filteredNewArticle() {
-      const newarticle = this.$store.getters["main/NewArticle"]; //모듈/getters
+      const newarticle = this.$store.getters['main/NewArticle']; //모듈/getters
       console.log(newarticle);
       return newarticle;
     },
     hasNewArticle() {
-      return !this.isLoading && this.$store.getters["main/NewArticle"];
+      return !this.isLoading && this.$store.getters['main/NewArticle'];
     },
-     filteredNewForum() {
-      const newforum = this.$store.getters["main/NewForum"]; //모듈/getters
+    filteredNewForum() {
+      const newforum = this.$store.getters['main/NewForum']; //모듈/getters
       console.log(newforum);
       return newforum;
     },
     hasNewForum() {
-      return !this.isLoading && this.$store.getters["main/NewForum"];
+      return !this.isLoading && this.$store.getters['main/NewForum'];
     },
   },
   created() {
@@ -228,7 +224,6 @@ export default {
     this.LoadNewForum();
   },
   methods: {
-
     convert_time(time) {
       for (var i = 0; i < time.length; i++) {
         var Y = String(time).substring(0, 4);
@@ -262,34 +257,33 @@ export default {
     async LoadRanking(refresh = true) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("main/LoadRanking", {
+        await this.$store.dispatch('main/LoadRanking', {
           forceRefresh: refresh,
         });
       } catch (error) {
         this.error = error.message || '랭킹을 불러오는데 문제가 발생했습니다.';
       }
       this.isLoading = false;
-    },async LoadNewArticle(refresh = true) {
+    },
+    async LoadNewArticle(refresh = true) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("main/LoadNewArticle", {
+        await this.$store.dispatch('main/LoadNewArticle', {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error =
-          error.message || "최신 레시피를 불러오는데 문제가 발생했습니다.";
+        this.error = error.message || '최신 레시피를 불러오는데 문제가 발생했습니다.';
       }
       this.isLoading = false;
     },
     async LoadNewForum(refresh = true) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("main/LoadNewForum", {
+        await this.$store.dispatch('main/LoadNewForum', {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error =
-          error.message || "최신 게시글을 불러오는데 문제가 발생했습니다.";
+        this.error = error.message || '최신 게시글을 불러오는데 문제가 발생했습니다.';
       }
       this.isLoading = false;
     },

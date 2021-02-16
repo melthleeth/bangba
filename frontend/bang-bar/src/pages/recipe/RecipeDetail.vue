@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex justify-center font-S-CoreDream-light mt-20 font-color-black-400"
-  >
+  <div class="flex justify-center font-S-CoreDream-light mt-20 font-color-black-400">
     <section class="w-1/3 flex flex-col justify-items-center">
       <base-card class="flex flex-col justify-items-center">
         <img
@@ -9,8 +7,7 @@
           :src="imgsrc"
           alt="Sunset in the mountains"
         />
-        <span
-          class="text-2xl mt-6 mb-8 text-center font-S-CoreDream-medium font-bold"
+        <span class="text-2xl mt-6 mb-8 text-center font-S-CoreDream-medium font-bold"
           >{{ title_kor }}
         </span>
       </base-card>
@@ -54,51 +51,42 @@
       </article>
 
       <article class="card-flat mx-auto flex w-11/12">
-        <img
-          class="w-12 h-12 mr-2"
-          src="../../assets/img/profile6.png"
-          alt="profile image"
-        />
+        <img class="w-12 h-12 mr-2" src="../../assets/img/profile6.png" alt="profile image" />
         <section class="flex flex-col w-full">
-          <article
-            class="tracking-wider flex items-center"
-          >
-            <span><span class="font-S-CoreDream-medium">{{ user_name }}</span>님의 레시피입니다.</span>
+          <article class="tracking-wider flex items-center">
+            <span
+              ><span class="font-S-CoreDream-medium">{{ user_name }}</span
+              >님의 레시피입니다.</span
+            >
           </article>
           <article class="flex items-center font-color-black-200 text-xs">
             <span class="mr-2">{{ created_at }}</span>
             <span class="mr-2">조회 {{ hits }}</span>
             <section class="">
               <span v-if="user_name === owner_check">
-                <base-button
-                  class="text-xs px-2 py-1 ml-2"
-                  mode="nude"
-                  @click="updateData"
+                <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateData"
                   >수정</base-button
                 >
-                <base-button
-                  class="text-xs px-2 py-1"
-                  mode="nude"
-                  @click="deleteData"
+                <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteData"
                   >삭제</base-button
                 >
               </span>
             </section>
             <div class="justify-self-end ml-auto">
               <base-button
-              v-if="isFollow"
-              class="text-xs px-2 py-1 ml-2"
-              mode="colored"
-              @click="follow"
-              >팔로잉</base-button
-            >
-            <base-button
-              v-else
-              class="text-xs px-3 py-1 ml-2"
-              mode="outline-colored"
-              @click="follow"
-              >팔로우</base-button
-            >
+                v-if="isFollow"
+                class="text-xs px-2 py-1 ml-2"
+                mode="colored"
+                @click="follow"
+                >팔로잉</base-button
+              >
+              <base-button
+                v-else
+                class="text-xs px-3 py-1 ml-2"
+                mode="outline-colored"
+                @click="follow"
+                >팔로우</base-button
+              >
             </div>
           </article>
         </section>
@@ -118,26 +106,16 @@
       </article>
       <article class="flex">
         <base-card class="w-1/2 flex flex-col justify-items-center">
-          <span
-            class="text-xl font-S-CoreDream-medium font-bold text-center mt-4 mb-6"
-            >재료</span
-          >
+          <span class="text-xl font-S-CoreDream-medium font-bold text-center mt-4 mb-6">재료</span>
           <ul class="mx-4">
-            <li class="mb-2" v-for="alcohol in alcohols" :key="alcohol">
-              🍸 {{ alcohol }}
-            </li>
-            <li
-              class="mb-2"
-              v-for="ingredient in ingredients"
-              :key="ingredient"
-            >
+            <li class="mb-2" v-for="alcohol in alcohols" :key="alcohol">🍸 {{ alcohol }}</li>
+            <li class="mb-2" v-for="ingredient in ingredients" :key="ingredient">
               🥄 {{ ingredient }}
             </li>
           </ul>
         </base-card>
         <base-card class="w-1/2 flex flex-col justify-items-center">
-          <span
-            class="text-xl font-S-CoreDream-medium font-bold text-center mt-4 mb-6"
+          <span class="text-xl font-S-CoreDream-medium font-bold text-center mt-4 mb-6"
             >레시피</span
           >
           <ol class="mx-4">
@@ -150,15 +128,10 @@
     </section>
     <section class="">
       <span v-if="selectedRecipe.user_name === owner_check">
-        <base-button
-          class="text-xs px-2 py-1 ml-2"
-          mode="nude"
-          @click="updateRecipe"
+        <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateRecipe"
           >수정</base-button
         >
-        <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe"
-          >삭제</base-button
-        >
+        <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe">삭제</base-button>
       </span>
     </section>
   </div>
@@ -166,10 +139,10 @@
 
 <script>
 export default {
-  props: ["pk_article"],
+  props: ['pk_article'],
   data() {
     return {
-      owner_check: localStorage.getItem("user_name"),
+      owner_check: localStorage.getItem('user_name'),
       selectedRecipe: null,
       likeBtn: false,
       bmarkBtn: false,
@@ -190,6 +163,9 @@ export default {
     set_bookmark_cnt: function(newVal) {
       this.bookmark_cnt = newVal;
     },
+    set_isFollow(newVal) {
+      this.isFollow = newVal;
+    },
   },
   computed: {
     title_kor() {
@@ -199,52 +175,61 @@ export default {
       return this.selectedRecipe.img_path;
     },
     set_like_cnt() {
-      return this.$store.getters["likes/likeCnt"];
+      return this.$store.getters['likes/likeCnt'];
     },
     set_bookmark_cnt() {
-      return this.$store.getters["likes/bmarkCnt"];
+      return this.$store.getters['likes/bmarkCnt'];
     },
-    user_name() { return this.selectedRecipe.user_name; },
-    created_at() {return this.selectedRecipe.created_at;},
-    hits() {return this.selectedRecipe.hits;},
+    user_name() {
+      return this.selectedRecipe.user_name;
+    },
+    created_at() {
+      return this.selectedRecipe.created_at;
+    },
+    hits() {
+      return this.selectedRecipe.hits;
+    },
     content() {
       return this.selectedRecipe.content;
     },
     tags() {
-      return this.selectedRecipe.tag.split("<br>");
+      return this.selectedRecipe.tag.split('<br>');
     },
     alcohols() {
-      const alcoholItem = this.selectedRecipe.alcohol.split("<br>");
+      const alcoholItem = this.selectedRecipe.alcohol.split('<br>');
       const modified = [];
       for (const item of alcoholItem) {
-        const alcoholInfo = item.split("/");
+        const alcoholInfo = item.split('/');
         const modifiedItem = `${alcoholInfo[0]} ${alcoholInfo[1]}${alcoholInfo[2]}`;
         modified.push(modifiedItem);
       }
       return modified;
     },
     ingredients() {
-      const ingredientItem = this.selectedRecipe.ingredient.split("<br>");
+      const ingredientItem = this.selectedRecipe.ingredient.split('<br>');
       const modified = [];
       for (const item of ingredientItem) {
-        const ingredientInfo = item.split("/");
+        const ingredientInfo = item.split('/');
         const modifiedItem = `${ingredientInfo[1]} ${ingredientInfo[2]}${ingredientInfo[3]}`;
         modified.push(modifiedItem);
       }
       return modified;
     },
     recipes() {
-      return this.selectedRecipe.recipe.split("<br>");
+      return this.selectedRecipe.recipe.split('<br>');
     },
     setLikeBtn() {
-      return this.$store.getters["likes/likeBtn"];
+      return this.$store.getters['likes/likeBtn'];
     },
     setBmarkBtn() {
-      return this.$store.getters["likes/bmarkBtn"];
+      return this.$store.getters['likes/bmarkBtn'];
+    },
+    set_isFollow() {
+      return this.$store.getters['follows/isFollow'];
     },
   },
   created() {
-    this.selectedRecipe = this.$store.getters["recipes/recipes"].find(
+    this.selectedRecipe = this.$store.getters['recipes/recipes'].find(
       (recipe) => recipe.pk_article.toString() === this.pk_article
     );
     this.test();
@@ -253,10 +238,10 @@ export default {
     test() {
       this.isLike();
       this.isBmark();
-      this.likeBtn = this.$store.getters["likes/likeBtn"];
-      this.bmarkBtn = this.$store.getters["likes/bmarkBtn"];
-      this.like_cnt = this.$store.getters["likes/likeCnt"];
-      this.bookmark_cnt = this.$store.getters["likes/bmarkCnt"];
+      this.likeBtn = this.$store.getters['likes/likeBtn'];
+      this.bmarkBtn = this.$store.getters['likes/bmarkBtn'];
+      this.like_cnt = this.$store.getters['likes/likeCnt'];
+      this.bookmark_cnt = this.$store.getters['likes/bmarkCnt'];
     },
     async isLike() {
       const btnInfo = {
@@ -264,7 +249,7 @@ export default {
         article_no: this.pk_article,
         like_cnt: this.selectedRecipe.like_cnt,
       };
-      await this.$store.dispatch("likes/isClick", btnInfo);
+      await this.$store.dispatch('likes/isClick', btnInfo);
     },
     async isBmark() {
       const btnInfo = {
@@ -272,33 +257,33 @@ export default {
         article_no: this.pk_article,
         bookmark_cnt: this.selectedRecipe.bookmark_cnt,
       };
-      await this.$store.dispatch("likes/isClick", btnInfo);
+      await this.$store.dispatch('likes/isClick', btnInfo);
     },
     async clickLikeBtn() {
-      if (localStorage.getItem("user_name") === null) {
-        alert("로그인이 필요한 기능입니다.");
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
         return;
       }
       const btnInfo = {
         isLike: true,
         article_no: this.pk_article,
-        isclick: this.likeBtn == false ? "off" : "on",
+        isclick: this.likeBtn == false ? 'off' : 'on',
         like_cnt: this.like_cnt,
       };
-      await this.$store.dispatch("likes/clickBtn", btnInfo);
+      await this.$store.dispatch('likes/clickBtn', btnInfo);
     },
     async clickBmarkBtn() {
-      if (localStorage.getItem("user_name") === null) {
-        alert("로그인이 필요한 기능입니다.");
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
         return;
       }
       const btnInfo = {
         isLike: false,
         article_no: this.pk_article,
-        isclick: this.bmarkBtn == false ? "off" : "on",
+        isclick: this.bmarkBtn == false ? 'off' : 'on',
         bookmark_cnt: this.bookmark_cnt,
       };
-      await this.$store.dispatch("likes/clickBtn", btnInfo);
+      await this.$store.dispatch('likes/clickBtn', btnInfo);
     },
     //수정
     updateRecipe() {
@@ -311,15 +296,46 @@ export default {
       const articleInfo = {
         pk_article: this.pk_article,
       };
-      console.log(articleInfo);
-      const result = await this.$store.dispatch(
-        "recipes/deleteRecipe",
-        articleInfo
-      );
+
+      const result = await this.$store.dispatch('recipes/deleteRecipe', articleInfo);
       if (result) {
-        this.$router.replace("/recipe/custom");
+        this.$router.replace('/recipe/custom');
       }
     },
+    saveUser(pkOther, nickname) {
+      localStorage.setItem('pkOther', pkOther);
+      this.$router.push({
+        path: `/mypageother/${nickname}`,
+      });
+    },
+    // 팔로우 여부 확인하기
+    async is_Follow() {
+      const userInfo = {
+        target_no: this.forum.user_no,
+      };
+      await this.$store.dispatch('follows/isFollow', userInfo);
+    },
+    //follow 하기
+    async follow() {
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
+        return;
+      }
+      const mode = this.isFollow ? 'following' : 'x';
+      const userInfo = {
+        target_no: this.forum.user_no,
+        mode: mode,
+      };
+      if (this.isFollow) {
+        await this.$store.dispatch('follows/unfollow', userInfo);
+      } else {
+        await this.$store.dispatch('follows/follow', userInfo);
+      }
+    },
+  },
+  updated() {
+    this.is_Follow();
+    this.isFollow = this.$store.getters['follows/isFollow'];
   },
 };
 </script>
