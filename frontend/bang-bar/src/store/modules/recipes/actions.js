@@ -145,7 +145,7 @@ export default {
     });
     const responseData = await response.json();
     const articlerankings = [];
-
+    console.log(responseData);
     for (const key in responseData) {
       const articleranking = {
             pk_article: responseData[key].pk_article,

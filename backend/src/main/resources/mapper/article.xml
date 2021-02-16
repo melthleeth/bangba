@@ -249,8 +249,19 @@
 		where article_no = #{article_no} and user_no = #{user_no} and bookmark = true
 	</select>
 	
-	<select id="searchNewArticle" resultType="ArticleDto" >
-		select * from article
-		order by created_at desc limit 3;
+	<select id="recommend" parameterType="map" resultType="ArticleDto">
+		select pk_article, title_kor, title_eng, img_path, content, abv
+		 from article
+		 where pk_article in (select distinct article_no
+							from article_ingredient
+		                     where ingredient_no in (select pk_ingredient
+		 											from ingredient
+													where name_kor like concat('%', #{ingredient}, '%') or name_eng like concat('%', #{ingredient}, '%')))
+		 and pk_article in (select distinct article_no 
+		 				  from article_alcohol
+						   where alcohol_no in (select pk_alcohol
+												from alcohol
+											where name_kor like concat('%', #{base}, '%') or name_eng like concat('%', #{base}, '%')))
+		and category = 1;
 	</select>
 </mapper>
