@@ -85,7 +85,8 @@
       />
       <span class="w-max font-S-CoreDream-medium font-color-black-300">{{ forum.like_cnt }}</span>
     </section>
-    <section class="flex flex-col w-1/2 mx-auto">
+    <section class="flex flex-col w-1/2 mx-auto mt-10">
+      <span class="text-center mb-4 font-S-CoreDream-medium font-semibold text-xl border-gray-800 border-b-4 tracking-wider w-max mx-auto">댓글</span>
       <comment-list :contentId="forumId.val"></comment-list>
       <section class="flex justify-self-end ml-auto">
         <base-button mode="outline" class="px-6 py-2 text-sm" @click="golist">목록</base-button>

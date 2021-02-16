@@ -33,9 +33,11 @@
             <span class="mt-2 mx-auto">{{ baseItem }}</span>
           </label>
         </article>
-        <base-card class="w-1/2 card-margin flex">
-          <span class="mx-4 my-2">{{ baseAlcoholes[base.idx].content }}</span>
-        </base-card>
+        <article class="flex flex-col justify-items-center items-center mt-4">
+          <base-card class="w-1/2 flex">
+            <span class="mx-4 my-2">{{ baseAlcoholes[base.idx].content }}</span>
+          </base-card>
+        </article>
       </section>
       <section
         class="flex flex-col justify-items-center tracking-wider mx-auto mb-20"
@@ -127,9 +129,11 @@
             <span class="mt-2 mx-auto">{{ abvItem.name }}</span>
           </label>
         </article>
-        <base-card class="w-1/2 card-margin flex">
-          <span class="mx-4 my-2">{{ abvs[abv.idx].content }}</span>
-        </base-card>
+        <article class="flex flex-col justify-items-center items-center mt-4">
+          <base-card class="w-1/2 card-margin flex">
+            <span class="mx-4 my-2">{{ abvs[abv.idx].content }}</span>
+          </base-card>
+        </article>
       </section>
       <section
         class="flex flex-col text-center justify-items-center items-center"
@@ -143,7 +147,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {

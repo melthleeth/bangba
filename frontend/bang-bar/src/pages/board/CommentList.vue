@@ -1,47 +1,67 @@
 <template>
   <div>
-    <div :key="item.comment_id" v-for="item in comments" class="flex" >
-      <section class="card-flat flex flex-col flex-initial h-full w-full" v-if="item.pk_fcomment!==this.return_num || modify_flag">
-        <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}
-          <span class="flex items-center font-color-black-200 text-sm">{{convert_time(item.created_at)}}</span>
-          </span>
-          <div class="comment-list-item">
-            <div class="comment-list-item-name">
-
-            </div>
-            <div class="comment-list-item-context">{{item.content}}</div>
-            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto" v-if="item.user_name===this.loginName" >
-            <button variant="info" @click="check_modifyComment(item.pk_fcomment,item.content)">수정</button>
-            &nbsp;&nbsp;&nbsp;
-            <button variant="info" @click="deleteComment(item.pk_fcomment)">삭제</button>
-          </div>
-        </div>
-        
-    </section>
-    
-        <section class="card-flat flex flex-col flex-initial h-full w-full" v-else>
-          <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}</span>
-          <textarea
-            ref="commentTA"
-            class="w-full mb-2"
-            v-model="content"
-            @keypress.enter="modifyComment()"
-            
+    <div :key="item.comment_id" v-for="item in comments" class="flex">
+      <section
+        class="card-flat flex flex-col flex-initial h-full w-full"
+        v-if="item.pk_fcomment !== this.return_num || modify_flag"
+      >
+        <span class="font-S-CoreDream-medium mt-2">{{ item.user_name }} </span>
+        <span class="flex items-center font-color-black-200 text-xs mb-2">{{
+          convert_time(item.created_at)
+        }}</span>
+        <section class="">
+          <div class="tracking-wide whitespace-pre-line mb-2">{{ item.content }}</div>
+          <div
+            class="w-max px-3 py-1 text-sm justify-self-end ml-auto"
+            v-if="item.user_name === this.loginName"
           >
-
-          </textarea>
-            <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto"  >
-  
-            <button variant="info" @click="modifyComment(item.pk_fcomment,this.content)">수정</button>
-             &nbsp;&nbsp;&nbsp;
-            <button variant="info" @click="this.return_num=-1, modify_flag=true">취소</button>
-            
+            <base-button
+              mode="nude"
+              variant="info"
+              @click="check_modifyComment(item.pk_fcomment, item.content)"
+              >수정</base-button
+            >
+            <base-button
+              mode="nude"
+              variant="info"
+              @click="deleteComment(item.pk_fcomment)"
+              >삭제</base-button
+            >
           </div>
+        </section>
       </section>
-    
-  </div>
 
-    <comment-create :forum_id="forum_id" v-on:addComment="addComment"/>
+      <section
+        class="card-flat flex flex-col flex-initial h-full w-full"
+        v-else
+      >
+        <span class="font-S-CoreDream-medium mb-2">{{ item.user_name }}</span>
+        <textarea
+          ref="commentTA"
+          class="w-full mb-2"
+          v-model="content"
+          @keypress.enter="modifyComment()"
+        >
+        </textarea>
+        <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto">
+          <button
+            variant="info"
+            @click="modifyComment(item.pk_fcomment, this.content)"
+          >
+            수정
+          </button>
+          &nbsp;&nbsp;&nbsp;
+          <button
+            variant="info"
+            @click="(this.return_num = -1), (modify_flag = true)"
+          >
+            취소
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <comment-create :forum_id="forum_id" v-on:addComment="addComment" />
   </div>
 </template>
 
@@ -51,56 +71,54 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "CommentList",
-  props: ["pk_forum"]
-    ,
+  props: ["pk_forum"],
   data() {
     return {
-      comments:[],
-      pk_num:'',
-      loginName:localStorage.getItem("user_name"),
-      myComment:false,
-      modify_flag:true,
-      return_num:'',
-      content:'',
-      forum_id:'',
+      comments: [],
+      pk_num: "",
+      loginName: localStorage.getItem("user_name"),
+      myComment: false,
+      modify_flag: true,
+      return_num: "",
+      content: "",
+      forum_id: "",
     };
   },
 
   components: {
-    CommentCreate
+    CommentCreate,
   },
   methods: {
-    getList_Comment(){
-
-        //주소입력을 위함
-        var link=(document.location.href).split('/');
-        var answer=link[5]; // = 74
-        this.axios.get(`${SERVER_URL}/forum/comment/keyword/`+answer, {
-        headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        'Accept': '*/*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-        },
-      })
-      .then((result)=>{
-        this.comments = result.data
-        //시간순 정렬
-        this.comments.sort(function(a,b){
-          return a.created_at-b.created_at
+    getList_Comment() {
+      //주소입력을 위함
+      var link = document.location.href.split("/");
+      var answer = link[5]; // = 74
+      this.axios
+        .get(`${SERVER_URL}/forum/comment/keyword/` + answer, {
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            Accept: "*/*",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+          },
+        })
+        .then((result) => {
+          this.comments = result.data;
+          //시간순 정렬
+          this.comments.sort(function(a, b) {
+            return a.created_at - b.created_at;
+          });
+        })
+        .catch((e) => {
+          console.log("error:", e);
         });
-      })
-      .catch(e=>{
-        console.log('error:',e)
-      })
     },
 
-
-    addComment(){
-      this.getList_Comment()
+    addComment() {
+      this.getList_Comment();
     },
 
-      //시간 포멧 변경
+    //시간 포멧 변경
     convert_time(create_at) {
       var Y = String(create_at).substring(0, 4);
       var M = String(create_at).substring(4, 6);
@@ -124,10 +142,10 @@ export default {
       answer = Y + "." + M + "." + D + "  " + H + ":" + Min + ":" + S;
       return answer;
     },
-    deleteComment(pk_fcomment){
-      var pk=parseInt(pk_fcomment)
+    deleteComment(pk_fcomment) {
+      var pk = parseInt(pk_fcomment);
 
-       const headers = {
+      const headers = {
         "Content-type": "application/json; charset=UTF-8",
         Accept: "*/*",
         "Access-Control-Allow-Origin": "*",
@@ -135,29 +153,26 @@ export default {
       };
 
       this.axios
-        .delete(
-          `${SERVER_URL}/forum/comment/${pk}`,
-          { headers },
-        )
+        .delete(`${SERVER_URL}/forum/comment/${pk}`, { headers })
         .then((result) => {
           console.log(result);
-          this.getList_Comment()
+          this.getList_Comment();
         })
         .catch((e) => {
           console.log("error:", e);
         });
     },
-    check_modifyComment(pk_fcomment,content){    
-      this.modify_flag=false;  
-      this.return_num=pk_fcomment;
-      this.pk_num=pk_fcomment
-      this.content=content;
+    check_modifyComment(pk_fcomment, content) {
+      this.modify_flag = false;
+      this.return_num = pk_fcomment;
+      this.pk_num = pk_fcomment;
+      this.content = content;
       // this.content=this.
-     this.$nextTick(() => {
-        this.$refs.commentTA.focus()
-      })
+      this.$nextTick(() => {
+        this.$refs.commentTA.focus();
+      });
     },
-    modifyComment(pk_fcomment,content) {
+    modifyComment(pk_fcomment, content) {
       // 수정
       let params = {
         pk_fcomment: pk_fcomment,
@@ -171,14 +186,18 @@ export default {
       };
 
       this.axios
-        .put(`${SERVER_URL}/forum/comment/update-comment`, JSON.stringify(params), {
-          headers,
-        })
+        .put(
+          `${SERVER_URL}/forum/comment/update-comment`,
+          JSON.stringify(params),
+          {
+            headers,
+          }
+        )
         .then((result) => {
           console.log(result);
-          this.return_num=this.pk_num
-          this.modify_flag=true;
-          this.getList_Comment()
+          this.return_num = this.pk_num;
+          this.modify_flag = true;
+          this.getList_Comment();
         })
         .catch((e) => {
           console.log("error:", e);
@@ -186,11 +205,9 @@ export default {
     },
   },
 
-
   created() {
-      this.getList_Comment()
+    this.getList_Comment();
   },
-
 };
 </script>
 

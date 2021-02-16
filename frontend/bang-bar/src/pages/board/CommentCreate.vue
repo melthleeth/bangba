@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="flex mx-4">
     <section class="card-flat flex flex-col flex-initial h-full w-full">
       <span class="font-S-CoreDream-medium mb-2">{{ name }}</span>
       <textarea

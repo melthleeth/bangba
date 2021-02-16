@@ -6,11 +6,6 @@
       <article class="flex justify-center justify-self-start">
         <base-button mode="important" class="px-8 py-2" @click="writeContent">글쓰기</base-button>
       </article>
-      <!-- 후기/질문 탭용 버튼 -->
-      <article>
-        <button class="mx-3">후기</button>
-        <button>질문</button>
-      </article>
 
       <article class="flex flex-1"></article>
       <article class="flex justify-center justify-self-end">
