@@ -13,5 +13,8 @@ export default {
         state.Ranking = payload;
     },setArticleRanking(state, payload){
         state.ArticleRanking = payload;
+    },
+    setRecommendRecipes(state, payload) {
+        state.recommendRecipes = payload;
     }
 };

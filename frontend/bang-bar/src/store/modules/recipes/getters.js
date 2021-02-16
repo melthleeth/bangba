@@ -15,5 +15,8 @@ export default {
     return state.Ranking;
   }, ArticleRanking(state) {
     return state.ArticleRanking;
+  }, 
+  recommendRecipes(state) {
+    return state.recommendRecipes;
   }
 };

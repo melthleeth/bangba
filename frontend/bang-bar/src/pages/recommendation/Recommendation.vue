@@ -218,14 +218,14 @@ export default {
       this.abv.idx = input.target.value;
       // console.log(input.target.value);
     },
-    submitForm() {
+    async submitForm() {
       const formData = {
-        base: this.base.val,
-        ingredient: this.ingredient.val,
+        base: this.bases[this.base.val],
+        ingredient: this.ingredients[this.ingredient.val].name,
         abv: this.abvs[this.abv.idx].val,
       };
       console.log(formData);
-      // await this.$store.dispatch("recipes/recommendRecipe", formData);
+      await this.$store.dispatch("recipes/recommendRecipe", formData);
       this.$router.replace("/recommendation/result");
     },
   },

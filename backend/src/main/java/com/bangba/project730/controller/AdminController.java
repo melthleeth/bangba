@@ -91,6 +91,7 @@ public class AdminController {
 	public List<ArticleDto> articleFavor(@RequestBody Map<String, String> map) throws Exception {
 		List<ArticleDto> dto = articleService.recommend(map);
 		List<ArticleDto> result = new ArrayList<>();
+		System.out.println(map.toString());
 		if(map.get("abv").equals("약한")) {
 			for(ArticleDto d : dto) {
 				if(d.getAbv() <10) {

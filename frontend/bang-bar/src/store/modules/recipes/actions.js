@@ -236,5 +236,21 @@ export default {
     
     // console.log(responseData[0].pk_article);
     return responseData[0].pk_article;
+  },
+  async recommendRecipe(context, payload) {
+    const response = await fetch(`${SERVER_URL}/admin/recommend-favor`, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "POST",
+      body: JSON.stringify(payload),
+    }); 
+
+    const responseData = await response.json();
+    console.log(responseData);
+    context.commit("setRecommendRecipes", responseData);
   }
 };
