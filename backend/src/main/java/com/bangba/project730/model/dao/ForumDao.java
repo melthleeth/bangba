@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.bangba.project730.model.dto.FcommentDto;
 import com.bangba.project730.model.dto.ForumDto;
+import com.bangba.project730.model.dto.ForumTotalDto;
 import com.bangba.project730.model.dto.SearchForumDto;
 
 
@@ -32,5 +33,5 @@ public interface ForumDao {
 	public void upLike(int user_no, int forum_no) throws Exception;
 	public void downLike(int user_no, int forum_no) throws Exception;
 	public int isLike(int user_no, int forum_no) throws Exception;
-	public  List<ForumDto>  searchNewForum() throws Exception;
+	public  List<ForumTotalDto>  searchNewForum() throws Exception;
 }

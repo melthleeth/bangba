@@ -53,4 +53,61 @@ export default {
         }
         context.commit("setArticleRanking", articlerankings);
     },
+    // 새로운 레시피 
+    async LoadNewArticle(context) {
+        const response = await fetch(`${SERVER_URL}/article/new`, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            },
+            method: "GET",
+        });
+        const responseData = await response.json();
+        const newarticles = [];
+
+        for (const key in responseData) {
+            const newarticle = {
+                pk_article: responseData[key].pk_article,
+                user_name: responseData[key].user_name,
+                like_weekly: responseData[key].like_weekly,
+                img_path: responseData[key].img_path,
+                title_kor: responseData[key].title_kor,
+                like_cnt: responseData[key].like_cnt,
+                bookmark_cnt: responseData[key].bookmark_cnt,
+                tag: responseData[key].tag,
+            };
+            newarticles.push(newarticle);
+        }
+        context.commit("setNewArticle", newarticles);
+    },// 새로운 게시글 
+    async LoadNewForum(context) {
+        const response = await fetch(`${SERVER_URL}/forum/new`, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            },
+            method: "GET",
+        });
+        const responseData = await response.json();
+        const newforums = [];
+
+        for (const key in responseData) {
+            const newforum = {
+                pk_forum: responseData[key].pk_forum,
+                category: responseData[key].category,
+                title: responseData[key].title,
+                img_path: responseData[key].img_path,
+                username: responseData[key].user_name,
+                created_at: responseData[key].created_at,
+                content: responseData[key].content,
+               
+            };
+            newforums.push(newforum);
+        }
+        context.commit("setNewForum", newforums);
+    },
 };

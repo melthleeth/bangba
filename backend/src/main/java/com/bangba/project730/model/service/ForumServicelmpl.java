@@ -12,6 +12,7 @@ import com.bangba.project730.model.dao.UserDao;
 import com.bangba.project730.model.dto.FFcommentDto;
 import com.bangba.project730.model.dto.FcommentDto;
 import com.bangba.project730.model.dto.ForumDto;
+import com.bangba.project730.model.dto.ForumTotalDto;
 import com.bangba.project730.model.dto.SearchForumDto;
 
 
@@ -152,8 +153,14 @@ public class ForumServicelmpl implements ForumService{
 	}
 
 	@Override
-	public List<ForumDto> searchNewForum() throws Exception {
+	public List<ForumTotalDto> searchNewForum() throws Exception {
 		// TODO Auto-generated method stub
-		return dao.searchNewForum();
+		List<ForumTotalDto> lfdto = dao.searchNewForum();
+		for(ForumTotalDto fdto : lfdto)
+		{
+			fdto.setUser_name(udao.getUserName(fdto.getUser_no()));
+			fdto.setImg_path(udao.getImgPath(fdto.getUser_no()));
+		}
+		return lfdto;
 	}
 }

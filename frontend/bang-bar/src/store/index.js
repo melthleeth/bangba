@@ -22,7 +22,7 @@ const store = createStore ({
         likes : likeModule,
         follows : followModule,
         users : userModule,
-        ranking: adminModule,
+        main: adminModule,
         boardlikes: boardLikesModule,
         tags : tagModule,
         recommendationes: recommendationModule

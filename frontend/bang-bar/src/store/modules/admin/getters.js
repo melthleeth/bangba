@@ -4,5 +4,11 @@ export default {
     },
     ArticleRanking(state) {
         return state.ArticleRanking;
+    },
+    NewArticle(state) {
+        return state.NewArticle;
+    },
+    NewForum(state) {
+        return state.NewForum;
     }
 };

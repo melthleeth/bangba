@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.FFcommentDto;
 import com.bangba.project730.model.dto.ForumDto;
+import com.bangba.project730.model.dto.ForumTotalDto;
 import com.bangba.project730.model.dto.SearchForumDto;
 import com.bangba.project730.model.service.ForumService;
 
@@ -214,7 +214,7 @@ public class ForumController {
 	}
 	@ApiOperation(value = "최신 레시피 불러오기")
     @GetMapping("/new")
-    public List<ForumDto> searchNewForum() throws Exception {
+    public List<ForumTotalDto> searchNewForum() throws Exception {
         return forumService.searchNewForum();
     }
 }

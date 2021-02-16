@@ -182,7 +182,7 @@
 		where forum_no = #{forum_no} and user_no = #{user_no}
 	</select>
 	
-	<select id="searchNewForum" resultType="ForumDto" >
+	<select id="searchNewForum" resultType="ForumTotalDto" >
 		select * from forum
 		order by created_at desc limit 3;
 	</select>

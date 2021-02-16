@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.bangba.project730.model.dto.FFcommentDto;
 import com.bangba.project730.model.dto.ForumDto;
+import com.bangba.project730.model.dto.ForumTotalDto;
 import com.bangba.project730.model.dto.SearchForumDto;
 
 public interface ForumService {
@@ -32,5 +33,5 @@ public interface ForumService {
 	public void downLike(int user_no, int forum_no) throws Exception;
 	public int isLike(int user_no, int forum_no) throws Exception;
 	
-	 public List<ForumDto> searchNewForum() throws Exception;
+	 public List<ForumTotalDto> searchNewForum() throws Exception;
 }

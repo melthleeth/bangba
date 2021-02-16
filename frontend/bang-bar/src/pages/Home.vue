@@ -55,6 +55,38 @@
             </svg>
           </div>
         </section>
+        <section class="flex justify-center px-32 mb-6 font-S-CoreDream-light">
+      
+      <base-card
+        class="flex-auto inline-block flex flex-col justify-items-center"
+      >
+        <span
+          class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+          >새로운 레시피</span
+        >
+        <section class="font-S-CoreDream-light">
+          <div v-if="isLoading" class="my-32">
+        <base-spinner></base-spinner>
+      </div>
+      <div
+        class=" grid grid-cols-3 grid-flow-row gap-4 mx-auto"
+      >
+        <recipe-card
+          v-for="newarticle in filteredNewArticle"
+          :key="newarticle.pk_article"
+          :img_path="newarticle.img_path"
+          :user_name="newarticle.user_name"
+          :cocktailname="newarticle.title_kor"
+          :tag="newarticle.tag"
+          :like_cnt="newarticle.like_cnt"
+          :bookmark_cnt="newarticle.bookmark_cnt"
+        >
+        </recipe-card>
+      </div>
+      
+        </section>
+      </base-card>
+    </section>
       </article>
     </section>
     <section class="flex-1">
@@ -117,29 +149,31 @@
         <base-card
           size="box-620"
           class="transition duration-200 ease-in-out transform hover:scale-105"
-          v-for="article in weeklyBest"
-          :key="article.pk_board"
+          v-for="newforum in filteredNewForum"
+          :key="newforum.pk_forum"
         >
           <section class="flex flex-col px-4 py-2">
             <div class="flex items-center mb-2">
               <span
                 class="text-base font-S-CoreDream-medium font-medium text-center"
-                >[{{ article.category }}] {{ article.title }}</span
+                >[{{ newforum.category }}] {{ newforum.title }}</span
               >
               <article class="flex justify-self-end ml-auto items-center">
                 <img
-                  :src="article.imgsrc"
-                  class="board-post ml-4 mr-2 object-cover rounded-full"
-                  alt="profile image"
-                />
+                :src="newforum.img_path === '' ? 
+                'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif' 
+                : newforum.img_path" 
+                class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
+                alt="profile image"
+              />
                 <span class="text-sm font-semibold mr-2">{{
-                  article.username
+                  newforum.user_name
                 }}</span>
-                <span class="text-xs text-gray-400">{{ article.time }}</span>
+                <span class="text-xs text-gray-400">{{ newforum.created_at }}</span>
               </article>
             </div>
             <span class="text-sm block leading-relaxed">{{
-              article.contents
+              newforum.content
             }}</span>
           </section>
         </base-card>
@@ -156,89 +190,73 @@ export default {
     return {
       isLoading: false,
       error: null,
-      // ranking: [
-      //   {
-      //     pk_user: 22,
-      //     imgsrc: require("../assets/img/mr.fox.jpg"),
-      //     username: "미스터 여우씨",
-      //   },
-      //   {
-      //     pk_user: 3,
-      //     imgsrc: require("../assets/img/profile2.png"),
-      //     username: "의문의 루피",
-      //   },
-      //   {
-      //     pk_user: 5,
-      //     imgsrc: require("../assets/img/profile3.jpg"),
-      //     username: "베르나르 무민무민",
-      //   },
-      //   {
-      //     pk_user: 46,
-      //     imgsrc: require("../assets/img/profile4.jpeg"),
-      //     username: "이시국 칵테일",
-      //   },
-      //   {
-      //     pk_user: 1,
-      //     imgsrc: require("../assets/img/profile5.jpg"),
-      //     username: "개발 안맞아",
-      //   },
-      // ],
-      weeklyBest: [
-        {
-          pk_board: 1,
-          category: "자유게시판",
-          title: "소맥 황금비율 딱 알려드림",
-          imgsrc: require("../assets/img/profile2.png"),
-          username: "의문의 루피",
-          time: "14:41",
-          contents: "소맥 황금비율 알려드립니다.",
-        },
-        {
-          pk_board: 7,
-          category: "커스텀 레시피",
-          title: "소주 모히또",
-          imgsrc: require("../assets/img/mr.fox.jpg"),
-          username: "미스터 여우씨",
-          time: "14:30",
-          contents:
-            "죽기 전에 극락 가는 방법 알려드립니다. 이 비율로 타시면 무조건 대박입니다... 널리 퍼트려주세요",
-        },
-        {
-          pk_board: 12,
-          category: "자유게시판",
-          title: "요새 핫한 칵테일바 추천",
-          imgsrc: require("../assets/img/profile4.jpeg"),
-          username: "이시국 칵테일",
-          time: "14:29",
-          contents:
-            "안녕하세요 이시국 칵테일입니다. 오늘은 이시국에 갈만한 칵테일 바 몇 개 추천드림니다. 우선 홍대쪽부터 알려드림.",
-        },
-      ],
+      
     };
   },
   computed: {
     filteredRanking() {
-      const ranking = this.$store.getters["ranking/Ranking"]; //모듈/getters
+      const ranking = this.$store.getters["main/Ranking"]; //모듈/getters
       console.log(ranking);
       return ranking;
     },
     hasRanking() {
-      return !this.isLoading && this.$store.getters["ranking/Ranking"];
+      return !this.isLoading && this.$store.getters["main/Ranking"];
+    },
+    filteredNewArticle() {
+      const newarticle = this.$store.getters["main/NewArticle"]; //모듈/getters
+      console.log(newarticle);
+      return newarticle;
+    },
+    hasNewArticle() {
+      return !this.isLoading && this.$store.getters["main/NewArticle"];
+    },
+     filteredNewForum() {
+      const newforum = this.$store.getters["main/NewForum"]; //모듈/getters
+      console.log(newforum);
+      return newforum;
+    },
+    hasNewForum() {
+      return !this.isLoading && this.$store.getters["main/NewForum"];
     },
   },
    created() {
     this.LoadRanking();
+    this.LoadNewArticle();
+    this.LoadNewForum();
   },
   methods: {
     async LoadRanking(refresh = true) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("ranking/LoadRanking", {
+        await this.$store.dispatch("main/LoadRanking", {
           forceRefresh: refresh,
         });
       } catch (error) {
         this.error =
           error.message || "랭킹을 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },async LoadNewArticle(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("main/LoadNewArticle", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "최신 레시피를 불러오는데 문제가 발생했습니다.";
+      }
+      this.isLoading = false;
+    },
+    async LoadNewForum(refresh = true) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("main/LoadNewForum", {
+          forceRefresh: refresh,
+        });
+      } catch (error) {
+        this.error =
+          error.message || "최신 게시글을 불러오는데 문제가 발생했습니다.";
       }
       this.isLoading = false;
     },

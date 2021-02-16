@@ -164,33 +164,6 @@ export default {
     return {
       isLoading: false,
       error: null,
-      // ranking: [
-      //   {
-      //     pk_user: 22,
-      //     imgsrc: require("../../assets/img/mr.fox.jpg"),
-      //     username: "미스터 여우씨",
-      //   },
-      //   {
-      //     pk_user: 3,
-      //     imgsrc: require("../../assets/img/profile2.png"),
-      //     username: "의문의 루피",
-      //   },
-      //   {
-      //     pk_user: 5,
-      //     imgsrc: require("../../assets/img/profile3.jpg"),
-      //     username: "베르나르 무민무민",
-      //   },
-      //   {
-      //     pk_user: 46,
-      //     imgsrc: require("../../assets/img/profile4.jpeg"),
-      //     username: "이시국 칵테일",
-      //   },
-      //   {
-      //     pk_user: 1,
-      //     imgsrc: require("../../assets/img/profile5.jpg"),
-      //     username: "개발 안맞아",
-      //   },
-      // ],
     };
   },
   computed: {

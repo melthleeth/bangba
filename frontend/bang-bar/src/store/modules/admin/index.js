@@ -9,6 +9,8 @@ export default {
         return {
             Ranking:[],
             ArticleRanking:[],
+            NewArticle:[],
+            NewForum:[],
         };
     },
     mutations,
