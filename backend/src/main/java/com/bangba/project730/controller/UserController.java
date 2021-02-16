@@ -395,17 +395,17 @@ public class UserController {
 
 	@ApiOperation(value = "팔로우 하기", response = String.class)
 	@PostMapping(value = "/follow")
-	public String follow(
+	public List<FollowDetailDto> follow(
 			@RequestBody @ApiParam(value = "팔로우할 계정의 pk와 본인의 pk를 담은 객체", required = true) FollowDto followDto,
 			Model model) {
 		try {
 			followService.follow(followDto);
 			model.addAttribute("msg", "팔로우에 성공했습니다.");
-			return "SUCCESS";
+			return followService.selectFollowerList(followDto.getTarget_no());
 		} catch (Exception e) {
 			model.addAttribute("msg", "팔로우에 실패했습니다.");
 		}
-		return "FAIL";
+		return null;
 	}
 
 	@ApiOperation(value = "언팔로우 하기", response = String.class)

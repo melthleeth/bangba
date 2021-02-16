@@ -57,7 +57,7 @@
         </section>
         <section class="flex justify-center px-32 mb-6 font-S-CoreDream-light">
       
-      <base-card
+      <!-- <base-card
         class="flex-auto inline-block flex flex-col justify-items-center"
       >
         <span
@@ -90,7 +90,7 @@
         >등록된 레시피가 없습니다.</span
       >
         </section>
-      </base-card>
+      </base-card> -->
     </section>
       </article>
     </section>
@@ -172,7 +172,7 @@
                 <span class="text-xs text-gray-400">{{ newforum.created_at }}</span>
               </article>
             </div>
-            <span class="text-sm block leading-relaxed">{{
+            <span class="text-sm block leading-relaxed truncate">{{
               newforum.content
             }}</span>
           </section>
@@ -183,11 +183,10 @@
 </template>
 
 <script>
-import BaseCard from "../components/ui/BaseCard.vue";
-import RecipeCard from "../components/recipes/RecipeCard.vue";
+// import RecipeCard from "../components/recipes/RecipeCard.vue";
 export default {
-  components: { 
-    RecipeCard,BaseCard },
+  // components: { 
+  //   RecipeCard },
   data() {
     return {
       isLoading: false,

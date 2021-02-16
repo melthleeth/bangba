@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.bangba.project730.model.dto.AlcoholDto;
 import com.bangba.project730.model.dto.ArticleDto;
+import com.bangba.project730.model.dto.ArticleTotalDto;
 import com.bangba.project730.model.dto.AtoA;
 import com.bangba.project730.model.dto.AtoI;
 import com.bangba.project730.model.dto.FAcommentDto;

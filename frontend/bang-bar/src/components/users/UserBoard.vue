@@ -125,9 +125,11 @@ export default {
         return;
       }
       const mode = this.isFollow ? 'following' : 'x';
+      const flag = 1;
       const userInfo = {
         target_no: localStorage.getItem('pkOther'),
         mode: mode,
+        flag: flag,
       };
       if (this.isFollow) {
         await this.$store.dispatch('follows/unfollow', userInfo);
