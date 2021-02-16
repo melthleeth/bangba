@@ -28,6 +28,6 @@ export default {
       };
       baseAlcoholes.push(baseAlcohol);
     }
-    context.commit("getBaseAlcohol", baseAlcoholes);
+    context.commit("baseAlcohol", baseAlcoholes);
   },
 };
