@@ -422,5 +422,9 @@ public class ArticleController {
     public List<AlcoholDto> searchBaseAlcohol() throws Exception {
         return articleService.searchBaseAlcohol();
     }
-	
+	@ApiOperation(value = "최신 레시피 불러오기")
+    @GetMapping("/new")
+    public List<ArticleTotalDto> searchNewArticle() throws Exception {
+        return articleService.searchNewArticle();
+    }
 }

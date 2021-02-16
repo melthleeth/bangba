@@ -249,4 +249,8 @@
 		where article_no = #{article_no} and user_no = #{user_no} and bookmark = true
 	</select>
 	
+	<select id="searchNewArticle" resultType="ArticleDto" >
+		select * from article
+		order by created_at desc limit 3;
+	</select>
 </mapper>

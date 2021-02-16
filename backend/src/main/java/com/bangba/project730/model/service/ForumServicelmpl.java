@@ -1,11 +1,7 @@
 package com.bangba.project730.model.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,5 +149,11 @@ public class ForumServicelmpl implements ForumService{
 	public int isLike(int user_no, int forum_no) throws Exception {
 		
 		return dao.isLike(user_no, forum_no);
+	}
+
+	@Override
+	public List<ForumDto> searchNewForum() throws Exception {
+		// TODO Auto-generated method stub
+		return dao.searchNewForum();
 	}
 }

@@ -32,4 +32,5 @@ public interface ForumDao {
 	public void upLike(int user_no, int forum_no) throws Exception;
 	public void downLike(int user_no, int forum_no) throws Exception;
 	public int isLike(int user_no, int forum_no) throws Exception;
+	public  List<ForumDto>  searchNewForum() throws Exception;
 }

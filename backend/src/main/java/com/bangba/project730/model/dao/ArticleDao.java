@@ -72,4 +72,5 @@ public interface ArticleDao {
 
 	public int isLike(int user_no, int article_no) throws Exception;
 	public int isBmark(int user_no, int article_no) throws Exception;
+	public List<ArticleDto> searchNewArticle() throws Exception;
 }
