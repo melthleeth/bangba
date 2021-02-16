@@ -1,7 +1,14 @@
 <template>
   <div class="font-S-CoreDream-light flex flex-col justify-items-center mx-16">
-    <span class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
+    <span 
+    v-if="!updateMode"
+    class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
       >{{ category }} 레시피 등록</span
+    >
+    <span 
+    v-else
+    class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
+      >{{ category }} 레시피 수정</span
     >
     <base-card class="w-2/3" id="card-margin">
       <form
@@ -213,7 +220,7 @@
           <base-button
             mode="important"
             class="w-max px-4 py-2"
-            @click="submitForm"
+            @click="updateMode ? updateForm() : submitForm()"
             >레시피 등록하기</base-button
           >
         </section>
@@ -233,6 +240,7 @@ export default {
   },
   data() {
     return {
+      updateMode: this.$route.params.pk_article > 0 ? true : false,
       formIsValid: true,
       isLoading: false,
       error: null,
@@ -318,6 +326,44 @@ export default {
         isValid: true,
       },
     };
+  },
+  created() {
+    if(this.$route.params.pk_article > 0) {
+      const selectedRecipe = this.$store.getters['recipes/recipes'].find(
+        (recipe) => recipe.pk_article.toString() === this.$route.params.pk_article
+      );
+      console.log(selectedRecipe);
+      this.imgsrc = selectedRecipe.img_path;
+      this.img_path.val = selectedRecipe.img_path;
+      this.title_kor.val = selectedRecipe.title_kor;
+      this.title_eng.val = selectedRecipe.title_eng;
+      this.abv.val = selectedRecipe.abv;
+      this.content.val = selectedRecipe.content;
+      this.cupinfo.val = selectedRecipe.cup_no;
+      // 재료 어떻게..?
+      this.tags.val = selectedRecipe.tag.split('<br>');
+      this.recipes.val = selectedRecipe.recipe.split('<br>');
+      //알코올
+      const alcoholItem = selectedRecipe.alcohol.split('<br>');
+      const modifiedAlcohol = [];
+      for (const item of alcoholItem) {
+        const alcoholInfo = item.split('/');
+        const modifiedAlcoholItem = `${alcoholInfo[0]} ${alcoholInfo[1]}${alcoholInfo[2]}`;
+        modifiedAlcohol.push(modifiedAlcoholItem);
+      }
+      this.alcohols.val = selectedRecipe.alcohol.split('<br>');
+      this.alcoholTemp = modifiedAlcohol;
+
+      const ingredientItem = selectedRecipe.ingredient.split('<br>');
+      const modifiedIngredient = [];
+      for (const item of ingredientItem) {
+        const ingredientInfo = item.split('/');
+        const modifiedIngredientItem = `${ingredientInfo[1]} ${ingredientInfo[2]}${ingredientInfo[3]}`;
+        modifiedIngredient.push(modifiedIngredientItem);
+      }
+      this.ingredients.val = selectedRecipe.ingredient.split('<br>');
+      this.ingredientTemp = modifiedIngredient;
+    }
   },
   methods: {
     showImgRegDialog() {
@@ -571,6 +617,34 @@ export default {
       console.log(formData);
 
       await this.$store.dispatch("recipes/registerRecipe", formData);
+      this.$router.replace("/recipe/" + this.category);
+    },
+    async updateForm() {
+      this.validateForm();
+      if (!this.formIsValid) return;
+
+      const formData = {
+        pk_article: this.$route.params.pk_article,
+        category: this.category,
+        img_path: this.img_path.val,
+        title_kor: this.title_kor.val,
+        title_eng: this.title_eng.val,
+        abv: this.abv.val,
+        content: this.content.val,
+        cupinfo: this.cupinfo.val,
+        tags: this.tags.val.join("<br>"), // default separator: ','
+        alcohols: this.alcohols.val.join("<br>"),
+        ingredients: this.ingredients.val.join("<br>"),
+        recipes: this.recipes.val.join("<br>"),
+      };
+
+
+      console.log(formData);
+
+      const result = await this.$store.dispatch("recipes/updateRecipe", formData);
+      if(result) {
+        alert("변경이 완료되었습니다.");
+      }
       this.$router.replace("/recipe/" + this.category);
     },
   },

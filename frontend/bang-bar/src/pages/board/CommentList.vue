@@ -11,10 +11,9 @@
             </div>
             <div class="comment-list-item-context">{{item.content}}</div>
             <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto" v-if="item.user_name===this.loginName" >
-  
             <button variant="info" @click="check_modifyComment(item.pk_fcomment,item.content)">수정</button>
+            &nbsp;&nbsp;&nbsp;
             <button variant="info" @click="deleteComment(item.pk_fcomment)">삭제</button>
-            
           </div>
         </div>
         
@@ -34,6 +33,7 @@
             <div class="w-max px-3 py-1 text-sm justify-self-end ml-auto"  >
   
             <button variant="info" @click="modifyComment(item.pk_fcomment,this.content)">수정</button>
+             &nbsp;&nbsp;&nbsp;
             <button variant="info" @click="this.return_num=-1, modify_flag=true">취소</button>
             
           </div>

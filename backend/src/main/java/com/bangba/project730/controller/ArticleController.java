@@ -334,6 +334,11 @@ public class ArticleController {
 				temp = "";
 				List<AtoI> ingredients = articleService.getIngredient(a.getPk_article());
 				for(AtoI ingredient: ingredients) {
+					if(ingredient.isType()) { //주재료일때 
+						temp += "재료/";
+					} else {
+						temp += "가니쉬/";
+					}
 					temp += ingredient.getName_kor();
 					temp += "/";
 					temp += ingredient.getQuantity();

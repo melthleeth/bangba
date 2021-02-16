@@ -85,10 +85,16 @@ export default {
     else if (payload.mode === "follower") context.commit('deleteFollower', payload.target_no);
   },
 
-  async followList(context) {
-    const response = await fetch(
-      `${SERVER_URL}/user/follow/` + context.rootGetters.pkUser + `/ec`,
-      {
+  async followList(context, payload) {
+    let url = '';
+
+    if (payload.mode === "otherUser") {
+      url = `${SERVER_URL}/user/follow/` + payload.target_no + `/ec`
+    } else {
+      url = `${SERVER_URL}/user/follow/` + context.rootGetters.pkUser + `/ec`
+    }
+
+    const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Accept: "*/*",
@@ -113,10 +119,16 @@ export default {
     }
     context.commit("setFollowList", followList);
   },
-  async followingList(context) {
-    const response = await fetch(
-      `${SERVER_URL}/user/follow/` + context.rootGetters.pkUser + `/ic`,
-      {
+  async followingList(context, payload) {
+    let url = '';
+
+    if (payload.mode === "otherUser") {
+      url = `${SERVER_URL}/user/follow/` + payload.target_no + `/ic`
+    } else {
+      url = `${SERVER_URL}/user/follow/` + context.rootGetters.pkUser + `/ic`
+    }
+
+    const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
           Accept: "*/*",

@@ -97,8 +97,7 @@
     <section class="flex-1">
       <article class="flex">
         <base-card size="box-290" class="flex flex-col justify-items-center">
-          <span
-            class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+          <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
             >오늘의 칵테일</span
           >
           <section
@@ -114,38 +113,34 @@
             </div>
           </section>
 
-          <span
-            class="text-gray-700 text-left px-4 mb-4 text-sm leading-relaxed"
-          >
-            일출과 같이 무언가로부터 희망을 찾고 싶을 때, 활력을 얻고 싶을 때
-            한잔 만들어보는 것은 어떨까?
+          <span class="text-gray-700 text-left px-4 mb-4 text-sm leading-relaxed">
+            일출과 같이 무언가로부터 희망을 찾고 싶을 때, 활력을 얻고 싶을 때 한잔 만들어보는 것은
+            어떨까?
           </span>
         </base-card>
         <base-card size="box-290" class="flex flex-col justify-items-center">
-          <span
-            class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+          <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
             >금주의 랭킹</span
           >
           <section
             class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
             v-for="(ranking, index) in filteredRanking"
-            :key="ranking.user_name" 
+            :key="ranking.user_name"
+            @click="saveUser(ranking.pk_user, ranking.user_name)"
           >
             <div class="flex items-center mt-4">
               <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
               <img
-                :src="ranking.img_path === '' ? 
-                'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif' 
-                : ranking.img_path" 
+                :src="
+                  ranking.img_path === ''
+                    ? 'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif'
+                    : ranking.img_path
+                "
                 class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
                 alt="profile image"
               />
-              <span class="text-base font-medium ml-2">{{
-                ranking.user_name
-              }}</span>
-              <span class="text-base font-medium ml-2">{{
-                ranking.like_weekly
-              }}</span>
+              <span class="text-base font-medium ml-2">{{ ranking.user_name }}</span>
+              <span class="text-base font-medium ml-2">{{ ranking.like_weekly }}</span>
             </div>
           </section>
         </base-card>
@@ -197,7 +192,6 @@ export default {
     return {
       isLoading: false,
       error: null,
-      
     };
   },
   computed: {
@@ -226,7 +220,7 @@ export default {
       return !this.isLoading && this.$store.getters["main/NewForum"];
     },
   },
-   created() {
+  created() {
     this.LoadRanking();
     this.LoadNewArticle();
     this.LoadNewForum();
@@ -239,8 +233,7 @@ export default {
           forceRefresh: refresh,
         });
       } catch (error) {
-        this.error =
-          error.message || "랭킹을 불러오는데 문제가 발생했습니다.";
+        this.error = error.message || '랭킹을 불러오는데 문제가 발생했습니다.';
       }
       this.isLoading = false;
     },async LoadNewArticle(refresh = true) {
@@ -270,6 +263,12 @@ export default {
     handleError() {
       this.error = null;
     },
+    saveUser(pkOther, nickname) {
+      localStorage.setItem('pkOther', pkOther);
+      this.$router.push({
+        path: `/mypageother/${nickname}`,
+      });
+    },
   },
 };
 </script>
@@ -281,7 +280,7 @@ section {
   height: 100%;
   /* font-family: 'NIXGONM-Vb'; */
   /* font-family: "S-CoreDream-4Regular"; */
-  font-family: "S-CoreDream-3Light";
+  font-family: 'S-CoreDream-3Light';
 }
 
 .box-290 {

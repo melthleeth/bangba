@@ -76,12 +76,11 @@ const router = createRouter({
 
     // recipe
     {
-      path: "/recipe/register/:category",
+      path: "/recipe/register/:category/:pk_article?",
       name: "RecipeRegistration",
       props: true,
       component: RecipeRegistration,
     },
-
     {
       path: "/recipe/detail/:pk_article",
       props: true,
@@ -124,7 +123,7 @@ const router = createRouter({
     },
 
     // mypage-other
-    { path: "/mypageother", component: MyPageOther },
+    { path: "/mypageother/:nickname", component: MyPageOther },
   ],
 });
 

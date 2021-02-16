@@ -1,8 +1,16 @@
 const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
     // 내가 쓴 글 불러오기
-    async LoadMyRecipe(context) {
-        const response = await fetch(`${SERVER_URL}/user/mypage/article/` + context.rootGetters.pkUser, {
+    async LoadMyRecipe(context, payload) {
+        let url = '';
+
+        if (payload.mode === "otherUser") {
+            url = `${SERVER_URL}/user/mypage/article/` + payload.target_no
+          } else {
+            url = `${SERVER_URL}/user/mypage/article/` + context.rootGetters.pkUser
+        }
+
+        const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -64,8 +72,16 @@ export default {
         }
     },
     // 내가 쓴 게시글 불러오기
-    async LoadMyForum(context) {
-        const response = await fetch(`${SERVER_URL}/user/mypage/forum/` + context.rootGetters.pkUser, {
+    async LoadMyForum(context, payload) {
+        let url = '';
+
+        if (payload.mode === "otherUser") {
+            url = `${SERVER_URL}/user/mypage/forum/` + payload.target_no
+          } else {
+            url = `${SERVER_URL}/user/mypage/forum/` + context.rootGetters.pkUser
+        }
+        
+        const response = await fetch(url, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
@@ -225,5 +241,31 @@ export default {
             localStorage.removeItem("email");
             return "success";
         }
-    }
+    },
+
+    // 타인의 정보 불러오기
+    async LoadOtherMyPage(context) {
+        const paramsPkUser = localStorage.getItem("pkOther")
+        const url = `${SERVER_URL}/user/mypage/?pk_user=${paramsPkUser}`;
+        const response = await fetch(url, {
+            headers: {
+                "Content-Type": "application/json; charset=utf-8",
+                'Accept': '*/*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': '*',
+            },
+            method: "GET",
+        });
+        const responseData = await response.json();
+        const userInfos = [];
+        for (const key in responseData) {
+            const userInfo = {
+                pk_user: responseData[key].pk_user,
+                user_name: responseData[key].user_name,
+                img_path: responseData[key].img_path,
+            };
+            userInfos.push(userInfo);
+        }
+        context.commit("getOtherMyPage", userInfos);
+    },
 };

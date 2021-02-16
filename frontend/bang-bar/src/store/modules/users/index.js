@@ -10,6 +10,7 @@ export default {
             myRecipe:[],
             myForum:[],
             myBookmark: [],
+            otherMyPage: [],
         };
     },
     mutations,

@@ -84,6 +84,16 @@
         </base-card>
       </article>
     </section>
+    <section class="">
+      <span v-if="selectedRecipe.user_name === owner_check">
+        <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateRecipe"
+          >수정</base-button
+        >
+        <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe"
+          >삭제</base-button
+        >
+      </span>
+    </section>
   </div>
 </template>
 
@@ -92,6 +102,7 @@ export default {
   props: ['pk_article'],
   data() {
     return {
+      owner_check: localStorage.getItem('user_name'),
       selectedRecipe: null,
       likeBtn: false,
       bmarkBtn: false,
@@ -147,7 +158,7 @@ export default {
       const modified = [];
       for (const item of ingredientItem) {
         const ingredientInfo = item.split('/');
-        const modifiedItem = `${ingredientInfo[0]} ${ingredientInfo[1]}${ingredientInfo[2]}`;
+        const modifiedItem = `${ingredientInfo[1]} ${ingredientInfo[2]}${ingredientInfo[3]}`;
         modified.push(modifiedItem);
       }
       return modified;
@@ -219,15 +230,21 @@ export default {
       };
       await this.$store.dispatch('likes/clickBtn', btnInfo);
     },
+    //수정
+    updateRecipe() {
+      this.$router.push({
+        path: `/recipe/register/custom/${this.pk_article}`,
+      });
+    },
     //삭제 버튼에 들어갈 함수 
     async deleteRecipe() {
       const articleInfo = {
-        pk_article : this.pk_artcile,
+        pk_article : this.pk_article,
       };
-
+      console.log(articleInfo);
       const result = await this.$store.dispatch('recipes/deleteRecipe', articleInfo);
       if(result) {
-        this.$router.replace("/");
+        this.$router.replace("/recipe/custom");
       }
     }
   },

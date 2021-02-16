@@ -108,11 +108,17 @@ export default {
   },
   methods: {
     async loadMyRecipes() {
-      const userInfo = 'myPage';
+      const userInfo = {
+        target_no: localStorage.getItem('pkOther'),
+        mode: 'otherUser',
+      };
       await this.$store.dispatch('users/LoadMyRecipe', userInfo);
     },
     async loadMyForums() {
-      const userInfo = 'myPage';
+      const userInfo = {
+        target_no: localStorage.getItem('pkOther'),
+        mode: 'otherUser',
+      };
       await this.$store.dispatch('users/LoadMyForum', userInfo);
     },
   },

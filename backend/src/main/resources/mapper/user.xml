@@ -121,4 +121,13 @@
 		from user
 		where pk_user = #{pk_user}
 	</select>
+	
+	<select id="getUserInfo" parameterType="int" resultType="UserDto">
+		select 
+			pk_user
+			, user_name
+			, img_path
+		from user
+		where pk_user = #{pk_user}
+	</select>
 </mapper>

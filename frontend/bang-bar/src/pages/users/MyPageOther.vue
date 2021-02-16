@@ -1,22 +1,22 @@
 <template>
-  <div style="flex flex-row font-color-black-400 font-S-CoreDream-light">
-    <section class="mt-20 mx-auto">
+  <div style="font-color-black-400 font-S-CoreDream-light">
+    <section class="w-1/2 my-20 mx-auto">
       <user-board></user-board>
     </section>
-    <section class="mt-10 mx-10 p-10">
-      <my-posts></my-posts>
+    <section class="w-2/3 mx-auto mt-10">
+      <other-posts></other-posts>
     </section>
   </div>
 </template>
 
 <script>
 import UserBoard from '../../components/users/UserBoard.vue';
-import MyPosts from '../users/MyPosts.vue';
+import OtherPosts from '../users/OtherPosts.vue';
 
 export default {
   components: {
     UserBoard,
-    MyPosts,
+    OtherPosts,
   },
 };
 </script>
