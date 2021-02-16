@@ -143,6 +143,7 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
@@ -165,19 +166,21 @@ export default {
           name: "약해요",
           val: "약한",
           imgsrc: require("../../assets/icon/abv_weak.png"),
-          content: "남들이 알아주는 알쓰/술찌라면, 이 도수가 적당할 거에요."
+          content: "남들이 알아주는 알쓰/술찌라면, 이 도수가 적당할 거에요.",
         },
         {
           name: "적당해요",
           val: "적당한",
           imgsrc: require("../../assets/icon/abv_moderate.png"),
-          content: "와인에서 소주 사이의 도수에요. 약간의 취기를 느낄 수 있어요."
+          content:
+            "와인에서 소주 사이의 도수에요. 약간의 취기를 느낄 수 있어요.",
         },
         {
           name: "강해요",
           val: "강한",
           imgsrc: require("../../assets/icon/abv_strong.png"),
-          content: "마시고 죽자! 싶은 날, 내일을 걱정하지 않아도 되는 날! 과감하게 이 도수를 골라보아요."
+          content:
+            "마시고 죽자! 싶은 날, 내일을 걱정하지 않아도 되는 날! 과감하게 이 도수를 골라보아요.",
         },
       ],
       base: {

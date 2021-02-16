@@ -16,5 +16,8 @@ export default {
     },
     setRecommendRecipes(state, payload) {
         state.recommendRecipes = payload;
-    }
+    },
+    setRecommendationData(state, payload) {
+        state.recommendationData = payload;
+    },
 };

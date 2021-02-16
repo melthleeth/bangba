@@ -10,6 +10,8 @@ export default {
       // dummy data 
       Ranking:[],
       ArticleRanking:[],
+      recommendationData: [],
+      recommendRecipes: [],
       recipes: [
         {
           pk_article: 1,

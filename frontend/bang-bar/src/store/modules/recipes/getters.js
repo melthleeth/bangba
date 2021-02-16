@@ -18,5 +18,8 @@ export default {
   }, 
   recommendRecipes(state) {
     return state.recommendRecipes;
-  }
+  },
+  recommendationData(state) {
+    return state.recommendationData;
+  },
 };

@@ -252,5 +252,6 @@ export default {
     const responseData = await response.json();
     console.log(responseData);
     context.commit("setRecommendRecipes", responseData);
-  }
+    context.commit("setRecommendationData", payload);
+  },
 };

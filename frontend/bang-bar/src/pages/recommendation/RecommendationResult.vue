@@ -9,7 +9,7 @@
     >
     <section class="flex mx-auto">
       <section class="w-1/3 flex flex-col justify-items-center">
-        <base-card class="flex flex-col justify-items-center">
+        <base-card class="flex flex-col justify-items-center transition duration-200 ease-in-out transform hover:scale-105">
           <img
             class="object-cover w-auto h-72 rounded-3xl mx-6 mt-6"
             :src="imgsrc"
@@ -39,7 +39,7 @@
           <article
             v-for="recipe in recipes.slice(1, 3)"
             :key="recipe.pk_article"
-            class="card-flat w-1/2 flex flex-col justify-items-center"
+            class="card-flat w-1/2 flex flex-col justify-items-center transition duration-200 ease-in-out transform hover:scale-105"
           >
             <img
               class="object-cover w-52 h-52 rounded-2xl mx-auto mt-2"
@@ -74,11 +74,11 @@ export default {
   data() {
     return {
       randomName: randomName.name,
-      base: "데킬라",
-      ingredient: "오렌지",
-      abv: "알딸딸한",
-      content:
-        "칵테일의 이름은 데킬라를 마시고 난 숙취를 의미합니다. 오렌지 주스와 그레나딘 시럽이 들어가 잘 넘어가기 때문에 주의해야 합니다. 본 칵테일과는 반대로 석양을 컨셉으로 한 데킬라 선셋이라는 칵테일도 존재합니다. 또한 데킬라를 제외시키면 선라이즈라는 이름의 논 알콜 칵테일이 됩니다.",
+      // base: "데킬라",
+      // ingredient: "오렌지",
+      // abv: "알딸딸한",
+      // content:
+      //   "칵테일의 이름은 데킬라를 마시고 난 숙취를 의미합니다. 오렌지 주스와 그레나딘 시럽이 들어가 잘 넘어가기 때문에 주의해야 합니다. 본 칵테일과는 반대로 석양을 컨셉으로 한 데킬라 선셋이라는 칵테일도 존재합니다. 또한 데킬라를 제외시키면 선라이즈라는 이름의 논 알콜 칵테일이 됩니다.",
       // recipes: [
       //   {
       //     pk_article: 3,
@@ -95,28 +95,43 @@ export default {
     };
   },
   computed: {
+    base() {
+      return this.$store.getters["recipes/recommendationData"].base;
+    },
+    ingredient() {
+      return this.$store.getters["recipes/recommendationData"].ingredient;
+    },
+    abv() {
+      return this.$store.getters["recipes/recommendationData"].abv;
+    },
     name() {
       return localStorage.getItem("user_name") === null
         ? `익명의 ${this.randomName[getRandomInt(this.randomName.length)]}`
         : localStorage.getItem("user_name");
     },
     imgsrc() {
-      return "https://upload.wikimedia.org/wikipedia/commons/3/3c/Tequila_Sunrise_glass.jpg";
+      return this.recipes[0].img_path;
+    },
+    content() {
+      return this.recipes[0].content;
     },
     cocktailName() {
-      return "데킬라 선라이즈";
+      return this.recipes[0].title_kor;
     },
     recipes() {
       return this.$store.getters["recipes/recommendRecipes"];
     },
   },
-  methods:{
+  created() {
+    console.log(this.recipes);
+  },
+  methods: {
     async moveRecipe() {
       const Info = {
-        searchtxt:this.cocktailName
+        searchtxt: this.cocktailName,
       };
-      var pk=await this.$store.dispatch('recipes/searchRecipe', Info);
-      
+      var pk = await this.$store.dispatch("recipes/searchRecipe", Info);
+
       this.$router.push({
         path: `/recipe/detail/${pk}`,
       });
