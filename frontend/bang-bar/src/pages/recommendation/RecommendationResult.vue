@@ -14,6 +14,7 @@
             class="object-cover w-auto h-72 rounded-3xl mx-6 mt-6"
             :src="imgsrc"
             alt="Sunset in the mountains"
+            @click="moveRecipe"
           />
           <span
             class="text-xl mt-6 mb-4 text-center tracking-wider font-S-CoreDream-medium font-bold"
@@ -44,6 +45,7 @@
               class="object-cover w-52 h-52 rounded-2xl mx-auto mt-2"
               :src="recipe.imgsrc"
               alt="Sunset in the mountains"
+              @click="moveSubRecipe(recipe.pk_article)"
             />
             <span
               class="text-xl mt-6 text-center tracking-wider font-S-CoreDream-medium font-bold"
@@ -95,11 +97,34 @@ export default {
       return "https://upload.wikimedia.org/wikipedia/commons/3/3c/Tequila_Sunrise_glass.jpg";
     },
     cocktailName() {
-      return "데킬라 썬라이즈";
+      return "데킬라 선라이즈";
     },
     // recipes() {
 
     // },
+  },
+  methods:{
+    async moveRecipe() {
+      const Info = {
+        searchtxt:this.cocktailName
+      };
+      var pk=await this.$store.dispatch('recipes/searchRecipe', Info);
+      
+      this.$router.push({
+        path: `/recipe/detail/${pk}`,
+      });
+    },
+
+    async moveSubRecipe(pk_article) {
+      // const Info = {
+      //   searchtxt:this.cocktailName
+      // };
+      // var pk=await this.$store.dispatch('recipes/searchRecipe', Info);
+      // console.log(pk_article);
+      this.$router.push({
+        path: `/recipe/detail/${pk_article}`,
+      });
+    },
   },
 };
 </script>

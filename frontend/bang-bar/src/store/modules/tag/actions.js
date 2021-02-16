@@ -2,12 +2,6 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 export default {
   //태그 등록
   async submitTag(context, payload) {
-    // console.log(context);
-    // console.log(payload);
-
-    // const tagData = {
-      // tag:payload.content_kor,
-    // };
 
     var tag = payload.content_kor;
     // console.log(tagData);
