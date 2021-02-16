@@ -196,7 +196,7 @@ export default {
   computed: {
     filteredRecipes() {
       const recipes = this.$store.getters["recipes/recipes"];
-      // console.log(recipes);
+      console.log(recipes);
       return recipes.filter((recipeItem) => {
         if (recipeItem.category === false) return true;
       });

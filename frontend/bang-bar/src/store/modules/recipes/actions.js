@@ -162,9 +162,15 @@ export default {
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,
+      abv: payload.abv,
       content: payload.content,
+      cup_no: payload.cupinfo,
+      tag: payload.tags,
+      alcohol: payload.alcohols,
+      ingredient: payload.ingredients,
+      recipe: payload.recipes,
     };
-    const url = `${SERVER_URL}/article/recipe` + payload.pk_article;
+    const url = `${SERVER_URL}/article/recipe/` + payload.pk_article;
     const response = await fetch(url, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
@@ -175,14 +181,15 @@ export default {
       method: "PUT",
       body: JSON.stringify(recipeData)
     });
-    const responseData = response.text();
+    const responseData = await response.text();
+    console.log(responseData);
     if(responseData === "success") {
-      alert("글 수정이 완료되었습니다.");
+      // alert("글 수정이 완료되었습니다.");
       return true;
     }
   },
   async deleteRecipe(_, payload) {
-    const response = await fetch(`${SERVER_URL}/article/recipe` + payload.pk_article, {
+    const response = await fetch(`${SERVER_URL}/article/recipe/` + payload.pk_article, {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         Accept: "application/json;",

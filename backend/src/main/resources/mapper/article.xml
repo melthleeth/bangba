@@ -55,7 +55,7 @@
 	
 	<update id="updateArticle" parameterType="ArticleDto">
 		update article set 
-		title_kor = #{title_kor}, title_eng = #{title_eng}, updated_at = #{updated_at}, content = #{content}, img_path = #{img_path}
+		title_kor = #{title_kor}, title_eng = #{title_eng}, updated_at = #{updated_at}, content = #{content}, img_path = #{img_path}, abv = #{abv}, cup_no = #{cup_no}
 		where pk_article = #{pk_article}
 	</update>
 	
@@ -146,7 +146,7 @@
         where a.article_no = #{pk_article};
 	</select>
 	<select id="getIngredient" parameterType="Integer" resultType="AtoI">
-		select i.name_kor, a.quantity, a.unit
+		select i.name_kor, a.quantity, a.unit, a.type
 		from ingredient as i
         inner join article_ingredient as a on  a.ingredient_no = i.pk_ingredient
         where a.article_no = #{pk_article};

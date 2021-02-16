@@ -190,19 +190,20 @@ public class ArticleServiceImpl implements ArticleService {
 		// TODO Auto-generated method stub
 
 		ArticleDto dto = new ArticleDto();
-
 		// 아티클 생성
+		dto.setPk_article(Integer.parseInt(map.get("pk_article")));
 		dto.setTitle_kor(map.get("title_kor"));
 		dto.setTitle_eng(map.get("title_eng"));
 		dto.setUpdated_at(map.get("updated_at"));
 		dto.setContent(map.get("content"));
 		dto.setImg_path(map.get("img_path"));
-		// dto.setAbv(Integer.parseInt(map.get("abv")));
+		dto.setAbv(Integer.parseInt(map.get("abv")));
 		dto.setCup_no(Integer.parseInt(map.get("cup_no")));
 
 		dao.updateArticle(dto);
 		// 생성된 아티클의 pk를 유저번호, 제목, 업데이트 시간으로 찾고 가장 나중의 pk를 가져옴
-		int pk = dao.searchUpdateArticlePK(dto);
+		// 업데이트 되는데 왜..?
+		int pk = Integer.parseInt(map.get("pk_article"));
 
 		dao.deleteArticleAlcohol(pk);
 		dao.deleteArticleIngredient(pk);
