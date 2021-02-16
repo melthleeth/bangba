@@ -5,10 +5,17 @@
       <span class="font-extrabold text-xl tracking-wider mt-1">{{ forum.title }}</span>
     </section>
     <section class="card-flat w-1/2 mx-auto flex">
-      <img class="w-12 h-12 mr-2" src="../../assets/img/profile6.png" alt="profile image" />
+      <img
+        class="w-12 h-12 mr-2 cursor-pointer"
+        src="../../assets/img/profile6.png"
+        alt="profile image"
+        @click="saveUser(forum.user_no, forum.user_name)"
+      />
       <section class="flex flex-col w-full">
         <article class="font-S-CoreDream-medium tracking-wider flex items-center">
-          <span>{{ forum.user_name }}</span>
+          <span class="cursor-pointer" @click="saveUser(forum.user_no, forum.user_name)">{{
+            forum.user_name
+          }}</span>
           <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
             >팔로잉</base-button
           >
@@ -289,6 +296,14 @@ export default {
         like_cnt: this.like_cnt,
       };
       await this.$store.dispatch('boardlikes/clickBtn', btnInfo);
+    },
+
+    //마이페이지 이동
+    saveUser(pkOther, nickname) {
+      localStorage.setItem('pkOther', pkOther);
+      this.$router.push({
+        path: `/mypageother/${nickname}`,
+      });
     },
   },
   watch: {

@@ -71,7 +71,7 @@ export default {
       body: JSON.stringify(keyword),
     });
     const responseData = await response.json();
-    // console.log(responseData);
+    console.log("레시피 디테일",responseData);
     if (!response.ok) {
       // error..
     }
@@ -82,6 +82,7 @@ export default {
       const recipe = {
         pk_article: responseData[key].pk_article,
         user_name: responseData[key].user_name,
+        user_no: responseData[key].user_no,
         title_kor: responseData[key].title_kor,
         title_eng: responseData[key].title_eng,
         like_cnt: responseData[key].like_cnt,
@@ -121,7 +122,8 @@ export default {
       const rankings = [];
 
       for (const key in responseData) {
-          const ranking = {
+        const ranking = {        
+              pk_user: responseData[key].pk_user,
               user_name: responseData[key].user_name,
               like_weekly: responseData[key].like_weekly,
               img_path: responseData[key].img_path,
@@ -145,7 +147,8 @@ export default {
     const articlerankings = [];
 
     for (const key in responseData) {
-        const articleranking = {
+      const articleranking = {
+            pk_article: responseData[key].pk_article,
             user_name: responseData[key].user_name,
             like_weekly: responseData[key].like_weekly,
             img_path: responseData[key].img_path,

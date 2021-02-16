@@ -49,6 +49,7 @@
           <span class="mt-2 font-S-CoreDream-medium">{{ bookmark_cnt }}</span>
         </base-card>
       </article>
+      <base-card> </base-card>
     </section>
     <section class="flex w-1/2 flex-col justify-items-center ">
       <base-card class="flex flex-col">
@@ -89,9 +90,7 @@
         <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateRecipe"
           >수정</base-button
         >
-        <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe"
-          >삭제</base-button
-        >
+        <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe">삭제</base-button>
       </span>
     </section>
   </div>
@@ -122,6 +121,9 @@ export default {
     },
     set_bookmark_cnt: function(newVal) {
       this.bookmark_cnt = newVal;
+    },
+    set_isFollow(newVal) {
+      this.isFollow = newVal;
     },
   },
   computed: {
@@ -171,6 +173,9 @@ export default {
     },
     setBmarkBtn() {
       return this.$store.getters['likes/bmarkBtn'];
+    },
+    set_isFollow() {
+      return this.$store.getters['follows/isFollow'];
     },
   },
   created() {
@@ -236,17 +241,51 @@ export default {
         path: `/recipe/register/custom/${this.pk_article}`,
       });
     },
-    //삭제 버튼에 들어갈 함수 
+    //삭제 버튼에 들어갈 함수
     async deleteRecipe() {
       const articleInfo = {
-        pk_article : this.pk_article,
+        pk_article: this.pk_article,
       };
       console.log(articleInfo);
       const result = await this.$store.dispatch('recipes/deleteRecipe', articleInfo);
-      if(result) {
-        this.$router.replace("/recipe/custom");
+      if (result) {
+        this.$router.replace('/recipe/custom');
       }
-    }
+    },
+    saveUser(pkOther, nickname) {
+      localStorage.setItem('pkOther', pkOther);
+      this.$router.push({
+        path: `/mypageother/${nickname}`,
+      });
+    },
+    // 팔로우 여부 확인하기
+    async is_Follow() {
+      const userInfo = {
+        target_no: this.forum.user_no,
+      };
+      await this.$store.dispatch('follows/isFollow', userInfo);
+    },
+    //follow 하기
+    async follow() {
+      if (localStorage.getItem('user_name') === null) {
+        alert('로그인이 필요한 기능입니다.');
+        return;
+      }
+      const mode = this.isFollow ? 'following' : 'x';
+      const userInfo = {
+        target_no: this.forum.user_no,
+        mode: mode,
+      };
+      if (this.isFollow) {
+        await this.$store.dispatch('follows/unfollow', userInfo);
+      } else {
+        await this.$store.dispatch('follows/follow', userInfo);
+      }
+    },
+  },
+  updated() {
+    this.is_Follow();
+    this.isFollow = this.$store.getters['follows/isFollow'];
   },
 };
 </script>
