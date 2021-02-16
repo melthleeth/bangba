@@ -55,6 +55,13 @@
         </div>
       </section>
     </section>
+    <section
+      class="flex flex-col text-center justify-items-center items-center mt-10"
+    >
+      <base-button class="px-10 py-2 text-center" link to="/recommendation/form"
+        >다시 추천받기</base-button
+      >
+    </section>
   </div>
 </template>
 

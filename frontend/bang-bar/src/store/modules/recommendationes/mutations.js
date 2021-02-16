@@ -1,5 +1,5 @@
 export default {
-    getBaseAlcohol(state, payload) {
+    baseAlcohol(state, payload) {
         state.baseType = payload;
     }, 
 };
