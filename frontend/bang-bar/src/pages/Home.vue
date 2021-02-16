@@ -169,7 +169,10 @@
                 <span class="text-sm font-semibold mr-2">{{
                   newforum.user_name
                 }}</span>
-                <span class="text-xs text-gray-400">{{ newforum.created_at }}</span>
+                <span class="text-xs text-gray-400">
+                  <!-- {{  newforum.created_at }} -->
+                  {{convert_time(newforum.created_at)}}
+                  </span>
               </article>
             </div>
             <span class="text-sm block leading-relaxed truncate">{{
@@ -225,6 +228,37 @@ export default {
     this.LoadNewForum();
   },
   methods: {
+
+    convert_time(time) {
+      for (var i = 0; i < time.length; i++) {
+        var Y = String(time).substring(0, 4);
+        var M = String(time).substring(4, 6);
+        var D = String(time).substring(6, 8);
+
+        var H = String(time).substring(8, 10);
+        var Min = String(time).substring(10, 12);
+        var S = String(time).substring(12, 14);
+
+        //현재 월
+        let month = new Date().getMonth() + 1; // 월
+        let date = new Date().getDate(); // 날짜
+
+        if (month < '10') {
+          month = '0' + month;
+        }
+        if (date < '10') {
+          date = '0' + date;
+        }
+        var answer = '';
+        if (month === M && D === date) {
+          answer = H + ':' + Min + ':' + S;
+        } else {
+          answer = Y + '.' + M + '.' + D;
+        }
+        return answer;
+      }
+    },
+
     async LoadRanking(refresh = true) {
       this.isLoading = true;
       try {
