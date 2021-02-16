@@ -144,6 +144,7 @@ export default {
     async saveNameImg() {
       if(!this.checkFlag) {
         alert("닉네임 중복확인을 해주세요.");
+        return;
       }
       if(this.user_name === localStorage.getItem("user_name") && this.imgsrc === localStorage.getItem("profileImage")) {
         alert("변경된 사항이 없습니다.");
