@@ -101,7 +101,7 @@ export default {
                 category: responseData[key].category,
                 title: responseData[key].title,
                 img_path: responseData[key].img_path,
-                username: responseData[key].user_name,
+                user_name: responseData[key].user_name,
                 created_at: responseData[key].created_at,
                 content: responseData[key].content,
                
