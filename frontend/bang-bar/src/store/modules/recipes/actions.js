@@ -8,9 +8,13 @@ export default {
     if (payload.category === "custom") {
       isOfficial = false;
     }
+
+    
+
     const recipeData = {
       user_no: context.rootGetters.pkUser,
-      created_at: new Date().toLocaleTimeString(), // 변경 가능
+      // created_at: new Date().toLocaleTimeString(), // 변경 가능
+      created_at:payload.created_at,
       category: isOfficial,
       img_path: payload.img_path,
       title_kor: payload.title_kor,
@@ -196,5 +200,33 @@ export default {
       alert("글 삭제가 완료되었습니다.");
       return true;
     }
+  },
+  //레시피 추천용 레시피 찾기 이름입력시 -> pk값을 리턴해준다!
+  async searchRecipe(context, payload) {
+    // console.log(payload);
+    console.log(payload.searchtxt);
+    const Data = {
+      searchtxt: payload.searchtxt,
+      // searchtxt:"",
+      tag: ""
+    };
+
+
+    const response = await fetch(`${SERVER_URL}/article/keyword`, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Accept: "application/json;",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+      },
+      method: "POST",
+      body: JSON.stringify(Data),
+    });
+    // Promise.all().then(result=>console.log(result));
+
+    const responseData =await response.json();
+    
+    // console.log(responseData[0].pk_article);
+    return responseData[0].pk_article;
   }
 };

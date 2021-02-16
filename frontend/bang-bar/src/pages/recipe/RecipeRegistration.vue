@@ -509,6 +509,44 @@ export default {
         this.formIsValid = true;
       }
     },
+
+    time_cal() {
+
+      let today = new Date();
+
+      let year = today.getFullYear(); // 년도
+      let month = today.getMonth() + 1; // 월
+      let date = today.getDate(); // 날짜
+
+      let hour = today.getHours();
+      let min = today.getMinutes();
+      let sec = today.getSeconds();
+
+      if (date < "10") {
+        date = "0" + date;
+      }
+
+      if (month < "10") {
+        month = "0" + month;
+      }
+
+      if (hour < "10") {
+        hour = "0" + hour;
+      }
+
+      if (min < "10") {
+        min = "0" + min;
+      }
+      if (sec < "10") {
+        sec = "0" + sec;
+      }
+
+      var convertTime =
+        year + "" + month + "" + date + "" + hour + "" + min + "" + sec;
+
+      return convertTime;
+    },
+
     async submitForm() {
       this.validateForm();
 
@@ -526,6 +564,7 @@ export default {
         alcohols: this.alcohols.val.join("<br>"),
         ingredients: this.ingredients.val.join("<br>"),
         recipes: this.recipes.val.join("<br>"),
+        created_at: this.time_cal(),
       };
 
 
