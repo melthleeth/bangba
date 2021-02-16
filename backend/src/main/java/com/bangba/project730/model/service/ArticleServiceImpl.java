@@ -145,6 +145,7 @@ public class ArticleServiceImpl implements ArticleService {
 		String[] ss = s.split("<br>");
 		int i = 0;
 		for (String a : ss) {
+			System.out.println(a);
 			if (a != "") {
 				switch (i) {
 				case 0:
@@ -542,6 +543,11 @@ public class ArticleServiceImpl implements ArticleService {
 			latdto.add(atdto);
 		}
 		return latdto;
+	}
+
+	@Override
+	public List<ArticleDto> recommend(Map<String, String> map) throws Exception {
+		return dao.recommend(map);
 	}
 	
 }

@@ -143,9 +143,10 @@ export default {
     });
     const responseData = await response.json();
     const articlerankings = [];
-
+    console.log(responseData);
     for (const key in responseData) {
         const articleranking = {
+            pk_article: responseData[key].pk_article,
             user_name: responseData[key].user_name,
             like_weekly: responseData[key].like_weekly,
             img_path: responseData[key].img_path,

@@ -1,6 +1,7 @@
 package com.bangba.project730.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -73,4 +74,6 @@ public interface ArticleDao {
 	public int isLike(int user_no, int article_no) throws Exception;
 	public int isBmark(int user_no, int article_no) throws Exception;
 	public List<ArticleDto> searchNewArticle() throws Exception;
+	
+	public List<ArticleDto> recommend(Map<String, String> map) throws Exception; 
 }
