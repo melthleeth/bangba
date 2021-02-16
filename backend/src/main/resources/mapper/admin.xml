@@ -47,6 +47,6 @@
 		select * 
 		from article 
 		order by like_cnt desc
-		limit 4
+		limit 3
 	</select>
 </mapper>
