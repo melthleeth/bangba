@@ -11,11 +11,13 @@ export default {
 
     const currentTimeStamp = new Date().getTime();
     return (currentTimeStamp - lastFetch) / 1000 > 60;
-  },Ranking(state) {
+  },
+  Ranking(state) {
     return state.Ranking;
-  }, ArticleRanking(state) {
+  },
+  ArticleRanking(state) {
     return state.ArticleRanking;
-  }, 
+  },
   recommendRecipes(state) {
     return state.recommendRecipes;
   },

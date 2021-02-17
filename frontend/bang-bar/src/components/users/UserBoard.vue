@@ -1,17 +1,16 @@
 <template>
   <div class="flex flex-row font-S-CoreDream-light font-color-black-400 w-full">
-    <section>
+    <section class="flex flex-col justify-items-center">
       <img
         id="profileImage"
         alt="profile image"
         :src="userInfo[0].img_path"
-        class="h-24 w-24 mx-auto mb-3 cursor-pointer rounded-full border-2 border-black object-cover text-center"
+        class="h-32 w-32 mx-auto mb-3 cursor-pointer rounded-full object-cover text-center"
       />
+        <span class="font-S-CoreDream-medium text-xl mx-auto font-semibold">{{ userInfo[0].user_name }}</span>
     </section>
     <section class="flex flex-col">
       <article class="flex flex-row items-end">
-        <span class="text-2xl font-bold">{{ userInfo[0].user_name }}</span>
-        <span>님의 프로필</span>
         <div v-if="userInfo[0].user_name !== owner_check">
           <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
             >팔로잉</base-button

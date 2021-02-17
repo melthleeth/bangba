@@ -80,7 +80,7 @@ export default {
         pk_article: responseData[key].pk_article,
         user_name: responseData[key].user_name,
         user_no: responseData[key].user_no,
-        user_profileImage: responseData[key].user_img_path,
+        user_profileImage: responseData[key].user_img,
         title_kor: responseData[key].title_kor,
         title_eng: responseData[key].title_eng,
         like_cnt: responseData[key].like_cnt,
@@ -148,6 +148,7 @@ export default {
       const articleranking = {
             pk_article: responseData[key].pk_article,
             user_name: responseData[key].user_name,
+            user_profileImage: responseData[key].user_img,
             like_weekly: responseData[key].like_weekly,
             img_path: responseData[key].img_path,
             title_kor: responseData[key].title_kor,

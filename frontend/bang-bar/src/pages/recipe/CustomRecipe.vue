@@ -5,7 +5,7 @@
       >커스텀 레시피</span
     >
     <section
-      class="flex justify-center grid grid-cols-4 mb-6 font-S-CoreDream-light px-20"
+      class="flex justify-center grid grid-cols-4 mb-6 font-S-CoreDream-light px-10"
     >
       <base-card class="flex flex-col justify-items-center">
         <span
@@ -13,8 +13,8 @@
           >금주의 랭킹</span
         >
         <section
-          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-          v-for="(ranking, index) in filteredRanking"
+          class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg py-1 my-1"
+          v-for="(ranking, index) in filteredRanking.slice(0, 5)"
           :key="ranking.user_name"
           @click="saveUser(ranking.pk_user, ranking.user_name)"
         >
@@ -32,9 +32,9 @@
             <span class="text-base font-medium ml-2">{{
               ranking.user_name
             }}</span>
-            <span class="text-base font-medium ml-2">{{
+            <!-- <span class="text-base font-medium ml-2">{{
               ranking.like_weekly
-            }}</span>
+            }}</span> -->
           </div>
         </section>
       </base-card>
@@ -42,7 +42,7 @@
         class="flex-auto inline-block flex flex-col justify-items-center col-span-3 "
       >
         <span
-          class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
+          class="font-S-CoreDream-medium text-2xl font-bold text-center mt-4"
           >주간 베스트</span
         >
         <section class="font-S-CoreDream-light p-3">
@@ -53,19 +53,19 @@
             v-else-if="filteredArticleRanking.length > 0"
             class=" grid grid-cols-3 grid-flow-row gap-2 mx-auto"
           >
-            <recipe-card
+            <recipe-card-small
               v-for="articleranking in filteredArticleRanking"
               :key="articleranking.pk_article"
               :pk_article="articleranking.pk_article"
               :img_path="articleranking.img_path"
               :user_name="articleranking.user_name"
-              :user_profileImage="cocktail.user_profileImage"
+              :user_profileImage="articleranking.user_profileImage"
               :cocktailname="articleranking.title_kor"
               :tag="articleranking.tag"
               :like_cnt="articleranking.like_cnt"
               :bookmark_cnt="articleranking.bookmark_cnt"
             >
-            </recipe-card>
+            </recipe-card-small>
           </div>
           <span
             v-else
@@ -143,6 +143,7 @@
           :pk_article="cocktail.pk_article"
           :img_path="cocktail.img_path"
           :user_name="cocktail.user_name"
+          :user_profileImage="cocktail.user_profileImage"
           :cocktailname="cocktail.title_kor"
           :tag="cocktail.tag"
           :like_cnt="cocktail.like_cnt"
@@ -161,9 +162,11 @@
 
 <script>
 import RecipeCard from "../../components/recipes/RecipeCard.vue";
+import RecipeCardSmall from "../../components/recipes/RecipeCardSmall.vue";
 export default {
   components: {
     RecipeCard,
+    RecipeCardSmall,
   },
   data() {
     return {

@@ -26,6 +26,7 @@ export default {
             const recipe = {
                 pk_article: responseData[key].pk_article,
                 user_name: responseData[key].user_name,
+                user_profileImage: responseData[key].user_img,
                 title_kor: responseData[key].title_kor,
                 title_eng: responseData[key].title_eng,
                 like_cnt: responseData[key].like_cnt,
