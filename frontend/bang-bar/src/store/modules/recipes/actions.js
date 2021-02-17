@@ -174,6 +174,7 @@ export default {
       ingredient: payload.ingredients,
       recipe: payload.recipes,
     };
+    console.log(recipeData);
     const url = `${SERVER_URL}/article/recipe/` + payload.pk_article;
     const response = await fetch(url, {
       headers: {
