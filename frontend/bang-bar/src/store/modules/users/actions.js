@@ -54,7 +54,7 @@ export default {
         console.log(payload);
 
         if (payload.newValue === payload.oldValue) {
-            alert("사용가능한 닉네임입니다.");
+            alert("닉네임을 유지합니다.");
             return "SUCCESS";
         }
 
@@ -135,10 +135,12 @@ export default {
         const responseData = await response.json();
 
         // 이미지 저장
-        localStorage.setItem('user_name', responseData.user_name);
-        localStorage.setItem('profileImage', responseData.img_path);
         if(responseData.user_name === payload.user_name && responseData.img_path === payload.img_path) {
             alert("변경되었습니다.");
+            localStorage.setItem('user_name', responseData.user_name);
+            localStorage.setItem('profileImage', responseData.img_path);
+            context.commit('setProfileImage', payload.img_path, {root: true});
+            context.commit('setUserName', payload.user_name, {root: true});
             location.reload();
         }
     },

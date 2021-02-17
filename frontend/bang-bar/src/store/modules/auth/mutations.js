@@ -8,4 +8,7 @@ export default {
     setProfileImage(state, payload) {
       state.profileImage = payload;
     },
+    setUserName(state, payload) {
+      state.userName = payload;
+    }
   };

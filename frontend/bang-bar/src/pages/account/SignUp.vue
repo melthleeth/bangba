@@ -339,7 +339,7 @@ export default {
           phone_number: this.phone_number,
           user_type:0,
           banned:false,
-          img_path:"",
+          img_path: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaaNaTC8W_ygKLZxLFWpHOerfIYQiVlsuyrw&usqp=CAU",
         }
         const headers = {
           'Content-type': 'application/json; charset=UTF-8',
