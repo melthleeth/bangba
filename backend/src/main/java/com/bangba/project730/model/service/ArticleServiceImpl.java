@@ -69,7 +69,7 @@ public class ArticleServiceImpl implements ArticleService {
 		dto.setContent(map.get("content"));
 		dto.setImg_path(map.get("img_path"));
 		System.out.println(map.get("true"));
-		if (map.get("category").equals("1"))
+		if (map.get("category").equals("official"))
 			dto.setCategory(true);
 		else
 			dto.setCategory(false);
