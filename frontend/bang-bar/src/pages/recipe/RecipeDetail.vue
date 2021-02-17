@@ -51,20 +51,27 @@
       </article>
 
       <article class="card-flat mx-auto flex w-11/12">
-        <img class="w-12 h-12 mr-2" src="../../assets/img/profile6.png" alt="profile image" />
+        <img
+          class="w-14 h-12 mr-2 rounded-full cursor-pointer"
+          :src="userInfo[0].img_path"
+          alt="profile image"
+          @click="saveUser(userInfo[0].pk_user, userInfo[0].user_name)"
+        />
         <section class="flex flex-col w-full">
           <article class="tracking-wider flex items-center">
             <span
-              ><span class="font-S-CoreDream-medium">{{ user_name }}</span
+              ><span
+                class="font-S-CoreDream-medium cursor-pointer"
+                @click="saveUser(userInfo[0].pk_user, userInfo[0].user_name)"
+                >{{ userInfo[0].user_name }}</span
               >님의 레시피입니다.</span
             >
           </article>
           <article class="flex items-center font-color-black-200 text-xs">
             <span class="mr-2">{{ created_at }}</span>
-            <span class="mr-2">조회 {{ hits }}</span>
             <section class="">
               <span v-if="user_name === owner_check">
-                <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateRecipe"
+                <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateData"
                   >수정</base-button
                 >
                 <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe"
@@ -82,7 +89,7 @@
               >
               <base-button
                 v-else
-                class="text-xs px-3 py-1 ml-2"
+                class="text-xs px-2 py-1 ml-2"
                 mode="outline-colored"
                 @click="follow"
                 >팔로우</base-button
@@ -96,7 +103,7 @@
       <base-card class="flex flex-col">
         <span class="mx-4 my-2 leading-relaxed">{{ content }}</span>
       </base-card>
-      <article>
+      <article class="ml-4">
         <span
           v-for="tag in tags"
           :key="tag"
@@ -148,6 +155,7 @@ export default {
       bmarkBtn: false,
       like_cnt: 0,
       bookmark_cnt: 0,
+      isFollow: false,
     };
   },
   watch: {
@@ -179,9 +187,6 @@ export default {
     },
     set_bookmark_cnt() {
       return this.$store.getters['likes/bmarkCnt'];
-    },
-    user_name() {
-      return this.selectedRecipe.user_name;
     },
     created_at() {
       return this.selectedRecipe.created_at;
@@ -227,12 +232,16 @@ export default {
     set_isFollow() {
       return this.$store.getters['follows/isFollow'];
     },
+    userInfo() {
+      return this.$store.getters['users/otherMyPage'];
+    },
   },
   created() {
     this.selectedRecipe = this.$store.getters['recipes/recipes'].find(
       (recipe) => recipe.pk_article.toString() === this.pk_article
     );
     this.test();
+    this.loadUserInfo();
   },
   methods: {
     test() {
@@ -311,7 +320,7 @@ export default {
     // 팔로우 여부 확인하기
     async is_Follow() {
       const userInfo = {
-        target_no: this.forum.user_no,
+        target_no: this.selectedRecipe.user_no,
       };
       await this.$store.dispatch('follows/isFollow', userInfo);
     },
@@ -323,7 +332,7 @@ export default {
       }
       const mode = this.isFollow ? 'following' : 'x';
       const userInfo = {
-        target_no: this.forum.user_no,
+        target_no: this.selectedRecipe.user_no,
         mode: mode,
       };
       if (this.isFollow) {
@@ -331,6 +340,13 @@ export default {
       } else {
         await this.$store.dispatch('follows/follow', userInfo);
       }
+    },
+    async loadUserInfo() {
+      const userInfo = {
+        target_no: this.selectedRecipe.user_no,
+        mode: 'recipe',
+      };
+      await this.$store.dispatch('users/LoadOtherMyPage', userInfo);
     },
   },
   updated() {
