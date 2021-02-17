@@ -1,7 +1,7 @@
 <template>
 <div>
   <the-header></the-header>
-    <router-view v-slot="slotProps" >
+    <router-view v-slot="slotProps" :key="$route.fullPath">
     <transition name="route" mode="out-in">
       <component :is="slotProps.Component"></component>
     </transition>
