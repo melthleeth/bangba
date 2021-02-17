@@ -98,6 +98,7 @@
           </article>
         </section>
       </article>
+      <base-button @click="gotoPreviousPage" id="btn" class="w-max px-10 py-1.5 text-sm font-bold">목록으로 돌아가기</base-button>
     </section>
     <section class="flex w-1/2 flex-col justify-items-center ">
       <base-card class="flex flex-col">
@@ -252,6 +253,9 @@ export default {
       this.like_cnt = this.$store.getters['likes/likeCnt'];
       this.bookmark_cnt = this.$store.getters['likes/bmarkCnt'];
     },
+    gotoPreviousPage() {
+      this.$router.go(-1);
+    },
 
     convert_time(time) {
       var Y = String(time).substring(0, 4);
@@ -382,6 +386,10 @@ export default {
 </script>
 
 <style scoped>
+#btn {
+  margin: 0.25rem auto;
+}
+
 .img-height {
   height: 30rem;
 }

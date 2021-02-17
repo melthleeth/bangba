@@ -5,9 +5,9 @@
       >커스텀 레시피</span
     >
     <section
-      class="flex justify-center grid grid-cols-4 mb-6 font-S-CoreDream-light px-10"
+      class="flex justify-center grid grid-cols-4 mb-6 font-S-CoreDream-light px-16"
     >
-      <base-card class="flex flex-col justify-items-center">
+      <base-card id="card-margin" class="flex flex-col justify-items-center">
         <span
           class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
           >금주의 랭킹</span
@@ -18,7 +18,7 @@
           :key="ranking.user_name"
           @click="saveUser(ranking.pk_user, ranking.user_name)"
         >
-          <div class="flex items-center mt-4">
+          <div class="flex items-center mt-3">
             <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
             <img
               :src="
@@ -29,7 +29,7 @@
               class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
               alt="profile image"
             />
-            <span class="text-base font-medium ml-2">{{
+            <span class="text-base ml-2 ">{{
               ranking.user_name
             }}</span>
             <!-- <span class="text-base font-medium ml-2">{{
@@ -39,7 +39,7 @@
         </section>
       </base-card>
       <base-card
-        class="flex-auto inline-block flex flex-col justify-items-center col-span-3 "
+        id="card-margin" class="flex-auto inline-block flex flex-col justify-items-center col-span-3 "
       >
         <span
           class="font-S-CoreDream-medium text-2xl font-bold text-center mt-4"
@@ -256,6 +256,9 @@ export default {
 </script>
 
 <style scoped>
+#card-margin {
+  margin: 0.75rem;
+}
 p {
   margin: 0;
   font-style: normal;

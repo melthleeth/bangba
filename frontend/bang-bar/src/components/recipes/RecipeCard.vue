@@ -4,7 +4,7 @@
     class="font-S-CoreDream-light flex flex-col justify-center card-corner max-w-sm rounded overflow-hidden bg-white m-4 shadow-lg pb-2 transition duration-200 ease-in-out transform hover:scale-105"
   >
     <img
-      class="w-full h-64 object-cover mr-0"
+      class="w-full h-60 object-cover mr-0"
       :src="imgsrc"
       alt="cocktail image"
     />
@@ -14,9 +14,9 @@
       >{{ cocktailname }}</span
     >
 
-    <section class="">
+    <section class="h-16 mr-2">
       <span
-        v-for="tag in tags.slice(0, 3)"
+        v-for="tag in tags.slice(0, 5)"
         :key="tag"
         class="w-max inline-block bg-gray-200 rounded-full px-3 py-1 text-xs font-semibold ml-2 mb-2"
         >#{{ tag }}</span
