@@ -18,22 +18,29 @@
         <article class="flex mx-auto">
           <label
             v-for="(baseItem, index) in bases"
-            :key="baseItem"
+            :key="baseItem.name"
             class="flex flex-col justify-items-center"
           >
             <input
               type="radio"
               name="base"
               :value="index"
-              checked
               v-model="base.val"
               @change="baseInfo"
             />
-            <div class="w-24 h-24 rounded-full"></div>
-            <span class="mt-2 mx-auto">{{ baseItem }}</span>
+            <div
+              class="w-24 h-24 rounded-full flex justify-items-center items-center"
+            >
+              <img
+                :src="baseItem.imgsrc"
+                alt="icon"
+                class="mx-auto w-16 h-16"
+              />
+            </div>
+            <span class="mt-2 mx-auto">{{ baseItem.name }}</span>
           </label>
         </article>
-        <article class="flex flex-col justify-items-center items-center mt-4">
+        <article v-if="base.idx >= 0" class="flex flex-col justify-items-center items-center mt-4">
           <base-card class="w-1/2 flex">
             <span class="mx-4 my-2">{{ baseAlcoholes[base.idx].content }}</span>
           </base-card>
@@ -55,7 +62,6 @@
               type="radio"
               name="ingredient"
               :value="index"
-              checked
               v-model="ingredient.val"
               @change="ingredientInfo"
             />
@@ -84,7 +90,6 @@
               type="radio"
               name="ingredient"
               :value="index + 4"
-              checked
               v-model="ingredient.val"
               @change="ingredientInfo"
             />
@@ -117,7 +122,6 @@
               type="radio"
               name="abv"
               :value="index"
-              checked
               v-model="abv.val"
               @change="abvInfo"
             />
@@ -129,7 +133,7 @@
             <span class="mt-2 mx-auto">{{ abvItem.name }}</span>
           </label>
         </article>
-        <article class="flex flex-col justify-items-center items-center mt-4">
+        <article v-if="abv.idx >= 0" class="flex flex-col justify-items-center items-center mt-4">
           <base-card class="w-1/2 card-margin flex">
             <span class="mx-4 my-2">{{ abvs[abv.idx].content }}</span>
           </base-card>
@@ -150,7 +154,14 @@
 export default {
   data() {
     return {
-      bases: ["데킬라", "진", "럼", "보드카", "브랜디", "리큐르"],
+      bases: [
+         { name:"데킬라", imgsrc: require("../../assets/icon/tequila.png") },
+         { name:"진", imgsrc: require("../../assets/icon/gin.png") },
+         { name:"럼", imgsrc: require("../../assets/icon/rum.png") },
+         { name:"보드카", imgsrc: require("../../assets/icon/vodka.png") },
+         { name:"브랜디", imgsrc: require("../../assets/icon/brandy.png") },
+         { name:"리큐르", imgsrc: require("../../assets/icon/liquor.png") },
+          ],
       ingredients: [
         { name: "레몬", imgsrc: require("../../assets/icon/lemon.png") },
         { name: "라임", imgsrc: require("../../assets/icon/lime.png") },
@@ -187,16 +198,16 @@ export default {
         },
       ],
       base: {
-        idx: 5,
-        val: "리큐르",
+        idx: -1,
+        val: "",
       },
       ingredient: {
-        idx: 7,
-        val: "파인애플",
+        idx: -1,
+        val: "",
       },
       abv: {
-        idx: 2,
-        val: "강한",
+        idx: -1,
+        val: "",
       },
     };
   },
@@ -226,7 +237,7 @@ export default {
     },
     async submitForm() {
       const formData = {
-        base: this.bases[this.base.val],
+        base: this.bases[this.base.val].name,
         ingredient: this.ingredients[this.ingredient.val].name,
         abv: this.abvs[this.abv.idx].val,
       };
