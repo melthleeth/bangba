@@ -60,7 +60,7 @@
             >
           </article>
           <article class="flex items-center font-color-black-200 text-xs">
-            <span class="mr-2">{{ created_at }}</span>
+            <span class="mr-2">{{ convert_time(created_at) }}</span>
             <span class="mr-2">조회 {{ hits }}</span>
             <section class="">
               <span v-if="user_name === owner_check">
@@ -242,6 +242,31 @@ export default {
       this.bmarkBtn = this.$store.getters['likes/bmarkBtn'];
       this.like_cnt = this.$store.getters['likes/likeCnt'];
       this.bookmark_cnt = this.$store.getters['likes/bmarkCnt'];
+    },
+
+    convert_time(time) {
+      var Y = String(time).substring(0, 4);
+      var M = String(time).substring(4, 6);
+      var D = String(time).substring(6, 8);
+
+      var H = String(time).substring(8, 10);
+      var Min = String(time).substring(10, 12);
+      var S = String(time).substring(12, 14);
+
+      //현재 월
+      let month = new Date().getMonth() + 1; // 월
+      let date = new Date().getDate(); // 날짜
+
+      if (month < '10') {
+        month = '0' + month;
+      }
+      if (date < '10') {
+        date = '0' + date;
+      }
+      var answer = '';
+      answer = Y + '.' + M + '.' + D + '  ' + H + ':' + Min + ':' + S;
+      
+      return answer;
     },
     async isLike() {
       const btnInfo = {
