@@ -71,7 +71,6 @@ export default {
       body: JSON.stringify(keyword),
     });
     const responseData = await response.json();
-    console.log("레시피 디테일",responseData);
     if (!response.ok) {
       // error..
     }
