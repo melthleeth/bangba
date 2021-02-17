@@ -11,7 +11,7 @@
 
 <script>
 import UserBoard from '../../components/users/UserBoard.vue';
-import OtherPosts from '../users/OtherPosts.vue';
+import OtherPosts from '../../components/users/OtherPosts.vue';
 
 export default {
   components: {

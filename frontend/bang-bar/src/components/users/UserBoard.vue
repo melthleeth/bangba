@@ -74,7 +74,7 @@
             <section class="modal-header">
               <span>팔로워</span>
             </section>
-            <section class="w-full">
+            <section class="w-full flex flex-col">
               <section
                 v-if="followList.length > 0"
                 class="mx-1 my-2 py-2 bg-white"
@@ -101,7 +101,7 @@
               </section>
               <span
                 v-else
-                class="text-xl text-center my-32 font-S-CoreDream-medium font-color-black-200"
+                class="text-xl flex mx-auto text-center my-28 font-S-CoreDream-medium font-color-black-200"
                 >팔로잉하는 유저가 없습니다.</span
               >
             </section>
@@ -115,7 +115,7 @@
             <section class="modal-header">
               <span>팔로우</span>
             </section>
-            <section class="w-full">
+            <section class="w-full flex flex-col">
               <section
                 v-if="followingList.length > 0"
                 class="mx-1 my-2 py-2 bg-white"
@@ -143,8 +143,8 @@
               </section>
               <span
                 v-else
-                class="text-xl text-center my-32 font-S-CoreDream-medium font-color-black-200"
-                >팔로잉하는 유저가 없습니다.</span
+                class="text-xl flex mx-auto text-center my-28 font-S-CoreDream-medium font-color-black-200"
+                >팔로우하는 유저가 없습니다.</span
               >
             </section>
           </base-modal>
