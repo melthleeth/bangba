@@ -5,7 +5,7 @@
         <img
           class="object-cover w-auto img-height rounded-3xl mx-6 mt-6"
           :src="imgsrc"
-          alt="Sunset in the mountains"
+          alt="cocktail image"
         />
         <span class="text-2xl mt-6 mb-8 text-center font-S-CoreDream-medium font-bold"
           >{{ title_kor }}
@@ -52,7 +52,7 @@
 
       <article class="card-flat mx-auto flex w-11/12">
         <img
-          class="w-14 h-12 mr-2 rounded-full cursor-pointer"
+          class="object-cover w-14 h-12 mr-2 rounded-full cursor-pointer"
           :src="userInfo[0].img_path"
           alt="profile image"
           @click="saveUser(userInfo[0].pk_user, userInfo[0].user_name)"

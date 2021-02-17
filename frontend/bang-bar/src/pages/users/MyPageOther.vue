@@ -3,7 +3,7 @@
     <section class="w-1/2 my-20 mx-auto">
       <user-board></user-board>
     </section>
-    <section class="w-2/3 mx-auto mt-10">
+    <section class="w-4/5 mx-auto mt-10">
       <other-posts></other-posts>
     </section>
   </div>

@@ -121,13 +121,14 @@
           <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
             >금주의 랭킹</span
           >
+          <div class="flex flex-col justify-items-start mt-2 mb-auto">
           <section
-            class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg"
-            v-for="(ranking, index) in filteredRanking"
+            class="transition duration-200 ease-in-out transform hover:scale-105 hover:shadow-lg py-3 my-1"
+            v-for="(ranking, index) in filteredRanking.slice(0, 5)"
             :key="ranking.user_name"
             @click="saveUser(ranking.pk_user, ranking.user_name)"
           >
-            <div class="flex items-center mt-4">
+            <article class="flex items-center">
               <span class="text-2xl font-extrabold mx-4">{{ index + 1 }}</span>
               <img
                 :src="
@@ -140,8 +141,9 @@
               />
               <span class="text-base font-medium ml-2">{{ ranking.user_name }}</span>
               <!-- <span class="text-base font-medium ml-2">{{ ranking.like_weekly }}</span> -->
-            </div>
+            </article>
           </section>
+          </div>
         </base-card>
       </article>
       <article>
