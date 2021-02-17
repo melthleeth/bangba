@@ -148,6 +148,7 @@
             id="unit"
             placeholder="ml"
             v-model.trim="unit"
+            @keyup.enter="addIngredient"
           />
           <base-button class="px-4 py-1.5 text-base ml-4" @click="addIngredient"
             >추가하기</base-button
@@ -190,6 +191,7 @@
             placeholder="레시피를 입력하세요"
             v-model.trim="recipe"
             @blur="clearValidity('recipes')"
+            @keyup.enter="addRecipe"
           />
           <base-button class="px-4 py-1.5 text-base ml-4" @click="addRecipe"
             >추가하기</base-button
@@ -216,6 +218,7 @@
             id="tag"
             v-model.trim="tag"
             @blur="clearValidity('tags')"
+            @keyup.enter="addTag"
           />
           <base-button class="px-4 py-1.5 text-base ml-4" @click="addTag"
             >추가하기</base-button
