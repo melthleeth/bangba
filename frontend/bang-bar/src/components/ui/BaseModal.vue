@@ -1,7 +1,7 @@
 <template>
   <div v-if="open" class="backdrop" @click="$emit('close')"></div>
   <transition name="modal">
-    <dialog open v-if="open">
+    <dialog open v-if="open" :class="custom">
       <slot></slot>
     </dialog>
   </transition>
@@ -9,7 +9,18 @@
 
 <script>
 export default {
-  props: ["open"],
+  props: {
+    open: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    custom: {
+      type: String,
+      required: false,
+      default: null,
+    },
+  },
   emits: ["close"],
 };
 </script>
@@ -41,7 +52,7 @@ dialog {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;;
+  align-items: center;
 }
 
 .modal-enter-active {
@@ -61,5 +72,11 @@ dialog {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+}
+
+.width-wide {
+  width: 26rem;
+  top: 20vh;
+  left: calc(50% - 13rem);
 }
 </style>
