@@ -225,7 +225,7 @@ public class ArticleServiceImpl implements ArticleService {
 			aadto.setUnit(sss[2]);
 			dao.addArticleAlcohol(aadto);
 		}
-
+		
 		s = map.get("ingredient");
 		ss = s.split("<br>");
 		for (String a : ss) {
@@ -242,7 +242,7 @@ public class ArticleServiceImpl implements ArticleService {
 			aidto.setUnit(sss[3]);
 			dao.addArticleIngredient(aidto);
 		}
-
+		
 		s = map.get("tag");
 		ss = s.split("<br>");
 		for (String a : ss) {
