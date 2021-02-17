@@ -5,6 +5,7 @@ public class ForumDto {
 	private int pk_forum;
 	private int user_no;
 	private String user_name;
+	private String img_path;
 	
 	private String title;
 	private String category;
@@ -105,6 +106,13 @@ public class ForumDto {
 	public void setComment_cnt(int comment_cnt) {
 		this.comment_cnt = comment_cnt;
 	}
-	
-	
+
+	public String getImg_path() {
+		return img_path;
+	}
+
+	public void setImg_path(String img_path) {
+		this.img_path = img_path;
+	}
+		
 }
