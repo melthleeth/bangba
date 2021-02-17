@@ -9,9 +9,10 @@
       alt="Sunset in the mountains"
     />
 
-    <span class="font-S-CoreDream-medium font-semibold text-xl mt-4 mb-6 text-center">{{
-      cocktailname
-    }}</span>
+    <span
+      class="font-S-CoreDream-medium font-semibold text-xl mt-4 mb-6 text-center"
+      >{{ cocktailname }}</span
+    >
 
     <section class="">
       <span
@@ -23,8 +24,8 @@
     </section>
     <section class="flex items-center mt-4">
       <img
-        src="../../assets/img/mr.fox.jpg"
-        class="w-8 h-8 rounded-full ml-6 mr-2"
+        :src="userProfileImage"
+        class="w-8 h-8 rounded-full ml-6 mr-2 object-cover"
         alt="profile image"
       />
       <span class="ml-2 text-sm font-semibold">{{ user_name }}</span>
@@ -61,6 +62,7 @@ export default {
     "img_path",
     "cocktailname",
     "user_name",
+    "user_profileImage",
     "tag",
     "like_cnt",
     "bookmark_cnt",
@@ -73,6 +75,13 @@ export default {
   },
   created() {
     this.tags = this.tag.split("<br>");
+  },
+  computed: {
+    userProfileImage() {
+      if (this.user_profileImage) return this.user_profileImage;
+      else
+        return "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaaNaTC8W_ygKLZxLFWpHOerfIYQiVlsuyrw&usqp=CAU";
+    },
   },
   methods: {
     viewRecipeDetail() {

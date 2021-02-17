@@ -7,7 +7,9 @@
       <router-link to="/">
         <section class="logo">
           <img class="mr-2" src="../../assets/img/logo.png" alt="logo-image" />
-          <span class="text-lg text-center font-color-black-400 font-Mapo-DPPA">방구석 바텐더</span>
+          <span class="text-lg text-center font-color-black-400 font-Mapo-DPPA"
+            >방구석 바텐더</span
+          >
         </section>
       </router-link>
       <ul class="ul-menu tracking-wider">
@@ -18,7 +20,14 @@
         <li><router-link to="/board/list">게시판</router-link></li>
       </ul>
       <section v-if="username == null">
-        <base-button id="button-signup" class="px-4 py-2" link mode="outline" to="/signup">회원가입</base-button>
+        <base-button
+          id="button-signup"
+          class="px-4 py-2"
+          link
+          mode="outline"
+          to="/signup"
+          >회원가입</base-button
+        >
 
         <base-modal
           @close="hideDialog"
@@ -51,7 +60,9 @@
             </span>
             <section class="button-modal flex justify-center">
               <base-button class="w-24 py-2">로그인</base-button>
-              <base-button class="w-24 py-2" @click="hideDialog" mode="outline">취소</base-button>
+              <base-button class="w-24 py-2" @click="hideDialog" mode="outline"
+                >취소</base-button
+              >
             </section>
           </form>
           <section class="sub-menu flex justify-center">
@@ -63,7 +74,9 @@
             >
           </section>
         </base-modal>
-        <base-button class="ml-4 px-4 py-2.5" @click="showDialog">로그인</base-button>
+        <base-button class="ml-4 px-4 py-2.5" @click="showDialog"
+          >로그인</base-button
+        >
       </section>
       <section v-else>
         <base-dropdown class="z-40">
@@ -71,7 +84,7 @@
             <img
               @click="context.toggleOpen"
               class="h-12 w-12 cursor-pointer rounded-full object-cover"
-              :src=imgsrc
+              :src="imgsrc"
               alt="profile image"
             />
             <transition
@@ -161,24 +174,33 @@ export default {
       formIsValid: true,
       isLoading: false,
       error: null,
-      imgsrc: "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif"
+      // imgsrc: this.$store.getters.profileImage,
     };
   },
   created() {
-    this.test()
+    this.test();
   },
   computed: {
-    setUsername() { return this.$store.getters.userName },
-    setUserEmail() { return this.$store.getters.email},
-
+    setUsername() {
+      return this.$store.getters.userName;
+    },
+    setUserEmail() {
+      return this.$store.getters.email;
+    },
+    imgsrc() {
+      return this.$store.getters.profileImage;
+    },
   },
   watch: {
+    // imgsrc: function(newVal) {
+    //   this.imgsrc = newVal;
+    // },
     setUsername: function(newVal) {
       this.username = newVal;
     },
     setUserEmail: function(newVal) {
       this.username = newVal;
-    }
+    },
   },
   methods: {
     test() {
@@ -188,8 +210,8 @@ export default {
       // console.log(this.email);
     },
     showDialog() {
-      this.email='';
-      this.password='';
+      this.email = "";
+      this.password = "";
       this.dialogIsVisible = true;
       this.formIsValid = true;
     },
@@ -201,13 +223,10 @@ export default {
       // location.reload();
     },
     logout() {
-      localStorage.removeItem("user_name");
-      localStorage.removeItem("pk_user");
-      localStorage.removeItem("email");
-
+      this.$store.dispatch("logout");
       this.username = null;
-      this.password='';
-      this.email = '';
+      this.password = "";
+      this.email = "";
       this.dialogIsVisible = false;
       this.$router.replace("/");
     },
@@ -231,13 +250,13 @@ export default {
       try {
         if (this.username === null) {
           await this.$store.dispatch("login", actionPayload);
-        } 
+        }
       } catch (error) {
         this.error =
           error.message || "로그인에 실패하였습니다. 다시 시도바랍니다.";
       }
       this.username = localStorage.getItem("user_name");
-      if(this.username === null) {
+      if (this.username === null) {
         this.formIsValid = false;
         return;
       }
@@ -250,9 +269,10 @@ export default {
 </script>
 
 <style scoped>
-section, li {
+section,
+li {
   /* font-family: 'NIXGONM-Vb'; */
-  font-family: 'S-CoreDream-3Light';
+  font-family: "S-CoreDream-3Light";
 }
 .img-profile {
   width: 50px;
@@ -408,5 +428,4 @@ u:active {
 #button-signup {
   padding: 0.5rem 1rem;
 }
-
 </style>
