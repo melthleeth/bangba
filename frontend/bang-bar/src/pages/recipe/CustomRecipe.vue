@@ -41,6 +41,7 @@
             <recipe-card
               v-for="articleranking in filteredArticleRanking"
               :key="articleranking.pk_article"
+              :pk_article="articleranking.pk_article"
               :img_path="articleranking.img_path"
               :user_name="articleranking.user_name"
               :cocktailname="articleranking.title_kor"

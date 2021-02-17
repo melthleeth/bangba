@@ -12,12 +12,14 @@
       <article class="flex flex-row items-end">
         <span class="text-2xl font-bold">{{ userInfo[0].user_name }}</span>
         <span>님의 프로필</span>
-        <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
-          >팔로잉</base-button
-        >
-        <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
-          >팔로우</base-button
-        >
+        <div v-if="userInfo[0].user_name !== owner_check">
+          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
+            >팔로잉</base-button
+          >
+          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
+            >팔로우</base-button
+          >
+        </div>
       </article>
       <article class="flex flex-row">
         <p>작성글 {{ recipeCnt + postCnt }}</p>
@@ -66,6 +68,7 @@
 export default {
   data() {
     return {
+      owner_check: localStorage.getItem('user_name'),
       isFollow: false,
       dialogIsVisible: false,
       isFollower: false,

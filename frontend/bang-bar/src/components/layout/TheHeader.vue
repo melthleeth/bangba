@@ -88,13 +88,13 @@
               >
                 <ul>
                   <li>
-                    <router-link
-                      to="/"
-                      class="rounded-t-lg block px-4 py-3 hover:bg-gray-100"
+                    <div
+                      class="rounded-t-lg block px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                      @click="goHome"
                     >
                       <div class="font-semibold">{{ username }}</div>
                       <div class="text-gray-700">{{ email }}</div>
-                    </router-link>
+                    </div>
                   </li>
                   <li class="hover:bg-gray-100">
                     <router-link
@@ -244,6 +244,9 @@ export default {
     handleError() {
       this.error = null;
     },
+    goHome() {
+      return this.$router.push("/mypageother/" + this.username);
+    }
   },
 };
 </script>
