@@ -165,7 +165,7 @@
                       ? 'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif'
                       : newforum.img_path
                   "
-                  class="w-10 h-10 object-cover rounded-full ml-4 mr-2"
+                  class="w-8 h-8 object-cover rounded-full ml-4 mr-2"
                   alt="profile image"
                 />
                 <span class="text-sm font-semibold mr-2">{{ newforum.user_name }}</span>

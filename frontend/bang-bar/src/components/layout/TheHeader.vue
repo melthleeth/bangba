@@ -4,7 +4,7 @@
       <base-spinner></base-spinner>
     </div>
     <nav>
-      <router-link to="/">
+      <router-link to="/home">
         <section class="logo">
           <img class="mr-2" src="../../assets/img/logo.png" alt="logo-image" />
           <span class="text-lg text-center font-color-black-400 font-Mapo-DPPA"

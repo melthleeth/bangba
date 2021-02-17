@@ -1,5 +1,5 @@
 <template>
-  <div class="py-12">
+  <div class="font-S-CoreDream-light font-color-black-400 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:text-center">
         <h2 class="text-base tracking-wide uppercase font-extrabold">

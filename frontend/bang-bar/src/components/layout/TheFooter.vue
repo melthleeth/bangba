@@ -2,7 +2,7 @@
   <footer class="mt-12 mb-10">
     <div class="flex flex-col justify-items-center">
       <section>
-      <router-link to="/">
+      <router-link to="/home">
         <article class="logo flex flex-col justify-items-center w-max">
           <img src="../../assets/img/logo.png" alt="logo-image" />
           <span

@@ -202,6 +202,7 @@ export default {
       }
       await this.$store.dispatch("users/changeNameImg", userInfo);
       this.$store.dispatch("changeProfileImage", this.imgsrc);
+      this.$router.replace("/header/editprofile");
     },
     async checkPW() {
       const result = await this.$store.dispatch("users/confirmPW", this.currentPassword);
