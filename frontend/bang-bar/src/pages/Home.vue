@@ -139,7 +139,7 @@
                 alt="profile image"
               />
               <span class="text-base font-medium ml-2">{{ ranking.user_name }}</span>
-              <span class="text-base font-medium ml-2">{{ ranking.like_weekly }}</span>
+              <!-- <span class="text-base font-medium ml-2">{{ ranking.like_weekly }}</span> -->
             </div>
           </section>
         </base-card>

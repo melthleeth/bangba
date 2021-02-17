@@ -51,7 +51,13 @@ export default {
     // 닉네임 중복확인 
     async checkName(_, payload) {
         console.log(payload);
-        const response = await fetch(`${SERVER_URL}/user/join/${payload}`, {
+
+        if (payload.newValue === payload.oldValue) {
+            alert("사용가능한 닉네임입니다.");
+            return "SUCCESS";
+        }
+
+        const response = await fetch(`${SERVER_URL}/user/join/${payload.newValue}`, {
             headers: {
                 "Content-Type": "application/json; charset=utf-8",
                 'Accept': '*/*',
