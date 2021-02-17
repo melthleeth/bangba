@@ -5,23 +5,34 @@
         class="card-flat flex flex-col flex-initial h-full w-full"
         v-if="item.pk_fcomment !== this.return_num || modify_flag"
       >
-        <span class="font-S-CoreDream-medium mt-2">{{ item.user_name }} </span>
+        <article class="flex items-center mb-1">
+          <img
+            :src="item.img_path"
+            class="w-8 h-8 rounded-full mr-2 object-cover"
+            alt="profile image"
+          />
+          <span class="font-S-CoreDream-medium">{{ item.user_name }} </span>
+        </article>
         <span class="flex items-center font-color-black-200 text-xs mb-2">{{
           convert_time(item.created_at)
         }}</span>
         <section class="">
-          <div class="tracking-wide whitespace-pre-line mb-2">{{ item.content }}</div>
+          <div class="tracking-wide whitespace-pre-line mb-2">
+            {{ item.content }}
+          </div>
           <div
             class="w-max px-3 py-1 text-sm justify-self-end ml-auto"
             v-if="item.user_name === this.loginName"
           >
             <base-button
+              class="px-2.5 py-1 text-xs"
               mode="nude"
               variant="info"
               @click="check_modifyComment(item.pk_fcomment, item.content)"
               >수정</base-button
             >
             <base-button
+              class="px-2.5 py-1 text-xs"
               mode="nude"
               variant="info"
               @click="deleteComment(item.pk_fcomment)"
@@ -71,6 +82,9 @@ const SERVER_URL = process.env.VUE_APP_SERVER_URL;
 
 export default {
   name: "CommentList",
+  components: {
+    CommentCreate,
+  },
   props: ["pk_forum"],
   data() {
     return {
@@ -82,11 +96,8 @@ export default {
       return_num: "",
       content: "",
       forum_id: "",
+      img_path: "",
     };
-  },
-
-  components: {
-    CommentCreate,
   },
   methods: {
     getList_Comment() {
@@ -104,6 +115,7 @@ export default {
         })
         .then((result) => {
           this.comments = result.data;
+          console.log(this.comments);
           //시간순 정렬
           this.comments.sort(function(a, b) {
             return a.created_at - b.created_at;
