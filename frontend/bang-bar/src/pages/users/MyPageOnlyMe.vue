@@ -6,7 +6,11 @@
       </section>
 
       <section class="mt-10 mb-24 mx-auto col-span-3 w-full">
-        <router-view></router-view>
+        <router-view v-slot="slotProps">
+          <transition name="route" mode="out-in">
+      <component :is="slotProps.Component"></component>
+    </transition>
+        </router-view>
       </section>
     </div>
   </div>
@@ -22,4 +26,5 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
