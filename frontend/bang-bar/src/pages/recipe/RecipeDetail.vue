@@ -68,12 +68,7 @@
             >
           </article>
           <article class="flex items-center font-color-black-200 text-xs">
-<<<<<<< HEAD
             <span class="mr-2">{{ convert_time(created_at) }}</span>
-            <span class="mr-2">조회 {{ hits }}</span>
-=======
-            <span class="mr-2">{{ created_at }}</span>
->>>>>>> backend
             <section class="">
               <span v-if="selectedRecipe.user_name === owner_check">
                 <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateData"
@@ -279,7 +274,7 @@ export default {
       }
       var answer = '';
       answer = Y + '.' + M + '.' + D + '  ' + H + ':' + Min + ':' + S;
-      
+
       return answer;
     },
     async isLike() {

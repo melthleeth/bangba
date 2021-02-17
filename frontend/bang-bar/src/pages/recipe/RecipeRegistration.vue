@@ -1,13 +1,9 @@
 <template>
   <div class="font-S-CoreDream-light flex flex-col justify-items-center mx-16">
-    <span 
-    v-if="!updateMode"
-    class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
+    <span v-if="!updateMode" class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
       >{{ category }} 레시피 등록</span
     >
-    <span 
-    v-else
-    class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
+    <span v-else class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold"
       >{{ category }} 레시피 수정</span
     >
     <base-card class="w-2/3" id="card-margin">
@@ -32,9 +28,7 @@
             placeholder="이미지 주소 입력"
             v-model.trim="imgsrc"
           />
-          <base-button
-            class="mt-4 px-4 py-2 text-base"
-            @click="showImgRegDialog"
+          <base-button class="mt-4 px-4 py-2 text-base" @click="showImgRegDialog"
             >사진 등록</base-button
           >
           <p v-if="!img_path.isValid">등록된 사진이 없습니다.</p>
@@ -75,10 +69,7 @@
           />
           <p v-if="!abv.isValid">칵테일 도수를 적어주세요.</p>
         </div>
-        <div
-          class="form-control flex flex-row items-center"
-          :class="{ invalid: !content.isValid }"
-        >
+        <div class="form-control flex flex-row items-center" :class="{ invalid: !content.isValid }">
           <label for="content">칵테일 소개</label>
           <textarea
             class="w-2/3"
@@ -99,9 +90,7 @@
             v-model="cupinfo.val"
             @blur="clearValidity('cupinfo')"
           >
-            <option v-for="cup in cups" :key="cup.index" :value="cup.index">{{
-              cup.val
-            }}</option>
+            <option v-for="cup in cups" :key="cup.index" :value="cup.index">{{ cup.val }}</option>
           </select>
           <p v-if="!cupinfo.isValid">컵을 선택해주세요.</p>
         </div>
@@ -114,7 +103,7 @@
             v-model.trim="tag"
             @blur="clearValidity('tags')"
           />
-          <base-button class="px-4 py-2" @click="addTag" >추가하기</base-button>
+          <base-button class="px-4 py-2" @click="addTag">추가하기</base-button>
           <section class="mt-2">
             <span class="mr-4" v-for="(tag, index) in tags.val" :key="tag">
               {{ tag }}
@@ -149,16 +138,8 @@
             placeholder="30"
             v-model.number="quantity"
           />
-          <input
-            class="w-28"
-            type="text"
-            id="unit"
-            placeholder="ml"
-            v-model.trim="unit"
-          />
-          <base-button class="px-4 py-2" @click="addIngredient"
-            >추가하기</base-button
-          >
+          <input class="w-28" type="text" id="unit" placeholder="ml" v-model.trim="unit" />
+          <base-button class="px-4 py-2" @click="addIngredient">추가하기</base-button>
           <ul>
             <li v-for="(alcoholItem, index) in alcoholTemp" :key="alcoholItem">
               <span class="ml-2">🍸 {{ alcoholItem }}</span>
@@ -170,10 +151,7 @@
             </li>
           </ul>
           <ul>
-            <li
-              v-for="(ingredientItem, index) in ingredientTemp"
-              :key="ingredientItem"
-            >
+            <li v-for="(ingredientItem, index) in ingredientTemp" :key="ingredientItem">
               <span class="ml-2">🥄 {{ ingredientItem }}</span>
               <span
                 class="ml-2 text-grey-400 cursor-pointer hover:text-red-400"
@@ -196,9 +174,7 @@
             v-model.trim="recipe"
             @blur="clearValidity('recipes')"
           />
-          <base-button class="px-4 py-2" @click="addRecipe"
-            >추가하기</base-button
-          >
+          <base-button class="px-4 py-2" @click="addRecipe">추가하기</base-button>
           <ul>
             <li v-for="(recipeItem, index) in recipes.val" :key="recipeItem">
               <span>{{ index + 1 }}. {{ recipeItem }}</span>
@@ -211,9 +187,7 @@
           </ul>
           <p v-if="!recipes.isValid">최소 한 가지 순서를 추가해주세요.</p>
         </div>
-        <section
-          class="flex flex-col text-center justify-items-center items-center"
-        >
+        <section class="flex flex-col text-center justify-items-center items-center">
           <span class="font-red" v-if="!formIsValid">
             비어있는 칸이 있습니다. 채운 후 다시 시도해주세요.
           </span>
@@ -235,7 +209,7 @@ export default {
     category: {
       type: String,
       required: true,
-      default: "official",
+      default: 'official',
     },
   },
   data() {
@@ -245,56 +219,56 @@ export default {
       isLoading: false,
       error: null,
       cups: [
-        { index: 0, name: "none", val: "없음" },
-        { index: 1, name: "highball", val: "하이볼 글라스" },
-        { index: 2, name: "sling", val: "슬링 글라스" },
-        { index: 3, name: "shot", val: "샷 글라스" },
-        { index: 4, name: "straight", val: "스트레이트 글라스" },
-        { index: 5, name: "pint", val: "파인트" },
-        { index: 6, name: "rock", val: "락 글라스" },
-        { index: 7, name: "collins", val: "콜린스 글라스" },
-        { index: 8, name: "oldfashioned", val: "올드패션드/락 글라스" },
-        { index: 9, name: "martini", val: "마티니 글라스" },
-        { index: 10, name: "pilsner", val: "필스너 글라스" },
+        { index: 0, name: 'none', val: '없음' },
+        { index: 1, name: 'highball', val: '하이볼 글라스' },
+        { index: 2, name: 'sling', val: '슬링 글라스' },
+        { index: 3, name: 'shot', val: '샷 글라스' },
+        { index: 4, name: 'straight', val: '스트레이트 글라스' },
+        { index: 5, name: 'pint', val: '파인트' },
+        { index: 6, name: 'rock', val: '락 글라스' },
+        { index: 7, name: 'collins', val: '콜린스 글라스' },
+        { index: 8, name: 'oldfashioned', val: '올드패션드/락 글라스' },
+        { index: 9, name: 'martini', val: '마티니 글라스' },
+        { index: 10, name: 'pilsner', val: '필스너 글라스' },
         {
           index: 11,
-          name: "irish-coffee-fizz",
-          val: "아이리쉬 커피/피즈 글라스",
+          name: 'irish-coffee-fizz',
+          val: '아이리쉬 커피/피즈 글라스',
         },
-        { index: 12, name: "brandy-sniffer", val: "브랜디 스니퍼" },
-        { index: 13, name: "punch-cup", val: "펀치 컵" },
-        { index: 14, name: "cordial", val: "코디얼 글라스" },
-        { index: 15, name: "sour", val: "소어 글라스" },
-        { index: 16, name: "parfait", val: "파르페 글라스" },
-        { index: 17, name: "sherry", val: "쉐리 글라스" },
-        { index: 18, name: "champagne-flute", val: "샴페인 플룻" },
-        { index: 19, name: "champagne-saucer", val: "샴페인 소서 (쿱)" },
-        { index: 20, name: "red-wine", val: "레드 와인 글라스" },
-        { index: 21, name: "white-wine", val: "화이트 와인 글라스" },
-        { index: 22, name: "margarita", val: "마가리타 글라스" },
-        { index: 23, name: "cocktail", val: "칵테일 글라스" },
+        { index: 12, name: 'brandy-sniffer', val: '브랜디 스니퍼' },
+        { index: 13, name: 'punch-cup', val: '펀치 컵' },
+        { index: 14, name: 'cordial', val: '코디얼 글라스' },
+        { index: 15, name: 'sour', val: '소어 글라스' },
+        { index: 16, name: 'parfait', val: '파르페 글라스' },
+        { index: 17, name: 'sherry', val: '쉐리 글라스' },
+        { index: 18, name: 'champagne-flute', val: '샴페인 플룻' },
+        { index: 19, name: 'champagne-saucer', val: '샴페인 소서 (쿱)' },
+        { index: 20, name: 'red-wine', val: '레드 와인 글라스' },
+        { index: 21, name: 'white-wine', val: '화이트 와인 글라스' },
+        { index: 22, name: 'margarita', val: '마가리타 글라스' },
+        { index: 23, name: 'cocktail', val: '칵테일 글라스' },
       ],
       units: [{}],
-      tag: "",
-      type: "",
-      ingredient: "",
+      tag: '',
+      type: '',
+      ingredient: '',
       quantity: null,
-      unit: "",
-      recipe: "",
+      unit: '',
+      recipe: '',
       alcoholTemp: [],
       ingredientTemp: [],
-      imgsrc: "",
+      imgsrc: '',
       img_path: {
-        val: require("../../assets/img/defaultCocktailImage.png"),
-        src: "img/defaultCocktailImage.png",
+        val: require('../../assets/img/defaultCocktailImage.png'),
+        src: 'img/defaultCocktailImage.png',
         isValid: true,
       },
       title_kor: {
-        val: "",
+        val: '',
         isValid: true,
       },
       title_eng: {
-        val: "",
+        val: '',
         isValid: true,
       },
       abv: {
@@ -302,11 +276,11 @@ export default {
         isValid: true,
       },
       content: {
-        val: "",
+        val: '',
         isValid: true,
       },
       cupinfo: {
-        val: "",
+        val: '',
         isValid: true,
       },
       tags: {
@@ -328,7 +302,7 @@ export default {
     };
   },
   created() {
-    if(this.$route.params.pk_article > 0) {
+    if (this.$route.params.pk_article > 0) {
       const selectedRecipe = this.$store.getters['recipes/recipes'].find(
         (recipe) => recipe.pk_article.toString() === this.$route.params.pk_article
       );
@@ -370,13 +344,12 @@ export default {
       // console.log("사진 등록 중");
       // console.log(this.img_path.val);
       this.img_path.val = this.imgsrc;
-      this.imgsrc = "";
+      this.imgsrc = '';
       // alert("사진 등록 기능 준비중");
     },
     async addTag() {
-      if (this.tag === "") alert("태그 내용을 입력해주세요.");
-      else if (this.tags.val.includes(this.tag))
-        alert("이미 등록된 태그입니다.");
+      if (this.tag === '') alert('태그 내용을 입력해주세요.');
+      else if (this.tags.val.includes(this.tag)) alert('이미 등록된 태그입니다.');
       else {
         this.tags.val.push(this.tag);
         //실제로 tag 테이블네 넣는 조건
@@ -387,36 +360,36 @@ export default {
         };
 
         //중복된 값이 있는지 체크 있으면 continue
-        const flag=await this.$store.dispatch("tags/checkTag", tagData);
-        console.log(flag)
+        const flag = await this.$store.dispatch('tags/checkTag', tagData);
+        console.log(flag);
         //없으면 태그 데이터에 넣어줌
-        if(!flag){
-          await this.$store.dispatch("tags/submitTag", tagData);  
+        if (!flag) {
+          await this.$store.dispatch('tags/submitTag', tagData);
         }
-        
-        this.tag = "";
+
+        this.tag = '';
       }
     },
     removeTag(index) {
-      var tagN=this.tags.val.splice(index, 1);
+      var tagN = this.tags.val.splice(index, 1);
       console.log(tagN);
       //실제로 삭제되는 로직 구현
     },
     async addIngredient() {
-      if (this.type === "") {
-        alert("분류를 선택해주세요.");
+      if (this.type === '') {
+        alert('분류를 선택해주세요.');
         return;
       }
-      if (this.ingredient === "") {
-        alert("재료명을 입력해주세요.");
+      if (this.ingredient === '') {
+        alert('재료명을 입력해주세요.');
         return;
       }
       if (!this.quantity || this.quantity <= 0) {
-        alert("용량을 입력해주세요. (용량은 0보다 커야 합니다.");
+        alert('용량을 입력해주세요. (용량은 0보다 커야 합니다.');
         return;
       }
-      if (this.unit === "") {
-        alert("단위를 입력해주세요.");
+      if (this.unit === '') {
+        alert('단위를 입력해주세요.');
         return;
       }
 
@@ -424,39 +397,35 @@ export default {
         if (alcohol.includes(this.ingredient)) return true;
         return false;
       });
-      const isIngredientDuplicated = this.ingredientTemp.filter(
-        (ingredient) => {
-          if (ingredient.includes(this.ingredient)) return true;
-          return false;
-        }
-      );
+      const isIngredientDuplicated = this.ingredientTemp.filter((ingredient) => {
+        if (ingredient.includes(this.ingredient)) return true;
+        return false;
+      });
 
       if (!isAlcoholDuplicated || !isIngredientDuplicated) {
-        alert("이미 등록된 재료입니다.");
+        alert('이미 등록된 재료입니다.');
         return;
       }
 
       const tempItem = `${this.ingredient} ${this.quantity}${this.unit}`;
 
-      if (this.type === "주류") {
+      if (this.type === '주류') {
         const alcoholItem = `${this.ingredient}/${this.quantity}/${this.unit}`;
         this.alcoholTemp.push(tempItem);
         this.alcohols.val.push(alcoholItem);
         this.alcohols.isValid = true;
-
 
         //태그 로직 아래 추가
         const tagData = {
           content_kor: this.ingredient,
         };
         //중복된 값이 있는지 체크 있으면 continue
-        const flag=await this.$store.dispatch("tags/checkTag", tagData);
+        const flag = await this.$store.dispatch('tags/checkTag', tagData);
         // console.log(flag)
         //없으면 태그 데이터에 넣어줌
-        if(!flag){
-          await this.$store.dispatch("tags/submitTag", tagData);  
+        if (!flag) {
+          await this.$store.dispatch('tags/submitTag', tagData);
         }
-        
       } else {
         const ingredientItem = `${this.type}/${this.ingredient}/${this.quantity}/${this.unit}`;
         this.ingredientTemp.push(tempItem);
@@ -469,27 +438,26 @@ export default {
           content_kor: this.ingredient,
         };
         // 중복된 값이 있는지 체크 있으면 continue
-        const flag=await this.$store.dispatch("tags/checkTag", tagData);
+        const flag = await this.$store.dispatch('tags/checkTag', tagData);
         // console.log(flag)
         //없으면 태그 데이터에 넣어줌
-        if(!flag){
-          await this.$store.dispatch("tags/checkTag", tagData);  
+        if (!flag) {
+          await this.$store.dispatch('tags/checkTag', tagData);
         }
-        
+
         //재료 로직
-        const iflag=await this.$store.dispatch("tags/checkIngredient", tagData);
+        const iflag = await this.$store.dispatch('tags/checkIngredient', tagData);
         // console.log(iflag);
-        if(!iflag){
-          await this.$store.dispatch("tags/submitIngredient", tagData);  
+        if (!iflag) {
+          await this.$store.dispatch('tags/submitIngredient', tagData);
         }
-
       }
-      alert(this.type + " (" + this.ingredient + ")가 추가되었습니다.");
+      alert(this.type + ' (' + this.ingredient + ')가 추가되었습니다.');
 
-      this.type = "";
-      this.ingredient = "";
+      this.type = '';
+      this.ingredient = '';
       this.quantity = null;
-      this.unit = "";
+      this.unit = '';
     },
     removeAlcohol(index) {
       this.alcoholTemp.splice(index, 1);
@@ -500,10 +468,10 @@ export default {
       this.ingredients.val.splice(index, 1);
     },
     addRecipe() {
-      if (this.recipe !== "") {
+      if (this.recipe !== '') {
         this.recipes.val.push(this.recipe);
-        this.recipe = "";
-      } else alert("레시피 내용을 입력해주세요.");
+        this.recipe = '';
+      } else alert('레시피 내용을 입력해주세요.');
     },
     removeRecipe(index) {
       this.recipes.val.splice(index, 1);
@@ -514,50 +482,46 @@ export default {
     validateForm() {
       this.formIsValid = true;
 
-      if (this.title_kor.val === "") {
+      if (this.title_kor.val === '') {
         this.title_kor.isValid = false;
         this.formIsValid = false;
-        console.log("1");
+        console.log('1');
       }
       // if (this.title_eng.val === "") {
       //   this.title_eng.isValid = false;
       //   this.formIsValid = false;
       // }
-      else if (!this.abv.val || this.abv.val < 0) {
+      if (!this.abv.val || this.abv.val < 0) {
         this.abv.isValid = false;
         this.formIsValid = false;
-        console.log("2");
-      } else if (this.content.val === "") {
+      }
+      if (this.content.val === '') {
         this.content.isValid = false;
         this.formIsValid = false;
-        console.log("3");
-      } else if (this.cupinfo.val === "") {
+      }
+      if (this.cupinfo.val === '') {
         this.cupinfo.isValid = false;
         this.formIsValid = false;
-        console.log("4");
-      } else if (this.tags.val.length === 0) {
+      }
+      if (this.tags.val.length === 0) {
         this.tags.isValid = false;
         this.formIsValid = false;
-        console.log("5");
-      } else if (this.alcohols.val.length === 0) {
-        this.alcohols.isValid = false;
-        this.formIsValid = false;
-        console.log("6");
-      } else if (this.ingredients.val.length === 0) {
-        this.ingredients.isValid = false;
-        this.formIsValid = false;
-        console.log("7");
-      } else if (this.recipes.val.length === 0) {
+      }
+      // if (this.alcohols.val.length === 0) {
+      //   this.alcohols.isValid = false;
+      //   this.formIsValid = false;
+      // }
+      // if (this.ingredients.val.length === 0) {
+      //   this.ingredients.isValid = false;
+      //   this.formIsValid = false;
+      // }
+      if (this.recipes.val.length === 0) {
         this.recipes.isValid = false;
         this.formIsValid = false;
-        console.log("8");
-      } else {
-        this.formIsValid = true;
       }
     },
 
     time_cal() {
-
       let today = new Date();
 
       let year = today.getFullYear(); // 년도
@@ -568,27 +532,26 @@ export default {
       let min = today.getMinutes();
       let sec = today.getSeconds();
 
-      if (date < "10") {
-        date = "0" + date;
+      if (date < '10') {
+        date = '0' + date;
       }
 
-      if (month < "10") {
-        month = "0" + month;
+      if (month < '10') {
+        month = '0' + month;
       }
 
-      if (hour < "10") {
-        hour = "0" + hour;
+      if (hour < '10') {
+        hour = '0' + hour;
       }
 
-      if (min < "10") {
-        min = "0" + min;
+      if (min < '10') {
+        min = '0' + min;
       }
-      if (sec < "10") {
-        sec = "0" + sec;
+      if (sec < '10') {
+        sec = '0' + sec;
       }
 
-      var convertTime =
-        year + "" + month + "" + date + "" + hour + "" + min + "" + sec;
+      var convertTime = year + '' + month + '' + date + '' + hour + '' + min + '' + sec;
 
       return convertTime;
     },
@@ -606,18 +569,17 @@ export default {
         abv: this.abv.val,
         content: this.content.val,
         cupinfo: this.cupinfo.val,
-        tags: this.tags.val.join("<br>"), // default separator: ','
-        alcohols: this.alcohols.val.join("<br>"),
-        ingredients: this.ingredients.val.join("<br>"),
-        recipes: this.recipes.val.join("<br>"),
+        tags: this.tags.val.join('<br>'), // default separator: ','
+        alcohols: this.alcohols.val.join('<br>'),
+        ingredients: this.ingredients.val.join('<br>'),
+        recipes: this.recipes.val.join('<br>'),
         created_at: this.time_cal(),
       };
 
-
       console.log(formData);
 
-      await this.$store.dispatch("recipes/registerRecipe", formData);
-      this.$router.replace("/recipe/" + this.category);
+      await this.$store.dispatch('recipes/registerRecipe', formData);
+      this.$router.replace('/recipe/' + this.category);
     },
     async updateForm() {
       this.validateForm();
@@ -632,21 +594,20 @@ export default {
         abv: this.abv.val,
         content: this.content.val,
         cupinfo: this.cupinfo.val,
-        tags: this.tags.val.join("<br>"), // default separator: ','
-        alcohols: this.alcohols.val.join("<br>"),
-        ingredients: this.ingredients.val.join("<br>"),
-        recipes: this.recipes.val.join("<br>"),
+        tags: this.tags.val.join('<br>'), // default separator: ','
+        alcohols: this.alcohols.val.join('<br>'),
+        ingredients: this.ingredients.val.join('<br>'),
+        recipes: this.recipes.val.join('<br>'),
         created_at: this.time_cal(),
       };
 
-
       console.log(formData);
 
-      const result = await this.$store.dispatch("recipes/updateRecipe", formData);
-      if(result) {
-        alert("변경이 완료되었습니다.");
+      const result = await this.$store.dispatch('recipes/updateRecipe', formData);
+      if (result) {
+        alert('변경이 완료되었습니다.');
       }
-      this.$router.replace("/recipe/" + this.category);
+      this.$router.replace('/recipe/' + this.category);
     },
   },
 };
