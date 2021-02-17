@@ -17,10 +17,18 @@
             forum.user_name
           }}</span>
           <div v-if="isMe">
-            <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
+            <base-button
+              v-if="isFollow"
+              class="text-xs px-2 py-1 ml-2"
+              mode="colored"
+              @click="follow"
               >팔로잉</base-button
             >
-            <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
+            <base-button
+              v-else
+              class="text-xs px-2 py-1 ml-2"
+              mode="outline-colored"
+              @click="follow"
               >팔로우</base-button
             >
           </div>
@@ -95,7 +103,10 @@
       <span class="w-max font-S-CoreDream-medium font-color-black-300">{{ forum.like_cnt }}</span>
     </section>
     <section class="flex flex-col w-1/2 mx-auto mt-10">
-      <span class="text-center mb-4 font-S-CoreDream-medium font-semibold text-xl border-gray-800 border-b-4 tracking-wider w-max mx-auto">댓글</span>
+      <span
+        class="text-center mb-4 font-S-CoreDream-medium font-semibold text-xl border-gray-800 border-b-4 tracking-wider w-max mx-auto"
+        >댓글</span
+      >
       <comment-list :contentId="forumId.val"></comment-list>
       <section class="flex justify-self-end ml-auto">
         <base-button mode="outline" class="px-6 py-2 text-sm" @click="golist">목록</base-button>
@@ -344,7 +355,7 @@ export default {
     },
     isMe() {
       return localStorage.getItem('user_name') === this.forum.user_name ? false : true;
-    }
+    },
   },
 };
 </script>

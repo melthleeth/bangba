@@ -18,7 +18,9 @@
         <li><router-link to="/board/list">게시판</router-link></li>
       </ul>
       <section v-if="username == null">
-        <base-button id="button-signup" class="px-4 py-2" link mode="outline" to="/signup">회원가입</base-button>
+        <base-button id="button-signup" class="px-4 py-2" link mode="outline" to="/signup"
+          >회원가입</base-button
+        >
 
         <base-modal
           @close="hideDialog"
@@ -29,16 +31,8 @@
             <img src="../../assets/img/logo.png" alt="logo" />
             <span>로그인</span>
           </section>
-          <form
-            @submit.prevent="submitForm"
-            class="flex flex-col justify-items-center"
-          >
-            <input
-              class="input-modal"
-              type="text"
-              placeholder="이메일"
-              v-model.trim="email"
-            />
+          <form @submit.prevent="submitForm" class="flex flex-col justify-items-center">
+            <input class="input-modal" type="text" placeholder="이메일" v-model.trim="email" />
             <input
               class="input-modal"
               type="password"
@@ -46,8 +40,7 @@
               v-model.trim="password"
             />
             <span v-if="!formIsValid" class="font-sm text-red-500">
-              이메일과 비밀번호가 올바른지 확인해주세요. (비밀번호는 최소 8자
-              입니다.)
+              이메일과 비밀번호가 올바른지 확인해주세요. (비밀번호는 최소 8자 입니다.)
             </span>
             <section class="button-modal flex justify-center">
               <base-button class="w-24 py-2">로그인</base-button>
@@ -55,12 +48,8 @@
             </section>
           </form>
           <section class="sub-menu flex justify-center">
-            <router-link @click="hideDialog" to="/findpassword"
-              ><u>비밀번호 찾기</u></router-link
-            >
-            <router-link @click="hideDialog" to="/signup"
-              ><u>회원가입</u></router-link
-            >
+            <router-link @click="hideDialog" to="/findpassword"><u>비밀번호 찾기</u></router-link>
+            <router-link @click="hideDialog" to="/signup"><u>회원가입</u></router-link>
           </section>
         </base-modal>
         <base-button class="ml-4 px-4 py-2.5" @click="showDialog">로그인</base-button>
@@ -71,7 +60,7 @@
             <img
               @click="context.toggleOpen"
               class="h-12 w-12 cursor-pointer rounded-full object-cover"
-              :src=imgsrc
+              :src="imgsrc"
               alt="profile image"
             />
             <transition
@@ -90,30 +79,24 @@
                   <li>
                     <div
                       class="rounded-t-lg block px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                      @click="goHome"
+                      @click="goHome(setUserPk)"
                     >
                       <div class="font-semibold">{{ username }}</div>
                       <div class="text-gray-700">{{ email }}</div>
                     </div>
                   </li>
                   <li class="hover:bg-gray-100">
-                    <router-link
-                      class="font-normal block px-4 py-3"
-                      to="/header/editprofile"
+                    <router-link class="font-normal block px-4 py-3" to="/header/editprofile"
                       >프로필 수정</router-link
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <router-link
-                      class="font-normal block px-4 py-3"
-                      to="/header/bookmarkedrecipe"
+                    <router-link class="font-normal block px-4 py-3" to="/header/bookmarkedrecipe"
                       >북마크한 레시피</router-link
                     >
                   </li>
                   <li class="hover:bg-gray-100">
-                    <router-link
-                      class="font-normal block px-4 py-3"
-                      to="/header/myposts"
+                    <router-link class="font-normal block px-4 py-3" to="/header/myposts"
                       >내가 쓴 글</router-link
                     >
                   </li>
@@ -125,19 +108,13 @@
                     >
                   </li> -->
                   <li class="hover:bg-gray-100">
-                    <router-link
-                      class="font-normal block px-4 py-3"
-                      to="/header/followingfollowers"
+                    <router-link class="font-normal block px-4 py-3" to="/header/followingfollowers"
                       >팔로잉/팔로워</router-link
                     >
                   </li>
                   <hr />
                   <li class="hover:bg-gray-100">
-                    <span
-                      class="font-font-normal block px-4 py-3"
-                      @click="logout"
-                      >로그아웃</span
-                    >
+                    <span class="font-font-normal block px-4 py-3" @click="logout">로그아웃</span>
                   </li>
                 </ul>
               </div>
@@ -154,23 +131,27 @@ export default {
   data() {
     return {
       username: null,
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       dialogIsVisible: false,
       isAuth: false,
       formIsValid: true,
       isLoading: false,
       error: null,
-      imgsrc: "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif"
+      imgsrc:
+        'https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif',
     };
   },
   created() {
-    this.test()
+    this.test();
   },
   computed: {
-    setUsername() { return this.$store.getters.userName },
-    setUserEmail() { return this.$store.getters.email},
-
+    setUsername() {
+      return this.$store.getters.userName;
+    },
+    setUserEmail() {
+      return this.$store.getters.email;
+    },
   },
   watch: {
     setUsername: function(newVal) {
@@ -178,18 +159,19 @@ export default {
     },
     setUserEmail: function(newVal) {
       this.username = newVal;
-    }
+    },
   },
   methods: {
     test() {
-      this.username = localStorage.getItem("user_name");
-      this.email = localStorage.getItem("email");
-      // console.log(this.username);
+      this.username = localStorage.getItem('user_name');
+      this.email = localStorage.getItem('email');
+      this.userpk = localStorage.getItem('pk_user');
+      console.log(this.userpk);
       // console.log(this.email);
     },
     showDialog() {
-      this.email='';
-      this.password='';
+      this.email = '';
+      this.password = '';
       this.dialogIsVisible = true;
       this.formIsValid = true;
     },
@@ -201,23 +183,19 @@ export default {
       // location.reload();
     },
     logout() {
-      localStorage.removeItem("user_name");
-      localStorage.removeItem("pk_user");
-      localStorage.removeItem("email");
+      localStorage.removeItem('user_name');
+      localStorage.removeItem('pk_user');
+      localStorage.removeItem('email');
 
       this.username = null;
-      this.password='';
+      this.password = '';
       this.email = '';
       this.dialogIsVisible = false;
-      this.$router.replace("/");
+      this.$router.replace('/');
     },
     async submitForm() {
       this.formIsValid = true;
-      if (
-        this.email === "" ||
-        !this.email.includes("@") ||
-        this.password.length < 8
-      ) {
+      if (this.email === '' || !this.email.includes('@') || this.password.length < 8) {
         this.formIsValid = false;
         return;
       }
@@ -229,14 +207,13 @@ export default {
 
       try {
         if (this.username === null) {
-          await this.$store.dispatch("login", actionPayload);
-        } 
+          await this.$store.dispatch('login', actionPayload);
+        }
       } catch (error) {
-        this.error =
-          error.message || "로그인에 실패하였습니다. 다시 시도바랍니다.";
+        this.error = error.message || '로그인에 실패하였습니다. 다시 시도바랍니다.';
       }
-      this.username = localStorage.getItem("user_name");
-      if(this.username === null) {
+      this.username = localStorage.getItem('user_name');
+      if (this.username === null) {
         this.formIsValid = false;
         return;
       }
@@ -245,14 +222,16 @@ export default {
       this.error = null;
     },
     goHome() {
-      return this.$router.push("/mypageother/" + this.username);
-    }
+      localStorage.setItem('pkOther', localStorage.getItem('pk_user'));
+      return this.$router.push('/mypageother/' + this.username);
+    },
   },
 };
 </script>
 
 <style scoped>
-section, li {
+section,
+li {
   /* font-family: 'NIXGONM-Vb'; */
   font-family: 'S-CoreDream-3Light';
 }
@@ -410,5 +389,4 @@ u:active {
 #button-signup {
   padding: 0.5rem 1rem;
 }
-
 </style>
