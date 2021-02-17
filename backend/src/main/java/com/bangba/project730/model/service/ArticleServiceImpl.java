@@ -96,23 +96,20 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 
 		s = map.get("ingredient");
-		System.out.println(s);
-		if(s != "") {
-			ss = s.split("<br>");
-			for (String a : ss) {
-				String[] sss = a.split("/");
-				int ipk = idao.searchIngredientPK(sss[1]);
-				Article_ingredientDto aidto = new Article_ingredientDto();
-				aidto.setArticle_no(pk);
-				aidto.setIngredient_no(ipk);
-				if (sss[0].equals("재료"))
-					aidto.setType(true);
-				else
-					aidto.setType(false);
-				aidto.setQuantity(sss[2]);
-				aidto.setUnit(sss[3]);
-				dao.addArticleIngredient(aidto);
-			}
+		ss = s.split("<br>");
+		for (String a : ss) {
+			String[] sss = a.split("/");
+			int ipk = idao.searchIngredientPK(sss[1]);
+			Article_ingredientDto aidto = new Article_ingredientDto();
+			aidto.setArticle_no(pk);
+			aidto.setIngredient_no(ipk);
+			if (sss[0].equals("재료"))
+				aidto.setType(true);
+			else
+				aidto.setType(false);
+			aidto.setQuantity(sss[2]);
+			aidto.setUnit(sss[3]);
+			dao.addArticleIngredient(aidto);
 		}
 
 		s = map.get("tag");
@@ -230,24 +227,22 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		
 		s = map.get("ingredient");
-		System.out.println(s);
-		if(s != "") {
-			ss = s.split("<br>");
-			for (String a : ss) {
-				String[] sss = a.split("/");
-				int ipk = idao.searchIngredientPK(sss[1]);
-				Article_ingredientDto aidto = new Article_ingredientDto();
-				aidto.setArticle_no(pk);
-				aidto.setIngredient_no(ipk);
-				if (sss[0].equals("재료"))
-					aidto.setType(true);
-				else
-					aidto.setType(false);
-				aidto.setQuantity(sss[2]);
-				aidto.setUnit(sss[3]);
-				dao.addArticleIngredient(aidto);
-			}
+		ss = s.split("<br>");
+		for (String a : ss) {
+			String[] sss = a.split("/");
+			int ipk = idao.searchIngredientPK(sss[1]);
+			Article_ingredientDto aidto = new Article_ingredientDto();
+			aidto.setArticle_no(pk);
+			aidto.setIngredient_no(ipk);
+			if (sss[0].equals("재료"))
+				aidto.setType(true);
+			else
+				aidto.setType(false);
+			aidto.setQuantity(sss[2]);
+			aidto.setUnit(sss[3]);
+			dao.addArticleIngredient(aidto);
 		}
+		
 		s = map.get("tag");
 		ss = s.split("<br>");
 		for (String a : ss) {
