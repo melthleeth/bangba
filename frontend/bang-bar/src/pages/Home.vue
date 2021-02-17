@@ -245,7 +245,7 @@ export default {
           date = '0' + date;
         }
         var answer = '';
-        if (month === M && D === date) {
+        if (String(month) === M && D === String(date)) {
           answer = H + ':' + Min + ':' + S;
         } else {
           answer = Y + '.' + M + '.' + D;

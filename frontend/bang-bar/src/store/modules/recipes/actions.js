@@ -165,7 +165,7 @@ export default {
   async updateRecipe(context, payload) {
     const recipeData = {
       pk_article : payload.pk_article,
-      updated_at: new Date().toLocaleTimeString(), // 변경 가능
+      updated_at: payload.created_at, // 변경 가능
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,

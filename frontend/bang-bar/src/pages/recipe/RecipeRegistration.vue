@@ -468,17 +468,17 @@ export default {
         const tagData = {
           content_kor: this.ingredient,
         };
-        //중복된 값이 있는지 체크 있으면 continue
-        // const flag=await this.$store.dispatch("tags/checkTag", tagData);
-        // // console.log(flag)
-        // //없으면 태그 데이터에 넣어줌
-        // if(!flag){
-        //   await this.$store.dispatch("tags/checkTag", tagData);  
-        // }
+        // 중복된 값이 있는지 체크 있으면 continue
+        const flag=await this.$store.dispatch("tags/checkTag", tagData);
+        // console.log(flag)
+        //없으면 태그 데이터에 넣어줌
+        if(!flag){
+          await this.$store.dispatch("tags/checkTag", tagData);  
+        }
         
         //재료 로직
         const iflag=await this.$store.dispatch("tags/checkIngredient", tagData);
-        console.log(iflag);
+        // console.log(iflag);
         if(!iflag){
           await this.$store.dispatch("tags/submitIngredient", tagData);  
         }
@@ -636,6 +636,7 @@ export default {
         alcohols: this.alcohols.val.join("<br>"),
         ingredients: this.ingredients.val.join("<br>"),
         recipes: this.recipes.val.join("<br>"),
+        created_at: this.time_cal(),
       };
 
 
