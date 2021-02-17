@@ -12,23 +12,43 @@
           id="profileImage"
           alt="profile image"
           :src="imgsrc"
-          class="h-24 w-24 mx-auto mb-3 cursor-pointer rounded-full object-cover text-center"
+          class="h-24 w-24 mx-auto mb-3 rounded-full object-cover text-center"
         />
         <!-- <base-button class="btn px-3 py-1 mr-0 text-sm"  @click="changeProfileImage"
           >이미지 변경</base-button
         > -->
 
-        <label class="btn px-3 py-1 text-sm"
+        <label class="btn px-3 py-1 text-sm" @click="showDialog"
           >이미지 변경
-          <input
+          <!-- <input
             type="file"
             class="hidden"
             id="image_uploads"
             name="image_uploads"
             accept=".jpg, .jpeg, .png .gif"
             @change="changeProfileImage"
-          />
+          /> -->
         </label>
+        <base-modal
+          @close="hideDialog"
+          :open="dialogIsVisible"
+          class="flex flex-col justify-items-center z-40"
+        >
+        <span class="tracking-wider font-semibold text-2xl font-S-CoreDream-medium w-max px-1 mt-6 mb-10">프로필 이미지 변경</span>
+        <input
+              class="text-sm text-left rounded-full w-full px-8 py-3 mb-4 border-3 border-transparent hover:bg-gray-100 focus:outline-none"
+              type="text"
+              placeholder="이미지 주소를 입력하세요"
+              v-model.trim="newImgsrc"
+            />
+            <span v-if="!formIsValid" class="text-xs text-red-500">
+              올바른 이미지 주소를 입력하세요.
+            </span>
+            <article class="flex mt-8">
+        <base-button class="w-24 py-2 text-sm" @click="changeProfileImageByURL">변경하기</base-button>
+        <base-button class="w-24 py-2 text-sm" @click="hideDialog" mode="outline">취소</base-button>
+        </article>
+        </base-modal>
       </article>
       <article class="my-auto flex flex-col">
         <div class="items-center">
@@ -117,8 +137,11 @@ export default {
       user_id: localStorage.getItem("email"),
       user_name: localStorage.getItem("user_name"),
       imgsrc: localStorage.getItem("profileImage") === null ? "https://www.lifewire.com/thmb/wTQhx22YA7ljA0-dTNKiHp2bReI=/1142x642/smart/filters:no_upscale()/iphonex_animoji_fox-59dd137c03f4020010a60b54.gif" : localStorage.getItem("profileImage"),
+      newImgsrc: "",
       passmessage:"",
       checkFlag : false,
+      dialogIsVisible: false,
+      formIsValid: true,
     };
   },
   watch: { 
@@ -134,8 +157,31 @@ export default {
       const objectURL = URL.createObjectURL(input.target.files[0]);
       this.imgsrc = objectURL;
     },
+    changeProfileImageByURL() {
+      this.formIsValid = true;
+
+      if (this.newImgsrc === "") {
+        this.formIsValid = false;
+        return;
+      }
+      
+      this.imgsrc = this.newImgsrc;
+      this.newImgsrc = "";
+      this.dialogIsVisible = false;
+    },
+    showDialog() {
+      this.dialogIsVisible = true;
+
+    },
+    hideDialog() {
+      this.dialogIsVisible = false;
+    },
     async checkDuplication() {
-      const result = await this.$store.dispatch("users/checkName", this.user_name);
+      const userinfo = {
+        newValue: this.user_name,
+        oldValue: this.$store.getters.userName
+      };
+      const result = await this.$store.dispatch("users/checkName", userinfo);
       if(result === "SUCCESS") {
         this.checkFlag = true;
       } 
@@ -155,6 +201,7 @@ export default {
         img_path : this.imgsrc
       }
       await this.$store.dispatch("users/changeNameImg", userInfo);
+      this.$store.dispatch("changeProfileImage", this.imgsrc);
     },
     async checkPW() {
       const result = await this.$store.dispatch("users/confirmPW", this.currentPassword);

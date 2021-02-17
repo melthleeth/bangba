@@ -80,6 +80,7 @@ export default {
         pk_article: responseData[key].pk_article,
         user_name: responseData[key].user_name,
         user_no: responseData[key].user_no,
+        user_profileImage: responseData[key].user_img_path,
         title_kor: responseData[key].title_kor,
         title_eng: responseData[key].title_eng,
         like_cnt: responseData[key].like_cnt,

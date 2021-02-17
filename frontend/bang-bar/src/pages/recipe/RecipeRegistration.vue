@@ -495,11 +495,11 @@ export default {
         this.abv.isValid = false;
         this.formIsValid = false;
       }
-      if (this.content.val === '') {
+      if (this.content.val === "") {
         this.content.isValid = false;
         this.formIsValid = false;
-      }
-      if (this.cupinfo.val === '') {
+      } 
+      if (this.cupinfo.val === "") {
         this.cupinfo.isValid = false;
         this.formIsValid = false;
       }
@@ -514,7 +514,7 @@ export default {
       // if (this.ingredients.val.length === 0) {
       //   this.ingredients.isValid = false;
       //   this.formIsValid = false;
-      // }
+      // } 
       if (this.recipes.val.length === 0) {
         this.recipes.isValid = false;
         this.formIsValid = false;
