@@ -16,12 +16,14 @@
           <span class="cursor-pointer" @click="saveUser(forum.user_no, forum.user_name)">{{
             forum.user_name
           }}</span>
-          <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
-            >팔로잉</base-button
-          >
-          <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
-            >팔로우</base-button
-          >
+          <div v-if="isMe">
+            <base-button v-if="isFollow" class="text-xs px-2 py-1 ml-2" mode="colored" @click="follow"
+              >팔로잉</base-button
+            >
+            <base-button v-else class="text-xs px-2 py-1 ml-2" mode="outline-colored" @click="follow"
+              >팔로우</base-button
+            >
+          </div>
         </article>
         <article class="flex items-center font-color-black-200 text-sm">
           <span class="mr-2">{{ forum.created_at }}</span>
@@ -340,6 +342,9 @@ export default {
     like_cnt() {
       return this.forum.like_cnt;
     },
+    isMe() {
+      return localStorage.getItem('user_name') === this.forum.user_name ? false : true;
+    }
   },
 };
 </script>

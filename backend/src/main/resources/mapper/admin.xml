@@ -39,7 +39,7 @@
 	
 	<select id="userRankWeekly" resultType="UserRankDto">
 		select * 
-		from user as u right join (select user_no, sum(like_weekly) as like_weekly from article where category = false group by user_no order by sum(like_weekly) desc limit 5) as a 
+		from user as u right join (select user_no, sum(like_cnt) as like_weekly from article where category = false group by user_no order by sum(like_cnt) desc limit 5) as a 
 		on u.pk_user = a.user_no;
 	</select>
 	

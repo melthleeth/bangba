@@ -95,7 +95,7 @@
     </section>
     <section class="flex-1">
       <article class="flex">
-        <base-card size="box-290" class="flex flex-col justify-items-center">
+        <base-card size="box-290" class="flex flex-col justify-items-center" @click="goRecipe">
           <span class="font-S-CoreDream-medium text-2xl font-bold text-center py-4"
             >오늘의 칵테일</span
           >
@@ -150,7 +150,7 @@
           class="transition duration-200 ease-in-out transform hover:scale-105"
           v-for="newforum in filteredNewForum"
           :key="newforum.pk_forum"
-        >
+        @click="rowClick(newforum)">
           <section class="flex flex-col px-4 py-2">
             <div class="flex items-center mb-2">
               <span class="text-base font-S-CoreDream-medium font-medium text-center"
@@ -294,6 +294,15 @@ export default {
       localStorage.setItem('pkOther', pkOther);
       this.$router.push({
         path: `/mypageother/${nickname}`,
+      });
+    },
+    goRecipe() {
+      this.$router.push("/recipe/detail/2");
+    },
+    rowClick(item) {
+      this.$router.push({
+        path: `/board/detail/${item.pk_forum}`,
+        params: { user_no: item.user_no },
       });
     },
   },

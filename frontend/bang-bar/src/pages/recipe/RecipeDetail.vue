@@ -70,16 +70,16 @@
           <article class="flex items-center font-color-black-200 text-xs">
             <span class="mr-2">{{ convert_time(created_at) }}</span>
             <section class="">
-              <span v-if="selectedRecipe.user_name === owner_check">
+              <span v-if="user_name === owner_check">
                 <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateData"
                   >수정</base-button
                 >
-                <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteData"
+                <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe"
                   >삭제</base-button
                 >
               </span>
             </section>
-            <div class="justify-self-end ml-auto">
+            <div class="justify-self-end ml-auto" v-if="user_name !== owner_check">
               <base-button
                 v-if="isFollow"
                 class="text-xs px-2 py-1 ml-2"
@@ -134,12 +134,12 @@
       </article>
     </section>
     <section class="">
-      <span v-if="selectedRecipe.user_name === owner_check">
+      <!-- <span v-if="selectedRecipe.user_name === owner_check">
         <base-button class="text-xs px-2 py-1 ml-2" mode="nude" @click="updateRecipe"
           >수정</base-button
         >
         <base-button class="text-xs px-2 py-1" mode="nude" @click="deleteRecipe">삭제</base-button>
-      </span>
+      </span> -->
     </section>
   </div>
 </template>
