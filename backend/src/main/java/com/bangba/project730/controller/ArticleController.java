@@ -283,6 +283,7 @@ public class ArticleController {
 				tdto.setPk_article(a.getPk_article());
 				tdto.setUser_no(a.getUser_no());
 				tdto.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
+				tdto.setUser_img(userService.getMyPage(a.getUser_no()).getImg_path());
 				tdto.setTitle_kor(a.getTitle_kor());
 				tdto.setTitle_eng(a.getTitle_eng());
 				tdto.setLike_cnt(a.getLike_cnt());

@@ -68,7 +68,8 @@ public class ArticleServiceImpl implements ArticleService {
 		dto.setLike_weekly(0);
 		dto.setContent(map.get("content"));
 		dto.setImg_path(map.get("img_path"));
-		if (map.get("category").equals("admin"))
+		System.out.println(map.get("true"));
+		if (map.get("category").equals("official"))
 			dto.setCategory(true);
 		else
 			dto.setCategory(false);

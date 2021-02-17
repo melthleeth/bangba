@@ -4,18 +4,16 @@ export default {
     console.log(context);
     console.log(payload);
 
-    let isOfficial = true;
-    if (payload.category === "custom") {
-      isOfficial = false;
-    }
-
-    
+    // let isOfficial = true;
+    // if (payload.category === "custom") {
+    //   isOfficial = false;
+    // }
 
     const recipeData = {
       user_no: context.rootGetters.pkUser,
       // created_at: new Date().toLocaleTimeString(), // 변경 가능
       created_at:payload.created_at,
-      category: isOfficial,
+      category: payload.category,
       img_path: payload.img_path,
       title_kor: payload.title_kor,
       title_eng: payload.title_eng,

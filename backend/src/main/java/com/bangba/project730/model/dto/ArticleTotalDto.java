@@ -4,6 +4,7 @@ public class ArticleTotalDto {
 	private int pk_article;
 	private String user_name;
 	private int user_no;
+	private String user_img;
 	
 	private String title_kor;
 	private String title_eng;
@@ -149,5 +150,11 @@ public class ArticleTotalDto {
 	}
 	public void setTag(String tag) {
 		this.tag = tag;
+	}
+	public String getUser_img() {
+		return user_img;
+	}
+	public void setUser_img(String user_img) {
+		this.user_img = user_img;
 	}
 }
