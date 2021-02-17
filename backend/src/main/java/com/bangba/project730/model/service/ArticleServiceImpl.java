@@ -68,7 +68,6 @@ public class ArticleServiceImpl implements ArticleService {
 		dto.setLike_weekly(0);
 		dto.setContent(map.get("content"));
 		dto.setImg_path(map.get("img_path"));
-		System.out.println(map.get("true"));
 		if (map.get("category").equals("official"))
 			dto.setCategory(true);
 		else
@@ -77,14 +76,16 @@ public class ArticleServiceImpl implements ArticleService {
 		dto.setCup_no(Integer.parseInt(map.get("cup_no")));
 
 		dao.createArticle(dto);
-
+		System.out.println("111111");
 		// 생성된 아티클의 pk를 유저번호, 제목, 시간으로 찾고 그중에 가장 나중에 만들어진 pk를 가져옴
 		int pk = dao.searchArticlePK(dto);
 
 		String s = map.get("alcohol");
-		String[] ss = s.split("<br>");
+		String[] ss = s.split("<br>");;
 		for (String a : ss) {
+			System.out.println(a);
 			String[] sss = a.split("/");
+			System.out.println(sss[0]);
 			int apk = adao.searchAlcoholPK(sss[0]);
 			Article_alcoholDto aadto = new Article_alcoholDto();
 			aadto.setArticle_no(pk);
