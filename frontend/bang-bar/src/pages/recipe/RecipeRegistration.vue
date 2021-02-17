@@ -523,36 +523,33 @@ export default {
       //   this.title_eng.isValid = false;
       //   this.formIsValid = false;
       // }
-      else if (!this.abv.val || this.abv.val < 0) {
+      if (!this.abv.val || this.abv.val < 0) {
         this.abv.isValid = false;
         this.formIsValid = false;
-        console.log("2");
-      } else if (this.content.val === "") {
+      }
+      if (this.content.val === "") {
         this.content.isValid = false;
         this.formIsValid = false;
-        console.log("3");
-      } else if (this.cupinfo.val === "") {
+      } 
+      if (this.cupinfo.val === "") {
         this.cupinfo.isValid = false;
         this.formIsValid = false;
-        console.log("4");
-      } else if (this.tags.val.length === 0) {
+      }
+      if (this.tags.val.length === 0) {
         this.tags.isValid = false;
         this.formIsValid = false;
-        console.log("5");
-      } else if (this.alcohols.val.length === 0) {
-        this.alcohols.isValid = false;
-        this.formIsValid = false;
-        console.log("6");
-      } else if (this.ingredients.val.length === 0) {
-        this.ingredients.isValid = false;
-        this.formIsValid = false;
-        console.log("7");
-      } else if (this.recipes.val.length === 0) {
+      }
+      // if (this.alcohols.val.length === 0) {
+      //   this.alcohols.isValid = false;
+      //   this.formIsValid = false;
+      // }
+      // if (this.ingredients.val.length === 0) {
+      //   this.ingredients.isValid = false;
+      //   this.formIsValid = false;
+      // } 
+      if (this.recipes.val.length === 0) {
         this.recipes.isValid = false;
         this.formIsValid = false;
-        console.log("8");
-      } else {
-        this.formIsValid = true;
       }
     },
 

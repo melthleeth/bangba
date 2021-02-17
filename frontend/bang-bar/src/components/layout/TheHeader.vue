@@ -219,6 +219,7 @@ export default {
         this.password.length < 8
       ) {
         this.formIsValid = false;
+        this.password = "";
         return;
       }
 
