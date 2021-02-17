@@ -244,8 +244,13 @@ export default {
     },
 
     // 타인의 정보 불러오기
-    async LoadOtherMyPage(context) {
-        const paramsPkUser = localStorage.getItem("pkOther")
+    async LoadOtherMyPage(context, payload) {
+        let paramsPkUser;
+        if (payload.mode === "recipe") {
+            paramsPkUser = payload.target_no
+        } else {
+            paramsPkUser = localStorage.getItem("pkOther")
+        }
         const url = `${SERVER_URL}/user/mypage/?pk_user=${paramsPkUser}`;
         const response = await fetch(url, {
             headers: {

@@ -111,7 +111,10 @@ export default {
   },
   methods: {
     async loadUserInfo() {
-      await this.$store.dispatch('users/LoadOtherMyPage');
+      const userInfo = {
+        mode: 'myPage',
+      };
+      await this.$store.dispatch('users/LoadOtherMyPage', userInfo);
     },
     async is_Follow() {
       const userInfo = {
