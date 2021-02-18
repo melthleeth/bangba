@@ -246,42 +246,85 @@ public class ArticleServiceImpl implements ArticleService {
 		dao.deleteArticleIngredient(pk);
 		dao.deleteArticleTag(pk);
 		dao.deleteRecipe(pk);
-		System.out.println(map.toString());
+
 		String s = map.get("alcohol");
 		String[] ss = s.split("<br>");
 		for (String a : ss) {
-			String[] sss = a.split("/");
-			int apk = adao.searchAlcoholPK(sss[0]);
-			Article_alcoholDto aadto = new Article_alcoholDto();
-			aadto.setArticle_no(pk);
-			aadto.setAlcohol_no(apk);
-			aadto.setQuantity(sss[1]);
-			aadto.setUnit(sss[2]);
-			dao.addArticleAlcohol(aadto);
+			if (!a.equals("")) {
+				String[] sss = a.split("/");
+				int apk = adao.searchAlcoholPK(sss[0]);
+				Article_alcoholDto aadto = new Article_alcoholDto();
+				aadto.setArticle_no(pk);
+				aadto.setAlcohol_no(apk);
+				aadto.setQuantity(sss[1]);
+				aadto.setUnit(sss[2]);
+				dao.addArticleAlcohol(aadto);
+				
+				int stpk = tdao.searchTagPKCount(sss[0]);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(sss[0]);
+					tdto.setType(1);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(sss[0]);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
 		s = map.get("ingredient");
 		ss = s.split("<br>");
 		for (String a : ss) {
-			String[] sss = a.split("/");
-			int ipk = idao.searchIngredientPK(sss[1]);
-			Article_ingredientDto aidto = new Article_ingredientDto();
-			aidto.setArticle_no(pk);
-			aidto.setIngredient_no(ipk);
-			if (sss[0].equals("재료"))
-				aidto.setType(true);
-			else
-				aidto.setType(false);
-			aidto.setQuantity(sss[2]);
-			aidto.setUnit(sss[3]);
-			dao.addArticleIngredient(aidto);
+			if (!a.equals("")) {
+				String[] sss = a.split("/");
+				int sipk = idao.searchIngredientPKCount(sss[1]);
+				if(sipk==0)
+				{
+					IngredientDto idto = new IngredientDto();
+					idto.setName_kor(sss[1]);
+					idao.addIngredient(idto);
+				}
+				int ipk = idao.searchIngredientPK(sss[1]);
+				Article_ingredientDto aidto = new Article_ingredientDto();
+				aidto.setArticle_no(pk);
+				aidto.setIngredient_no(ipk);
+				if (sss[0].equals("재료"))
+					aidto.setType(true);
+				else
+					aidto.setType(false);
+				aidto.setQuantity(sss[2]);
+				aidto.setUnit(sss[3]);
+				dao.addArticleIngredient(aidto);
+				
+				int stpk = tdao.searchTagPKCount(sss[1]);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(sss[1]);
+					tdto.setType(2);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(sss[1]);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
 		s = map.get("tag");
 		ss = s.split("<br>");
 		for (String a : ss) {
-			int tpk = tdao.searchTagPK(a);
-			dao.addArticleTag(pk, tpk);
+			if (!a.equals("")) {
+				int stpk = tdao.searchTagPKCount(a);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(a);
+					tdto.setType(3);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(a);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
 		s = map.get("recipe");
