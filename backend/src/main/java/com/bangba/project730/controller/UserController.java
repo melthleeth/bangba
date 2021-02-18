@@ -453,4 +453,9 @@ public class UserController {
 		return userService.getUserInfo(pk_user);
 	}
 	
+	@ApiOperation(value = "이름으로 pk찾기", response = String.class)
+	@PostMapping(value = "/find-name")
+	public int getUserPk(@RequestParam(required = true) String user_name) throws Exception {
+		return userService.getUserPk(user_name);
+	}
 }
