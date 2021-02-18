@@ -16,24 +16,33 @@
       </p>
     </div>
     <div class="mt-20 mx-16 flex grid grid-cols-3">
-      <section v-for="person in people" :key="person.name" class="flex flex-col justify-items-center mt-4 mb-10">
+      <section
+        v-for="person in people"
+        :key="person.name"
+        class="flex flex-col justify-items-center mt-4 mb-10"
+      >
         <img
           class="mx-auto rounded-full object-cover bg-white w-36 h-36 p-4"
-          :src=getImgsrc(person.profileImage)
+          :src="getImgsrc(person.profileImage)"
           alt="profile image"
         />
-        <span class="text-2xl leading-6 font-S-CoreDream-medium tracking-widest font-bold mx-auto mt-4">
+        <span
+          class="text-2xl leading-6 font-S-CoreDream-medium tracking-widest font-bold mx-auto mt-4"
+        >
           {{ person.name }}
         </span>
-        <span class="mt-2 text-base font-S-CoreDream-medium tracking-wide mx-auto"
+        <span
+          class="mt-2 text-base font-S-CoreDream-medium tracking-wide mx-auto"
           >{{ person.role }}</span
         >
         <article class="mx-auto">
-        <base-card class="w-96">
-        <span class="flex m-2 tracking-wide leading-7 whitespace-pre-line text-base text-color-black-300">
-          {{person.description}}
-        </span>
-        </base-card>
+          <base-card class="w-96">
+            <span
+              class="flex m-2 tracking-wide leading-7 whitespace-pre-line text-base text-color-black-300"
+            >
+              {{ person.description }}
+            </span>
+          </base-card>
         </article>
       </section>
     </div>
@@ -41,7 +50,7 @@
 </template>
 
 <script>
-import bangbaInfo from '../../data/people.js'
+import bangbaInfo from "../../data/people.js";
 export default {
   data() {
     return {
@@ -50,14 +59,13 @@ export default {
   },
   methods: {
     getImgsrc(imageName) {
-      return require('../../assets/' + imageName);
-    }
+      return require("../../assets/" + imageName);
+    },
   },
-}
+};
 </script>
 
 <style scoped>
-
 /* p {
   margin: 0;
   font-style: normal;

@@ -15,7 +15,7 @@
       <section class="">
         <nav class="font-color-black-400 text-base">
           <ul>
-            <li><router-link to="/footer/guide">방바 가이드</router-link></li>
+            <li><router-link to="/">방바 가이드</router-link></li>
             <li><router-link to="/footer/people">방바 사람들</router-link></li>
             <li><router-link to="/footer/ask">문의</router-link></li>
           </ul>
