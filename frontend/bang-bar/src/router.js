@@ -124,7 +124,7 @@ const router = createRouter({
     },
 
     // mypage-other
-    { path: "/mypageother/:nickname", 
+    { path: "/mypageother/:username", 
     props: true,
     component: MyPageOther },
     // not found
