@@ -32,4 +32,6 @@ public interface UserService {
 	public List<ForumDto> forumMyPage(int pk_user)throws Exception;
 	public String getPW(UserDto userDto) throws Exception;
 	public List<UserDto> getUserInfo(int pk_user) throws Exception;
+	
+	public int getUserPk(String user_name) throws Exception;
 }

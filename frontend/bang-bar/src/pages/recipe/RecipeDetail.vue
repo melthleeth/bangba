@@ -326,7 +326,7 @@ export default {
     //수정
     updateRecipe() {
       this.$router.push({
-        path: this.category === "custom" ? `/recipe/register/custom/${this.pk_article}` : `/recipe/register/official/${this.pk_article}`,
+        path: !this.selectedRecipe.category ? `/recipe/register/custom/${this.pk_article}` : `/recipe/register/official/${this.pk_article}`,
       });
     },
     //삭제 버튼에 들어갈 함수

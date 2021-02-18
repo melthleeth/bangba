@@ -34,4 +34,5 @@ public interface UserDao {
 	
 	public List<ForumDto> forumMyPage(int pk_user);
 	public List<UserDto> getUserInfo(int pk_user) throws Exception;
+	public int getUserPk(String user_name) throws Exception;
 }

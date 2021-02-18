@@ -46,6 +46,7 @@
 	<select id="articleRankWeekly" resultType="ArticleDto">
 		select * 
 		from article 
+		where category = 0
 		order by like_cnt desc
 		limit 3
 	</select>
