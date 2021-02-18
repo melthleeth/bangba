@@ -2,7 +2,7 @@
 <div>
   <the-header></the-header>
     <transition name="route" mode="out-in">
-    <router-view v-slot="slotProps" :key="$route.fullPath">
+    <router-view v-slot="slotProps">
       <component :is="slotProps.Component"></component>
   </router-view>
     </transition>

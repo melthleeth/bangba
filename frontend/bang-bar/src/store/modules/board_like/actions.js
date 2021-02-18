@@ -31,7 +31,7 @@ export default {
                 context.commit("setLikeBtn", true);
         } else {
             console.log(parseInt(responseData));
-            alert("페이지 로드에 문제가 생겼습니다.");
+            // alert("페이지 로드에 문제가 생겼습니다.");
         }
 
         if(payload.isLike == true) {
