@@ -92,11 +92,11 @@
                   <span class="mr-2 font-S-CoreDream-medium">{{
                     user.user_name
                   }}</span>
-                  <router-link :to="`/mypageother/${user.user_name}`"
+                  <!-- <base-button
                     v-if="user.user_name !== myself"
                     mode="outline"
                     class="text-xs px-4 py-1.5 ml-auto justify-self-end"
-                    >보러가기</router-link>
+                    >보러가기</base-button> -->
                 </article>
               </section>
               <span
@@ -133,12 +133,12 @@
                   <span class="mr-2 font-S-CoreDream-medium">{{
                     user.user_name
                   }}</span>
-                  <base-button
+                  <!-- <base-button
                     v-if="user.user_name !== myself"
                     mode="outline"
                     class="text-xs px-4 py-1.5 ml-auto justify-self-end"
                     >팔로우</base-button
-                  >
+                  > -->
                 </article>
               </section>
               <span
@@ -155,7 +155,9 @@
 </template>
 
 <script>
+import BaseButton from '../ui/BaseButton.vue';
 export default {
+  components: { BaseButton },
   data() {
     return {
       owner_check: localStorage.getItem("user_name"),
