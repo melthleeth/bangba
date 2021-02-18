@@ -13,50 +13,19 @@
         >레시피 등록</base-button
       >
     </section>
-    <section id="search-bar" class="flex items-center mx-64 mb-12">
-      <div class="inline-block relative w-max">
-        <select
-          class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-8 py-3 rounded-full shadow-lg leading-tight border-3 border-transparent focus:outline-none focus:shadow-outline"
-        >
-          <option>통합</option>
-        </select>
-        <div
-          class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-        >
-          <svg
-            class="fill-current h-4 w-4"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-            />
-          </svg>
-        </div>
-      </div>
-      <div class="ml-4 flex-auto inline-block">
+    <section
+      id="search-bar"
+      class="flex justify-items-center items-center mx-64 mb-12"
+    >
+      <article class="flex w-full items-center">
         <input
-          class="text-base text-left shadow-lg appearance-none rounded-full w-full px-8 py-3 leading-tight border-3 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
+          class="mx-auto text-base text-left shadow-lg appearance-none rounded-full w-5/6 pl-10 pr-20 py-4 leading-tight border-3 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
           id="search"
           type="text"
-          placeholder="검색"
+          placeholder="레시피명, 태그명으로 검색하세요😉"
+          v-model.trim="keyword"
         />
-      </div>
-      <div class="w-10 h-10 ml-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
-      </div>
+      </article>
     </section>
     <section class="flex flex-col">
       <div v-if="isLoading" class="my-32">
@@ -99,11 +68,25 @@ export default {
     return {
       isLoading: false,
       error: null,
+      keyword: "",
     };
+  },
+  watch: {
+    category(newVal) {
+      this.keyword = newVal;
+    },
   },
   computed: {
     filteredRecipes() {
-      const recipes = this.$store.getters["recipes/recipes"]; //모듈/getters
+      let recipes = this.$store.getters["recipes/recipes"]; //모듈/getters
+      if (this.keyword !== "") {
+        recipes = recipes.filter((recipeItem) => {
+          if (recipeItem.title_kor.includes(this.keyword)) return true;
+          if (recipeItem.tag.includes(this.keyword)) return true;
+          return false;
+        });
+      }
+
       console.log(recipes);
       return recipes.filter((recipeItem) => {
         if (recipeItem.category === true) return true;
@@ -140,5 +123,17 @@ export default {
 .title {
   font-size: 42px;
   line-height: 93px;
+}
+
+.search-icon {
+  position: relative;
+  left: -7.5rem;
+  border-radius: 100%;
+  transition: 0.3s ease-out;
+}
+
+.search-icon:hover {
+  background-color: #c6c6c6;
+  border-radius: 100%;
 }
 </style>

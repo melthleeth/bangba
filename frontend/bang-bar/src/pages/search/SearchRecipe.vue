@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col justify-items-center mx-16 font-color-black-400">
+  <div
+    class="flex flex-col font-S-CoreDream-light justify-items-center mx-16 font-color-black-400"
+  >
     <span
       class="text-4xl text-center my-10 font-S-CoreDream-medium font-bold font-color-black-400"
       >검색</span
@@ -7,11 +9,12 @@
     <section id="search-bar" class="flex items-center px-64 mb-12">
       <div class="inline-block relative w-max">
         <select
+          v-model="category"
           class="block appearance-none w-full text-base bg-white hover:bg-gray-100 px-8 py-3 rounded-full shadow-lg leading-tight border-3 border-transparent focus:outline-none focus:shadow-outline"
         >
-          <option>통합</option>
-          <option>오피셜</option>
-          <option>커스텀</option>
+          <option value="all">통합</option>
+          <option value="official">오피셜</option>
+          <option value="custom">커스텀</option>
         </select>
         <div
           class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
@@ -32,7 +35,7 @@
           class="text-base text-left shadow-lg appearance-none rounded-full w-full px-8 py-3 leading-tight border-3 border-transparent hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:border-gray-200"
           id="search"
           type="text"
-          placeholder="검색할 단어를 입력하세요"
+          placeholder="레시피명, 태그명으로 검색하세요😉"
           v-model="searchKeyword"
         />
       </div>
@@ -78,24 +81,41 @@ export default {
       isLoading: false,
       error: null,
       searchKeyword: "",
+      category: "",
     };
+  },
+  watch: {
+    category(newVal) {
+      this.category = newVal;
+    }
   },
   computed: {
     searchCondition() {
-      return this.filteredRecipes.length > 0 && this.searchKeyword.trim().length > 0;
+      return (
+        this.filteredRecipes.length > 0 && this.searchKeyword.trim().length > 0
+      );
     },
     filteredRecipes() {
-      const recipes = this.$store.getters["recipes/recipes"];
+      let recipes = this.$store.getters["recipes/recipes"];
+      let category = true;
+      if (this.category === "custom") category = false;
       // console.log(this.searchKeyword);
+      // console.log(this.category);
+      if (this.category !== "all") {
+        recipes = recipes.filter((recipe) => {
+          if (recipe.category === category) return true;
+          return false;
+        });
+      }
       return recipes.filter((recipe) => {
-        console.log(recipe.title_kor.includes(this.searchKeyword));
+        // console.log(recipe.title_kor.includes(this.searchKeyword));
         if (recipe.title_kor.includes(this.searchKeyword)) return true;
-        if (
-          recipe.title_eng
-            .toLowerCase()
-            .includes(this.searchKeyword.toLowerCase())
-        )
-          return true;
+        // if (
+        //   recipe.title_eng
+        //     .toLowerCase()
+        //     .includes(this.searchKeyword.toLowerCase())
+        // )
+        //   return true;
         if (recipe.tag.includes(this.searchKeyword)) return true;
         return false;
       });
@@ -103,8 +123,13 @@ export default {
   },
   created() {
     this.loadRecipes();
+    this.loadKeyword();
   },
   methods: {
+    loadKeyword() {
+      this.searchKeyword = this.$store.getters["recipes/keyword"];
+      this.$store.dispatch("recipes/setSearchKeyword", null);
+    },
     async loadRecipes(refresh = true) {
       this.isLoading = true;
       try {

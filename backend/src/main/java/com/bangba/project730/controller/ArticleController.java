@@ -297,6 +297,7 @@ public class ArticleController {
 				tdto.setCategory(a.isCategory());
 				tdto.setAbv(a.getAbv());
 				tdto.setCup_no(a.getCup_no());
+//				System.out.println("img_path: " + a.getImg_path());
 				
 				// 추가 정보
 				String temp = "";

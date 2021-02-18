@@ -24,4 +24,7 @@ export default {
   recommendationData(state) {
     return state.recommendationData;
   },
+  keyword(state) {
+    return state.keyword;
+  },
 };
