@@ -155,9 +155,8 @@
 </template>
 
 <script>
-import BaseButton from '../ui/BaseButton.vue';
 export default {
-  components: { BaseButton },
+  props: ["username"],
   data() {
     return {
       owner_check: localStorage.getItem("user_name"),
@@ -205,6 +204,7 @@ export default {
     // console.log(this.followingList);
     // console.log(this.followList);
     this.myself = this.$store.getters.userName;
+    console.log("userboard", this.username);
   },
   updated() {
     this.is_Follow();
