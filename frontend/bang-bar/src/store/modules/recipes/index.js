@@ -8,6 +8,7 @@ export default {
     return {
       lastFetch: null,
       // dummy data 
+      keyword: null,
       Ranking:[],
       ArticleRanking:[],
       recommendationData: [],

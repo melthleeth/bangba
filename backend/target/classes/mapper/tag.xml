@@ -21,6 +21,10 @@
 	</select>
 	<select id="searchTagPK" resultType="int" parameterType="String">
 		select pk_tag from tag
-		where content_kor like #{content} or content_eng like #{content}
+		where content_kor = #{content} or content_eng = #{content}
+	</select>
+	<select id="searchTagPKCount" resultType="int" parameterType="String">
+		select count(pk_tag) from tag
+		where content_kor = #{content} or content_eng = #{content}
 	</select>
 </mapper>

@@ -76,60 +76,94 @@ public class ArticleServiceImpl implements ArticleService {
 		dto.setCup_no(Integer.parseInt(map.get("cup_no")));
 
 		dao.createArticle(dto);
-		System.out.println("111111");
 		// 생성된 아티클의 pk를 유저번호, 제목, 시간으로 찾고 그중에 가장 나중에 만들어진 pk를 가져옴
 		int pk = dao.searchArticlePK(dto);
 
 		String s = map.get("alcohol");
-		String[] ss = s.split("<br>");;
+		String[] ss = s.split("<br>");
 		for (String a : ss) {
-			System.out.println(a);
-			String[] sss = a.split("/");
-			System.out.println(sss[0]);
-			int apk = adao.searchAlcoholPK(sss[0]);
-			Article_alcoholDto aadto = new Article_alcoholDto();
-			aadto.setArticle_no(pk);
-			aadto.setAlcohol_no(apk);
-			aadto.setQuantity(sss[1]);
-			aadto.setUnit(sss[2]);
-			dao.addArticleAlcohol(aadto);
+			if (!a.equals("")) {
+				String[] sss = a.split("/");
+				int apk = adao.searchAlcoholPK(sss[0]);
+				Article_alcoholDto aadto = new Article_alcoholDto();
+				aadto.setArticle_no(pk);
+				aadto.setAlcohol_no(apk);
+				aadto.setQuantity(sss[1]);
+				aadto.setUnit(sss[2]);
+				dao.addArticleAlcohol(aadto);
+				
+				int stpk = tdao.searchTagPKCount(sss[0]);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(sss[0]);
+					tdto.setType(1);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(sss[0]);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
 		s = map.get("ingredient");
 		ss = s.split("<br>");
 		for (String a : ss) {
-			String[] sss = a.split("/");
-			int ipk = idao.searchIngredientPK(sss[1]);
-			Article_ingredientDto aidto = new Article_ingredientDto();
-			aidto.setArticle_no(pk);
-			aidto.setIngredient_no(ipk);
-			if (sss[0].equals("재료"))
-				aidto.setType(true);
-			else
-				aidto.setType(false);
-			aidto.setQuantity(sss[2]);
-			aidto.setUnit(sss[3]);
-			dao.addArticleIngredient(aidto);
+			if (!a.equals("")) {
+				String[] sss = a.split("/");
+				int sipk = idao.searchIngredientPKCount(sss[1]);
+				if(sipk==0)
+				{
+					IngredientDto idto = new IngredientDto();
+					idto.setName_kor(sss[1]);
+					idao.addIngredient(idto);
+				}
+				int ipk = idao.searchIngredientPK(sss[1]);
+				Article_ingredientDto aidto = new Article_ingredientDto();
+				aidto.setArticle_no(pk);
+				aidto.setIngredient_no(ipk);
+				if (sss[0].equals("재료"))
+					aidto.setType(true);
+				else
+					aidto.setType(false);
+				aidto.setQuantity(sss[2]);
+				aidto.setUnit(sss[3]);
+				dao.addArticleIngredient(aidto);
+				
+				int stpk = tdao.searchTagPKCount(sss[1]);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(sss[1]);
+					tdto.setType(2);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(sss[1]);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
 		s = map.get("tag");
 		ss = s.split("<br>");
 		for (String a : ss) {
-			System.out.println("tag: " + a);
-			int tpk = tdao.searchTagPK(a);
-			dao.addArticleTag(pk, tpk);
+			if (!a.equals("")) {
+				int stpk = tdao.searchTagPKCount(a);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(a);
+					tdto.setType(3);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(a);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
-		// if(map.get("category"))
-		// 	dao.addArticleTag(pk, tdao.searchTagPK("오피셜"));
-		// else
-		// 	dao.addArticleTag(pk, tdao.searchTagPK("커스텀"));
-		s=map.get("recipe");
-		ss=s.split("<br>");
-        int r=1;
-		for(String a:ss)
-		{
-			RecipeDto rdto= new RecipeDto();
+		s = map.get("recipe");
+		ss = s.split("<br>");
+		int r = 1;
+		for (String a : ss) {
+			RecipeDto rdto = new RecipeDto();
 			rdto.setArticle_no(pk);
 			rdto.setContent(a);
 			rdto.setNum(r);
@@ -212,42 +246,85 @@ public class ArticleServiceImpl implements ArticleService {
 		dao.deleteArticleIngredient(pk);
 		dao.deleteArticleTag(pk);
 		dao.deleteRecipe(pk);
-		System.out.println(map.toString());
+
 		String s = map.get("alcohol");
 		String[] ss = s.split("<br>");
 		for (String a : ss) {
-			String[] sss = a.split("/");
-			int apk = adao.searchAlcoholPK(sss[0]);
-			Article_alcoholDto aadto = new Article_alcoholDto();
-			aadto.setArticle_no(pk);
-			aadto.setAlcohol_no(apk);
-			aadto.setQuantity(sss[1]);
-			aadto.setUnit(sss[2]);
-			dao.addArticleAlcohol(aadto);
+			if (!a.equals("")) {
+				String[] sss = a.split("/");
+				int apk = adao.searchAlcoholPK(sss[0]);
+				Article_alcoholDto aadto = new Article_alcoholDto();
+				aadto.setArticle_no(pk);
+				aadto.setAlcohol_no(apk);
+				aadto.setQuantity(sss[1]);
+				aadto.setUnit(sss[2]);
+				dao.addArticleAlcohol(aadto);
+				
+				int stpk = tdao.searchTagPKCount(sss[0]);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(sss[0]);
+					tdto.setType(1);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(sss[0]);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
-		
+
 		s = map.get("ingredient");
 		ss = s.split("<br>");
 		for (String a : ss) {
-			String[] sss = a.split("/");
-			int ipk = idao.searchIngredientPK(sss[1]);
-			Article_ingredientDto aidto = new Article_ingredientDto();
-			aidto.setArticle_no(pk);
-			aidto.setIngredient_no(ipk);
-			if (sss[0].equals("재료"))
-				aidto.setType(true);
-			else
-				aidto.setType(false);
-			aidto.setQuantity(sss[2]);
-			aidto.setUnit(sss[3]);
-			dao.addArticleIngredient(aidto);
+			if (!a.equals("")) {
+				String[] sss = a.split("/");
+				int sipk = idao.searchIngredientPKCount(sss[1]);
+				if(sipk==0)
+				{
+					IngredientDto idto = new IngredientDto();
+					idto.setName_kor(sss[1]);
+					idao.addIngredient(idto);
+				}
+				int ipk = idao.searchIngredientPK(sss[1]);
+				Article_ingredientDto aidto = new Article_ingredientDto();
+				aidto.setArticle_no(pk);
+				aidto.setIngredient_no(ipk);
+				if (sss[0].equals("재료"))
+					aidto.setType(true);
+				else
+					aidto.setType(false);
+				aidto.setQuantity(sss[2]);
+				aidto.setUnit(sss[3]);
+				dao.addArticleIngredient(aidto);
+				
+				int stpk = tdao.searchTagPKCount(sss[1]);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(sss[1]);
+					tdto.setType(2);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(sss[1]);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
-		
+
 		s = map.get("tag");
 		ss = s.split("<br>");
 		for (String a : ss) {
-			int tpk = tdao.searchTagPK(a);
-			dao.addArticleTag(pk, tpk);
+			if (!a.equals("")) {
+				int stpk = tdao.searchTagPKCount(a);
+				if(stpk==0)
+				{
+					TagDto tdto = new TagDto();
+					tdto.setContent_kor(a);
+					tdto.setType(3);
+					tdao.addTag(tdto);
+				}
+				int tpk = tdao.searchTagPK(a);
+				dao.addArticleTag(pk, tpk);
+			}
 		}
 
 		s = map.get("recipe");
@@ -382,7 +459,7 @@ public class ArticleServiceImpl implements ArticleService {
 		// TODO Auto-generated method stub
 		return tdao.searchTag(searchtxt);
 	}
-	
+
 	// 추가로 구현된 함수
 
 	@Override
@@ -404,6 +481,7 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<TagDto> getTag(int pk_article) throws Exception {
 		return dao.getTag(pk_article);
 	}
+
 	public String createComment(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
 		AcommentDto acdto = new AcommentDto();
@@ -417,10 +495,9 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public List<FAcommentDto> searchComment(int pk_article) throws Exception {
 		// TODO Auto-generated method stub
-		List<AcommentDto> lacdto =  dao.searchComment(pk_article);
+		List<AcommentDto> lacdto = dao.searchComment(pk_article);
 		List<FAcommentDto> lfacdto = new ArrayList<FAcommentDto>();
-		for(AcommentDto acdto : lacdto)
-		{
+		for (AcommentDto acdto : lacdto) {
 			FAcommentDto facdto = new FAcommentDto();
 			facdto.setPk_acomment(acdto.getPk_acomment());
 			facdto.setArticle_no(acdto.getArticle_no());
@@ -435,7 +512,7 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public String updateComment(Map<String, String> map) throws Exception {
 		// TODO Auto-generated method stub
-		AcommentDto acdto= new AcommentDto();
+		AcommentDto acdto = new AcommentDto();
 		acdto.setPk_acomment(Integer.parseInt(map.get("pk_acomment")));
 		acdto.setContent(map.get("content"));
 		dao.updateComment(acdto);
@@ -495,7 +572,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public int isLike(int user_no, int article_no) throws Exception {
-		
+
 		return dao.isLike(user_no, article_no);
 	}
 
@@ -503,19 +580,18 @@ public class ArticleServiceImpl implements ArticleService {
 	public int isBmark(int user_no, int article_no) throws Exception {
 		return dao.isBmark(user_no, article_no);
 	}
-	
+
 	@Override
-    public List<AlcoholDto> searchBaseAlcohol() throws Exception {
-        return adao.searchBaseAlcohol();
-    }
+	public List<AlcoholDto> searchBaseAlcohol() throws Exception {
+		return adao.searchBaseAlcohol();
+	}
 
 	@Override
 	public List<ArticleTotalDto> searchNewArticle() throws Exception {
 		// TODO Auto-generated method stub
 		List<ArticleDto> ladto = dao.searchNewArticle();
 		List<ArticleTotalDto> latdto = new ArrayList<ArticleTotalDto>();
-		for(ArticleDto adto:ladto)
-		{
+		for (ArticleDto adto : ladto) {
 			ArticleTotalDto atdto = new ArticleTotalDto();
 			atdto.setPk_article(adto.getPk_article());
 			atdto.setUser_name(udao.getUserName(adto.getUser_no()));
@@ -530,14 +606,13 @@ public class ArticleServiceImpl implements ArticleService {
 			atdto.setContent(adto.getContent());
 			atdto.setImg_path(adto.getImg_path());
 			atdto.setCategory(adto.isCategory());
-			String t="";
+			String t = "";
 			List<TagDto> ltdto = dao.getTag(adto.getPk_article());
-			int i=1;
-			for(TagDto tdto:ltdto)
-			{
-				t+=tdto.getContent_kor();
-				if(i<ltdto.size())
-					t+="<br>";
+			int i = 1;
+			for (TagDto tdto : ltdto) {
+				t += tdto.getContent_kor();
+				if (i < ltdto.size())
+					t += "<br>";
 				i++;
 			}
 			atdto.setTag(t);
@@ -550,5 +625,5 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleDto> recommend(Map<String, String> map) throws Exception {
 		return dao.recommend(map);
 	}
-	
+
 }

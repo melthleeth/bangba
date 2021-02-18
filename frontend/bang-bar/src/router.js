@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Home from "./pages/Home.vue";
+import NotFound from "./pages/NotFound.vue";
 
 // account
 import SignUp from "./pages/account/SignUp.vue";
@@ -123,7 +124,11 @@ const router = createRouter({
     },
 
     // mypage-other
-    { path: "/mypageother/:nickname", component: MyPageOther },
+    { path: "/mypageother/:username", 
+    props: true,
+    component: MyPageOther },
+    // not found
+    { path: '/:notFound(.*)', component: NotFound }
   ],
 });
 

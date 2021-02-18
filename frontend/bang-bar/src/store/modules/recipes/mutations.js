@@ -20,4 +20,7 @@ export default {
     setRecommendationData(state, payload) {
         state.recommendationData = payload;
     },
+    setKeyword(state, payload) {
+        state.keyword = payload;
+    },
 };

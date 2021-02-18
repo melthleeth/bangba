@@ -185,6 +185,7 @@ public class UserController {
 			if (tag_tmp.length() > 0)
 				tag_tmp = tag_tmp.substring(0, tag_tmp.length() - 4);
 			a.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
+			a.setUser_img(userService.getMyPage(a.getUser_no()).getImg_path());
 			a.setTag(tag_tmp);
 			
 		}
@@ -452,4 +453,9 @@ public class UserController {
 		return userService.getUserInfo(pk_user);
 	}
 	
+	@ApiOperation(value = "이름으로 pk찾기", response = String.class)
+	@PostMapping(value = "/find-name")
+	public int getUserPk(@RequestParam(required = true) String user_name) throws Exception {
+		return userService.getUserPk(user_name);
+	}
 }

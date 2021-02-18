@@ -130,4 +130,10 @@
 		from user
 		where pk_user = #{pk_user}
 	</select>
+	
+	<select id="getUserPk" parameterType="String" resultType="int">
+		select pk_user
+		from user
+		where user_name = #{user_name}
+	</select>
 </mapper>

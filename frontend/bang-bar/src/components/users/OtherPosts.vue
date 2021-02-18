@@ -84,6 +84,7 @@
 import RecipeCardSmall from "../../components/recipes/RecipeCardSmall.vue";
 import BoardCard from '../../components/boards/BoardCard.vue';
 export default {
+  props: ["username"],
   components: {
     RecipeCardSmall,
     BoardCard,
@@ -98,6 +99,7 @@ export default {
   created() {
     this.loadMyRecipes();
     this.loadMyForums();
+    console.log("otherspost", this.username);
   },
   computed: {
     recipes() {

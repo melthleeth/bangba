@@ -74,6 +74,7 @@ public class AdminServiceImpl implements AdminService{
 			ArticleTotalDto atdto = new ArticleTotalDto();
 			atdto.setPk_article(adto.getPk_article());
 			atdto.setUser_name(udao.getUserName(adto.getUser_no()));
+			atdto.setUser_img(udao.getMyPage(adto.getUser_no()).getImg_path());
 			atdto.setTitle_kor(adto.getTitle_kor());
 			atdto.setTitle_eng(atdto.getTitle_eng());
 			atdto.setLike_cnt(adto.getLike_cnt());

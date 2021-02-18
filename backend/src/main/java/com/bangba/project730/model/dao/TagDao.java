@@ -15,5 +15,6 @@ public interface TagDao {
 	public List<TagDto> searchArticleTag(int pk_article) throws Exception;
 	public TagDto searchTagbyPK(int pk_tag) throws Exception;
 	public int searchTagPK(String content) throws Exception;
+	public int searchTagPKCount(String content) throws Exception;
 	
 }

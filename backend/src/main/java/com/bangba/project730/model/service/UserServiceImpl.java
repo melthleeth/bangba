@@ -123,4 +123,9 @@ public class UserServiceImpl implements UserService{
 	public List<UserDto> getUserInfo(int pk_user) throws Exception {
 		return dao.getUserInfo(pk_user);
 	}
+	
+	@Override
+	public int getUserPk(String user_name) throws Exception {
+		return dao.getUserPk(user_name);
+	}
 }

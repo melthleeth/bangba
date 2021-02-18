@@ -8,7 +8,6 @@ export default {
     // if (payload.category === "custom") {
     //   isOfficial = false;
     // }
-
     const recipeData = {
       user_no: context.rootGetters.pkUser,
       // created_at: new Date().toLocaleTimeString(), // 변경 가능
@@ -42,7 +41,8 @@ export default {
     console.log(responseData);
 
     if (responseData === "error") {
-      // ...
+      alert("등록에 실패하였습니다.");
+      return;
     }
     alert("등록이 완료되었습니다.");
   },
@@ -98,7 +98,9 @@ export default {
         alcohol: responseData[key].alcohol,
         ingredient: responseData[key].ingredient,
         recipe: responseData[key].recipe,
+
       };
+      // console.log(key, responseData[key].img_path);
       recipes.push(recipe);
     }
 
@@ -256,4 +258,7 @@ export default {
     context.commit("setRecommendRecipes", responseData);
     context.commit("setRecommendationData", payload);
   },
+  setSearchKeyword(context, payload) {
+    context.commit("setKeyword", payload);
+  } 
 };

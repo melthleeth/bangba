@@ -92,11 +92,11 @@
                   <span class="mr-2 font-S-CoreDream-medium">{{
                     user.user_name
                   }}</span>
-                  <base-button
+                  <!-- <base-button
                     v-if="user.user_name !== myself"
                     mode="outline"
                     class="text-xs px-4 py-1.5 ml-auto justify-self-end"
-                    >팔로우</base-button>
+                    >보러가기</base-button> -->
                 </article>
               </section>
               <span
@@ -133,12 +133,12 @@
                   <span class="mr-2 font-S-CoreDream-medium">{{
                     user.user_name
                   }}</span>
-                  <base-button
+                  <!-- <base-button
                     v-if="user.user_name !== myself"
                     mode="outline"
                     class="text-xs px-4 py-1.5 ml-auto justify-self-end"
                     >팔로우</base-button
-                  >
+                  > -->
                 </article>
               </section>
               <span
@@ -156,6 +156,7 @@
 
 <script>
 export default {
+  props: ["username"],
   data() {
     return {
       owner_check: localStorage.getItem("user_name"),
@@ -203,6 +204,7 @@ export default {
     // console.log(this.followingList);
     // console.log(this.followList);
     this.myself = this.$store.getters.userName;
+    console.log("userboard", this.username);
   },
   updated() {
     this.is_Follow();
@@ -268,8 +270,8 @@ export default {
       this.imgDialogIsVisible = false;
       this.followerDialogIsVisible = false;
       this.followingDialogIsVisible = false;
-    },
-  },
+    }
+  }, 
   watch: {
     set_isFollow(newVal) {
       this.isFollow = newVal;

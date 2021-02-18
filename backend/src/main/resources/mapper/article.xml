@@ -46,6 +46,7 @@
   		</if>
   		)) 
 		and (title_kor like concat('%', #{searchtxt}, '%') or title_eng like concat('%', #{searchtxt}, '%')) 
+		order by pk_article desc
 	</select>
 	
 	<select id="searchArticlePK" resultType="int" parameterType="ArticleDto">
