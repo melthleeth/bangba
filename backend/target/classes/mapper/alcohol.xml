@@ -18,7 +18,7 @@
 	</select>
 	<select id="searchAlcoholPK" resultType="int" parameterType="String">
 		select pk_alcohol from alcohol
-		where name_kor like #{name} or name_eng like #{name}
+		where name_kor = #{name} or name_eng = #{name}
 	</select>
 	<select id="searchBaseAlcohol" resultType="AlcoholDto">
 		select 
