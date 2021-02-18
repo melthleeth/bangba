@@ -5,13 +5,14 @@
       >오피셜 레시피</span
     >
     <section class="flex justify-end mx-12">
-      <base-button
+      <!-- <base-button
         class="w-max px-8 py-2"
         mode="important"
         link
         to="register/official"
         >레시피 등록</base-button
-      >
+      > -->
+      <article class="py-6"></article>
     </section>
     <section
       id="search-bar"
