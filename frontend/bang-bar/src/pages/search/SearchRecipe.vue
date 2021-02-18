@@ -54,6 +54,7 @@
           :pk_article="cocktail.pk_article"
           :img_path="cocktail.img_path"
           :user_name="cocktail.user_name"
+          :user_profileImage="cocktail.user_profileImage"
           :cocktailname="cocktail.title_kor"
           :tag="cocktail.tag"
           :like_cnt="cocktail.like_cnt"
