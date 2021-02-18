@@ -185,6 +185,7 @@ public class UserController {
 			if (tag_tmp.length() > 0)
 				tag_tmp = tag_tmp.substring(0, tag_tmp.length() - 4);
 			a.setUser_name(userService.getMyPage(a.getUser_no()).getUser_name());
+			a.setUser_img(userService.getMyPage(a.getUser_no()).getImg_path());
 			a.setTag(tag_tmp);
 			
 		}
