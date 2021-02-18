@@ -113,21 +113,21 @@
           <section
             class="flex flex-col justify-items-center transition duration-200 ease-in-out transform hover:scale-105"
           >
+              <!-- src="../assets/img/tequila-sunrise.png" -->
             <img
               class="object-cover w-56 m-auto"
-              src="../assets/img/tequila-sunrise.png"
+              src="https://www.liquor.com/thmb/CRXajbaGbKIDo-nc2CGIw2N1xF0=/735x0/grasshopper-720x720-article-effdd8c4222b415c948816047bd59b1a.jpg"
               alt="Sunset in the mountains"
             />
             <div class="font-S-CoreDream-medium text-xl mb-2 px-6 pt-4">
-              테킬라 선라이즈
+              그래스호퍼
             </div>
           </section>
 
           <span
             class="text-gray-700 text-left px-4 mb-4 text-sm leading-relaxed"
           >
-            일출과 같이 무언가로부터 희망을 찾고 싶을 때, 활력을 얻고 싶을 때
-            한잔 만들어보는 것은 어떨까?
+            그래스호퍼는 메뚜기를 말한다. 물들인 것 같은 푸른 색은 메뚜기 보다는 메뚜기가 사는 초원을 연상시켰다고 생각하는 편이 안심하고 마실 수 있지 않을까?
           </span>
         </base-card>
         <base-card size="box-290" class="flex flex-col justify-items-center">
@@ -336,7 +336,7 @@ export default {
       });
     },
     goRecipe() {
-      this.$router.push("/recipe/detail/2");
+      this.$router.push("/recipe/detail/198");
     },
     rowClick(item) {
       this.$router.push({
