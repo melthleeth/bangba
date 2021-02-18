@@ -1,19 +1,19 @@
 <template>
   <div class="flex font-S-CoreDream-light font-color-black-400 w-full">
-    <section class="flex flex-col w-full justify-items-center">
+    <section class="flex flex-col w-full justify-items-center mr-4">
       <span
         class="tracking-wider font-semibold text-2xl border-gray-800 border-b-4 font-S-CoreDream-medium w-max px-1 mt-10 mx-auto"
         >팔로잉 ({{ followingCnt }})</span
       >
-      <section v-if="followingList.length > 0" class="mx-7 my-8 py-4 bg-white card">
+      <section v-if="followingList.length > 0" class="mx-10 my-8 py-4 bg-white card">
         <article
           v-for="user in followingList"
           :key="user.pk_user"
-          class="flex items-center mx-12 my-2"
+          class="flex items-center mx-12 my-2 py-1"
         >
           <img
             alt="profile image"
-            :src="tempImage"
+            :src="user.img_path"
             class="w-12 h-12 ml-4 mr-2 object-cover rounded-full"
           />
           <span class="font-S-CoreDream-medium">{{ user.user_name }}</span>
@@ -34,15 +34,15 @@
         class="tracking-wider font-semibold text-2xl border-gray-800 border-b-4 font-S-CoreDream-medium w-max px-1 mt-10 mx-auto"
         >팔로워 ({{ followCnt }})</span
       >
-      <section v-if="followList.length > 0" class="mx-7 my-8 py-4 bg-white card">
+      <section v-if="followList.length > 0" class="mx-10 my-8 py-4 bg-white card">
         <article
           v-for="user in followList"
           :key="user.pk_user"
-          class="flex items-center mx-12 my-2"
+          class="flex items-center mx-12 my-2 py-1"
         >
           <img
             alt="profile image"
-            :src="tempImage"
+            :src="user.img_path"
             class="w-12 h-12 ml-4 mr-2 object-cover rounded-full"
           />
           <span class="font-S-CoreDream-medium">{{ user.user_name }}</span>
