@@ -36,24 +36,24 @@
 - 최종 배포
 ---
 ## 방바 사람들
-![bangba people](frontend\bang-bar\src\assets\bangba\bangba-people.png)
+![bangba people](./frontend/bang-bar/src/assets/bangba/bangba-people.png)
 
 ## 방바 logo & icon
 
 <div style="display: flex; margin-bottom: 30px">
-<img src="frontend\bang-bar\src\assets\bangba\logo\bangba_light.png" alt="bangba_light" width="300" style="margin: 10px; display: block;" >
+<img src="./frontend/bang-bar/src/assets/bangba/logo/bangba_light.png" alt="bangba_light" width="300" style="margin: 10px; display: block;" >
 
-<img src="frontend\bang-bar\src\assets\bangba\logo\bangba_dark.png"  alt="bangba_dark" width="300" style="margin: 10px; display: block;" >
+<img src="./frontend/bang-bar/src/assets/bangba/logo/bangba_dark.png"  alt="bangba_dark" width="300" style="margin: 10px; display: block;" >
 </div>
 
 <div style="display: flex; margin-bottom: 30px">
-<img src="frontend\bang-bar\src\assets\bangba\logo\bangba_square_light.png" width="220" style="margin: 10px; display: block;" >
+<img src="./frontend/bang-bar/src/assets/bangba/logo/bangba_square_light.png" width="220" style="margin: 10px; display: block;" >
 
-<img src="frontend\bang-bar\src\assets\bangba\logo\bangba_square_dark.png" width="220" style="margin: 10px; display: block;" >
+<img src="./frontend/bang-bar/src/assets/bangba/logo/bangba_square_dark.png" width="220" style="margin: 10px; display: block;" >
 </div>
 
 <div style="display: flex; margin-bottom: 30px">
-<img src="frontend\bang-bar\src\assets\bangba\logo\bangba_square_logo_light.png" width="150" style="margin: 10px; display: block;" >
+<img src="./frontend/bang-bar/src/assets/bangba/logo/bangba_square_logo_light.png" width="150" style="margin: 10px; display: block;" >
 
-<img src="frontend\bang-bar\src\assets\bangba\logo\bangba_square_logo_dark.png" width="150" style="margin: 10px; display: block;" >
+<img src="./frontend/bang-bar/src/assets/bangba/logo/bangba_square_logo_dark.png" width="150" style="margin: 10px; display: block;" >
 </div>
