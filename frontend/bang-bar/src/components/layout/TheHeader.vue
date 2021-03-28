@@ -61,7 +61,7 @@
             <router-link @click="hideDialog" to="/signup"><u>회원가입</u></router-link>
           </section>
         </base-modal>
-        <base-button class="ml-4 px-4 py-2.5" @click="showDialog"
+        <base-button class="ml-4 px-4 py-2" @click="showDialog"
           >로그인</base-button
         >
       </section>
