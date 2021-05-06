@@ -244,7 +244,7 @@
           </span>
           <base-button
             mode="important"
-            class="w-max px-8 py-2.5 text-base"
+            class="w-max px-8 py-2 text-base"
             @click="updateMode ? updateForm() : submitForm()"
             >레시피 등록하기</base-button
           >

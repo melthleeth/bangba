@@ -2,6 +2,7 @@
   <div
     class="font-color-black-400 flex flex-col justify-items-center font-S-CoreDream-light"
   >
+  <section class="flex flex-col mx-auto">
     <section
       class="card-flat mt-12 w-1/2 flex flex-col justify-items-center mx-auto text-center"
     >
@@ -95,7 +96,7 @@
         </article>
       </section>
     </section>
-
+  </section>
     <section class="card-flat flex flex-col w-1/2 mx-auto h-full ">
       <div
         class="mx-4 my-6 mb-10 min-h leading-7 tracking-wide whitespace-pre-line"
